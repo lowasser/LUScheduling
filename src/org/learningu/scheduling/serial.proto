@@ -1,0 +1,52 @@
+package org.learningu.scheduling;
+message Course {
+	required int32 courseId = 1;
+	required string courseTitle = 2;
+	repeated int32 teacherIds = 3 [packed = true];
+	optional int32 sections = 4 [default = 1];
+	optional int32 estimatedClassSize = 5 [default = 15];
+	optional int32 maxClassSize = 7 [default = 20];
+	repeated int32 roomRequiredProperties = 6;
+}
+
+message Teacher {
+	required int32 teacherId = 1; // teacher identifier number
+	optional string name = 2; // teacher name
+	repeated int32 availableBlocks = 3 [packed = true]; // teacher availability
+}
+
+message TimeBlock {
+	required int32 blockId = 1;
+	optional string description = 2;
+	optional int32 nextTime = 3 [default = -1];
+	optional int32 prevTime = 4 [default = -1];
+}
+
+message RoomProperty {
+	required int32 propertyId = 1;
+	required string description = 2;
+}
+
+message Room {
+	required int32 roomId = 1;
+	optional string building = 2;
+	optional string name = 3;
+	optional int32 capacity = 5 [default = 25];
+	repeated int32 availableBlocks = 6 [packed = true];
+	repeated int32 properties = 4 [packed = true];
+}
+
+message ScheduleAssignment {
+	required int32 course = 1;
+	required int32 section = 4;
+	required int32 timeBlock = 2;
+	required int32 room = 3;
+}
+
+message ProgramParameters {
+	repeated RoomProperty roomProperties = 1;
+	repeated TimeBlock timeBlocks = 2;
+	repeated Teacher teachers = 4;
+	repeated Course courses = 3;
+	repeated Room rooms = 5;
+}
