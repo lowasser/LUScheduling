@@ -19,8 +19,12 @@ public final class ScheduleAssignment {
    * Returns {@code true} if this assignment is valid on its own.
    */
   public boolean isLocallyValid() {
-    
+    boolean sectionIsValid = section >= 0 && section < course.getNumberOfSections();
+
+    boolean timeIsValid = room.getAvailableTimeBlocks().contains(block);
+    for (Teacher t : course.getTeachers()) {
+      timeIsValid &= t.getAvailableTimeBlocks().contains(block);
+    }
+    return sectionIsValid && timeIsValid;
   }
-  
-  public boolean get
 }

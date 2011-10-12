@@ -1,5 +1,7 @@
 package org.learningu.scheduling;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import javax.annotation.Nullable;
 
 import com.google.protobuf.Message;
@@ -11,8 +13,8 @@ abstract class ProgramObject<T extends Message & MessageOrBuilder> implements Ha
   final T serial;
 
   ProgramObject(Program program, T serial) {
-    this.program = program;
-    this.serial = serial;
+    this.program = checkNotNull(program);
+    this.serial = checkNotNull(serial);
   }
 
   public String toString() {
@@ -27,7 +29,8 @@ abstract class ProgramObject<T extends Message & MessageOrBuilder> implements Ha
   @Override
   public boolean equals(@Nullable Object obj) {
     if (obj instanceof ProgramObject) {
-      return this.getClass() == obj.getClass() && this.getId() == ((HasUID) obj).getId();
+      ProgramObject<?> other = (ProgramObject<?>) obj;
+      return getId() == other.getId() && serial.getAllFields().equals(other.serial.getAllFields());
     }
     return false;
   }

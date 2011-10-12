@@ -43,7 +43,7 @@ message ScheduleAssignment {
 	required int32 room = 3;
 }
 
-message ProgramParameters {
+message Program {
 	repeated RoomProperty roomProperties = 1;
 	repeated TimeBlock timeBlocks = 2;
 	repeated Teacher teachers = 4;

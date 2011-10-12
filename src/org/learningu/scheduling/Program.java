@@ -1,16 +1,23 @@
 package org.learningu.scheduling;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import javax.annotation.Nullable;
+
 import com.google.common.base.Function;
+import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.protobuf.TextFormat;
 
 public final class Program {
   private final ImmutableMap<Integer, Teacher> teachers;
@@ -20,17 +27,19 @@ public final class Program {
   private final ImmutableMap<Integer, Room> rooms;
   private final ImmutableSetMultimap<Teacher, Course> teachingMap;
   private final ImmutableMap<TimeBlock, Integer> timeBlockIndex;
+  private final Serial.Program serial;
 
-  Program(Serial.ProgramParameters program) {
-    teachers = makeIdMap(Lists.transform(program.getTeachersList(), Teacher.programWrapper(this)));
-    courses = makeIdMap(Lists.transform(program.getCoursesList(), Course.programWrapper(this)));
-    roomProperties = makeIdMap(Lists.transform(program.getRoomPropertiesList(),
+  Program(Serial.Program serial) {
+    this.serial = checkNotNull(serial);
+    teachers = makeIdMap(Lists.transform(serial.getTeachersList(), Teacher.programWrapper(this)));
+    courses = makeIdMap(Lists.transform(serial.getCoursesList(), Course.programWrapper(this)));
+    roomProperties = makeIdMap(Lists.transform(serial.getRoomPropertiesList(),
         RoomProperty.programWrapper(this)));
-    rooms = makeIdMap(Lists.transform(program.getRoomsList(), Room.programWrapper(this)));
+    rooms = makeIdMap(Lists.transform(serial.getRoomsList(), Room.programWrapper(this)));
 
     // initialize timeBlocks
     List<Serial.TimeBlock> orderedBlocks = orderedTimeBlocks(Maps.uniqueIndex(
-        program.getTimeBlocksList(), new Function<Serial.TimeBlock, Integer>() {
+        serial.getTimeBlocksList(), new Function<Serial.TimeBlock, Integer>() {
 
           @Override
           public Integer apply(org.learningu.scheduling.Serial.TimeBlock input) {
@@ -69,17 +78,22 @@ public final class Program {
   }
 
   private static List<Serial.TimeBlock> orderedTimeBlocks(Map<Integer, Serial.TimeBlock> timeBlocks) {
+    if (timeBlocks.isEmpty()) {
+      return ImmutableList.of();
+    }
     ImmutableList.Builder<Serial.TimeBlock> builder = ImmutableList.builder();
     Serial.TimeBlock current = firstTimeBlock(timeBlocks);
     builder.add(current);
-    assert !current.hasPrevTime();
+    checkArgument(!current.hasPrevTime());
     while (current.hasNextTime()) {
       Serial.TimeBlock next = get(timeBlocks, current.getNextTime());
-      assert next.hasPrevTime() && next.getPrevTime() == current.getBlockId();
+      checkArgument(next.hasPrevTime() && next.getPrevTime() == current.getBlockId());
       builder.add(next);
       current = next;
     }
-    return builder.build();
+    List<Serial.TimeBlock> result = builder.build();
+    checkArgument(result.size() == timeBlocks.size());
+    return result;
   }
 
   public Teacher getTeacher(int teacherId) {
@@ -112,7 +126,7 @@ public final class Program {
 
   private static <T> void set(Map<Integer, T> map, int key, T value) {
     T oldValue = map.put(key, value);
-    if (value == null) {
+    if (oldValue != null) {
       throw new IllegalArgumentException("Duplicate found when inserting " + value + " : "
           + oldValue);
     }
@@ -124,5 +138,34 @@ public final class Program {
       set(map, t.getId(), t);
     }
     return ImmutableMap.copyOf(map);
+  }
+
+  public List<Teacher> getTeachers() {
+    return teachers.values().asList();
+  }
+
+  public List<TimeBlock> getTimeBlocks() {
+    return timeBlocks.values().asList();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(teachers, rooms, courses, roomProperties, timeBlocks);
+  }
+
+  @Override
+  public boolean equals(@Nullable Object obj) {
+    if (obj instanceof Program) {
+      Program other = (Program) obj;
+      return teachers.equals(other.teachers) && rooms.equals(other.rooms)
+          && courses.equals(other.courses) && roomProperties.equals(other.roomProperties)
+          && timeBlocks.equals(other.timeBlocks);
+    }
+    return false;
+  }
+
+  @Override
+  public String toString() {
+    return TextFormat.printToString(serial);
   }
 }
