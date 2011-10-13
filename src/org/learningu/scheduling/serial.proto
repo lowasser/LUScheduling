@@ -51,3 +51,12 @@ message Program {
 	repeated Course courses = 3;
 	repeated Room rooms = 4;
 }
+
+/*
+ * An assignment of a course to a room and time.
+ */
+message ScheduleAssignment {
+	required int32 timeBlockId = 1;
+	required int32 roomId = 2;
+	required int32 courseId = 3;
+}
