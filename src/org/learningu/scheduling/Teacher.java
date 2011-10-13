@@ -6,7 +6,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.Set;
 
 import com.google.common.base.Function;
-import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 
 /**
  * A teacher at an LU program.
@@ -26,7 +26,7 @@ public final class Teacher extends ProgramObject<Serial.Teacher> {
 
   public boolean isCompatibleWithTimeBlock(TimeBlock block) {
     checkArgument(program.getTimeBlocks().contains(block));
-    return getAvailableTimeBlocks().contains(block);
+    return getCompatibleTimeBlocks().contains(block);
   }
 
   static Function<Serial.Teacher, Teacher> programWrapper(final Program program) {
@@ -39,18 +39,15 @@ public final class Teacher extends ProgramObject<Serial.Teacher> {
     };
   }
 
-  private transient Set<TimeBlock> availableTimeBlocks;
+  private transient Set<TimeBlock> compatibleTimeBlocks;
 
-  public Set<TimeBlock> getAvailableTimeBlocks() {
-    Set<TimeBlock> result = availableTimeBlocks;
+  public Set<TimeBlock> getCompatibleTimeBlocks() {
+    Set<TimeBlock> result = compatibleTimeBlocks;
     if (result != null) {
       return result;
     }
-    ImmutableSet.Builder<TimeBlock> builder = ImmutableSet.builder();
-    for (int blockId : serial.getAvailableBlocksList()) {
-      builder.add(program.getTimeBlock(blockId));
-    }
-    return availableTimeBlocks = builder.build();
+    return compatibleTimeBlocks = ProgramObjectSet.create(Lists.transform(
+        serial.getAvailableBlocksList(), program.getTimeBlocks().asLookupFunction()));
   }
 
   public String getName() {

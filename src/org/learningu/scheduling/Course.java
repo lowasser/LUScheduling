@@ -7,6 +7,8 @@ import java.util.Set;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 /**
  * A course in an LU program.
@@ -34,11 +36,9 @@ public final class Course extends ProgramObject<Serial.Course> {
     if (result != null) {
       return result;
     }
-    ImmutableSet.Builder<Teacher> builder = ImmutableSet.builder();
-    for (int teacherId : serial.getTeacherIdsList()) {
-      builder.add(program.getTeacher(teacherId));
-    }
-    return teachers = builder.build();
+    return teachers = ProgramObjectSet.create(Lists.transform(serial.getTeacherIdsList(), program
+        .getTeachers()
+        .asLookupFunction()));
   }
 
   public int getEstimatedClassSize() {
@@ -56,12 +56,21 @@ public final class Course extends ProgramObject<Serial.Course> {
 
   public boolean isCompatibleWithTimeBlock(TimeBlock block) {
     checkArgument(program.getTimeBlocks().contains(block));
-    for (Teacher t : getTeachers()) {
-      if (!t.isCompatibleWithTimeBlock(block)) {
-        return false;
-      }
+    return getCompatibleTimeBlocks().contains(block);
+  }
+
+  private transient Set<TimeBlock> compatibleTimeBlocks;
+
+  public Set<TimeBlock> getCompatibleTimeBlocks() {
+    Set<TimeBlock> result = compatibleTimeBlocks;
+    if (result != null) {
+      return result;
     }
-    return true;
+    Set<TimeBlock> blocks = Sets.newHashSet(program.getTimeBlocks());
+    for (Teacher t : getTeachers()) {
+      blocks.retainAll(t.getCompatibleTimeBlocks());
+    }
+    return compatibleTimeBlocks = ImmutableSet.copyOf(blocks);
   }
 
   static Function<Serial.Course, Course> programWrapper(final Program program) {

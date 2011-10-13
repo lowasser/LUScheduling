@@ -6,6 +6,7 @@ import java.util.Set;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 
 /**
  * A room at a LU program in which classes may be scheduled.
@@ -28,21 +29,18 @@ public final class Room extends ProgramObject<org.learningu.scheduling.Serial.Ro
   }
 
   public boolean isCompatibleWithTimeBlock(TimeBlock t) {
-    return getAvailableTimeBlocks().contains(t);
+    return getCompatibleTimeBlocks().contains(t);
   }
 
-  private transient Set<TimeBlock> availableTimeBlocks;
+  private transient Set<TimeBlock> compatibleTimeBlocks;
 
-  public Set<TimeBlock> getAvailableTimeBlocks() {
-    Set<TimeBlock> result = availableTimeBlocks;
+  public Set<TimeBlock> getCompatibleTimeBlocks() {
+    Set<TimeBlock> result = compatibleTimeBlocks;
     if (result != null) {
       return result;
     }
-    ImmutableSet.Builder<TimeBlock> builder = ImmutableSet.builder();
-    for (int blockId : serial.getAvailableBlocksList()) {
-      builder.add(program.getTimeBlock(blockId));
-    }
-    return availableTimeBlocks = builder.build();
+    return compatibleTimeBlocks = ProgramObjectSet.create(Lists.transform(
+        serial.getAvailableBlocksList(), program.getTimeBlocks().asLookupFunction()));
   }
 
   static Function<Serial.Room, Room> programWrapper(final Program program) {

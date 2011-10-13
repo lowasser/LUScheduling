@@ -55,10 +55,7 @@ public final class Program {
 
   private void checkTeachersValid() {
     for (Teacher t : teachers) {
-      for (int block : t.serial.getAvailableBlocksList()) {
-        checkArgument(timeBlocks.containsId(block),
-            "Teacher %s claims to be available at nonexistent time block with ID %s", t, block);
-      }
+      t.getCompatibleTimeBlocks();
     }
   }
 
@@ -67,19 +64,13 @@ public final class Program {
       checkArgument(c.getEstimatedClassSize() <= c.getMaxClassSize(),
           "Class %s has estimated class size %s > max class size %s", c,
           c.getEstimatedClassSize(), c.getMaxClassSize());
-      for (int tId : c.serial.getTeacherIdsList()) {
-        checkArgument(teachers.containsId(tId),
-            "Class %s refers to nonexistent teacher with id %s", c, tId);
-      }
+      c.getTeachers();
     }
   }
 
   private void checkRoomsValid() {
     for (Room r : rooms) {
-      for (int blockId : r.serial.getAvailableBlocksList()) {
-        checkArgument(timeBlocks.containsId(blockId),
-            "Room %s claims to be available at nonexistent time block %s", r, blockId);
-      }
+      r.getCompatibleTimeBlocks();
     }
   }
 
@@ -104,15 +95,19 @@ public final class Program {
     return teachingMap.get(t);
   }
 
-  public Set<Teacher> getTeachers() {
+  public ProgramObjectSet<Teacher> getTeachers() {
     return teachers;
   }
 
-  public Set<TimeBlock> getTimeBlocks() {
+  public ProgramObjectSet<Course> getCourses() {
+    return courses;
+  }
+
+  public ProgramObjectSet<TimeBlock> getTimeBlocks() {
     return timeBlocks;
   }
 
-  public Set<Room> getRooms() {
+  public ProgramObjectSet<Room> getRooms() {
     return rooms;
   }
 
