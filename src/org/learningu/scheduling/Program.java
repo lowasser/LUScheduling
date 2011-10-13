@@ -10,7 +10,6 @@ import java.util.NoSuchElementException;
 
 import javax.annotation.Nullable;
 
-import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -32,7 +31,6 @@ public final class Program {
   private final ImmutableMap<Integer, TimeBlock> timeBlocks;
   private final ImmutableMap<Integer, Room> rooms;
   private final ImmutableSetMultimap<Teacher, Course> teachingMap;
-  private final ImmutableMap<TimeBlock, Integer> timeBlockIndex;
   private final Serial.Program serial;
 
   Program(Serial.Program serial) {
@@ -40,19 +38,8 @@ public final class Program {
     teachers = makeIdMap(Lists.transform(serial.getTeachersList(), Teacher.programWrapper(this)));
     courses = makeIdMap(Lists.transform(serial.getCoursesList(), Course.programWrapper(this)));
     rooms = makeIdMap(Lists.transform(serial.getRoomsList(), Room.programWrapper(this)));
-
-    // initialize timeBlocks
-    List<Serial.TimeBlock> orderedBlocks = orderedTimeBlocks(Maps.uniqueIndex(
-        serial.getTimeBlocksList(), new Function<Serial.TimeBlock, Integer>() {
-
-          @Override
-          public Integer apply(org.learningu.scheduling.Serial.TimeBlock input) {
-            return input.getBlockId();
-          }
-        }));
-    List<TimeBlock> blocks = Lists.transform(orderedBlocks, TimeBlock.programWrapper(this));
-    timeBlocks = makeIdMap(blocks);
-    timeBlockIndex = reverseIndex(blocks);
+    timeBlocks = makeIdMap(Lists.transform(serial.getTimeBlocksList(),
+        TimeBlock.programWrapper(this)));
 
     // initialize teachingMap
     ImmutableSetMultimap.Builder<Teacher, Course> teachingMapBuilder = ImmutableSetMultimap
@@ -105,36 +92,6 @@ public final class Program {
       builder.put(list.get(i), i);
     }
     return builder.build();
-  }
-
-  private static Serial.TimeBlock firstTimeBlock(Map<Integer, Serial.TimeBlock> timeBlocks) {
-    Serial.TimeBlock any = timeBlocks.values().iterator().next();
-    while (any.hasPrevTime()) {
-      any = timeBlocks.get(any.getPrevTime());
-    }
-    return any;
-  }
-
-  private static List<Serial.TimeBlock> orderedTimeBlocks(Map<Integer, Serial.TimeBlock> timeBlocks) {
-    if (timeBlocks.isEmpty()) {
-      return ImmutableList.of();
-    }
-    ImmutableList.Builder<Serial.TimeBlock> builder = ImmutableList.builder();
-    Serial.TimeBlock current = firstTimeBlock(timeBlocks);
-    builder.add(current);
-    checkArgument(!current.hasPrevTime(), "Inconsistent next/prev properties for time block %s",
-        current);
-    while (current.hasNextTime()) {
-      Serial.TimeBlock next = get(timeBlocks, current.getNextTime());
-      checkArgument(next.hasPrevTime() && next.getPrevTime() == current.getBlockId(),
-          "Inconsistent next/prev properties for time blocks %s, %s", current, next);
-      builder.add(next);
-      current = next;
-    }
-    List<Serial.TimeBlock> result = builder.build();
-    checkArgument(result.size() == timeBlocks.size(), "Disconnected time blocks");
-    // TODO: how do we work out MIT-style, multiple-day Splashes?
-    return result;
   }
 
   public Teacher getTeacher(int teacherId) {

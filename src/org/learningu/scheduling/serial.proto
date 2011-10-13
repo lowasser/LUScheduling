@@ -29,8 +29,6 @@ message TimeBlock {
 	// TODO: multi-block class support; multi-day program support
 	required int32 blockId = 1;
 	optional string description = 2;
-	optional int32 nextTime = 3 [default = -1]; // ID number of the next time block
-	optional int32 prevTime = 4 [default = -1]; // ID number of the previous time block
 }
 
 /*
