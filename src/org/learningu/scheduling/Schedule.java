@@ -1,13 +1,8 @@
 package org.learningu.scheduling;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Table;
 
 /**
