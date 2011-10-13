@@ -1,25 +1,16 @@
 package org.learningu.scheduling;
 
 /*
- * A course in an LU program, which may have several sections and teachers.
- * All sections of a course have the same teachers, class sizes, and room requirements.
+ * A course in an LU program.  Courses may have estimated and maximum class sizes,
+ * room requirements, and teachers.
  */
 message Course {
 	required int32 courseId = 1;
 	optional string courseTitle = 2;
 	repeated int32 teacherIds = 3 [packed = true];
-	optional int32 sections = 4 [default = 1];
 	optional int32 estimatedClassSize = 5 [default = 15];
 	optional int32 maxClassSize = 7 [default = 20];
 	repeated int32 roomRequiredProperties = 6;
-}
-
-/**
- * A particular section of some course.
- */
-message Section {
-	required int32 courseId = 1;
-	required int32 sectionId = 2;
 }
 
 /*

@@ -8,8 +8,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.ImmutableSet;
 
 /**
- * A course in an LU program. A course represents all sections of the same class, which are assumed
- * to share the same teachers, classroom requirements, and other details.
+ * A course in an LU program.
  * 
  * @author lowasser
  */
@@ -47,10 +46,6 @@ public final class Course extends ProgramObject<Serial.Course> {
 
   public int getMaxClassSize() {
     return serial.getMaxClassSize();
-  }
-
-  public int getNumberOfSections() {
-    return serial.getSections();
   }
 
   private transient Set<RoomProperty> roomRequiredProperties;
