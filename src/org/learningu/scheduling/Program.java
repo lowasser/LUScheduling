@@ -19,6 +19,13 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.protobuf.TextFormat;
 
+/**
+ * A specification for a LU Splash-type program: all the ``inputs.'' The {@code Program} object is
+ * responsible for combining all the serialized program data into an actual object graph, tracking
+ * associations between IDs and teachers, courses, rooms, etc.
+ * 
+ * @author lowasser
+ */
 public final class Program {
   private final ImmutableMap<Integer, Teacher> teachers;
   private final ImmutableMap<Integer, Course> courses;
@@ -180,7 +187,7 @@ public final class Program {
     }
   }
 
-  private static <T extends HasUID> ImmutableMap<Integer, T> makeIdMap(Collection<T> collection) {
+  private static <T extends ProgramObject<?>> ImmutableMap<Integer, T> makeIdMap(Collection<T> collection) {
     Map<Integer, T> map = Maps.newLinkedHashMap();
     for (T t : collection) {
       set(map, t.getId(), t);

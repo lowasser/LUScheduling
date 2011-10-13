@@ -7,6 +7,11 @@ import java.util.Set;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableSet;
 
+/**
+ * A room at a LU program in which classes may be scheduled.
+ * 
+ * @author lowasser
+ */
 public final class Room extends ProgramObject<org.learningu.scheduling.Serial.Room> {
 
   public Room(Program program, org.learningu.scheduling.Serial.Room serial) {
@@ -49,7 +54,7 @@ public final class Room extends ProgramObject<org.learningu.scheduling.Serial.Ro
     }
     return availableTimeBlocks = builder.build();
   }
-  
+
   static Function<Serial.Room, Room> programWrapper(final Program program) {
     checkNotNull(program);
     return new Function<Serial.Room, Room>() {

@@ -7,6 +7,11 @@ import java.util.Set;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableSet;
 
+/**
+ * A teacher at an LU program.
+ * 
+ * @author lowasser
+ */
 public final class Teacher extends ProgramObject<Serial.Teacher> {
 
   Teacher(Program program, org.learningu.scheduling.Serial.Teacher serial) {

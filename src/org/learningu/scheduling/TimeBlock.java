@@ -4,6 +4,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.base.Function;
 
+/**
+ * A block of time at an LU program, in which a single section of a single course might be
+ * scheduled.
+ * 
+ * @author lowasser
+ */
 public final class TimeBlock extends ProgramObject<Serial.TimeBlock> {
 
   TimeBlock(Program program, org.learningu.scheduling.Serial.TimeBlock serial) {

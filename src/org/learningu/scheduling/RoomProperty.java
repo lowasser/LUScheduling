@@ -4,6 +4,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.base.Function;
 
+/**
+ * A property of a room which makes it suitable for some classes and not others. Examples include
+ * the presence of a blackboard, A/V projector equipment, or dance space.
+ * 
+ * @author lowasser
+ * 
+ */
 public final class RoomProperty extends ProgramObject<Serial.RoomProperty> {
 
   RoomProperty(Program program, org.learningu.scheduling.Serial.RoomProperty serial) {

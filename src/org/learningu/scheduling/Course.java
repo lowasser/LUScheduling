@@ -7,7 +7,16 @@ import java.util.Set;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableSet;
 
+/**
+ * A course in an LU program. A course represents all sections of the same class, which are assumed
+ * to share the same teachers, classroom requirements, and other details.
+ * 
+ * @author lowasser
+ */
 public final class Course extends ProgramObject<Serial.Course> {
+  /*
+   * Features that might be added in the future include: prerequisites, multi-block classes.
+   */
 
   Course(Program program, org.learningu.scheduling.Serial.Course serial) {
     super(program, serial);

@@ -1,7 +1,12 @@
 package org.learningu.scheduling;
+
+/*
+ * A course in an LU program, which may have several sections and teachers.
+ * All sections of a course have the same teachers, class sizes, and room requirements.
+ */
 message Course {
 	required int32 courseId = 1;
-	required string courseTitle = 2;
+	optional string courseTitle = 2;
 	repeated int32 teacherIds = 3 [packed = true];
 	optional int32 sections = 4 [default = 1];
 	optional int32 estimatedClassSize = 5 [default = 15];
@@ -9,24 +14,46 @@ message Course {
 	repeated int32 roomRequiredProperties = 6;
 }
 
+/**
+ * A particular section of some course.
+ */
+message Section {
+	required int32 courseId = 1;
+	required int32 sectionId = 2;
+}
+
+/*
+ * A teacher at an LU program.  Teachers may not be available for all time blocks.
+ */
 message Teacher {
 	required int32 teacherId = 1; // teacher identifier number
 	optional string name = 2; // teacher name
+	optional string email = 4; // email address
 	repeated int32 availableBlocks = 3 [packed = true]; // teacher availability
 }
 
+/*
+ * A block of time at an LU program, during which a single course may be scheduled.
+ */
 message TimeBlock {
+	// TODO: multi-block class support; multi-day program support
 	required int32 blockId = 1;
 	optional string description = 2;
-	optional int32 nextTime = 3 [default = -1];
-	optional int32 prevTime = 4 [default = -1];
+	optional int32 nextTime = 3 [default = -1]; // ID number of the next time block
+	optional int32 prevTime = 4 [default = -1]; // ID number of the previous time block
 }
 
+/*
+ * A property a room might have, for example A/V equipment, or a blackboard.
+ */
 message RoomProperty {
 	required int32 propertyId = 1;
-	required string description = 2;
+	optional string description = 2;
 }
 
+/*
+ * A room at an LU program with possibly some associated properties.
+ */
 message Room {
 	required int32 roomId = 1;
 	optional string building = 2;
@@ -36,13 +63,9 @@ message Room {
 	repeated int32 properties = 4 [packed = true];
 }
 
-message ScheduleAssignment {
-	required int32 course = 1;
-	required int32 section = 4;
-	required int32 timeBlock = 2;
-	required int32 room = 3;
-}
-
+/*
+ * A specification for an entire LU program, from which a schedule must be constructed.
+ */
 message Program {
 	repeated RoomProperty roomProperties = 1;
 	repeated TimeBlock timeBlocks = 2;
