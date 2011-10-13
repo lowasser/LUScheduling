@@ -23,20 +23,6 @@ public final class Room extends ProgramObject<org.learningu.scheduling.Serial.Ro
     return serial.getRoomId();
   }
 
-  private transient Set<RoomProperty> roomProperties;
-
-  public Set<RoomProperty> getRoomProperties() {
-    Set<RoomProperty> result = roomProperties;
-    if (result != null) {
-      return result;
-    }
-    ImmutableSet.Builder<RoomProperty> builder = ImmutableSet.builder();
-    for (int propId : serial.getPropertiesList()) {
-      builder.add(program.getProperty(propId));
-    }
-    return roomProperties = builder.build();
-  }
-
   public int getCapacity() {
     return serial.getCapacity();
   }

@@ -9,8 +9,7 @@ message Course {
 	optional string courseTitle = 2;
 	repeated int32 teacherIds = 3 [packed = true];
 	optional int32 estimatedClassSize = 5 [default = 15];
-	optional int32 maxClassSize = 7 [default = 20];
-	repeated int32 roomRequiredProperties = 6;
+	optional int32 maxClassSize = 6 [default = 20];
 }
 
 /*
@@ -35,32 +34,22 @@ message TimeBlock {
 }
 
 /*
- * A property a room might have, for example A/V equipment, or a blackboard.
- */
-message RoomProperty {
-	required int32 propertyId = 1;
-	optional string description = 2;
-}
-
-/*
  * A room at an LU program with possibly some associated properties.
  */
 message Room {
 	required int32 roomId = 1;
 	optional string building = 2;
 	optional string name = 3;
-	optional int32 capacity = 5 [default = 25];
-	repeated int32 availableBlocks = 6 [packed = true];
-	repeated int32 properties = 4 [packed = true];
+	optional int32 capacity = 4 [default = 25];
+	repeated int32 availableBlocks = 5 [packed = true];
 }
 
 /*
  * A specification for an entire LU program, from which a schedule must be constructed.
  */
 message Program {
-	repeated RoomProperty roomProperties = 1;
-	repeated TimeBlock timeBlocks = 2;
-	repeated Teacher teachers = 4;
+	repeated TimeBlock timeBlocks = 1;
+	repeated Teacher teachers = 2;
 	repeated Course courses = 3;
-	repeated Room rooms = 5;
+	repeated Room rooms = 4;
 }

@@ -48,20 +48,6 @@ public final class Course extends ProgramObject<Serial.Course> {
     return serial.getMaxClassSize();
   }
 
-  private transient Set<RoomProperty> roomRequiredProperties;
-
-  public Set<RoomProperty> getRoomRequiredProperties() {
-    Set<RoomProperty> result = roomRequiredProperties;
-    if (result != null) {
-      return result;
-    }
-    ImmutableSet.Builder<RoomProperty> builder = ImmutableSet.builder();
-    for (int propId : serial.getRoomRequiredPropertiesList()) {
-      builder.add(program.getProperty(propId));
-    }
-    return roomRequiredProperties = builder.build();
-  }
-
   static Function<Serial.Course, Course> programWrapper(final Program program) {
     checkNotNull(program);
     return new Function<Serial.Course, Course>() {

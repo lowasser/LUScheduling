@@ -29,7 +29,6 @@ import com.google.protobuf.TextFormat;
 public final class Program {
   private final ImmutableMap<Integer, Teacher> teachers;
   private final ImmutableMap<Integer, Course> courses;
-  private final ImmutableMap<Integer, RoomProperty> roomProperties;
   private final ImmutableMap<Integer, TimeBlock> timeBlocks;
   private final ImmutableMap<Integer, Room> rooms;
   private final ImmutableSetMultimap<Teacher, Course> teachingMap;
@@ -40,8 +39,6 @@ public final class Program {
     this.serial = checkNotNull(serial);
     teachers = makeIdMap(Lists.transform(serial.getTeachersList(), Teacher.programWrapper(this)));
     courses = makeIdMap(Lists.transform(serial.getCoursesList(), Course.programWrapper(this)));
-    roomProperties = makeIdMap(Lists.transform(serial.getRoomPropertiesList(),
-        RoomProperty.programWrapper(this)));
     rooms = makeIdMap(Lists.transform(serial.getRoomsList(), Room.programWrapper(this)));
 
     // initialize timeBlocks
@@ -86,10 +83,6 @@ public final class Program {
       checkArgument(c.getEstimatedClassSize() <= c.getMaxClassSize(),
           "Class %s has estimated class size %s > max class size %s", c,
           c.getEstimatedClassSize(), c.getMaxClassSize());
-      for (int resId : c.serial.getRoomRequiredPropertiesList()) {
-        checkArgument(roomProperties.containsKey(resId),
-            "Class %s refers to nonexistent room property with id %s", c, resId);
-      }
       for (int tId : c.serial.getTeacherIdsList()) {
         checkArgument(teachers.containsKey(tId),
             "Class %s refers to nonexistent teacher with id %s", c, tId);
@@ -102,10 +95,6 @@ public final class Program {
       for (int blockId : r.serial.getAvailableBlocksList()) {
         checkArgument(timeBlocks.containsKey(blockId),
             "Room %s claims to be available at nonexistent time block %s", r, blockId);
-      }
-      for (int resId : r.serial.getPropertiesList()) {
-        checkArgument(roomProperties.containsKey(resId),
-            "Room %s claims to have nonexistent room property %s", r, resId);
       }
     }
   }
@@ -156,10 +145,6 @@ public final class Program {
     return get(courses, courseId);
   }
 
-  public RoomProperty getProperty(int propId) {
-    return get(roomProperties, propId);
-  }
-
   public TimeBlock getTimeBlock(int blockId) {
     return get(timeBlocks, blockId);
   }
@@ -203,7 +188,7 @@ public final class Program {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(teachers, rooms, courses, roomProperties, timeBlocks);
+    return Objects.hashCode(teachers, rooms, courses, timeBlocks);
   }
 
   @Override
@@ -211,8 +196,7 @@ public final class Program {
     if (obj instanceof Program) {
       Program other = (Program) obj;
       return teachers.equals(other.teachers) && rooms.equals(other.rooms)
-          && courses.equals(other.courses) && roomProperties.equals(other.roomProperties)
-          && timeBlocks.equals(other.timeBlocks);
+          && courses.equals(other.courses) && timeBlocks.equals(other.timeBlocks);
     }
     return false;
   }
