@@ -86,9 +86,6 @@ public final class Program {
       checkArgument(c.getEstimatedClassSize() <= c.getMaxClassSize(),
           "Class %s has estimated class size %s > max class size %s", c,
           c.getEstimatedClassSize(), c.getMaxClassSize());
-      checkArgument(c.getNumberOfSections() <= timeBlocks.size(),
-          "Class %s wants to schedule more (%s) sections than there are time blocks (%s)", c,
-          c.getNumberOfSections(), timeBlocks.size());
       for (int resId : c.serial.getRoomRequiredPropertiesList()) {
         checkArgument(roomProperties.containsKey(resId),
             "Class %s refers to nonexistent room property with id %s", c, resId);
@@ -187,7 +184,8 @@ public final class Program {
     }
   }
 
-  private static <T extends ProgramObject<?>> ImmutableMap<Integer, T> makeIdMap(Collection<T> collection) {
+  private static <T extends ProgramObject<?>> ImmutableMap<Integer, T> makeIdMap(
+      Collection<T> collection) {
     Map<Integer, T> map = Maps.newLinkedHashMap();
     for (T t : collection) {
       set(map, t.getId(), t);
