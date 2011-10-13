@@ -4,7 +4,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -87,14 +86,6 @@ public final class Program {
     }
   }
 
-  private static <E> ImmutableMap<E, Integer> reverseIndex(List<E> list) {
-    ImmutableMap.Builder<E, Integer> builder = ImmutableMap.builder();
-    for (int i = 0; i < list.size(); i++) {
-      builder.put(list.get(i), i);
-    }
-    return builder.build();
-  }
-
   public Teacher getTeacher(int teacherId) {
     return get(teachers, teacherId);
   }
@@ -109,6 +100,11 @@ public final class Program {
 
   public Room getRoom(int roomId) {
     return get(rooms, roomId);
+  }
+
+  public Set<Course> getCoursesForTeacher(Teacher t) {
+    checkArgument(getTeachers().contains(t));
+    return teachingMap.get(t);
   }
 
   private static <T> T get(Map<Integer, T> map, int key) {
