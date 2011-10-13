@@ -60,3 +60,10 @@ message ScheduleAssignment {
 	required int32 roomId = 2;
 	required int32 courseId = 3;
 }
+
+/*
+ * An entire schedule for an LU program.
+ */
+message Schedule {
+	repeated ScheduleAssignment assignments = 1;
+}
