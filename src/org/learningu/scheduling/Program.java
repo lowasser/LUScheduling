@@ -7,11 +7,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 import javax.annotation.Nullable;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ForwardingCollection;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Lists;
@@ -135,12 +136,75 @@ public final class Program {
     return ImmutableMap.copyOf(map);
   }
 
-  public List<Teacher> getTeachers() {
-    return teachers.values().asList();
+  private transient Set<Teacher> teacherSet;
+
+  public Set<Teacher> getTeachers() {
+    Set<Teacher> result = teacherSet;
+    return (result == null) ? teacherSet = new UniqueSet<Teacher>(teachers) : result;
   }
 
-  public List<TimeBlock> getTimeBlocks() {
-    return timeBlocks.values().asList();
+  private transient Set<TimeBlock> timeBlockSet;
+
+  public Set<TimeBlock> getTimeBlocks() {
+    Set<TimeBlock> result = timeBlockSet;
+    return (result == null) ? timeBlockSet = new UniqueSet<TimeBlock>(timeBlocks) : result;
+  }
+
+  private transient Set<Room> roomSet;
+
+  public Set<Room> getRooms() {
+    Set<Room> result = roomSet;
+    return (result == null) ? roomSet = new UniqueSet<Room>(rooms) : result;
+  }
+
+  /**
+   * The values of a Map<Integer, ProgramObject> map are unique. View them as a set.
+   */
+  private static final class UniqueSet<T extends ProgramObject<?>> extends ForwardingCollection<T>
+      implements Set<T> {
+    private final Map<Integer, T> idMap;
+
+    UniqueSet(Map<Integer, T> idMap) {
+      this.idMap = idMap;
+    }
+
+    @Override
+    public boolean contains(@Nullable Object object) {
+      if (object instanceof ProgramObject) {
+        ProgramObject<?> other = (ProgramObject<?>) object;
+        T lookup = idMap.get(other.getId());
+        return lookup != null && lookup.equals(object);
+      }
+      return false;
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> collection) {
+      return standardContainsAll(collection);
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 0;
+      for (T t : this) {
+        hashCode += t.hashCode();
+      }
+      return hashCode;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+      if (obj instanceof Set) {
+        Set<?> other = (Set<?>) obj;
+        return size() == other.size() && containsAll(other);
+      }
+      return false;
+    }
+
+    @Override
+    protected Collection<T> delegate() {
+      return idMap.values();
+    }
   }
 
   @Override

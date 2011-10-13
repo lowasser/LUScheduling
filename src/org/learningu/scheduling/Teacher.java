@@ -1,5 +1,6 @@
 package org.learningu.scheduling;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Set;
@@ -21,6 +22,11 @@ public final class Teacher extends ProgramObject<Serial.Teacher> {
   @Override
   public int getId() {
     return serial.getTeacherId();
+  }
+
+  public boolean isCompatibleWithTimeBlock(TimeBlock block) {
+    checkArgument(program.getTimeBlocks().contains(block));
+    return getAvailableTimeBlocks().contains(block);
   }
 
   static Function<Serial.Teacher, Teacher> programWrapper(final Program program) {

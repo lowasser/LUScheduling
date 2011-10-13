@@ -1,5 +1,6 @@
 package org.learningu.scheduling;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Set;
@@ -46,6 +47,21 @@ public final class Course extends ProgramObject<Serial.Course> {
 
   public int getMaxClassSize() {
     return serial.getMaxClassSize();
+  }
+
+  public boolean isCompatibleWithRoom(Room room) {
+    checkArgument(program.getRooms().contains(room));
+    return getMaxClassSize() <= room.getCapacity();
+  }
+
+  public boolean isCompatibleWithTimeBlock(TimeBlock block) {
+    checkArgument(program.getTimeBlocks().contains(block));
+    for (Teacher t : getTeachers()) {
+      if (!t.isCompatibleWithTimeBlock(block)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   static Function<Serial.Course, Course> programWrapper(final Program program) {
