@@ -134,6 +134,36 @@ public class ProgramTest extends TestCase {
     }
   }
 
+  public void testThrowsOnSkippedNextPrev() {
+    Serial.TimeBlock block1 = Serial.TimeBlock
+        .newBuilder()
+        .setBlockId(5)
+        .setDescription("10-11AM")
+        .setNextTime(6)
+        .build();
+    Serial.TimeBlock block2 = Serial.TimeBlock
+        .newBuilder()
+        .setBlockId(6)
+        .setPrevTime(5)
+        .setDescription("11-12PM")
+        .build();
+    Serial.TimeBlock block3 = Serial.TimeBlock
+        .newBuilder()
+        .setBlockId(7)
+        .setDescription("12-1PM")
+        .build();
+    Serial.Program p = Serial.Program
+        .newBuilder()
+        .addAllTimeBlocks(Arrays.asList(block2, block1, block3))
+        .build();
+
+    try {
+      new Program(p);
+      fail("Expected IAE");
+    } catch (IllegalArgumentException expected) {
+    }
+  }
+
   <T extends Message> void assertProgObjEquals(T expected, ProgramObject<T> actual) {
     assertEquals(
         "Expected: " + TextFormat.printToString(expected) + "\nActual: "

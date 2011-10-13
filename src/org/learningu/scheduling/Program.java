@@ -59,6 +59,51 @@ public final class Program {
       }
     }
     teachingMap = teachingMapBuilder.build();
+
+    checkTeachersValid();
+    checkCoursesValid();
+    checkRoomsValid();
+  }
+
+  private void checkTeachersValid() {
+    for (Teacher t : teachers.values()) {
+      for (int block : t.serial.getAvailableBlocksList()) {
+        checkArgument(timeBlocks.containsKey(block),
+            "Teacher %s claims to be available at nonexistent time block with ID %s", t, block);
+      }
+    }
+  }
+
+  private void checkCoursesValid() {
+    for (Course c : courses.values()) {
+      checkArgument(c.getEstimatedClassSize() <= c.getMaxClassSize(),
+          "Class %s has estimated class size %s > max class size %s", c,
+          c.getEstimatedClassSize(), c.getMaxClassSize());
+      checkArgument(c.getNumberOfSections() <= timeBlocks.size(),
+          "Class %s wants to schedule more (%s) sections than there are time blocks (%s)", c,
+          c.getNumberOfSections(), timeBlocks.size());
+      for (int resId : c.serial.getRoomRequiredPropertiesList()) {
+        checkArgument(roomProperties.containsKey(resId),
+            "Class %s refers to nonexistent room property with id %s", c, resId);
+      }
+      for (int tId : c.serial.getTeacherIdsList()) {
+        checkArgument(teachers.containsKey(tId),
+            "Class %s refers to nonexistent teacher with id %s", c, tId);
+      }
+    }
+  }
+
+  private void checkRoomsValid() {
+    for (Room r : rooms.values()) {
+      for (int blockId : r.serial.getAvailableBlocksList()) {
+        checkArgument(timeBlocks.containsKey(blockId),
+            "Room %s claims to be available at nonexistent time block %s", r, blockId);
+      }
+      for (int resId : r.serial.getPropertiesList()) {
+        checkArgument(roomProperties.containsKey(resId),
+            "Room %s claims to have nonexistent room property %s", r, resId);
+      }
+    }
   }
 
   private static <E> ImmutableMap<E, Integer> reverseIndex(List<E> list) {
@@ -84,15 +129,18 @@ public final class Program {
     ImmutableList.Builder<Serial.TimeBlock> builder = ImmutableList.builder();
     Serial.TimeBlock current = firstTimeBlock(timeBlocks);
     builder.add(current);
-    checkArgument(!current.hasPrevTime());
+    checkArgument(!current.hasPrevTime(), "Inconsistent next/prev properties for time block %s",
+        current);
     while (current.hasNextTime()) {
       Serial.TimeBlock next = get(timeBlocks, current.getNextTime());
-      checkArgument(next.hasPrevTime() && next.getPrevTime() == current.getBlockId());
+      checkArgument(next.hasPrevTime() && next.getPrevTime() == current.getBlockId(),
+          "Inconsistent next/prev properties for time blocks %s, %s", current, next);
       builder.add(next);
       current = next;
     }
     List<Serial.TimeBlock> result = builder.build();
-    checkArgument(result.size() == timeBlocks.size());
+    checkArgument(result.size() == timeBlocks.size(), "Disconnected time blocks");
+    // TODO: how do we work out MIT-style, multiple-day Splashes?
     return result;
   }
 
