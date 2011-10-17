@@ -5,7 +5,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.Set;
 
 import com.google.common.base.Function;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 
 /**
@@ -28,6 +27,10 @@ public final class Room extends ProgramObject<org.learningu.scheduling.Serial.Ro
     return serial.getCapacity();
   }
 
+  public String getName() {
+    return serial.getName();
+  }
+
   private transient Set<TimeBlock> compatibleTimeBlocks;
 
   public Set<TimeBlock> getCompatibleTimeBlocks() {
@@ -35,8 +38,13 @@ public final class Room extends ProgramObject<org.learningu.scheduling.Serial.Ro
     if (result != null) {
       return result;
     }
-    return compatibleTimeBlocks = ProgramObjectSet.create(Lists.transform(
-        serial.getAvailableBlocksList(), program.getTimeBlocks().asLookupFunction()));
+    return compatibleTimeBlocks = ProgramObjectSet.create(Lists.transform(serial.getAvailableBlocksList(),
+        program.getTimeBlocks().asLookupFunction()));
+  }
+
+  @Override
+  public String toString() {
+    return serial.hasName() ? getName() : super.toString();
   }
 
   static Function<Serial.Room, Room> programWrapper(final Program program) {

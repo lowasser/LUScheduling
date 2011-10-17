@@ -1,14 +1,11 @@
 package org.learningu.scheduling;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Set;
 
 import com.google.common.base.Function;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 /**
  * A course in an LU program.
@@ -29,6 +26,10 @@ public final class Course extends ProgramObject<Serial.Course> {
     return serial.getCourseId();
   }
 
+  public String getTitle() {
+    return serial.getCourseTitle();
+  }
+
   private transient Set<Teacher> teachers;
 
   public Set<Teacher> getTeachers() {
@@ -36,9 +37,8 @@ public final class Course extends ProgramObject<Serial.Course> {
     if (result != null) {
       return result;
     }
-    return teachers = ProgramObjectSet.create(Lists.transform(serial.getTeacherIdsList(), program
-        .getTeachers()
-        .asLookupFunction()));
+    return teachers = ProgramObjectSet.create(Lists.transform(serial.getTeacherIdsList(),
+        program.getTeachers().asLookupFunction()));
   }
 
   public int getEstimatedClassSize() {
@@ -47,6 +47,11 @@ public final class Course extends ProgramObject<Serial.Course> {
 
   public int getMaxClassSize() {
     return serial.getMaxClassSize();
+  }
+
+  @Override
+  public String toString() {
+    return serial.hasCourseTitle() ? getTitle() : super.toString();
   }
 
   static Function<Serial.Course, Course> programWrapper(final Program program) {

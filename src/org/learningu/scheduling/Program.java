@@ -125,6 +125,10 @@ public final class Program {
     }
     return false;
   }
+  
+  public String getName(){
+    return serial.getName();
+  }
 
   @Override
   public String toString() {

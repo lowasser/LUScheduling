@@ -21,6 +21,19 @@ public final class TimeBlock extends ProgramObject<Serial.TimeBlock> {
     return serial.getBlockId();
   }
 
+  public String getDescription() {
+    return serial.getDescription();
+  }
+
+  @Override
+  public String toString() {
+    if (serial.hasDescription()) {
+      return getDescription();
+    } else {
+      return super.toString();
+    }
+  }
+
   static Function<Serial.TimeBlock, TimeBlock> programWrapper(final Program program) {
     checkNotNull(program);
     return new Function<Serial.TimeBlock, TimeBlock>() {
