@@ -49,30 +49,6 @@ public final class Course extends ProgramObject<Serial.Course> {
     return serial.getMaxClassSize();
   }
 
-  public boolean isCompatibleWithRoom(Room room) {
-    checkArgument(program.getRooms().contains(room));
-    return getMaxClassSize() <= room.getCapacity();
-  }
-
-  public boolean isCompatibleWithTimeBlock(TimeBlock block) {
-    checkArgument(program.getTimeBlocks().contains(block));
-    return getCompatibleTimeBlocks().contains(block);
-  }
-
-  private transient Set<TimeBlock> compatibleTimeBlocks;
-
-  public Set<TimeBlock> getCompatibleTimeBlocks() {
-    Set<TimeBlock> result = compatibleTimeBlocks;
-    if (result != null) {
-      return result;
-    }
-    Set<TimeBlock> blocks = Sets.newHashSet(program.getTimeBlocks());
-    for (Teacher t : getTeachers()) {
-      blocks.retainAll(t.getCompatibleTimeBlocks());
-    }
-    return compatibleTimeBlocks = ImmutableSet.copyOf(blocks);
-  }
-
   static Function<Serial.Course, Course> programWrapper(final Program program) {
     checkNotNull(program);
     return new Function<Serial.Course, Course>() {

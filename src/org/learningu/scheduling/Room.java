@@ -28,10 +28,6 @@ public final class Room extends ProgramObject<org.learningu.scheduling.Serial.Ro
     return serial.getCapacity();
   }
 
-  public boolean isCompatibleWithTimeBlock(TimeBlock t) {
-    return getCompatibleTimeBlocks().contains(t);
-  }
-
   private transient Set<TimeBlock> compatibleTimeBlocks;
 
   public Set<TimeBlock> getCompatibleTimeBlocks() {

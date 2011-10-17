@@ -24,11 +24,6 @@ public final class Teacher extends ProgramObject<Serial.Teacher> {
     return serial.getTeacherId();
   }
 
-  public boolean isCompatibleWithTimeBlock(TimeBlock block) {
-    checkArgument(program.getTimeBlocks().contains(block));
-    return getCompatibleTimeBlocks().contains(block);
-  }
-
   static Function<Serial.Teacher, Teacher> programWrapper(final Program program) {
     checkNotNull(program);
     return new Function<Serial.Teacher, Teacher>() {
