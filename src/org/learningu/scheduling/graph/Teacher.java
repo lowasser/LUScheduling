@@ -1,4 +1,4 @@
-package org.learningu.scheduling;
+package org.learningu.scheduling.graph;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -14,7 +14,7 @@ import com.google.common.collect.Lists;
  */
 public final class Teacher extends ProgramObject<Serial.Teacher> {
 
-  Teacher(Program program, org.learningu.scheduling.Serial.Teacher serial) {
+  Teacher(Program program, Serial.Teacher serial) {
     super(program, serial);
   }
 
@@ -42,7 +42,7 @@ public final class Teacher extends ProgramObject<Serial.Teacher> {
     checkNotNull(program);
     return new Function<Serial.Teacher, Teacher>() {
       @Override
-      public Teacher apply(org.learningu.scheduling.Serial.Teacher input) {
+      public Teacher apply(Serial.Teacher input) {
         return new Teacher(program, input);
       }
     };

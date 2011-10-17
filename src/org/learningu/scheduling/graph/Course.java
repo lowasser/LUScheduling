@@ -1,4 +1,4 @@
-package org.learningu.scheduling;
+package org.learningu.scheduling.graph;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -17,7 +17,7 @@ public final class Course extends ProgramObject<Serial.Course> {
    * Features that might be added in the future include: prerequisites, multi-block classes.
    */
 
-  Course(Program program, org.learningu.scheduling.Serial.Course serial) {
+  Course(Program program, Serial.Course serial) {
     super(program, serial);
   }
 
@@ -53,7 +53,7 @@ public final class Course extends ProgramObject<Serial.Course> {
     checkNotNull(program);
     return new Function<Serial.Course, Course>() {
       @Override
-      public Course apply(org.learningu.scheduling.Serial.Course input) {
+      public Course apply(Serial.Course input) {
         return new Course(program, input);
       }
     };

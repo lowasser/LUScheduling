@@ -5,6 +5,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Set;
 
+import org.learningu.scheduling.graph.Course;
+import org.learningu.scheduling.graph.Program;
+import org.learningu.scheduling.graph.ProgramObject;
+import org.learningu.scheduling.graph.Room;
+import org.learningu.scheduling.graph.Teacher;
+import org.learningu.scheduling.graph.TimeBlock;
+
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -85,6 +92,6 @@ public class Scheduler {
   }
 
   private void checkProgram(ProgramObject<?> obj) {
-    checkArgument(obj.program == program);
+    checkArgument(program == obj.getProgram());
   }
 }

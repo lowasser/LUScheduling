@@ -4,6 +4,13 @@ import java.util.Arrays;
 
 import junit.framework.TestCase;
 
+import org.learningu.scheduling.graph.Course;
+import org.learningu.scheduling.graph.Program;
+import org.learningu.scheduling.graph.Room;
+import org.learningu.scheduling.graph.Serial;
+import org.learningu.scheduling.graph.Teacher;
+import org.learningu.scheduling.graph.TimeBlock;
+
 import com.google.common.primitives.Ints;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;

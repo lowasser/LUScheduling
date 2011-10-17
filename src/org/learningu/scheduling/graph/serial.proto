@@ -1,4 +1,4 @@
-package org.learningu.scheduling;
+package org.learningu.scheduling.graph;
 
 /*
  * A course in an LU program.  Courses may have estimated and maximum class sizes,

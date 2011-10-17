@@ -1,4 +1,4 @@
-package org.learningu.scheduling;
+package org.learningu.scheduling.graph;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -12,9 +12,9 @@ import com.google.common.collect.Lists;
  * 
  * @author lowasser
  */
-public final class Room extends ProgramObject<org.learningu.scheduling.Serial.Room> {
+public final class Room extends ProgramObject<Serial.Room> {
 
-  public Room(Program program, org.learningu.scheduling.Serial.Room serial) {
+  public Room(Program program, Serial.Room serial) {
     super(program, serial);
   }
 
@@ -46,7 +46,7 @@ public final class Room extends ProgramObject<org.learningu.scheduling.Serial.Ro
     checkNotNull(program);
     return new Function<Serial.Room, Room>() {
       @Override
-      public Room apply(org.learningu.scheduling.Serial.Room input) {
+      public Room apply(Serial.Room input) {
         return new Room(program, input);
       }
     };

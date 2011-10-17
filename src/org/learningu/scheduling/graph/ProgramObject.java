@@ -1,4 +1,4 @@
-package org.learningu.scheduling;
+package org.learningu.scheduling.graph;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -23,7 +23,7 @@ import com.google.protobuf.TextFormat;
  * 
  * @author lowasser
  */
-abstract class ProgramObject<T extends Message & MessageOrBuilder> {
+public abstract class ProgramObject<T extends Message & MessageOrBuilder> {
   final Program program;
   final T serial;
 
@@ -41,6 +41,10 @@ abstract class ProgramObject<T extends Message & MessageOrBuilder> {
   @Override
   public int hashCode() {
     return getId();
+  }
+  
+  public Program getProgram() {
+    return program;
   }
 
   @Override
