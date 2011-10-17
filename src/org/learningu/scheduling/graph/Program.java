@@ -1,4 +1,4 @@
-package org.learningu.scheduling;
+package org.learningu.scheduling.graph;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -27,7 +27,7 @@ public final class Program {
   private final ImmutableSetMultimap<Teacher, Course> teachingMap;
   private final Serial.Program serial;
 
-  Program(Serial.Program serial) {
+  public Program(Serial.Program serial) {
     this.serial = checkNotNull(serial);
     teachers = ProgramObjectSet.create(Lists.transform(serial.getTeachersList(),
         Teacher.programWrapper(this)));
@@ -124,6 +124,10 @@ public final class Program {
           && courses.equals(other.courses) && timeBlocks.equals(other.timeBlocks);
     }
     return false;
+  }
+  
+  public String getName(){
+    return serial.getName();
   }
 
   @Override

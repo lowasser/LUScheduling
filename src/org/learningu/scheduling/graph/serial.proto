@@ -1,4 +1,4 @@
-package org.learningu.scheduling;
+package org.learningu.scheduling.graph;
 
 /*
  * A course in an LU program.  Courses may have estimated and maximum class sizes,
@@ -18,7 +18,6 @@ message Course {
 message Teacher {
 	required int32 teacherId = 1; // teacher identifier number
 	optional string name = 2; // teacher name
-	optional string email = 4; // email address
 	repeated int32 availableBlocks = 3 [packed = true]; // teacher availability
 }
 
@@ -36,7 +35,6 @@ message TimeBlock {
  */
 message Room {
 	required int32 roomId = 1;
-	optional string building = 2;
 	optional string name = 3;
 	optional int32 capacity = 4 [default = 25];
 	repeated int32 availableBlocks = 5 [packed = true];
@@ -46,6 +44,7 @@ message Room {
  * A specification for an entire LU program, from which a schedule must be constructed.
  */
 message Program {
+	optional string name = 5 [default = ""];
 	repeated TimeBlock timeBlocks = 1;
 	repeated Teacher teachers = 2;
 	repeated Course courses = 3;
