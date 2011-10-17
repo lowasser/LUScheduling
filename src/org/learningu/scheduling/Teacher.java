@@ -23,14 +23,9 @@ public final class Teacher extends ProgramObject<Serial.Teacher> {
     return serial.getTeacherId();
   }
 
-  private transient Set<TimeBlock> compatibleTimeBlocks;
-
+  // Does not cache!
   public Set<TimeBlock> getCompatibleTimeBlocks() {
-    Set<TimeBlock> result = compatibleTimeBlocks;
-    if (result != null) {
-      return result;
-    }
-    return compatibleTimeBlocks = ProgramObjectSet.create(Lists.transform(
+    return ProgramObjectSet.create(Lists.transform(
         serial.getAvailableBlocksList(), program.getTimeBlocks().asLookupFunction()));
   }
 

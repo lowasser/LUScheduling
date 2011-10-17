@@ -47,7 +47,7 @@ abstract class ProgramObject<T extends Message & MessageOrBuilder> {
   public boolean equals(@Nullable Object obj) {
     if (obj instanceof ProgramObject) {
       ProgramObject<?> other = (ProgramObject<?>) obj;
-      return getId() == other.getId() && serial.getAllFields().equals(other.serial.getAllFields());
+      return program == other.program && getId() == other.getId() && getClass().equals(other.getClass());
     }
     return false;
   }

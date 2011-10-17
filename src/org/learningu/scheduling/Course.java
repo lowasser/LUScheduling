@@ -30,14 +30,9 @@ public final class Course extends ProgramObject<Serial.Course> {
     return serial.getCourseTitle();
   }
 
-  private transient Set<Teacher> teachers;
-
+  // Does not cache!
   public Set<Teacher> getTeachers() {
-    Set<Teacher> result = teachers;
-    if (result != null) {
-      return result;
-    }
-    return teachers = ProgramObjectSet.create(Lists.transform(serial.getTeacherIdsList(),
+    return ProgramObjectSet.create(Lists.transform(serial.getTeacherIdsList(),
         program.getTeachers().asLookupFunction()));
   }
 

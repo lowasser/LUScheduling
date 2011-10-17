@@ -31,14 +31,9 @@ public final class Room extends ProgramObject<org.learningu.scheduling.Serial.Ro
     return serial.getName();
   }
 
-  private transient Set<TimeBlock> compatibleTimeBlocks;
-
+  // Does not cache!
   public Set<TimeBlock> getCompatibleTimeBlocks() {
-    Set<TimeBlock> result = compatibleTimeBlocks;
-    if (result != null) {
-      return result;
-    }
-    return compatibleTimeBlocks = ProgramObjectSet.create(Lists.transform(serial.getAvailableBlocksList(),
+    return ProgramObjectSet.create(Lists.transform(serial.getAvailableBlocksList(),
         program.getTimeBlocks().asLookupFunction()));
   }
 
