@@ -19,7 +19,7 @@ public final class StandardAcceptanceFunction implements AcceptanceFunction {
     if (newScore >= originalScore) {
       return true;
     }
-    double probability = Math.exp((originalScore - newScore) / temperature);
+    double probability = Math.exp((newScore - originalScore) / temperature);
     return random.nextLong() < probability;
   }
 }
