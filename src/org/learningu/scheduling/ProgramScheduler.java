@@ -23,13 +23,13 @@ import com.google.common.collect.Sets;
  * 
  * @author lowasser
  */
-public class Scheduler {
+public class ProgramScheduler {
   private final Cache<Course, Set<TimeBlock>> courseCompatibleBlocks;
   private final Cache<Room, Set<TimeBlock>> roomAvailableBlocks;
   private final Cache<Teacher, Set<TimeBlock>> teacherAvailableBlocks;
   private final Program program;
 
-  public Scheduler(final Program program) {
+  public ProgramScheduler(final Program program) {
     this.program = checkNotNull(program);
     this.teacherAvailableBlocks = CacheBuilder
         .newBuilder()

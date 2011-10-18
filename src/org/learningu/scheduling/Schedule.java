@@ -8,7 +8,7 @@ import org.learningu.scheduling.graph.TimeBlock;
 import com.google.common.collect.Table;
 
 public abstract class Schedule {
-  public abstract Scheduler getScheduler();
+  public abstract ProgramScheduler getScheduler();
 
   public Program getProgram() {
     return getScheduler().getProgram();
