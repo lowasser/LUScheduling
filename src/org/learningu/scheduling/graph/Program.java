@@ -20,10 +20,10 @@ import com.google.protobuf.TextFormat;
  * @author lowasser
  */
 public final class Program {
-  private final ProgramObjectSet<Teacher> teachers;
-  private final ProgramObjectSet<Course> courses;
-  private final ProgramObjectSet<TimeBlock> timeBlocks;
-  private final ProgramObjectSet<Room> rooms;
+  final ProgramObjectSet<Teacher> teachers;
+  final ProgramObjectSet<Course> courses;
+  final ProgramObjectSet<TimeBlock> timeBlocks;
+  final ProgramObjectSet<Room> rooms;
   private final ImmutableSetMultimap<Teacher, Course> teachingMap;
   private final Serial.Program serial;
 
@@ -95,19 +95,19 @@ public final class Program {
     return teachingMap.get(t);
   }
 
-  public ProgramObjectSet<Teacher> getTeachers() {
+  public Set<Teacher> getTeachers() {
     return teachers;
   }
 
-  public ProgramObjectSet<Course> getCourses() {
+  public Set<Course> getCourses() {
     return courses;
   }
 
-  public ProgramObjectSet<TimeBlock> getTimeBlocks() {
+  public Set<TimeBlock> getTimeBlocks() {
     return timeBlocks;
   }
 
-  public ProgramObjectSet<Room> getRooms() {
+  public Set<Room> getRooms() {
     return rooms;
   }
 

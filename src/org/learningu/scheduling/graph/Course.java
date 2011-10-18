@@ -33,7 +33,7 @@ public final class Course extends ProgramObject<Serial.Course> {
   // Does not cache!
   public Set<Teacher> getTeachers() {
     return ProgramObjectSet.create(Lists.transform(serial.getTeacherIdsList(),
-        program.getTeachers().asLookupFunction()));
+        program.teachers.asLookupFunction()));
   }
 
   public int getEstimatedClassSize() {
