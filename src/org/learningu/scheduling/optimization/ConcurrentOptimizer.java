@@ -31,9 +31,9 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
   private double bestScore;
 
   @Inject
-  ConcurrentOptimizer(Scorer<T> scorer, @Named("initial") T initial,
-      OptimizerFactory<T> optFactory, @Named("nThreads") int nThreads,
-      @Named("concurrentIterations") int nIterations, ExecutorService service) {
+  ConcurrentOptimizer(Scorer<T> scorer, @Named("Initial") T initial,
+      OptimizerFactory<T> optFactory, @Named("NumThreads") int nThreads,
+      @Named("ConcurrentIterations") int nIterations, ExecutorService service) {
     this.scorer = checkNotNull(scorer);
     this.service = checkNotNull(service);
     ImmutableList.Builder<Optimizer<T>> builder = ImmutableList.builder();

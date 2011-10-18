@@ -25,7 +25,7 @@ public final class Annealer<T> implements Optimizer<T> {
 
   @Inject
   Annealer(Perturber<T> perturber, Scorer<T> scorer, TemperatureFunction tempFun,
-      AcceptanceFunction acceptFun, @Named("initial") T initial) {
+      AcceptanceFunction acceptFun, @Named("Initial") T initial) {
     this.perturber = checkNotNull(perturber);
     this.scorer = checkNotNull(scorer);
     this.tempFun = checkNotNull(tempFun);
