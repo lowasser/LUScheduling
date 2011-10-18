@@ -31,7 +31,8 @@ public class Scheduler {
 
   public Scheduler(final Program program) {
     this.program = checkNotNull(program);
-    this.teacherAvailableBlocks = CacheBuilder.newBuilder()
+    this.teacherAvailableBlocks = CacheBuilder
+        .newBuilder()
         .softValues()
         .build(new CacheLoader<Teacher, Set<TimeBlock>>() {
           @Override
@@ -39,7 +40,8 @@ public class Scheduler {
             return teacher.getCompatibleTimeBlocks();
           }
         });
-    this.roomAvailableBlocks = CacheBuilder.newBuilder()
+    this.roomAvailableBlocks = CacheBuilder
+        .newBuilder()
         .softValues()
         .build(new CacheLoader<Room, Set<TimeBlock>>() {
           @Override
@@ -47,7 +49,8 @@ public class Scheduler {
             return room.getCompatibleTimeBlocks();
           }
         });
-    this.courseCompatibleBlocks = CacheBuilder.newBuilder()
+    this.courseCompatibleBlocks = CacheBuilder
+        .newBuilder()
         .softValues()
         .build(new CacheLoader<Course, Set<TimeBlock>>() {
           @Override
@@ -59,6 +62,16 @@ public class Scheduler {
             return ImmutableSet.copyOf(compatibleBlocks);
           }
         });
+  }
+
+  public Program getProgram() {
+    return program;
+  }
+
+  public boolean isCompatible(Teacher teacher, TimeBlock block) {
+    checkProgram(teacher);
+    checkProgram(block);
+    return teacherAvailableBlocks.getUnchecked(teacher).contains(block);
   }
 
   public boolean isCompatible(Course course, TimeBlock block) {
@@ -77,18 +90,6 @@ public class Scheduler {
     checkProgram(room);
     checkProgram(block);
     return roomAvailableBlocks.getUnchecked(room).contains(block);
-  }
-
-  public boolean isCompatible(Room room, Course course) {
-    return isCompatible(course, room);
-  }
-
-  public boolean isCompatible(TimeBlock block, Room room) {
-    return isCompatible(room, block);
-  }
-
-  public boolean isCompatible(TimeBlock block, Course course) {
-    return isCompatible(course, block);
   }
 
   private void checkProgram(ProgramObject<?> obj) {

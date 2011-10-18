@@ -1,35 +1,18 @@
 package org.learningu.scheduling;
 
-import java.util.Collections;
-import java.util.Map;
+import org.learningu.scheduling.graph.Course;
+import org.learningu.scheduling.graph.Program;
+import org.learningu.scheduling.graph.Room;
+import org.learningu.scheduling.graph.TimeBlock;
 
 import com.google.common.collect.Table;
 
-/**
- * A (potentially mutable) view of a schedule at an LU program.
- * 
- * @author lowasser
- */
 public abstract class Schedule {
-  public abstract Program getProgram();
+  public abstract Scheduler getScheduler();
 
-  protected abstract Table<TimeBlock, Room, ScheduleAssignment> getScheduleTable();
-
-  public abstract Map<Course, ScheduleAssignment> getAssignmentsForCourses();
-
-  public Map<Room, ScheduleAssignment> getAssignmentsAtTime(TimeBlock block) {
-    return Collections.unmodifiableMap(getScheduleTable().row(block));
+  public Program getProgram() {
+    return getScheduler().getProgram();
   }
 
-  public Map<TimeBlock, ScheduleAssignment> getAssignmentsForRoom(Room room) {
-    return Collections.unmodifiableMap(getScheduleTable().column(room));
-  }
-
-  public abstract void remove(ScheduleAssignment assignment);
-
-  public abstract void assign(ScheduleAssignment assignment);
-
-  public void assign(TimeBlock timeBlock, Room room, Course course) {
-    assign(ScheduleAssignment.createAssignment(course, timeBlock, room));
-  }
+  public abstract Table<TimeBlock, Room, Course> getScheduleTable();
 }
