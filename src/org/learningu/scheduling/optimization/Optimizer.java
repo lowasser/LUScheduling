@@ -1,4 +1,4 @@
-package org.learningu.scheduling.annealing;
+package org.learningu.scheduling.optimization;
 
 /**
  * A tool for incrementally optimizing the value of a scoring function.

@@ -1,4 +1,4 @@
-package org.learningu.scheduling.annealing;
+package org.learningu.scheduling.optimization;
 
 /**
  * A tool for incrementally perturbing points in some space.

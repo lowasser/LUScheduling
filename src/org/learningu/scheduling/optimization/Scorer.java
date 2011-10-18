@@ -1,4 +1,4 @@
-package org.learningu.scheduling.annealing;
+package org.learningu.scheduling.optimization;
 
 /**
  * A scoring function on some space of inputs which can be optimized.

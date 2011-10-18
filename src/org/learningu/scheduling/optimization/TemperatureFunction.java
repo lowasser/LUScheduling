@@ -1,4 +1,4 @@
-package org.learningu.scheduling.annealing;
+package org.learningu.scheduling.optimization;
 
 /**
  * A temperature function that "cools" as more steps are executed.

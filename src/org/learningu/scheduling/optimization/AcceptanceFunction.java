@@ -1,4 +1,4 @@
-package org.learningu.scheduling.annealing;
+package org.learningu.scheduling.optimization;
 
 /**
  * An acceptance function for moving to a new state based on the difference in their scores and the
