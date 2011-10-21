@@ -20,9 +20,12 @@ import com.google.inject.Inject;
 final class DefaultScheduleLogic implements ScheduleLogic {
   private final Program program;
 
+  private ScheduleLogicFlags flags;
+
   @Inject
-  DefaultScheduleLogic(Program program) {
+  DefaultScheduleLogic(Program program, ScheduleLogicFlags flags) {
     this.program = program;
+    this.flags = flags;
   }
 
   @Override
@@ -41,7 +44,11 @@ final class DefaultScheduleLogic implements ScheduleLogic {
   @Override
   public boolean isCompatible(Course course, Room room) {
     checkValid(course, room);
-    return course.getMaxClassSize() <= room.getCapacity();
+    double estClassSizeRatio = ((double) course.getEstimatedClassSize()) / room.getCapacity();
+    double classCapRatio = ((double) course.getMaxClassSize()) / room.getCapacity();
+    return estClassSizeRatio >= flags.minEstimatedClassSizeRatio
+        && estClassSizeRatio <= flags.maxEstimatedClassSizeRatio
+        && classCapRatio <= flags.maxClassCapRatio;
   }
 
   @Override
