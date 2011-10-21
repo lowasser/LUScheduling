@@ -22,6 +22,7 @@ import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.google.protobuf.TextFormat;
 
@@ -32,6 +33,7 @@ import com.google.protobuf.TextFormat;
  * 
  * @author lowasser
  */
+@Singleton
 public final class Program {
   final ProgramObjectSet<Teacher> teachers;
   final ProgramObjectSet<Course> courses;
