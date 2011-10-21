@@ -10,4 +10,5 @@ import java.lang.annotation.Target;
 public @interface Flag {
   String value();
   String description() default "";
+  String defaultValue() default "";
 }

@@ -75,6 +75,9 @@ public class OptionModule extends AbstractModule {
       Flag flag = entry.getKey();
       String argument;
       argument = commandLine.getOptionValue(flag.value());
+      if (argument == null && !flag.defaultValue().isEmpty()) {
+        argument = flag.defaultValue();
+      }
 
       Named annotation = Names.named(flag.value());
       if (boolean.class.equals(type)) {
