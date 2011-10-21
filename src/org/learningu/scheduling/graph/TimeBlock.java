@@ -2,6 +2,8 @@ package org.learningu.scheduling.graph;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import org.learningu.scheduling.graph.Serial.SerialTimeBlock;
+
 import com.google.common.base.Function;
 
 /**
@@ -10,9 +12,9 @@ import com.google.common.base.Function;
  * 
  * @author lowasser
  */
-public final class TimeBlock extends ProgramObject<Serial.TimeBlock> {
+public final class TimeBlock extends ProgramObject<SerialTimeBlock> {
 
-  TimeBlock(Program program, Serial.TimeBlock serial) {
+  TimeBlock(Program program, SerialTimeBlock serial) {
     super(program, serial);
   }
 
@@ -34,11 +36,11 @@ public final class TimeBlock extends ProgramObject<Serial.TimeBlock> {
     }
   }
 
-  static Function<Serial.TimeBlock, TimeBlock> programWrapper(final Program program) {
+  static Function<SerialTimeBlock, TimeBlock> programWrapper(final Program program) {
     checkNotNull(program);
-    return new Function<Serial.TimeBlock, TimeBlock>() {
+    return new Function<SerialTimeBlock, TimeBlock>() {
       @Override
-      public TimeBlock apply(Serial.TimeBlock input) {
+      public TimeBlock apply(SerialTimeBlock input) {
         return new TimeBlock(program, input);
       }
     };

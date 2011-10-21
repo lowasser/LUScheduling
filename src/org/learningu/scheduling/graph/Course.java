@@ -4,6 +4,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Set;
 
+import org.learningu.scheduling.graph.Serial.SerialCourse;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
@@ -12,12 +14,12 @@ import com.google.common.collect.Lists;
  * 
  * @author lowasser
  */
-public final class Course extends ProgramObject<Serial.Course> {
+public final class Course extends ProgramObject<SerialCourse> {
   /*
    * Features that might be added in the future include: prerequisites, multi-block classes.
    */
 
-  Course(Program program, Serial.Course serial) {
+  Course(Program program, SerialCourse serial) {
     super(program, serial);
   }
 
@@ -31,7 +33,7 @@ public final class Course extends ProgramObject<Serial.Course> {
   }
 
   // Does not cache!
-  public Set<Teacher> getTeachers() {
+  Set<Teacher> getTeachers() {
     return ProgramObjectSet.create(Lists.transform(serial.getTeacherIdsList(),
         program.teachers.asLookupFunction()));
   }
@@ -49,11 +51,11 @@ public final class Course extends ProgramObject<Serial.Course> {
     return serial.hasCourseTitle() ? getTitle() : super.toString();
   }
 
-  static Function<Serial.Course, Course> programWrapper(final Program program) {
+  static Function<SerialCourse, Course> programWrapper(final Program program) {
     checkNotNull(program);
-    return new Function<Serial.Course, Course>() {
+    return new Function<SerialCourse, Course>() {
       @Override
-      public Course apply(Serial.Course input) {
+      public Course apply(SerialCourse input) {
         return new Course(program, input);
       }
     };

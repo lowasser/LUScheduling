@@ -4,6 +4,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Set;
 
+import org.learningu.scheduling.graph.Serial.SerialRoom;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
@@ -12,9 +14,9 @@ import com.google.common.collect.Lists;
  * 
  * @author lowasser
  */
-public final class Room extends ProgramObject<Serial.Room> {
+public final class Room extends ProgramObject<SerialRoom> {
 
-  public Room(Program program, Serial.Room serial) {
+  public Room(Program program, SerialRoom serial) {
     super(program, serial);
   }
 
@@ -32,7 +34,7 @@ public final class Room extends ProgramObject<Serial.Room> {
   }
 
   // Does not cache!
-  public Set<TimeBlock> getCompatibleTimeBlocks() {
+  Set<TimeBlock> getCompatibleTimeBlocks() {
     return ProgramObjectSet.create(Lists.transform(serial.getAvailableBlocksList(),
         program.timeBlocks.asLookupFunction()));
   }
@@ -42,11 +44,11 @@ public final class Room extends ProgramObject<Serial.Room> {
     return serial.hasName() ? getName() : super.toString();
   }
 
-  static Function<Serial.Room, Room> programWrapper(final Program program) {
+  static Function<SerialRoom, Room> programWrapper(final Program program) {
     checkNotNull(program);
-    return new Function<Serial.Room, Room>() {
+    return new Function<SerialRoom, Room>() {
       @Override
-      public Room apply(Serial.Room input) {
+      public Room apply(SerialRoom input) {
         return new Room(program, input);
       }
     };

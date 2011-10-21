@@ -7,12 +7,10 @@ import org.learningu.scheduling.graph.TimeBlock;
 
 import com.google.common.collect.Table;
 
-public abstract class Schedule {
-  public abstract ProgramScheduler getScheduler();
-
-  public Program getProgram() {
-    return getScheduler().getProgram();
-  }
-
-  public abstract Table<TimeBlock, Room, Course> getScheduleTable();
+public interface Schedule {
+  Program getProgram();
+  
+  ScheduleLogic getLogic(); 
+  
+  Table<TimeBlock, Room, Course> getScheduleTable();
 }

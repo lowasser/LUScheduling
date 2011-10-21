@@ -3,13 +3,23 @@ package org.learningu.scheduling.graph;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.Collection;
 import java.util.Set;
 
 import javax.annotation.Nullable;
 
+import org.learningu.scheduling.graph.Serial.SerialProgram;
+
 import com.google.common.base.Objects;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.Weigher;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import com.google.inject.Inject;
 import com.google.protobuf.TextFormat;
 
 /**
@@ -25,9 +35,14 @@ public final class Program {
   final ProgramObjectSet<TimeBlock> timeBlocks;
   final ProgramObjectSet<Room> rooms;
   private final ImmutableSetMultimap<Teacher, Course> teachingMap;
-  private final Serial.Program serial;
+  private final SerialProgram serial;
+  private final Cache<Course, Set<TimeBlock>> courseCompatibleBlocks;
+  private final Cache<Room, Set<TimeBlock>> roomAvailableBlocks;
+  private final Cache<Teacher, Set<TimeBlock>> teacherAvailableBlocks;
+  private final Cache<Course, Set<Teacher>> teachersForCourse;
 
-  public Program(Serial.Program serial) {
+  @Inject
+  public Program(SerialProgram serial) {
     this.serial = checkNotNull(serial);
     teachers = ProgramObjectSet.create(Lists.transform(serial.getTeachersList(),
         Teacher.programWrapper(this)));
@@ -39,8 +54,7 @@ public final class Program {
         TimeBlock.programWrapper(this)));
 
     // initialize teachingMap
-    ImmutableSetMultimap.Builder<Teacher, Course> teachingMapBuilder = ImmutableSetMultimap
-        .builder();
+    ImmutableSetMultimap.Builder<Teacher, Course> teachingMapBuilder = ImmutableSetMultimap.builder();
     for (Course c : courses) {
       for (Teacher t : c.getTeachers()) {
         teachingMapBuilder.put(t, c);
@@ -51,6 +65,72 @@ public final class Program {
     checkTeachersValid();
     checkCoursesValid();
     checkRoomsValid();
+
+    this.teacherAvailableBlocks = CacheBuilder.newBuilder()
+        .initialCapacity(teachers.size())
+        .weigher(COLLECTION_WEIGHER)
+        .maximumWeight(10000)
+        .build(new CacheLoader<Teacher, Set<TimeBlock>>() {
+          @Override
+          public Set<TimeBlock> load(Teacher key) throws Exception {
+            return key.getCompatibleTimeBlocks();
+          }
+        });
+    this.roomAvailableBlocks = CacheBuilder.newBuilder()
+        .initialCapacity(rooms.size())
+        .weigher(COLLECTION_WEIGHER)
+        .maximumWeight(10000)
+        .build(new CacheLoader<Room, Set<TimeBlock>>() {
+          @Override
+          public Set<TimeBlock> load(Room key) throws Exception {
+            return key.getCompatibleTimeBlocks();
+          }
+        });
+    this.teachersForCourse = CacheBuilder.newBuilder()
+        .weigher(COLLECTION_WEIGHER)
+        .maximumWeight(10000)
+        .build(new CacheLoader<Course, Set<Teacher>>() {
+          @Override
+          public Set<Teacher> load(Course key) throws Exception {
+            return key.getTeachers();
+          }
+        });
+    this.courseCompatibleBlocks = CacheBuilder.newBuilder()
+        .weigher(COLLECTION_WEIGHER)
+        .maximumWeight(10000)
+        .build(new CacheLoader<Course, Set<TimeBlock>>() {
+          @Override
+          public Set<TimeBlock> load(Course key) throws Exception {
+            Set<TimeBlock> blocks = Sets.newLinkedHashSet(getTimeBlocks());
+            for (Teacher t : teachersForCourse(key)) {
+              blocks.retainAll(compatibleTimeBlocks(t));
+            }
+            return ImmutableSet.copyOf(blocks);
+          }
+        });
+  }
+
+  private static final Weigher<Object, Collection<?>> COLLECTION_WEIGHER = new Weigher<Object, Collection<?>>() {
+    @Override
+    public int weigh(Object key, Collection<?> value) {
+      return value.size();
+    }
+  };
+
+  public Set<Teacher> teachersForCourse(Course c) {
+    return teachersForCourse.getUnchecked(c);
+  }
+
+  public Set<TimeBlock> compatibleTimeBlocks(Course c) {
+    return courseCompatibleBlocks.getUnchecked(c);
+  }
+
+  public Set<TimeBlock> compatibleTimeBlocks(Teacher t) {
+    return teacherAvailableBlocks.getUnchecked(t);
+  }
+
+  public Set<TimeBlock> compatibleTimeBlocks(Room r) {
+    return roomAvailableBlocks.getUnchecked(r);
   }
 
   private void checkTeachersValid() {
@@ -62,8 +142,10 @@ public final class Program {
   private void checkCoursesValid() {
     for (Course c : courses) {
       checkArgument(c.getEstimatedClassSize() <= c.getMaxClassSize(),
-          "Class %s has estimated class size %s > max class size %s", c,
-          c.getEstimatedClassSize(), c.getMaxClassSize());
+          "Class %s has estimated class size %s > max class size %s",
+          c,
+          c.getEstimatedClassSize(),
+          c.getMaxClassSize());
       c.getTeachers();
     }
   }
@@ -125,8 +207,8 @@ public final class Program {
     }
     return false;
   }
-  
-  public String getName(){
+
+  public String getName() {
     return serial.getName();
   }
 

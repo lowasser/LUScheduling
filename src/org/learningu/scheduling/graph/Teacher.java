@@ -4,6 +4,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Set;
 
+import org.learningu.scheduling.graph.Serial.SerialTeacher;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
@@ -12,9 +14,9 @@ import com.google.common.collect.Lists;
  * 
  * @author lowasser
  */
-public final class Teacher extends ProgramObject<Serial.Teacher> {
+public final class Teacher extends ProgramObject<SerialTeacher> {
 
-  Teacher(Program program, Serial.Teacher serial) {
+  Teacher(Program program, SerialTeacher serial) {
     super(program, serial);
   }
 
@@ -24,7 +26,7 @@ public final class Teacher extends ProgramObject<Serial.Teacher> {
   }
 
   // Does not cache!
-  public Set<TimeBlock> getCompatibleTimeBlocks() {
+  Set<TimeBlock> getCompatibleTimeBlocks() {
     return ProgramObjectSet.create(Lists.transform(
         serial.getAvailableBlocksList(), program.timeBlocks.asLookupFunction()));
   }
@@ -38,11 +40,11 @@ public final class Teacher extends ProgramObject<Serial.Teacher> {
     return serial.hasName() ? serial.getName() : super.toString();
   }
 
-  static Function<Serial.Teacher, Teacher> programWrapper(final Program program) {
+  static Function<SerialTeacher, Teacher> programWrapper(final Program program) {
     checkNotNull(program);
-    return new Function<Serial.Teacher, Teacher>() {
+    return new Function<SerialTeacher, Teacher>() {
       @Override
-      public Teacher apply(Serial.Teacher input) {
+      public Teacher apply(SerialTeacher input) {
         return new Teacher(program, input);
       }
     };

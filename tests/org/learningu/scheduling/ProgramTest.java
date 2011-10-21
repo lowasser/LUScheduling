@@ -7,7 +7,11 @@ import junit.framework.TestCase;
 import org.learningu.scheduling.graph.Course;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
-import org.learningu.scheduling.graph.Serial;
+import org.learningu.scheduling.graph.Serial.SerialCourse;
+import org.learningu.scheduling.graph.Serial.SerialProgram;
+import org.learningu.scheduling.graph.Serial.SerialRoom;
+import org.learningu.scheduling.graph.Serial.SerialTeacher;
+import org.learningu.scheduling.graph.Serial.SerialTimeBlock;
 import org.learningu.scheduling.graph.Teacher;
 import org.learningu.scheduling.graph.TimeBlock;
 
@@ -16,40 +20,40 @@ import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 public class ProgramTest extends TestCase {
-  private Serial.Program serialProgram;
+  private SerialProgram serialProgram;
 
   @Override
   protected void setUp() throws Exception {
-    Serial.Program.Builder programBuilder = Serial.Program.newBuilder();
+    SerialProgram.Builder programBuilder = SerialProgram.newBuilder();
 
-    Serial.Teacher alice = Serial.Teacher.newBuilder()
+    SerialTeacher alice = SerialTeacher.newBuilder()
         .setName("Alice")
         .setTeacherId(0)
         .addAvailableBlocks(0)
         .build();
-    Serial.Teacher bob = Serial.Teacher.newBuilder()
+    SerialTeacher bob = SerialTeacher.newBuilder()
         .setName("Bob")
         .setTeacherId(1)
         .addAvailableBlocks(1)
         .build();
-    Serial.Teacher carol = Serial.Teacher.newBuilder()
+    SerialTeacher carol = SerialTeacher.newBuilder()
         .setName("Carol")
         .setTeacherId(2)
         .addAllAvailableBlocks(Ints.asList(0, 1))
         .build();
     programBuilder.addAllTeachers(Arrays.asList(alice, carol, bob));
 
-    Serial.TimeBlock block0 = Serial.TimeBlock.newBuilder()
+    SerialTimeBlock block0 = SerialTimeBlock.newBuilder()
         .setBlockId(0)
         .setDescription("9-10")
         .build();
-    Serial.TimeBlock block1 = Serial.TimeBlock.newBuilder()
+    SerialTimeBlock block1 = SerialTimeBlock.newBuilder()
         .setBlockId(1)
         .setDescription("10-11")
         .build();
     programBuilder.addAllTimeBlocks(Arrays.asList(block0, block1));
 
-    Serial.Course course0 = Serial.Course.newBuilder()
+    SerialCourse course0 = SerialCourse.newBuilder()
         .setCourseId(0)
         .addTeacherIds(0)
         .addTeacherIds(2)
@@ -57,14 +61,14 @@ public class ProgramTest extends TestCase {
         .setMaxClassSize(10)
         .setCourseTitle("Maximum Science")
         .build();
-    Serial.Course course1 = Serial.Course.newBuilder()
+    SerialCourse course1 = SerialCourse.newBuilder()
         .setCourseId(1)
         .addTeacherIds(1)
         .setEstimatedClassSize(30)
         .setMaxClassSize(40)
         .setCourseTitle("Pirates")
         .build();
-    Serial.Course course2 = Serial.Course.newBuilder()
+    SerialCourse course2 = SerialCourse.newBuilder()
         .setCourseId(2)
         .addTeacherIds(0)
         .setEstimatedClassSize(15)
@@ -73,13 +77,13 @@ public class ProgramTest extends TestCase {
         .build();
     programBuilder.addAllCourses(Arrays.asList(course0, course2, course1));
 
-    Serial.Room harper130 = Serial.Room.newBuilder()
+    SerialRoom harper130 = SerialRoom.newBuilder()
         .setRoomId(0)
         .setCapacity(75)
         .setName("Harper 130")
         .addAllAvailableBlocks(Ints.asList(0, 1))
         .build();
-    Serial.Room harper135 = Serial.Room.newBuilder()
+    SerialRoom harper135 = SerialRoom.newBuilder()
         .setRoomId(1)
         .setCapacity(15)
         .setName("Harper 135")
@@ -97,51 +101,51 @@ public class ProgramTest extends TestCase {
   public void testByteStringSerialization() throws InvalidProtocolBufferException {
     ByteString bytes = serialProgram.toByteString();
     TestingUtils.assertMessageEquals(serialProgram,
-        serialize(new Program(Serial.Program.parseFrom(bytes))));
+        serialize(new Program(SerialProgram.parseFrom(bytes))));
   }
 
-  Serial.Teacher serialize(Teacher teacher) {
-    Serial.Teacher.Builder builder = Serial.Teacher.newBuilder();
+  SerialTeacher serialize(Teacher teacher) {
+    SerialTeacher.Builder builder = SerialTeacher.newBuilder();
     builder.setTeacherId(teacher.getId());
     builder.setName(teacher.getName());
-    for (TimeBlock block : teacher.getCompatibleTimeBlocks()) {
+    for (TimeBlock block : teacher.getProgram().compatibleTimeBlocks(teacher)) {
       builder.addAvailableBlocks(block.getId());
     }
     return builder.build();
   }
 
-  Serial.Course serialize(Course course) {
-    Serial.Course.Builder builder = Serial.Course.newBuilder();
+  SerialCourse serialize(Course course) {
+    SerialCourse.Builder builder = SerialCourse.newBuilder();
     builder.setCourseId(course.getId());
     builder.setCourseTitle(course.getTitle());
     builder.setEstimatedClassSize(course.getEstimatedClassSize());
     builder.setMaxClassSize(course.getMaxClassSize());
-    for (Teacher teacher : course.getTeachers()) {
+    for (Teacher teacher : course.getProgram().teachersForCourse(course)) {
       builder.addTeacherIds(teacher.getId());
     }
     return builder.build();
   }
 
-  Serial.TimeBlock serialize(TimeBlock block) {
-    Serial.TimeBlock.Builder builder = Serial.TimeBlock.newBuilder();
+  SerialTimeBlock serialize(TimeBlock block) {
+    SerialTimeBlock.Builder builder = SerialTimeBlock.newBuilder();
     builder.setBlockId(block.getId());
     builder.setDescription(block.getDescription());
     return builder.build();
   }
 
-  Serial.Room serialize(Room room) {
-    Serial.Room.Builder builder = Serial.Room.newBuilder();
+  SerialRoom serialize(Room room) {
+    SerialRoom.Builder builder = SerialRoom.newBuilder();
     builder.setRoomId(room.getId());
     builder.setName(room.getName());
     builder.setCapacity(room.getCapacity());
-    for (TimeBlock block : room.getCompatibleTimeBlocks()) {
+    for (TimeBlock block : room.getProgram().compatibleTimeBlocks(room)) {
       builder.addAvailableBlocks(block.getId());
     }
     return builder.build();
   }
 
-  Serial.Program serialize(Program program) {
-    Serial.Program.Builder builder = Serial.Program.newBuilder();
+  SerialProgram serialize(Program program) {
+    SerialProgram.Builder builder = SerialProgram.newBuilder();
     for (Teacher teacher : program.getTeachers()) {
       builder.addTeachers(serialize(teacher));
     }
