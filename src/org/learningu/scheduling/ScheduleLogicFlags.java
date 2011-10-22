@@ -11,6 +11,8 @@ import com.google.inject.name.Named;
  * @author lowasser
  */
 public final class ScheduleLogicFlags {
+  public static final ScheduleLogicFlags DEFAULTS = new ScheduleLogicFlags(0.0, 1.0, 1.0);
+
   @Flag(value = "minEstimatedClassSizeRatio", description = "The smallest estimated class size : "
       + "room capacity ratio that is acceptable.  For example, if this was 0.5, a class estimated "
       + "to have 15 students would not be allowed into a room with capacity over 30."

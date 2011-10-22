@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.learningu.scheduling.graph.Course;
 import org.learningu.scheduling.graph.Program;
@@ -27,10 +28,17 @@ import com.google.inject.Inject;
 final class DefaultScheduleLogic extends ScheduleLogic {
 
   private ScheduleLogicFlags flags;
+  private final Logger logger;
 
   @Inject
-  DefaultScheduleLogic(ScheduleLogicFlags flags) {
+  DefaultScheduleLogic(ScheduleLogicFlags flags, Logger logger) {
     this.flags = flags;
+    this.logger = logger;
+  }
+
+  @Override
+  public Logger getLogger() {
+    return logger;
   }
 
   @Override

@@ -4,7 +4,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.learningu.scheduling.graph.Course;
-import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Teacher;
 import org.learningu.scheduling.graph.TimeBlock;
@@ -32,8 +31,12 @@ public abstract class ScheduleLogic {
     return teacher.getProgram() == block.getProgram();
   }
 
+  public Logger getLogger() {
+    return Logger.getLogger(getClass().toString());
+  }
+
   public Condition isValid(Schedule schedule) {
-    Condition validSchedule = Condition.create(Logger.getLogger(getClass().toString()), Level.FINE);
+    Condition validSchedule = Condition.create(getLogger(), Level.FINE);
     isLocallyValid(validSchedule, schedule);
     return validSchedule;
   }

@@ -49,7 +49,7 @@ public final class Condition {
     }
   }
 
-  public boolean isValid() {
+  public boolean passes() {
     return isValid;
   }
 }
