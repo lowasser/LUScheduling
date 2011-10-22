@@ -14,7 +14,7 @@ import com.google.common.collect.Table.Cell;
 import com.google.inject.ImplementedBy;
 
 @ImplementedBy(DefaultScheduleLogic.class)
-public abstract class ScheduleLogic {
+public class ScheduleLogic {
   public boolean isCompatible(Course course, TimeBlock block) {
     return course.getProgram() == block.getProgram();
   }
