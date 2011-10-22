@@ -1,7 +1,11 @@
 package org.learningu.scheduling;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import junit.framework.TestCase;
 
+import org.apache.commons.cli.ParseException;
 import org.learningu.scheduling.graph.ClassPeriod;
 import org.learningu.scheduling.graph.Course;
 import org.learningu.scheduling.graph.Program;
@@ -9,7 +13,12 @@ import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Serial.SerialPeriod;
 import org.learningu.scheduling.graph.Serial.SerialTeacher;
+import org.learningu.scheduling.logic.ScheduleLogic;
+import org.learningu.scheduling.logic.ScheduleLogicModule;
+import org.learningu.scheduling.util.CommandLineModule;
+import org.learningu.scheduling.util.Condition;
 
+import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.google.inject.AbstractModule;
@@ -30,6 +39,14 @@ public class ScheduleLogicTest extends TestCase {
 
     @Override
     protected void configure() {
+      install(new ScheduleLogicModule());
+      try {
+        install(CommandLineModule.create(
+            new String[0],
+            ScheduleLogicModule.FLAGS_CLASSES.toArray(new Class[0])));
+      } catch (ParseException e) {
+        Throwables.propagate(e);
+      }
     }
   };
 
@@ -48,7 +65,7 @@ public class ScheduleLogicTest extends TestCase {
       bindRoom("Harper141", 20, tenAM);
       bindCourse("ScienceCourse", 1, 1, 15, alice, carol);
       bindCourse("PiratesCourse", 1, 1, 40, bob);
-      bindCourse("MathCourse", 1, 2, 10, carol);
+      bindCourse("MathCourse", 2, 1, 10, carol);
     }
   }
 
@@ -57,7 +74,8 @@ public class ScheduleLogicTest extends TestCase {
         .createChildInjector(scheduleModules);
     ScheduleLogic logic = injector.getInstance(ScheduleLogic.class);
     Schedule schedule = injector.getInstance(Schedule.class);
-    logic.isValid(schedule).assertPasses();
+    Condition cond = Condition.create(Logger.getAnonymousLogger(), Level.FINE);
+    logic.isValid(cond, schedule).assertPasses();
   }
 
   public void assertFails(Module... scheduleModules) {
@@ -65,7 +83,8 @@ public class ScheduleLogicTest extends TestCase {
         .createChildInjector(scheduleModules);
     ScheduleLogic logic = injector.getInstance(ScheduleLogic.class);
     Schedule schedule = injector.getInstance(Schedule.class);
-    assertFalse(logic.isValid(schedule).passes());
+    Condition cond = Condition.create(Logger.getAnonymousLogger(), Level.FINE);
+    assertFalse(logic.isValid(cond, schedule).passes());
   }
 
   public void testEmptySchedulePasses() {

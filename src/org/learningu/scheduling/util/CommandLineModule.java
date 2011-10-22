@@ -30,16 +30,16 @@ import com.google.inject.name.Names;
  * 
  * @author lowasser
  */
-public class OptionModule extends AbstractModule {
-  public static OptionModule createOptionModule(String[] args, Class<?>... flagSettings)
+public class CommandLineModule extends AbstractModule {
+  public static CommandLineModule create(String[] args, Class<?>... flagSettings)
       throws ParseException {
-    return new OptionModule(args, flagSettings);
+    return new CommandLineModule(args, flagSettings);
   }
 
   private final Map<Flag, Field> flags;
   private final CommandLine commandLine;
 
-  private OptionModule(String[] args, Class<?>... flagSettings) throws ParseException {
+  private CommandLineModule(String[] args, Class<?>... flagSettings) throws ParseException {
     Options options = new Options();
     ImmutableMap.Builder<Flag, Field> flagsBuilder = ImmutableMap.builder();
 

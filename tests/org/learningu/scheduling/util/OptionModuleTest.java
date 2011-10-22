@@ -59,7 +59,7 @@ public class OptionModuleTest extends TestCase {
   public void testBasicParsing() throws ParseException {
     String[] args = { "-someInteger", "25", "--somePeriod", "1h1s", "--boolFlag", "--someString",
         "abcdefg", "--someDouble", "-5.0", "--someBigInteger", "0" };
-    Injector injector = Guice.createInjector(OptionModule.createOptionModule(
+    Injector injector = Guice.createInjector(CommandLineModule.create(
         args,
         SampleFlags.class));
 
