@@ -2,6 +2,7 @@ package org.learningu.scheduling.graph;
 
 import org.learningu.scheduling.util.Flag;
 
+import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
 /**
@@ -24,6 +25,7 @@ public final class ProgramCacheFlags {
   @Flag(value = "programCacheConcurrencyLevel", description = "Number of concurrent updates allowed in caches for the Program", defaultValue = "4")
   final int cacheConcurrencyLevel;
 
+  @Inject
   ProgramCacheFlags(
       @Named("teacherAvailableCacheSize") int teacherAvailableCacheSize,
       @Named("roomAvailableCacheSize") int roomAvailableCacheSize,

@@ -51,12 +51,12 @@ public class OptionModule extends AbstractModule {
         Flag annotation = field.getAnnotation(Flag.class);
         flagsBuilder.put(annotation, field);
         OptionBuilder.withDescription(annotation.description());
-        OptionBuilder.withArgName(annotation.value());
         OptionBuilder.withLongOpt(annotation.value());
-        if (!boolean.class.equals(field.getType())) {
-          OptionBuilder.hasArg();
-        } else {
+        if (boolean.class.equals(field.getType())) {
           OptionBuilder.hasArg(false);
+        } else {
+          OptionBuilder.hasArg();
+          OptionBuilder.withArgName(annotation.value());
         }
         options.addOption(OptionBuilder.create(annotation.value()));
       }
@@ -80,10 +80,12 @@ public class OptionModule extends AbstractModule {
       }
 
       Named annotation = Names.named(flag.value());
-      if (boolean.class.equals(type)) {
-        bindConstant().annotatedWith(annotation).to(commandLine.hasOption(flag.value()));
-      } else if (argument == null) {
-        continue;
+      if (argument == null) {
+        if (boolean.class.equals(type)) {
+          bindConstant().annotatedWith(annotation).to(commandLine.hasOption(flag.value()));
+        } else {
+          continue;
+        }
       } else if (type.isPrimitive() || type.isEnum() || Primitives.isWrapperType(type)) {
         bindConstant().annotatedWith(annotation).to(argument);
       } else if (BigInteger.class.equals(type)) {

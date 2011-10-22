@@ -46,9 +46,7 @@ public final class Condition {
 
       @Override
       public void publish(LogRecord record) {
-        builder.append(
-            String.format(new SimpleFormatter().formatMessage(record), record.getParameters()))
-            .append('\n');
+        builder.append(new SimpleFormatter().formatMessage(record)).append('\n');
       }
     });
   }
@@ -64,10 +62,18 @@ public final class Condition {
 
   public void verify(boolean condition, String message, Object... parameters) {
     if (!condition) {
-      logger.log(level, message, parameters);
+      if (logger.isLoggable(level)) {
+        logger.log(level, String.format(message, parameters));
+      }
       for (Condition current = this; current != null; current = current.parent) {
         current.isValid = false;
       }
+    }
+  }
+
+  public void log(Level level, String message, Object... parameters) {
+    if (logger.isLoggable(level)) {
+      logger.log(level, String.format(message, parameters));
     }
   }
 

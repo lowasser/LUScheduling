@@ -3,6 +3,7 @@ package org.learningu.scheduling;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,7 +26,7 @@ import com.google.inject.Inject;
  * 
  * @author lowasser
  */
-final class DefaultScheduleLogic extends ScheduleLogic {
+final class DefaultScheduleLogic implements ScheduleLogic {
 
   private ScheduleLogicFlags flags;
   private final Logger logger;
@@ -36,45 +37,97 @@ final class DefaultScheduleLogic extends ScheduleLogic {
     this.logger = logger;
   }
 
-  @Override
   public Logger getLogger() {
     return logger;
   }
 
-  @Override
   public Condition isValid(Schedule schedule) {
-    Condition valid = super.isValid(schedule);
-    verifyNoTeacherConflicts(valid, schedule);
-    verifyNoDuplicateCourses(valid, schedule);
+    Condition valid = Condition.create(getLogger(), Level.FINE);
+    if (flags.localScheduleCheck) {
+      verifyLocallyValid(valid, schedule);
+    }
+    if (flags.teacherConflictCheck) {
+      verifyNoTeacherConflicts(valid, schedule);
+    }
+    if (flags.doublyScheduledCoursesCheck) {
+      verifyNoDuplicateCourses(valid, schedule);
+    }
     return valid;
   }
 
-  @Override
-  public boolean isCompatible(Course course, TimeBlock block) {
-    return super.isCompatible(course, block)
-        && course.getProgram().compatibleTimeBlocks(course).contains(block);
+  protected Condition verifyLocallyValid(Condition parent, Schedule schedule) {
+    Table<TimeBlock, Room, Course> table = schedule.getScheduleTable();
+    Condition local = parent.createSubCondition("local");
+    local.log(Level.FINEST, "Testing local validity of schedule");
+    for (Cell<TimeBlock, Room, Course> cell : table.cellSet()) {
+      verifyLocallyValid(local, cell);
+    }
+    local.log(Level.FINEST, "Done testing local validity of schedule");
+    return local;
   }
 
-  @Override
-  public boolean isCompatible(Course course, Room room) {
+  protected Condition verifyLocallyValid(Condition local, Cell<TimeBlock, Room, Course> cell) {
+    TimeBlock block = cell.getRowKey();
+    Room room = cell.getColumnKey();
+    Course course = cell.getValue();
+    local.log(Level.FINEST, "Testing local validity of %s", cell);
+    verifyCompatible(local, course, block);
+    verifyCompatible(local, room, block);
+    verifyCompatible(local, course, room);
+    local.log(Level.FINEST, "Done testing local validity of %s", cell);
+    return local;
+  }
+
+  protected void verifyCompatible(Condition cond, Course course, TimeBlock block) {
+    cond.verify(
+        course.getProgram() == block.getProgram(),
+        "Program mismatch between %s and %s",
+        course,
+        block);
+    Set<TimeBlock> compatibleBlocks = course.getProgram().compatibleTimeBlocks(course);
+    cond.verify(
+        compatibleBlocks.contains(block),
+        "Course %s is scheduled for %s but is only available during %s",
+        course,
+        block,
+        compatibleBlocks);
+  }
+
+  protected void verifyCompatible(Condition cond, Course course, Room room) {
     double estClassSizeRatio = ((double) course.getEstimatedClassSize()) / room.getCapacity();
     double classCapRatio = ((double) course.getMaxClassSize()) / room.getCapacity();
-    return super.isCompatible(course, room)
-        && estClassSizeRatio >= flags.minEstimatedClassSizeRatio
-        && estClassSizeRatio <= flags.maxEstimatedClassSizeRatio
-        && classCapRatio <= flags.maxClassCapRatio;
+    cond.verify(
+        course.getProgram() == room.getProgram(),
+        "Program mismatch between %s and %s",
+        course,
+        room);
+    cond.verify(
+        estClassSizeRatio >= flags.minEstimatedClassSizeRatio
+            && estClassSizeRatio <= flags.maxEstimatedClassSizeRatio,
+        "Estimated class size : room capacity ratio was %s but should have been between %s and %s",
+        estClassSizeRatio,
+        flags.minEstimatedClassSizeRatio,
+        flags.maxEstimatedClassSizeRatio);
+    cond.verify(
+        classCapRatio <= flags.maxClassCapRatio,
+        "Class capacity : room capacity ratio was %s but should have been at most %s",
+        classCapRatio,
+        flags.maxClassCapRatio);
   }
 
-  @Override
-  public boolean isCompatible(Room room, TimeBlock block) {
-    return super.isCompatible(room, block)
-        && room.getProgram().compatibleTimeBlocks(room).contains(block);
-  }
-
-  @Override
-  public boolean isCompatible(Teacher teacher, TimeBlock block) {
-    return super.isCompatible(teacher, block)
-        && teacher.getProgram().compatibleTimeBlocks(teacher).contains(block);
+  protected void verifyCompatible(Condition cond, Room room, TimeBlock block) {
+    cond.verify(
+        block.getProgram() == room.getProgram(),
+        "Program mismatch between %s and %s",
+        block,
+        room);
+    Set<TimeBlock> compatibleBlocks = room.getProgram().compatibleTimeBlocks(room);
+    cond.verify(
+        compatibleBlocks.contains(block),
+        "Room %s is scheduled for a class in block %s but is only available during: %s",
+        room,
+        block,
+        compatibleBlocks);
   }
 
   private Condition verifyNoTeacherConflicts(Condition parent, Schedule schedule) {
