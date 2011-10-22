@@ -2,10 +2,15 @@ package org.learningu.scheduling.util;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.logging.Handler;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import javax.annotation.Nullable;
+
+import junit.framework.AssertionFailedError;
 
 /**
  * A utility for testing for and logging failures.
@@ -20,6 +25,7 @@ public final class Condition {
   private boolean isValid;
   private final Logger logger;
   private final Level level;
+  private final StringBuilder builder = new StringBuilder();
 
   @Nullable
   private final Condition parent;
@@ -29,6 +35,22 @@ public final class Condition {
     this.logger = checkNotNull(logger);
     this.isValid = true;
     this.parent = parent;
+    logger.addHandler(new Handler() {
+      @Override
+      public void close() throws SecurityException {
+      }
+
+      @Override
+      public void flush() {
+      }
+
+      @Override
+      public void publish(LogRecord record) {
+        builder.append(
+            String.format(new SimpleFormatter().formatMessage(record), record.getParameters()))
+            .append('\n');
+      }
+    });
   }
 
   public Logger getLogger() {
@@ -51,5 +73,11 @@ public final class Condition {
 
   public boolean passes() {
     return isValid;
+  }
+
+  public void assertPasses() {
+    if (!isValid) {
+      throw new AssertionFailedError(builder.toString());
+    }
   }
 }
