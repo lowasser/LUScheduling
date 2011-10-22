@@ -10,7 +10,5 @@ import com.google.common.collect.Table;
 public interface Schedule {
   Program getProgram();
   
-  ScheduleLogic getLogic(); 
-  
   Table<TimeBlock, Room, Course> getScheduleTable();
 }

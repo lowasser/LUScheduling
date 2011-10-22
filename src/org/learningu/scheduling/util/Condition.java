@@ -31,6 +31,10 @@ public final class Condition {
     this.parent = parent;
   }
 
+  public Logger getLogger() {
+    return logger;
+  }
+
   public Condition createSubCondition(String subsystem) {
     Logger subLogger = Logger.getLogger(this.logger.getName() + "." + subsystem);
     return new Condition(subLogger, level, this);
