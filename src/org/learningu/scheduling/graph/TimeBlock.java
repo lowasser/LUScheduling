@@ -2,9 +2,13 @@ package org.learningu.scheduling.graph;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.List;
+
+import org.learningu.scheduling.graph.Serial.SerialPeriod;
 import org.learningu.scheduling.graph.Serial.SerialTimeBlock;
 
 import com.google.common.base.Function;
+import com.google.common.collect.ImmutableList;
 
 /**
  * A block of time at an LU program, in which a single section of a single course might be
@@ -14,8 +18,16 @@ import com.google.common.base.Function;
  */
 public final class TimeBlock extends ProgramObject<SerialTimeBlock> {
 
+  private final ImmutableList<ClassPeriod> periods;
+
   TimeBlock(Program program, SerialTimeBlock serial) {
     super(program, serial);
+    ImmutableList.Builder<ClassPeriod> builder = ImmutableList.builder();
+    int index = 0;
+    for (SerialPeriod period : serial.getPeriodsList()) {
+      builder.add(new ClassPeriod(period, this, index++));
+    }
+    periods = builder.build();
   }
 
   @Override
@@ -34,6 +46,14 @@ public final class TimeBlock extends ProgramObject<SerialTimeBlock> {
     } else {
       return super.toString();
     }
+  }
+
+  public List<ClassPeriod> getPeriods() {
+    return periods;
+  }
+
+  public ClassPeriod getPeriod(int index) {
+    return periods.get(index);
   }
 
   static Function<SerialTimeBlock, TimeBlock> programWrapper(final Program program) {

@@ -4,7 +4,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.AbstractSet;
-import java.util.Collection;
 import java.util.Iterator;
 
 import javax.annotation.Nullable;
@@ -21,7 +20,7 @@ import com.google.common.collect.ImmutableMap.Builder;
 final class ProgramObjectSet<T extends ProgramObject<?>> extends AbstractSet<T> {
   private final ImmutableMap<Integer, T> idMap;
 
-  static <T extends ProgramObject<?>> ProgramObjectSet<T> create(Collection<T> collection) {
+  static <T extends ProgramObject<?>> ProgramObjectSet<T> create(Iterable<T> collection) {
     checkNotNull(collection);
     Builder<Integer, T> builder = ImmutableMap.builder();
     for (T t : collection) {

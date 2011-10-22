@@ -8,6 +8,7 @@ import org.learningu.scheduling.graph.Course;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Serial.SerialCourse;
+import org.learningu.scheduling.graph.Serial.SerialPeriod;
 import org.learningu.scheduling.graph.Serial.SerialProgram;
 import org.learningu.scheduling.graph.Serial.SerialRoom;
 import org.learningu.scheduling.graph.Serial.SerialTeacher;
@@ -29,29 +30,28 @@ public class ProgramTest extends TestCase {
     SerialTeacher alice = SerialTeacher.newBuilder()
         .setName("Alice")
         .setTeacherId(0)
-        .addAvailableBlocks(0)
+        .addAvailablePeriods(0)
         .build();
     SerialTeacher bob = SerialTeacher.newBuilder()
         .setName("Bob")
         .setTeacherId(1)
-        .addAvailableBlocks(1)
+        .addAvailablePeriods(1)
         .build();
     SerialTeacher carol = SerialTeacher.newBuilder()
         .setName("Carol")
         .setTeacherId(2)
-        .addAllAvailableBlocks(Ints.asList(0, 1))
+        .addAllAvailablePeriods(Ints.asList(0, 1))
         .build();
     programBuilder.addAllTeachers(Arrays.asList(alice, carol, bob));
 
+    SerialPeriod period0 = SerialPeriod.newBuilder().setPeriodId(0).setDescription("9AM").build();
+    SerialPeriod period1 = SerialPeriod.newBuilder().setPeriodId(1).setDescription("10AM").build();
     SerialTimeBlock block0 = SerialTimeBlock.newBuilder()
         .setBlockId(0)
-        .setDescription("9-10")
+        .setDescription("Morning")
+        .addAllPeriods(Arrays.asList(period0, period1))
         .build();
-    SerialTimeBlock block1 = SerialTimeBlock.newBuilder()
-        .setBlockId(1)
-        .setDescription("10-11")
-        .build();
-    programBuilder.addAllTimeBlocks(Arrays.asList(block0, block1));
+    programBuilder.addTimeBlocks(block0);
 
     SerialCourse course0 = SerialCourse.newBuilder()
         .setCourseId(0)
@@ -81,13 +81,13 @@ public class ProgramTest extends TestCase {
         .setRoomId(0)
         .setCapacity(75)
         .setName("Harper 130")
-        .addAllAvailableBlocks(Ints.asList(0, 1))
+        .addAllAvailablePeriods(Ints.asList(0, 1))
         .build();
     SerialRoom harper135 = SerialRoom.newBuilder()
         .setRoomId(1)
         .setCapacity(15)
         .setName("Harper 135")
-        .addAllAvailableBlocks(Ints.asList(0))
+        .addAvailablePeriods(0)
         .build();
     programBuilder.addAllRooms(Arrays.asList(harper130, harper135));
 
@@ -100,7 +100,8 @@ public class ProgramTest extends TestCase {
 
   public void testByteStringSerialization() throws InvalidProtocolBufferException {
     ByteString bytes = serialProgram.toByteString();
-    TestingUtils.assertMessageEquals(serialProgram,
+    TestingUtils.assertMessageEquals(
+        serialProgram,
         serialize(new Program(SerialProgram.parseFrom(bytes))));
   }
 
@@ -108,8 +109,8 @@ public class ProgramTest extends TestCase {
     SerialTeacher.Builder builder = SerialTeacher.newBuilder();
     builder.setTeacherId(teacher.getId());
     builder.setName(teacher.getName());
-    for (TimeBlock block : teacher.getProgram().compatibleTimeBlocks(teacher)) {
-      builder.addAvailableBlocks(block.getId());
+    for (ClassPeriod block : teacher.getProgram().compatiblePeriods(teacher)) {
+      builder.addAvailablePeriods(block.getId());
     }
     return builder.build();
   }
@@ -126,10 +127,20 @@ public class ProgramTest extends TestCase {
     return builder.build();
   }
 
+  SerialPeriod serialize(ClassPeriod period) {
+    SerialPeriod.Builder builder = SerialPeriod.newBuilder();
+    builder.setPeriodId(period.getId());
+    builder.setDescription(period.getDescription());
+    return builder.build();
+  }
+
   SerialTimeBlock serialize(TimeBlock block) {
     SerialTimeBlock.Builder builder = SerialTimeBlock.newBuilder();
     builder.setBlockId(block.getId());
     builder.setDescription(block.getDescription());
+    for (ClassPeriod period : block.getPeriods()) {
+      builder.addPeriods(serialize(period));
+    }
     return builder.build();
   }
 
@@ -138,8 +149,8 @@ public class ProgramTest extends TestCase {
     builder.setRoomId(room.getId());
     builder.setName(room.getName());
     builder.setCapacity(room.getCapacity());
-    for (TimeBlock block : room.getProgram().compatibleTimeBlocks(room)) {
-      builder.addAvailableBlocks(block.getId());
+    for (ClassPeriod period : room.getProgram().compatiblePeriods(room)) {
+      builder.addAvailablePeriods(period.getId());
     }
     return builder.build();
   }

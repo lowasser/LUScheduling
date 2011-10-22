@@ -34,9 +34,9 @@ public final class Room extends ProgramObject<SerialRoom> {
   }
 
   // Does not cache!
-  Set<TimeBlock> getCompatibleTimeBlocks() {
-    return ProgramObjectSet.create(Lists.transform(serial.getAvailableBlocksList(),
-        program.timeBlocks.asLookupFunction()));
+  Set<ClassPeriod> getCompatiblePeriods() {
+    return ProgramObjectSet.create(Lists.transform(serial.getAvailablePeriodsList(),
+        program.periods.asLookupFunction()));
   }
 
   @Override

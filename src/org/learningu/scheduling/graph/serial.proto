@@ -11,6 +11,7 @@ message SerialCourse {
 	optional int32 estimatedClassSize = 5 [default = 15];
 	optional int32 maxClassSize = 6 [default = 20];
 	optional int32 sections = 7 [default = 1];
+	optional int32 periodLength = 8 [default = 1];
 }
 
 /*
@@ -19,16 +20,27 @@ message SerialCourse {
 message SerialTeacher {
 	required int32 teacherId = 1; // teacher identifier number
 	optional string name = 2; // teacher name
-	repeated int32 availableBlocks = 3 [packed = true]; // teacher availability
+	repeated int32 availablePeriods = 3 [packed = true]; // teacher availability
 }
 
 /*
- * A block of time at an LU program, during which a single course may be scheduled.
+ * A single period at an LU program; the shortest possible length of a class.
+ */
+message SerialPeriod {
+	required int32 periodId = 1;
+	optional string description = 2;
+}
+
+/*
+ * A block of consecutive periods at an LU program.  Classes may not be scheduled across time blocks.
+ * For example, "before lunch" and "after lunch" might be distinct blocks.
  */
 message SerialTimeBlock {
 	// TODO: multi-block class support; multi-day program support
 	required int32 blockId = 1;
 	optional string description = 2;
+
+	repeated SerialPeriod periods = 4;
 }
 
 /*
@@ -38,7 +50,7 @@ message SerialRoom {
 	required int32 roomId = 1;
 	optional string name = 3;
 	optional int32 capacity = 4 [default = 25];
-	repeated int32 availableBlocks = 5 [packed = true];
+	repeated int32 availablePeriods = 5 [packed = true];
 }
 
 /*
@@ -66,7 +78,7 @@ message SerialSchedule {
 	 * An assignment of a course to a room and time.
  	 */
 	message SerialScheduleAssignment {
-		required int32 timeBlockId = 1;
+		required SerialPeriod period = 1;
 		required int32 roomId = 2;
 		required SerialSection section = 3;
 	}

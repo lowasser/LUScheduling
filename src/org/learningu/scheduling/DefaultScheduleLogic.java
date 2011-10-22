@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.learningu.scheduling.graph.ClassPeriod;
 import org.learningu.scheduling.graph.Course;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
@@ -58,40 +59,40 @@ final class DefaultScheduleLogic implements ScheduleLogic {
   }
 
   protected Condition verifyLocallyValid(Condition parent, Schedule schedule) {
-    Table<TimeBlock, Room, Section> table = schedule.getScheduleTable();
+    Table<ClassPeriod, Room, Section> table = schedule.getScheduleTable();
     Condition local = parent.createSubCondition("local");
     local.log(Level.FINEST, "Testing local validity of schedule");
-    for (Cell<TimeBlock, Room, Section> cell : table.cellSet()) {
+    for (Cell<ClassPeriod, Room, Section> cell : table.cellSet()) {
       verifyLocallyValid(local, cell);
     }
     local.log(Level.FINEST, "Done testing local validity of schedule");
     return local;
   }
 
-  protected Condition verifyLocallyValid(Condition local, Cell<TimeBlock, Room, Section> cell) {
-    TimeBlock block = cell.getRowKey();
+  protected Condition verifyLocallyValid(Condition local, Cell<ClassPeriod, Room, Section> cell) {
+    ClassPeriod period = cell.getRowKey();
     Room room = cell.getColumnKey();
     Course course = cell.getValue().getCourse();
     local.log(Level.FINEST, "Testing local validity of %s", cell);
-    verifyCompatible(local, course, block);
-    verifyCompatible(local, room, block);
+    verifyCompatible(local, course, period);
+    verifyCompatible(local, room, period);
     verifyCompatible(local, course, room);
     local.log(Level.FINEST, "Done testing local validity of %s", cell);
     return local;
   }
 
-  protected void verifyCompatible(Condition cond, Course course, TimeBlock block) {
+  protected void verifyCompatible(Condition cond, Course course, ClassPeriod period) {
     cond.verify(
-        course.getProgram() == block.getProgram(),
+        course.getProgram() == period.getProgram(),
         "Program mismatch between %s and %s",
         course,
-        block);
-    Set<TimeBlock> compatibleBlocks = course.getProgram().compatibleTimeBlocks(course);
+        period);
+    Set<ClassPeriod> compatibleBlocks = course.getProgram().compatiblePeriods(course);
     cond.verify(
-        compatibleBlocks.contains(block),
+        compatibleBlocks.contains(period),
         "Course %s is scheduled for %s but is only available during %s",
         course,
-        block,
+        period,
         compatibleBlocks);
   }
 
@@ -118,32 +119,32 @@ final class DefaultScheduleLogic implements ScheduleLogic {
         flags.maxClassCapRatio);
   }
 
-  protected void verifyCompatible(Condition cond, Room room, TimeBlock block) {
+  protected void verifyCompatible(Condition cond, Room room, ClassPeriod period) {
     cond.verify(
-        block.getProgram() == room.getProgram(),
+        period.getProgram() == room.getProgram(),
         "Program mismatch between %s and %s",
-        block,
+        period,
         room);
-    Set<TimeBlock> compatibleBlocks = room.getProgram().compatibleTimeBlocks(room);
+    Set<ClassPeriod> compatibleBlocks = room.getProgram().compatiblePeriods(room);
     cond.verify(
-        compatibleBlocks.contains(block),
+        compatibleBlocks.contains(period),
         "Room %s is scheduled for a class in block %s but is only available during: %s",
         room,
-        block,
+        period,
         compatibleBlocks);
   }
 
   private Condition verifyNoTeacherConflicts(Condition parent, Schedule schedule) {
     Program program = schedule.getProgram();
-    Table<TimeBlock, Room, Section> table = schedule.getScheduleTable();
+    Table<ClassPeriod, Room, Section> table = schedule.getScheduleTable();
     Condition teacherConflicts = parent.createSubCondition("teacherconflicts");
     teacherConflicts.getLogger().log(
         Level.FINEST,
         "Checking for teacher conflicts in schedule %s",
         schedule);
 
-    for (Entry<TimeBlock, Map<Room, Section>> scheduleEntry : table.rowMap().entrySet()) {
-      TimeBlock block = scheduleEntry.getKey();
+    for (Entry<ClassPeriod, Map<Room, Section>> scheduleEntry : table.rowMap().entrySet()) {
+      ClassPeriod block = scheduleEntry.getKey();
       Map<Room, Section> roomAssignments = scheduleEntry.getValue();
 
       SetMultimap<Teacher, Section> coursesTeachingNow = HashMultimap.create(
@@ -175,8 +176,8 @@ final class DefaultScheduleLogic implements ScheduleLogic {
   }
 
   private Condition verifyNoDuplicateSections(Condition parent, Schedule schedule) {
-    Table<TimeBlock, Room, Section> table = schedule.getScheduleTable();
-    Map<Section, Table.Cell<TimeBlock, Room, Section>> cellMap = Maps
+    Table<ClassPeriod, Room, Section> table = schedule.getScheduleTable();
+    Map<Section, Table.Cell<ClassPeriod, Room, Section>> cellMap = Maps
         .newHashMapWithExpectedSize(table.size());
 
     Condition duplicateCourses = parent.createSubCondition("duplicatecourses");
@@ -186,9 +187,9 @@ final class DefaultScheduleLogic implements ScheduleLogic {
         "Checking for duplicate courses in schedule %s",
         schedule);
 
-    for (Cell<TimeBlock, Room, Section> cell : table.cellSet()) {
+    for (Cell<ClassPeriod, Room, Section> cell : table.cellSet()) {
       Section s = cell.getValue();
-      Cell<TimeBlock, Room, Section> previous = cellMap.get(s);
+      Cell<ClassPeriod, Room, Section> previous = cellMap.get(s);
       duplicateCourses.verify(
           previous == null,
           "Section %s is scheduled twice: %s and %s",

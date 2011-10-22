@@ -26,9 +26,10 @@ public final class Teacher extends ProgramObject<SerialTeacher> {
   }
 
   // Does not cache!
-  Set<TimeBlock> getCompatibleTimeBlocks() {
+  Set<ClassPeriod> getCompatiblePeriods() {
     return ProgramObjectSet.create(Lists.transform(
-        serial.getAvailableBlocksList(), program.timeBlocks.asLookupFunction()));
+        serial.getAvailablePeriodsList(),
+        program.periods.asLookupFunction()));
   }
 
   public String getName() {

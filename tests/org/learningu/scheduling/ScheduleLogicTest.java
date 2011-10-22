@@ -2,12 +2,13 @@ package org.learningu.scheduling;
 
 import junit.framework.TestCase;
 
+import org.learningu.scheduling.graph.ClassPeriod;
 import org.learningu.scheduling.graph.Course;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Section;
+import org.learningu.scheduling.graph.Serial.SerialPeriod;
 import org.learningu.scheduling.graph.Serial.SerialTeacher;
-import org.learningu.scheduling.graph.Serial.SerialTimeBlock;
 import org.learningu.scheduling.graph.TimeBlock;
 
 import com.google.common.collect.ImmutableTable;
@@ -22,10 +23,10 @@ import com.google.inject.name.Named;
 public class ScheduleLogicTest extends TestCase {
   static final class DumbSchedule implements Schedule {
     final Program program;
-    final Table<TimeBlock, Room, Section> table;
+    final Table<ClassPeriod, Room, Section> table;
 
     @Inject
-    DumbSchedule(Program program, Table<TimeBlock, Room, Section> table) {
+    DumbSchedule(Program program, Table<ClassPeriod, Room, Section> table) {
       this.program = program;
       this.table = table;
     }
@@ -36,7 +37,7 @@ public class ScheduleLogicTest extends TestCase {
     }
 
     @Override
-    public Table<TimeBlock, Room, Section> getScheduleTable() {
+    public Table<ClassPeriod, Room, Section> getScheduleTable() {
       return table;
     }
   }
@@ -45,8 +46,9 @@ public class ScheduleLogicTest extends TestCase {
     @Override
     protected void configure() {
       super.configure();
-      SerialTimeBlock tenAM = bindTimeBlock("10AM");
-      SerialTimeBlock elevenAM = bindTimeBlock("11AM");
+      SerialPeriod tenAM = bindPeriod("10AM");
+      SerialPeriod elevenAM = bindPeriod("11AM");
+      bindTimeBlock("Saturday Morning", tenAM, elevenAM);
       SerialTeacher alice = bindTeacher("Alice", tenAM);
       SerialTeacher bob = bindTeacher("Bob", elevenAM);
       SerialTeacher carol = bindTeacher("Carol", tenAM, elevenAM);
@@ -85,7 +87,7 @@ public class ScheduleLogicTest extends TestCase {
       @SuppressWarnings("unused")
       // provider
       @Provides
-      Table<TimeBlock, Room, Section> scheduleTable() {
+      Table<ClassPeriod, Room, Section> scheduleTable() {
         return ImmutableTable.of();
       }
     });
@@ -101,15 +103,15 @@ public class ScheduleLogicTest extends TestCase {
       @SuppressWarnings("unused")
       // provider
       @Provides
-      Table<TimeBlock, Room, Section> scheduleTable(
-          @Named("10AM") TimeBlock tenAM,
-          @Named("11AM") TimeBlock elevenAM,
+      Table<ClassPeriod, Room, Section> scheduleTable(
+          @Named("10AM") ClassPeriod tenAM,
+          @Named("11AM") ClassPeriod elevenAM,
           @Named("ScienceCourse") Course scienceCourse,
           @Named("PiratesCourse") Course piratesCourse,
           @Named("MathCourse") Course mathCourse,
           @Named("Harper130") Room harper130,
           @Named("Harper135") Room harper135) {
-        ImmutableTable.Builder<TimeBlock, Room, Section> builder = ImmutableTable.builder();
+        ImmutableTable.Builder<ClassPeriod, Room, Section> builder = ImmutableTable.builder();
         builder.put(tenAM, harper135, scienceCourse.getSection(0));
         builder.put(elevenAM, harper135, mathCourse.getSection(0));
         builder.put(elevenAM, harper130, piratesCourse.getSection(0));
@@ -128,12 +130,12 @@ public class ScheduleLogicTest extends TestCase {
       @SuppressWarnings("unused")
       // provider
       @Provides
-      Table<TimeBlock, Room, Section> scheduleTable(
-          @Named("11AM") TimeBlock elevenAM,
+      Table<ClassPeriod, Room, Section> scheduleTable(
+          @Named("11AM") ClassPeriod elevenAM,
           @Named("ScienceCourse") Course scienceCourse,
           @Named("Harper135") Room harper135) {
         // Alice co-teaches science, but is unavailable at 11.
-        ImmutableTable.Builder<TimeBlock, Room, Section> builder = ImmutableTable.builder();
+        ImmutableTable.Builder<ClassPeriod, Room, Section> builder = ImmutableTable.builder();
         builder.put(elevenAM, harper135, scienceCourse.getSection(0));
         return builder.build();
       }
@@ -150,14 +152,14 @@ public class ScheduleLogicTest extends TestCase {
       @SuppressWarnings("unused")
       // provider
       @Provides
-      Table<TimeBlock, Room, Section> scheduleTable(
-          @Named("10AM") TimeBlock tenAM,
+      Table<ClassPeriod, Room, Section> scheduleTable(
+          @Named("10AM") ClassPeriod tenAM,
           @Named("ScienceCourse") Course scienceCourse,
           @Named("MathCourse") Course mathCourse,
           @Named("Harper135") Room harper135,
           @Named("Harper141") Room harper141) {
         // Carol teaches both science and math, but they are both scheduled for 10.
-        ImmutableTable.Builder<TimeBlock, Room, Section> builder = ImmutableTable.builder();
+        ImmutableTable.Builder<ClassPeriod, Room, Section> builder = ImmutableTable.builder();
         builder.put(tenAM, harper135, scienceCourse.getSection(0));
         builder.put(tenAM, harper141, mathCourse.getSection(0));
         return builder.build();
@@ -175,8 +177,8 @@ public class ScheduleLogicTest extends TestCase {
       @SuppressWarnings("unused")
       // provider
       @Provides
-      Table<TimeBlock, Room, Section> scheduleTable(
-          @Named("11AM") TimeBlock elevenAM,
+      Table<ClassPeriod, Room, Section> scheduleTable(
+          @Named("11AM") ClassPeriod elevenAM,
           @Named("MathCourse") Course mathCourse,
           @Named("Harper141") Room harper141) {
         // Room 141 is not available at 11 am.
@@ -195,13 +197,13 @@ public class ScheduleLogicTest extends TestCase {
       @SuppressWarnings("unused")
       // provider
       @Provides
-      Table<TimeBlock, Room, Section> scheduleTable(
-          @Named("10AM") TimeBlock tenAM,
-          @Named("11AM") TimeBlock elevenAM,
+      Table<ClassPeriod, Room, Section> scheduleTable(
+          @Named("10AM") ClassPeriod tenAM,
+          @Named("11AM") ClassPeriod elevenAM,
           @Named("MathCourse") Course mathCourse,
           @Named("Harper135") Room harper135) {
         // We doubly-scheduled math for both 10 and 11.
-        ImmutableTable.Builder<TimeBlock, Room, Section> builder = ImmutableTable.builder();
+        ImmutableTable.Builder<ClassPeriod, Room, Section> builder = ImmutableTable.builder();
         builder.put(tenAM, harper135, mathCourse.getSection(0));
         builder.put(elevenAM, harper135, mathCourse.getSection(1));
         return builder.build();
@@ -219,13 +221,13 @@ public class ScheduleLogicTest extends TestCase {
       @SuppressWarnings("unused")
       // provider
       @Provides
-      Table<TimeBlock, Room, Section> scheduleTable(
-          @Named("10AM") TimeBlock tenAM,
-          @Named("11AM") TimeBlock elevenAM,
+      Table<ClassPeriod, Room, Section> scheduleTable(
+          @Named("10AM") ClassPeriod tenAM,
+          @Named("11AM") ClassPeriod elevenAM,
           @Named("MathCourse") Course mathCourse,
           @Named("Harper135") Room harper135) {
         // We doubly-scheduled math for both 10 and 11.
-        ImmutableTable.Builder<TimeBlock, Room, Section> builder = ImmutableTable.builder();
+        ImmutableTable.Builder<ClassPeriod, Room, Section> builder = ImmutableTable.builder();
         builder.put(tenAM, harper135, mathCourse.getSection(0));
         builder.put(elevenAM, harper135, mathCourse.getSection(0));
         return builder.build();
