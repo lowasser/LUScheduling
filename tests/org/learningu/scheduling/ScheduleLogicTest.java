@@ -56,16 +56,22 @@ public class ScheduleLogicTest extends TestCase {
       super.configure();
       SerialPeriod tenAM = bindPeriod("10AM");
       SerialPeriod elevenAM = bindPeriod("11AM");
-      bindTimeBlock("Saturday Morning", tenAM, elevenAM);
+      SerialPeriod noon = bindPeriod("12PM");
+      bindTimeBlock("Saturday Morning", tenAM, elevenAM, noon);
       SerialTeacher alice = bindTeacher("Alice", tenAM);
       SerialTeacher bob = bindTeacher("Bob", elevenAM);
       SerialTeacher carol = bindTeacher("Carol", tenAM, elevenAM);
-      bindRoom("Harper130", 75, elevenAM);
-      bindRoom("Harper135", 20, tenAM, elevenAM);
-      bindRoom("Harper141", 20, tenAM);
+      SerialTeacher dave = bindTeacher("Dave", tenAM, elevenAM);
+      SerialTeacher ellie = bindTeacher("Ellie", tenAM, elevenAM, noon);
+      bindRoom("Harper130", 75, elevenAM, noon);
+      bindRoom("Harper135", 20, tenAM, elevenAM, noon);
+      bindRoom("Harper141", 20, tenAM, noon);
+      bindRoom("Harper142", 20, tenAM, elevenAM);
       bindCourse("ScienceCourse", 1, 1, 15, alice, carol);
       bindCourse("PiratesCourse", 1, 1, 40, bob);
       bindCourse("MathCourse", 2, 1, 10, carol);
+      bindCourse("OrigamiCourse", 1, 2, 10, dave);
+      bindCourse("ZombiesCourse", 1, 3, 15, ellie);
     }
   }
 
@@ -117,13 +123,57 @@ public class ScheduleLogicTest extends TestCase {
           @Named("ScienceCourse") Course scienceCourse,
           @Named("PiratesCourse") Course piratesCourse,
           @Named("MathCourse") Course mathCourse,
+          @Named("ZombiesCourse") Course zombiesCourse,
           @Named("Harper130") Room harper130,
-          @Named("Harper135") Room harper135) {
+          @Named("Harper135") Room harper135,
+          @Named("Harper142") Room harper142) {
         ImmutableTable.Builder<ClassPeriod, Room, Section> builder = ImmutableTable.builder();
-        builder.put(tenAM, harper135, scienceCourse.getSection(0));
-        builder.put(elevenAM, harper135, mathCourse.getSection(0));
+        builder.put(tenAM, harper142, scienceCourse.getSection(0));
+        builder.put(elevenAM, harper142, mathCourse.getSection(0));
         builder.put(elevenAM, harper130, piratesCourse.getSection(0));
+        builder.put(tenAM, harper135, zombiesCourse.getSection(0));
         return builder.build();
+      }
+    });
+  }
+
+  public void testTeacherUnavailableForPartOfCourseFails() {
+    assertFails(SCHEDULE_MODULE, new AbstractModule() {
+      @Override
+      protected void configure() {
+      }
+
+      @SuppressWarnings("unused")
+      // provider
+      @Provides
+      Table<ClassPeriod, Room, Section> scheduleTable(
+          @Named("11AM") ClassPeriod elevenAM,
+          @Named("OrigamiCourse") Course origami,
+          @Named("Harper135") Room harper135) {
+        // Dave teaches a two-hour origami class, but is not available at noon.
+        return ImmutableTable.of(elevenAM, harper135, origami.getSection(0));
+      }
+    });
+  }
+
+  public void testRoomUnavailableForPartOfCourseFails() {
+    assertFails(SCHEDULE_MODULE, new AbstractModule() {
+      @Override
+      protected void configure() {
+      }
+
+      @SuppressWarnings("unused")
+      // provider
+      @Provides
+      Table<ClassPeriod, Room, Section> scheduleTable(
+          @Named("10AM") ClassPeriod tenAM,
+          @Named("ZombiesCourse") Course zombie,
+          @Named("Harper141") Room harper141) {
+        /*
+         * Harper 141 is only available at 10 and noon (skipping 11) but the zombie class is 3
+         * hours.
+         */
+        return ImmutableTable.of(tenAM, harper141, zombie.getSection(0));
       }
     });
   }
