@@ -7,10 +7,10 @@ import org.learningu.scheduling.graph.Section;
 
 import com.google.common.collect.Table;
 
-public abstract class Schedule {
-  public abstract Program getProgram();
+public interface Schedule {
+  Program getProgram();
 
-  public abstract Table<ClassPeriod, Room, Section> getStartingTimeTable();
-  
-  public abstract Table<ClassPeriod, Room, Section> getScheduleTable();
+  Table<ClassPeriod, Room, Section> getStartingTimeTable();
+
+  Table<ClassPeriod, Room, Section> getScheduleTable();
 }

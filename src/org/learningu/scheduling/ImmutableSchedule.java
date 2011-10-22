@@ -14,7 +14,7 @@ import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.google.common.collect.Table.Cell;
 
-public final class ImmutableSchedule extends Schedule {
+public final class ImmutableSchedule implements Schedule {
   private final Program program;
   private final ImmutableTable<ClassPeriod, Room, Section> scheduleTable;
   private final ImmutableTable<ClassPeriod, Room, Section> startingTable;
