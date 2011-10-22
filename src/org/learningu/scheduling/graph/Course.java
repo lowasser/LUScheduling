@@ -2,11 +2,13 @@ package org.learningu.scheduling.graph;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.List;
 import java.util.Set;
 
 import org.learningu.scheduling.graph.Serial.SerialCourse;
 
 import com.google.common.base.Function;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 /**
@@ -28,13 +30,36 @@ public final class Course extends ProgramObject<SerialCourse> {
     return serial.getCourseId();
   }
 
+  public int getSectionCount() {
+    return serial.getSections();
+  }
+
+  private transient List<Section> sections;
+
+  public List<Section> getSections() {
+    List<Section> result = sections;
+    if (result == null) {
+      ImmutableList.Builder<Section> builder = ImmutableList.builder();
+      for (int i = 0; i < getSectionCount(); i++) {
+        builder.add(new Section(Course.this, i));
+      }
+      return sections = builder.build();
+    }
+    return result;
+  }
+
+  public Section getSection(int index) {
+    return getSections().get(index);
+  }
+
   public String getTitle() {
     return serial.getCourseTitle();
   }
 
   // Does not cache!
   Set<Teacher> getTeachers() {
-    return ProgramObjectSet.create(Lists.transform(serial.getTeacherIdsList(),
+    return ProgramObjectSet.create(Lists.transform(
+        serial.getTeacherIdsList(),
         program.teachers.asLookupFunction()));
   }
 

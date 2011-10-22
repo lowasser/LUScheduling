@@ -10,6 +10,7 @@ message SerialCourse {
 	repeated int32 teacherIds = 3 [packed = true];
 	optional int32 estimatedClassSize = 5 [default = 15];
 	optional int32 maxClassSize = 6 [default = 20];
+	optional int32 sections = 7 [default = 1];
 }
 
 /*
@@ -51,6 +52,11 @@ message SerialProgram {
 	repeated SerialRoom rooms = 4;
 }
 
+message SerialSection {
+	required int32 courseId = 1;
+	required int32 sectionId = 2;
+}
+
 /*
  * An entire schedule for an LU program.
  */
@@ -62,7 +68,7 @@ message SerialSchedule {
 	message SerialScheduleAssignment {
 		required int32 timeBlockId = 1;
 		required int32 roomId = 2;
-		required int32 courseId = 3;
+		required SerialSection section = 3;
 	}
 
 	repeated SerialScheduleAssignment assignments = 1;

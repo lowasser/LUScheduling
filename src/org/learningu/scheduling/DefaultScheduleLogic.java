@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import org.learningu.scheduling.graph.Course;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
+import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Teacher;
 import org.learningu.scheduling.graph.TimeBlock;
 import org.learningu.scheduling.util.Condition;
@@ -41,6 +42,7 @@ final class DefaultScheduleLogic implements ScheduleLogic {
     return logger;
   }
 
+  @Override
   public Condition isValid(Schedule schedule) {
     Condition valid = Condition.create(getLogger(), Level.FINE);
     if (flags.localScheduleCheck) {
@@ -49,27 +51,27 @@ final class DefaultScheduleLogic implements ScheduleLogic {
     if (flags.teacherConflictCheck) {
       verifyNoTeacherConflicts(valid, schedule);
     }
-    if (flags.doublyScheduledCoursesCheck) {
-      verifyNoDuplicateCourses(valid, schedule);
+    if (flags.doublyScheduledSectionsCheck) {
+      verifyNoDuplicateSections(valid, schedule);
     }
     return valid;
   }
 
   protected Condition verifyLocallyValid(Condition parent, Schedule schedule) {
-    Table<TimeBlock, Room, Course> table = schedule.getScheduleTable();
+    Table<TimeBlock, Room, Section> table = schedule.getScheduleTable();
     Condition local = parent.createSubCondition("local");
     local.log(Level.FINEST, "Testing local validity of schedule");
-    for (Cell<TimeBlock, Room, Course> cell : table.cellSet()) {
+    for (Cell<TimeBlock, Room, Section> cell : table.cellSet()) {
       verifyLocallyValid(local, cell);
     }
     local.log(Level.FINEST, "Done testing local validity of schedule");
     return local;
   }
 
-  protected Condition verifyLocallyValid(Condition local, Cell<TimeBlock, Room, Course> cell) {
+  protected Condition verifyLocallyValid(Condition local, Cell<TimeBlock, Room, Section> cell) {
     TimeBlock block = cell.getRowKey();
     Room room = cell.getColumnKey();
-    Course course = cell.getValue();
+    Course course = cell.getValue().getCourse();
     local.log(Level.FINEST, "Testing local validity of %s", cell);
     verifyCompatible(local, course, block);
     verifyCompatible(local, room, block);
@@ -101,13 +103,14 @@ final class DefaultScheduleLogic implements ScheduleLogic {
         "Program mismatch between %s and %s",
         course,
         room);
-    cond.verify(
-        estClassSizeRatio >= flags.minEstimatedClassSizeRatio
-            && estClassSizeRatio <= flags.maxEstimatedClassSizeRatio,
-        "Estimated class size : room capacity ratio was %s but should have been between %s and %s",
-        estClassSizeRatio,
-        flags.minEstimatedClassSizeRatio,
-        flags.maxEstimatedClassSizeRatio);
+    cond
+        .verify(
+            estClassSizeRatio >= flags.minEstimatedClassSizeRatio
+                && estClassSizeRatio <= flags.maxEstimatedClassSizeRatio,
+            "Estimated class size : room capacity ratio was %s but should have been between %s and %s",
+            estClassSizeRatio,
+            flags.minEstimatedClassSizeRatio,
+            flags.maxEstimatedClassSizeRatio);
     cond.verify(
         classCapRatio <= flags.maxClassCapRatio,
         "Class capacity : room capacity ratio was %s but should have been at most %s",
@@ -132,31 +135,32 @@ final class DefaultScheduleLogic implements ScheduleLogic {
 
   private Condition verifyNoTeacherConflicts(Condition parent, Schedule schedule) {
     Program program = schedule.getProgram();
-    Table<TimeBlock, Room, Course> table = schedule.getScheduleTable();
+    Table<TimeBlock, Room, Section> table = schedule.getScheduleTable();
     Condition teacherConflicts = parent.createSubCondition("teacherconflicts");
     teacherConflicts.getLogger().log(
         Level.FINEST,
         "Checking for teacher conflicts in schedule %s",
         schedule);
 
-    for (Entry<TimeBlock, Map<Room, Course>> scheduleEntry : table.rowMap().entrySet()) {
+    for (Entry<TimeBlock, Map<Room, Section>> scheduleEntry : table.rowMap().entrySet()) {
       TimeBlock block = scheduleEntry.getKey();
-      Map<Room, Course> roomAssignments = scheduleEntry.getValue();
+      Map<Room, Section> roomAssignments = scheduleEntry.getValue();
 
-      SetMultimap<Teacher, Course> coursesTeachingNow = HashMultimap.create(
+      SetMultimap<Teacher, Section> coursesTeachingNow = HashMultimap.create(
           roomAssignments.size(),
           4);
 
-      for (Course c : roomAssignments.values()) {
-        for (Teacher t : program.teachersForCourse(c)) {
-          coursesTeachingNow.put(t, c);
+      for (Section s : roomAssignments.values()) {
+        for (Teacher t : program.teachersForCourse(s.getCourse())) {
+          coursesTeachingNow.put(t, s);
         }
       }
 
-      for (Entry<Teacher, Collection<Course>> teacherAssignments : coursesTeachingNow.asMap()
+      for (Entry<Teacher, Collection<Section>> teacherAssignments : coursesTeachingNow
+          .asMap()
           .entrySet()) {
         Teacher t = teacherAssignments.getKey();
-        Collection<Course> teaching = teacherAssignments.getValue();
+        Collection<Section> teaching = teacherAssignments.getValue();
         teacherConflicts.verify(
             teaching.size() <= 1,
             "Teacher %s has conflicts between %s classes in block %s: %s",
@@ -170,9 +174,10 @@ final class DefaultScheduleLogic implements ScheduleLogic {
     return teacherConflicts;
   }
 
-  private Condition verifyNoDuplicateCourses(Condition parent, Schedule schedule) {
-    Table<TimeBlock, Room, Course> table = schedule.getScheduleTable();
-    Map<Course, Table.Cell<TimeBlock, Room, Course>> cellMap = Maps.newHashMapWithExpectedSize(table.size());
+  private Condition verifyNoDuplicateSections(Condition parent, Schedule schedule) {
+    Table<TimeBlock, Room, Section> table = schedule.getScheduleTable();
+    Map<Section, Table.Cell<TimeBlock, Room, Section>> cellMap = Maps
+        .newHashMapWithExpectedSize(table.size());
 
     Condition duplicateCourses = parent.createSubCondition("duplicatecourses");
 
@@ -181,16 +186,16 @@ final class DefaultScheduleLogic implements ScheduleLogic {
         "Checking for duplicate courses in schedule %s",
         schedule);
 
-    for (Cell<TimeBlock, Room, Course> cell : table.cellSet()) {
-      Course c = cell.getValue();
-      Cell<TimeBlock, Room, Course> previous = cellMap.get(c);
+    for (Cell<TimeBlock, Room, Section> cell : table.cellSet()) {
+      Section s = cell.getValue();
+      Cell<TimeBlock, Room, Section> previous = cellMap.get(s);
       duplicateCourses.verify(
           previous == null,
-          "Course %s is scheduled twice: %s and %s",
-          c,
+          "Section %s is scheduled twice: %s and %s",
+          s,
           cell,
           previous);
-      cellMap.put(c, cell);
+      cellMap.put(s, cell);
     }
 
     return duplicateCourses;

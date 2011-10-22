@@ -4,6 +4,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nullable;
@@ -11,13 +12,16 @@ import javax.annotation.Nullable;
 import org.learningu.scheduling.graph.Serial.SerialProgram;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.Weigher;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
@@ -43,6 +47,7 @@ public final class Program {
   private final Cache<Room, Set<TimeBlock>> roomAvailableBlocks;
   private final Cache<Teacher, Set<TimeBlock>> teacherAvailableBlocks;
   private final Cache<Course, Set<Teacher>> teachersForCourse;
+  private transient ImmutableSet<Section> sections;
 
   @VisibleForTesting
   Program(SerialProgram serial) {
@@ -67,7 +72,8 @@ public final class Program {
         TimeBlock.programWrapper(this)));
 
     // initialize teachingMap
-    ImmutableSetMultimap.Builder<Teacher, Course> teachingMapBuilder = ImmutableSetMultimap.builder();
+    ImmutableSetMultimap.Builder<Teacher, Course> teachingMapBuilder = ImmutableSetMultimap
+        .builder();
     for (Course c : courses) {
       for (Teacher t : c.getTeachers()) {
         teachingMapBuilder.put(t, c);
@@ -79,7 +85,8 @@ public final class Program {
     checkCoursesValid();
     checkRoomsValid();
 
-    this.teacherAvailableBlocks = CacheBuilder.newBuilder()
+    this.teacherAvailableBlocks = CacheBuilder
+        .newBuilder()
         .initialCapacity(teachers.size())
         .concurrencyLevel(flags.cacheConcurrencyLevel)
         .weigher(COLLECTION_WEIGHER)
@@ -90,7 +97,8 @@ public final class Program {
             return key.getCompatibleTimeBlocks();
           }
         });
-    this.roomAvailableBlocks = CacheBuilder.newBuilder()
+    this.roomAvailableBlocks = CacheBuilder
+        .newBuilder()
         .initialCapacity(rooms.size())
         .concurrencyLevel(flags.cacheConcurrencyLevel)
         .weigher(COLLECTION_WEIGHER)
@@ -101,7 +109,8 @@ public final class Program {
             return key.getCompatibleTimeBlocks();
           }
         });
-    this.teachersForCourse = CacheBuilder.newBuilder()
+    this.teachersForCourse = CacheBuilder
+        .newBuilder()
         .initialCapacity(courses.size())
         .weigher(COLLECTION_WEIGHER)
         .concurrencyLevel(flags.cacheConcurrencyLevel)
@@ -112,7 +121,8 @@ public final class Program {
             return key.getTeachers();
           }
         });
-    this.courseCompatibleBlocks = CacheBuilder.newBuilder()
+    this.courseCompatibleBlocks = CacheBuilder
+        .newBuilder()
         .initialCapacity(courses.size())
         .weigher(COLLECTION_WEIGHER)
         .concurrencyLevel(flags.cacheConcurrencyLevel)
@@ -211,6 +221,21 @@ public final class Program {
 
   public Set<Room> getRooms() {
     return rooms;
+  }
+
+  public synchronized Set<Section> getSections() {
+    Set<Section> result = sections;
+    if (result == null) {
+      return sections = ImmutableSet.copyOf(Iterables.concat(Collections2.transform(
+          getCourses(),
+          new Function<Course, List<Section>>() {
+            @Override
+            public List<Section> apply(Course input) {
+              return input.getSections();
+            }
+          })));
+    }
+    return result;
   }
 
   @Override

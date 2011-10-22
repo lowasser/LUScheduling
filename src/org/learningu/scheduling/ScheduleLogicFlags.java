@@ -51,10 +51,10 @@ public final class ScheduleLogicFlags {
   final boolean teacherConflictCheck;
 
   @Flag(
-      value = "doublyScheduledCoursesCheck",
-      description = "Check for classes appearing more than once in the schedule.",
+      value = "doublyScheduledSectionsCheck",
+      description = "Check for sections appearing more than once in the schedule.",
       defaultValue = "true")
-  final boolean doublyScheduledCoursesCheck;
+  final boolean doublyScheduledSectionsCheck;
 
   @Inject
   ScheduleLogicFlags(
@@ -62,13 +62,13 @@ public final class ScheduleLogicFlags {
       @Named("maxEstimatedClassSizeRatio") double maxEstimatedClassSizeRatio,
       @Named("maxClassCapRatio") double maxClassCapRatio,
       @Named("teacherConflictCheck") boolean teacherConflictCheck,
-      @Named("doublyScheduledCoursesCheck") boolean doublyScheduledCoursesCheck,
+      @Named("doublyScheduledSectionsCheck") boolean doublyScheduledCoursesCheck,
       @Named("localScheduleCheck") boolean localScheduleCheck) {
     this.minEstimatedClassSizeRatio = minEstimatedClassSizeRatio;
     this.maxEstimatedClassSizeRatio = maxEstimatedClassSizeRatio;
     this.maxClassCapRatio = maxClassCapRatio;
     this.teacherConflictCheck = teacherConflictCheck;
-    this.doublyScheduledCoursesCheck = doublyScheduledCoursesCheck;
+    this.doublyScheduledSectionsCheck = doublyScheduledCoursesCheck;
     this.localScheduleCheck = localScheduleCheck;
   }
 }

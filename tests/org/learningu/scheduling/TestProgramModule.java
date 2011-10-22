@@ -108,9 +108,10 @@ public class TestProgramModule extends AbstractModule {
     return room;
   }
 
-  protected SerialCourse bindCourse(String name, int size, SerialTeacher... teachers) {
+  protected SerialCourse bindCourse(String name, int sections, int size, SerialTeacher... teachers) {
     SerialCourse.Builder builder = SerialCourse.newBuilder()
         .setCourseId(uid++)
+        .setSections(sections)
         .setCourseTitle(name)
         .setEstimatedClassSize(size)
         .setMaxClassSize(size);
