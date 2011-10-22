@@ -21,8 +21,15 @@ public final class Course extends ProgramObject<SerialCourse> {
    * Features that might be added in the future include: prerequisites, multi-block classes.
    */
 
+  private final List<Section> sections;
+
   Course(Program program, SerialCourse serial) {
     super(program, serial);
+    ImmutableList.Builder<Section> builder = ImmutableList.builder();
+    for (int i = 0; i < getSectionCount(); i++) {
+      builder.add(new Section(Course.this, i));
+    }
+    sections = builder.build();
   }
 
   @Override
@@ -34,22 +41,16 @@ public final class Course extends ProgramObject<SerialCourse> {
     return serial.getSections();
   }
 
-  private transient List<Section> sections;
-
   public List<Section> getSections() {
-    List<Section> result = sections;
-    if (result == null) {
-      ImmutableList.Builder<Section> builder = ImmutableList.builder();
-      for (int i = 0; i < getSectionCount(); i++) {
-        builder.add(new Section(Course.this, i));
-      }
-      return sections = builder.build();
-    }
-    return result;
+    return sections;
   }
 
   public Section getSection(int index) {
     return getSections().get(index);
+  }
+
+  public int getPeriodLength() {
+    return serial.getPeriodLength();
   }
 
   public String getTitle() {

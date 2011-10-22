@@ -20,7 +20,7 @@ public class Schedules {
 
   public static SerialSchedule serialize(Schedule schedule) {
     SerialSchedule.Builder builder = SerialSchedule.newBuilder();
-    for (Cell<ClassPeriod, Room, Section> cell : schedule.getScheduleTable().cellSet()) {
+    for (Cell<ClassPeriod, Room, Section> cell : schedule.getStartingTimeTable().cellSet()) {
       builder.addAssignments(serialize(cell));
     }
     return builder.build();
@@ -53,7 +53,7 @@ public class Schedules {
     for (SerialScheduleAssignment assignment : schedule.getAssignmentsList()) {
       builder.put(deserialize(assignment, program));
     }
-    return new ImmutableSchedule(program, builder.build());
+    return ImmutableSchedule.create(program, builder.build());
   }
 
   private static Section deserialize(SerialSection section, Program program) {

@@ -1,5 +1,6 @@
 package org.learningu.scheduling.graph;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
@@ -9,7 +10,8 @@ import org.learningu.scheduling.graph.Serial.SerialPeriod;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 
-public final class ClassPeriod extends ProgramObject<SerialPeriod> {
+public final class ClassPeriod extends ProgramObject<SerialPeriod> implements
+    Comparable<ClassPeriod> {
   private final TimeBlock block;
   private final int index;
 
@@ -85,5 +87,11 @@ public final class ClassPeriod extends ProgramObject<SerialPeriod> {
   public List<ClassPeriod> getHeadPeriods(boolean inclusive) {
     List<ClassPeriod> periods = block.getPeriods();
     return periods.subList(0, inclusive ? index + 1 : index);
+  }
+
+  @Override
+  public int compareTo(ClassPeriod period) {
+    checkArgument(block == period.block);
+    return index - period.index;
   }
 }

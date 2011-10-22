@@ -12,7 +12,7 @@ import com.google.inject.name.Named;
  */
 public final class ScheduleLogicFlags {
   public static final ScheduleLogicFlags DEFAULTS = new ScheduleLogicFlags(0.0, 1.0, 1.0, true,
-      true, true);
+      true, true, true);
 
   @Flag(
       value = "minEstimatedClassSizeRatio",
@@ -45,6 +45,13 @@ public final class ScheduleLogicFlags {
   final boolean localScheduleCheck;
 
   @Flag(
+      value = "overlappingClassCheck",
+      description = "Check that multi-period classes do not overlap with other classes in "
+          + "the same room.",
+      defaultValue = "true")
+  final boolean overlappingClassCheck;
+
+  @Flag(
       value = "teacherConflictCheck",
       description = "Check for teachers scheduled to teach more than one class in the same block.",
       defaultValue = "true")
@@ -61,12 +68,14 @@ public final class ScheduleLogicFlags {
       @Named("minEstimatedClassSizeRatio") double minEstimatedClassSizeRatio,
       @Named("maxEstimatedClassSizeRatio") double maxEstimatedClassSizeRatio,
       @Named("maxClassCapRatio") double maxClassCapRatio,
+      @Named("overlappingClassCheck") boolean overlappingClassCheck,
       @Named("teacherConflictCheck") boolean teacherConflictCheck,
       @Named("doublyScheduledSectionsCheck") boolean doublyScheduledCoursesCheck,
       @Named("localScheduleCheck") boolean localScheduleCheck) {
     this.minEstimatedClassSizeRatio = minEstimatedClassSizeRatio;
     this.maxEstimatedClassSizeRatio = maxEstimatedClassSizeRatio;
     this.maxClassCapRatio = maxClassCapRatio;
+    this.overlappingClassCheck = overlappingClassCheck;
     this.teacherConflictCheck = teacherConflictCheck;
     this.doublyScheduledSectionsCheck = doublyScheduledCoursesCheck;
     this.localScheduleCheck = localScheduleCheck;

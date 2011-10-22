@@ -1,6 +1,7 @@
 package org.learningu.scheduling;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -13,9 +14,10 @@ import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Teacher;
-import org.learningu.scheduling.graph.TimeBlock;
 import org.learningu.scheduling.util.Condition;
 
+import com.google.common.base.Objects;
+import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.SetMultimap;
@@ -54,6 +56,9 @@ final class DefaultScheduleLogic implements ScheduleLogic {
     }
     if (flags.doublyScheduledSectionsCheck) {
       verifyNoDuplicateSections(valid, schedule);
+    }
+    if (flags.overlappingClassCheck) {
+      verifyNoOverlaps(valid, schedule);
     }
     return valid;
   }
@@ -104,14 +109,13 @@ final class DefaultScheduleLogic implements ScheduleLogic {
         "Program mismatch between %s and %s",
         course,
         room);
-    cond
-        .verify(
-            estClassSizeRatio >= flags.minEstimatedClassSizeRatio
-                && estClassSizeRatio <= flags.maxEstimatedClassSizeRatio,
-            "Estimated class size : room capacity ratio was %s but should have been between %s and %s",
-            estClassSizeRatio,
-            flags.minEstimatedClassSizeRatio,
-            flags.maxEstimatedClassSizeRatio);
+    cond.verify(
+        estClassSizeRatio >= flags.minEstimatedClassSizeRatio
+            && estClassSizeRatio <= flags.maxEstimatedClassSizeRatio,
+        "Estimated class size : room capacity ratio was %s but should have been between %s and %s",
+        estClassSizeRatio,
+        flags.minEstimatedClassSizeRatio,
+        flags.maxEstimatedClassSizeRatio);
     cond.verify(
         classCapRatio <= flags.maxClassCapRatio,
         "Class capacity : room capacity ratio was %s but should have been at most %s",
@@ -157,8 +161,7 @@ final class DefaultScheduleLogic implements ScheduleLogic {
         }
       }
 
-      for (Entry<Teacher, Collection<Section>> teacherAssignments : coursesTeachingNow
-          .asMap()
+      for (Entry<Teacher, Collection<Section>> teacherAssignments : coursesTeachingNow.asMap()
           .entrySet()) {
         Teacher t = teacherAssignments.getKey();
         Collection<Section> teaching = teacherAssignments.getValue();
@@ -176,16 +179,12 @@ final class DefaultScheduleLogic implements ScheduleLogic {
   }
 
   private Condition verifyNoDuplicateSections(Condition parent, Schedule schedule) {
-    Table<ClassPeriod, Room, Section> table = schedule.getScheduleTable();
-    Map<Section, Table.Cell<ClassPeriod, Room, Section>> cellMap = Maps
-        .newHashMapWithExpectedSize(table.size());
+    Table<ClassPeriod, Room, Section> table = schedule.getStartingTimeTable();
+    Map<Section, Table.Cell<ClassPeriod, Room, Section>> cellMap = Maps.newHashMapWithExpectedSize(table.size());
 
     Condition duplicateCourses = parent.createSubCondition("duplicatecourses");
 
-    duplicateCourses.getLogger().log(
-        Level.FINEST,
-        "Checking for duplicate courses in schedule %s",
-        schedule);
+    duplicateCourses.log(Level.FINEST, "Checking for duplicate courses in schedule %s", schedule);
 
     for (Cell<ClassPeriod, Room, Section> cell : table.cellSet()) {
       Section s = cell.getValue();
@@ -200,5 +199,53 @@ final class DefaultScheduleLogic implements ScheduleLogic {
     }
 
     return duplicateCourses;
+  }
+
+  private Condition verifyNoOverlaps(Condition parent, Schedule schedule) {
+    /*
+     * This is equivalent to verifying that the starting time table matches correctly with the full
+     * schedule table.
+     */
+    Table<ClassPeriod, Room, Section> startTable = schedule.getStartingTimeTable();
+    Table<ClassPeriod, Room, Section> schedTable = HashBasedTable.create(schedule.getScheduleTable());
+
+    Condition noOverlaps = parent.createSubCondition("overlaps");
+
+    noOverlaps.log(
+        Level.FINEST,
+        "Checking for correct match between start-table and schedule-table in schedule %s",
+        schedule);
+
+    for (Cell<ClassPeriod, Room, Section> cell : startTable.cellSet()) {
+      ClassPeriod startPd = cell.getRowKey();
+      Room room = cell.getColumnKey();
+      Section section = cell.getValue();
+      Course course = section.getCourse();
+      List<ClassPeriod> targetPeriods = startPd.getTailPeriods(true);
+      noOverlaps.verify(
+          targetPeriods.size() >= course.getPeriodLength(),
+          "Schedule assignment %s runs over the end of the time block",
+          cell);
+      if (targetPeriods.size() >= course.getPeriodLength()) {
+        targetPeriods = targetPeriods.subList(0, course.getPeriodLength());
+        for (ClassPeriod target : targetPeriods) {
+          Section removed = schedTable.remove(target, room);
+          noOverlaps.verify(
+              Objects.equal(removed, section),
+              "Expected %s to be scheduled in period %s in room %s, but was %s",
+              section,
+              target,
+              room,
+              removed);
+        }
+      }
+    }
+
+    noOverlaps.verify(
+        schedTable.isEmpty(),
+        "The following courses were scheduled in rooms but did not have a registered start time: %s",
+        schedTable.cellSet());
+
+    return noOverlaps;
   }
 }

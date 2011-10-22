@@ -9,38 +9,29 @@ import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Serial.SerialPeriod;
 import org.learningu.scheduling.graph.Serial.SerialTeacher;
-import org.learningu.scheduling.graph.TimeBlock;
 
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.google.inject.AbstractModule;
-import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 
 public class ScheduleLogicTest extends TestCase {
-  static final class DumbSchedule implements Schedule {
-    final Program program;
-    final Table<ClassPeriod, Room, Section> table;
 
-    @Inject
-    DumbSchedule(Program program, Table<ClassPeriod, Room, Section> table) {
-      this.program = program;
-      this.table = table;
+  static final Module SCHEDULE_MODULE = new AbstractModule() {
+
+    @SuppressWarnings("unused")
+    @Provides
+    Schedule getSchedule(Program program, Table<ClassPeriod, Room, Section> startTable) {
+      return ImmutableSchedule.create(program, startTable);
     }
 
     @Override
-    public Program getProgram() {
-      return program;
+    protected void configure() {
     }
-
-    @Override
-    public Table<ClassPeriod, Room, Section> getScheduleTable() {
-      return table;
-    }
-  }
+  };
 
   class SampleProgramModule extends TestProgramModule {
     @Override
@@ -55,9 +46,9 @@ public class ScheduleLogicTest extends TestCase {
       bindRoom("Harper130", 75, elevenAM);
       bindRoom("Harper135", 20, tenAM, elevenAM);
       bindRoom("Harper141", 20, tenAM);
-      bindCourse("ScienceCourse", 1, 15, alice, carol);
-      bindCourse("PiratesCourse", 1, 40, bob);
-      bindCourse("MathCourse", 2, 10, carol);
+      bindCourse("ScienceCourse", 1, 1, 15, alice, carol);
+      bindCourse("PiratesCourse", 1, 1, 40, bob);
+      bindCourse("MathCourse", 1, 2, 10, carol);
     }
   }
 
@@ -78,10 +69,9 @@ public class ScheduleLogicTest extends TestCase {
   }
 
   public void testEmptySchedulePasses() {
-    assertSucceeds(new AbstractModule() {
+    assertSucceeds(SCHEDULE_MODULE, new AbstractModule() {
       @Override
       protected void configure() {
-        bind(Schedule.class).to(DumbSchedule.class);
       }
 
       @SuppressWarnings("unused")
@@ -94,10 +84,9 @@ public class ScheduleLogicTest extends TestCase {
   }
 
   public void testFullSchedulePasses() {
-    assertSucceeds(new AbstractModule() {
+    assertSucceeds(SCHEDULE_MODULE, new AbstractModule() {
       @Override
       protected void configure() {
-        bind(Schedule.class).to(DumbSchedule.class);
       }
 
       @SuppressWarnings("unused")
@@ -121,10 +110,9 @@ public class ScheduleLogicTest extends TestCase {
   }
 
   public void testTeacherUnavailableFails() {
-    assertFails(new AbstractModule() {
+    assertFails(SCHEDULE_MODULE, new AbstractModule() {
       @Override
       protected void configure() {
-        bind(Schedule.class).to(DumbSchedule.class);
       }
 
       @SuppressWarnings("unused")
@@ -143,10 +131,9 @@ public class ScheduleLogicTest extends TestCase {
   }
 
   public void testTeacherConflictFails() {
-    assertFails(new AbstractModule() {
+    assertFails(SCHEDULE_MODULE, new AbstractModule() {
       @Override
       protected void configure() {
-        bind(Schedule.class).to(DumbSchedule.class);
       }
 
       @SuppressWarnings("unused")
@@ -168,10 +155,9 @@ public class ScheduleLogicTest extends TestCase {
   }
 
   public void testRoomUnavailableFails() {
-    assertFails(new AbstractModule() {
+    assertFails(SCHEDULE_MODULE, new AbstractModule() {
       @Override
       protected void configure() {
-        bind(Schedule.class).to(DumbSchedule.class);
       }
 
       @SuppressWarnings("unused")
@@ -188,10 +174,9 @@ public class ScheduleLogicTest extends TestCase {
   }
 
   public void testScheduleTwoSectionsSucceeds() {
-    assertSucceeds(new AbstractModule() {
+    assertSucceeds(SCHEDULE_MODULE, new AbstractModule() {
       @Override
       protected void configure() {
-        bind(Schedule.class).to(DumbSchedule.class);
       }
 
       @SuppressWarnings("unused")
@@ -212,10 +197,9 @@ public class ScheduleLogicTest extends TestCase {
   }
 
   public void testScheduleOneSectionTwiceFails() {
-    assertFails(new AbstractModule() {
+    assertFails(SCHEDULE_MODULE, new AbstractModule() {
       @Override
       protected void configure() {
-        bind(Schedule.class).to(DumbSchedule.class);
       }
 
       @SuppressWarnings("unused")
