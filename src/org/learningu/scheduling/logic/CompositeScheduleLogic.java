@@ -1,15 +1,16 @@
 package org.learningu.scheduling.logic;
 
 import java.util.List;
-import java.util.logging.Level;
 
 import org.learningu.scheduling.Schedule;
-import org.learningu.scheduling.util.Condition;
+import org.learningu.scheduling.graph.ClassPeriod;
+import org.learningu.scheduling.graph.Room;
+import org.learningu.scheduling.graph.Section;
 
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 
-final class CompositeScheduleLogic implements ScheduleLogic {
+final class CompositeScheduleLogic extends ScheduleLogic {
   private final List<ScheduleLogic> logics;
 
   @Inject
@@ -18,12 +19,34 @@ final class CompositeScheduleLogic implements ScheduleLogic {
   }
 
   @Override
-  public Condition isValid(Condition valid, Schedule schedule) {
+  public void validateStartingAt(
+      ScheduleValidator validator,
+      Schedule schedule,
+      ClassPeriod period,
+      Room room,
+      Section section) {
     for (ScheduleLogic logic : logics) {
-      valid.log(Level.FINEST, "Using sub-logic %s", logic);
-      logic.isValid(valid.createSubCondition(logic.toString()), schedule);
+      logic.validateStartingAt(validator, schedule, period, room, section);
     }
-    return valid;
+  }
+
+  @Override
+  public void validateOccurringAt(
+      ScheduleValidator validator,
+      Schedule schedule,
+      ClassPeriod period,
+      Room room,
+      Section section) {
+    for (ScheduleLogic logic : logics) {
+      logic.validateOccurringAt(validator, schedule, period, room, section);
+    }
+  }
+
+  @Override
+  public void validate(ScheduleValidator validator, Schedule schedule) {
+    for (ScheduleLogic logic : logics) {
+      logic.validate(validator, schedule);
+    }
   }
 
 }

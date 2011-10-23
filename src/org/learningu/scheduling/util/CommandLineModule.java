@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.math.BigInteger;
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -88,6 +89,8 @@ public class CommandLineModule extends AbstractModule {
         }
       } else if (type.isPrimitive() || type.isEnum() || Primitives.isWrapperType(type)) {
         bindConstant().annotatedWith(annotation).to(argument);
+      } else if (Level.class.equals(type)) {
+        bind(Level.class).annotatedWith(annotation).toInstance(Level.parse(argument));
       } else if (BigInteger.class.equals(type)) {
         bind(BigInteger.class).annotatedWith(annotation).toInstance(
             argument.isEmpty() ? BigInteger.ZERO : new BigInteger(argument));

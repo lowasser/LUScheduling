@@ -1,8 +1,5 @@
 package org.learningu.scheduling;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import junit.framework.TestCase;
 
 import org.apache.commons.cli.ParseException;
@@ -15,8 +12,8 @@ import org.learningu.scheduling.graph.Serial.SerialPeriod;
 import org.learningu.scheduling.graph.Serial.SerialTeacher;
 import org.learningu.scheduling.logic.ScheduleLogic;
 import org.learningu.scheduling.logic.ScheduleLogicModule;
+import org.learningu.scheduling.logic.ScheduleValidator;
 import org.learningu.scheduling.util.CommandLineModule;
-import org.learningu.scheduling.util.Condition;
 
 import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableTable;
@@ -80,8 +77,9 @@ public class ScheduleLogicTest extends TestCase {
         .createChildInjector(scheduleModules);
     ScheduleLogic logic = injector.getInstance(ScheduleLogic.class);
     Schedule schedule = injector.getInstance(Schedule.class);
-    Condition cond = Condition.create(Logger.getAnonymousLogger(), Level.FINE);
-    logic.isValid(cond, schedule).assertPasses();
+    ScheduleValidator validator = injector.getInstance(ScheduleValidator.class);
+    logic.validate(validator, schedule);
+    assertTrue(validator.isValid());
   }
 
   public void assertFails(Module... scheduleModules) {
@@ -89,8 +87,9 @@ public class ScheduleLogicTest extends TestCase {
         .createChildInjector(scheduleModules);
     ScheduleLogic logic = injector.getInstance(ScheduleLogic.class);
     Schedule schedule = injector.getInstance(Schedule.class);
-    Condition cond = Condition.create(Logger.getAnonymousLogger(), Level.FINE);
-    assertFalse(logic.isValid(cond, schedule).passes());
+    ScheduleValidator validator = injector.getInstance(ScheduleValidator.class);
+    logic.validate(validator, schedule);
+    assertFalse(validator.isValid());
   }
 
   public void testEmptySchedulePasses() {

@@ -1,25 +1,22 @@
 package org.learningu.scheduling.logic;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Set;
 
 import org.learningu.scheduling.Schedule;
 import org.learningu.scheduling.graph.ClassPeriod;
-import org.learningu.scheduling.graph.Course;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Section;
-import org.learningu.scheduling.util.Condition;
 import org.learningu.scheduling.util.Flag;
 
-import com.google.common.base.Objects;
-import com.google.common.collect.HashBasedTable;
+import com.beust.jcommander.internal.Sets;
 import com.google.common.collect.Table;
 import com.google.common.collect.Table.Cell;
+import com.google.common.collect.Tables;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
-final class RoomOverlapScheduleLogic implements ScheduleLogic {
+final class RoomOverlapScheduleLogic extends ScheduleLogic {
 
   @Flag(
       value = "overlappingClassCheck",
@@ -29,58 +26,44 @@ final class RoomOverlapScheduleLogic implements ScheduleLogic {
   final boolean overlappingClassCheck;
 
   @Inject
-  RoomOverlapScheduleLogic(
-      @Named("overlappingClassCheck") boolean overlappingClassCheck) {
+  RoomOverlapScheduleLogic(@Named("overlappingClassCheck") boolean overlappingClassCheck) {
     this.overlappingClassCheck = overlappingClassCheck;
   }
 
   @Override
-  public Condition isValid(Condition parent, Schedule schedule) {
-    /*
-     * This is equivalent to verifying that the starting time table matches correctly with the full
-     * schedule table.
-     */
-    Table<ClassPeriod, Room, Section> startTable = schedule.getStartingTimeTable();
-    Table<ClassPeriod, Room, Section> schedTable = HashBasedTable.create(schedule.getScheduleTable());
-
-    Condition noOverlaps = parent.createSubCondition(getClass().getName());
-
-    noOverlaps.log(
-        Level.FINEST,
-        "Checking for correct match between start-table and schedule-table in schedule %s",
-        schedule);
-
-    for (Cell<ClassPeriod, Room, Section> cell : startTable.cellSet()) {
-      ClassPeriod startPd = cell.getRowKey();
-      Room room = cell.getColumnKey();
-      Section section = cell.getValue();
-      Course course = section.getCourse();
-      List<ClassPeriod> targetPeriods = startPd.getTailPeriods(true);
-      noOverlaps.verify(
-          targetPeriods.size() >= course.getPeriodLength(),
-          "Schedule assignment %s runs over the end of the time block",
-          cell);
-      if (targetPeriods.size() >= course.getPeriodLength()) {
-        targetPeriods = targetPeriods.subList(0, course.getPeriodLength());
-        for (ClassPeriod target : targetPeriods) {
-          Section removed = schedTable.remove(target, room);
-          noOverlaps.verify(
-              Objects.equal(removed, section),
-              "Expected %s to be scheduled in period %s in room %s, but was %s",
-              section,
-              target,
-              room,
-              removed);
+  public void validateStartingAt(
+      ScheduleValidator validator,
+      Schedule schedule,
+      ClassPeriod period,
+      Room room,
+      Section section) {
+    if (overlappingClassCheck) {
+      Table<ClassPeriod, Room, Section> startTable = schedule.getStartingTimeTable();
+      // First, test for no classes that would start during this class, except possibly ourselves.
+      Set<Table.Cell<ClassPeriod, Room, Section>> overlappingStart = Sets.newHashSet();
+      int periods = section.getCourse().getPeriodLength();
+      List<ClassPeriod> presentPeriods = period.getTailPeriods(true).subList(0, periods);
+      for (ClassPeriod pd : presentPeriods) {
+        Section startingSection = startTable.get(pd, room);
+        if (startingSection != null) {
+          overlappingStart.add(Tables.immutableCell(pd, room, startingSection));
         }
       }
+      Cell<ClassPeriod, Room, Section> assignment = Tables.immutableCell(period, room, section);
+      overlappingStart.remove(assignment);
+      validator.validate(
+          assignment,
+          overlappingStart,
+          "courses may not keep a room while other courses are using it");
     }
 
-    noOverlaps.verify(
-        schedTable.isEmpty(),
-        "The following courses were scheduled in rooms but did not have a registered start time: %s",
-        schedTable.cellSet());
+  }
 
-    return noOverlaps;
+  @Override
+  public void validate(ScheduleValidator validator, Schedule schedule) {
+    if (overlappingClassCheck) {
+      super.validate(validator, schedule);
+    }
   }
 
 }

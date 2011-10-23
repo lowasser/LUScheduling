@@ -1,24 +1,23 @@
 package org.learningu.scheduling.logic;
 
-import java.util.Map;
-import java.util.logging.Level;
+import java.util.Set;
 
 import org.learningu.scheduling.Schedule;
 import org.learningu.scheduling.graph.ClassPeriod;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Section;
-import org.learningu.scheduling.util.Condition;
 import org.learningu.scheduling.util.Flag;
 
-import com.google.common.collect.Maps;
+import com.beust.jcommander.internal.Sets;
 import com.google.common.collect.Table;
 import com.google.common.collect.Table.Cell;
+import com.google.common.collect.Tables;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
 @Singleton
-final class DuplicateSectionsLogic implements ScheduleLogic {
+final class DuplicateSectionsLogic extends ScheduleLogic {
 
   @Flag(
       value = "doublyScheduledSectionsCheck",
@@ -33,27 +32,32 @@ final class DuplicateSectionsLogic implements ScheduleLogic {
   }
 
   @Override
-  public Condition isValid(Condition duplicateCourses, Schedule schedule) {
-    Table<ClassPeriod, Room, Section> table = schedule.getStartingTimeTable();
-    Map<Section, Table.Cell<ClassPeriod, Room, Section>> cellMap = Maps.newHashMapWithExpectedSize(table.size());
-
+  public void validateStartingAt(
+      ScheduleValidator validator,
+      Schedule schedule,
+      ClassPeriod period,
+      Room room,
+      Section section) {
     if (doublyScheduledSectionsCheck) {
-      duplicateCourses.log(Level.FINEST, "Checking for duplicate courses in schedule %s", schedule);
-
-      for (Cell<ClassPeriod, Room, Section> cell : table.cellSet()) {
-        Section s = cell.getValue();
-        Cell<ClassPeriod, Room, Section> previous = cellMap.get(s);
-        duplicateCourses.verify(
-            previous == null,
-            "Section %s is scheduled twice: %s and %s",
-            s,
-            cell,
-            previous);
-        cellMap.put(s, cell);
+      Set<Table.Cell<ClassPeriod, Room, Section>> matchingAssignments = Sets.newHashSet();
+      for (Cell<ClassPeriod, Room, Section> assignment : schedule.getStartingTimeTable().cellSet()) {
+        if (assignment.getValue().equals(section)) {
+          matchingAssignments.add(assignment);
+        }
       }
+      Cell<ClassPeriod, Room, Section> assignment = Tables.immutableCell(period, room, section);
+      matchingAssignments.remove(assignment);
+      validator.validate(
+          assignment,
+          matchingAssignments,
+          "a single section of a course must not be scheduled more than once");
     }
-
-    return duplicateCourses;
   }
 
+  @Override
+  public void validate(ScheduleValidator validator, Schedule schedule) {
+    if (doublyScheduledSectionsCheck) {
+      super.validate(validator, schedule);
+    }
+  }
 }

@@ -17,7 +17,8 @@ public final class ScheduleLogicModule extends AbstractModule {
       DuplicateSectionsLogic.class,
       LocalScheduleLogic.class,
       RoomOverlapScheduleLogic.class,
-      TeacherConflictsScheduleLogic.class);
+      TeacherConflictsScheduleLogic.class,
+      ScheduleValidator.class);
 
   @Override
   protected void configure() {
