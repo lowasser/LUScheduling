@@ -1,5 +1,6 @@
 package org.learningu.scheduling.graph;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
@@ -16,7 +17,8 @@ import com.google.common.collect.ImmutableList;
  * 
  * @author lowasser
  */
-public final class TimeBlock extends ProgramObject<SerialTimeBlock> {
+public final class TimeBlock extends ProgramObject<SerialTimeBlock> implements
+    Comparable<TimeBlock> {
 
   private final ImmutableList<ClassPeriod> periods;
 
@@ -64,6 +66,12 @@ public final class TimeBlock extends ProgramObject<SerialTimeBlock> {
         return new TimeBlock(program, input);
       }
     };
+  }
+
+  @Override
+  public int compareTo(TimeBlock o) {
+    checkArgument(getProgram() == o.getProgram());
+    return getId() - o.getId();
   }
 
 }
