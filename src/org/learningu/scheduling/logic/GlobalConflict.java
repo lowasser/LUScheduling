@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import org.learningu.scheduling.Assignment;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 
 /**
@@ -26,7 +27,7 @@ public final class GlobalConflict<C extends Assignment> implements Conflict<C> {
   private GlobalConflict(C candidateAssignment, Iterable<C> conflictingAssignments,
       String failedCondition) {
     this.candidateAssignment = checkNotNull(candidateAssignment);
-    this.conflictingAssignments = checkNotNull(conflictingAssignments);
+    this.conflictingAssignments = ImmutableList.copyOf(conflictingAssignments);
     this.failedCondition = checkNotNull(failedCondition);
     checkArgument(
         !Iterables.isEmpty(conflictingAssignments),
