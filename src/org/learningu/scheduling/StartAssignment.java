@@ -25,7 +25,7 @@ import com.google.common.base.Objects;
  * 
  * @author lowasser
  */
-public final class StartAssignment {
+public final class StartAssignment implements Assignment {
   public static StartAssignment create(ClassPeriod period, Room room, Section section) {
     return new StartAssignment(period, room, section);
   }
@@ -43,10 +43,6 @@ public final class StartAssignment {
     checkArgument(period.getIndex() + getCourse().getPeriodLength() <= getTimeBlock()
         .getPeriods()
         .size());
-  }
-
-  public ClassPeriod getStartPeriod() {
-    return period;
   }
 
   public List<ClassPeriod> getPresentPeriods() {
@@ -71,24 +67,38 @@ public final class StartAssignment {
     return new PresentAssignmentsList();
   }
 
+  @Override
   public Room getRoom() {
     return room;
   }
 
+  @Override
   public Section getSection() {
     return section;
   }
 
+  @Override
   public Program getProgram() {
     return period.getProgram();
   }
 
+  @Override
   public Course getCourse() {
     return section.getCourse();
   }
 
   public TimeBlock getTimeBlock() {
     return period.getTimeBlock();
+  }
+
+  @Override
+  public StartAssignment getStartAssignment() {
+    return this;
+  }
+
+  @Override
+  public ClassPeriod getPeriod() {
+    return period;
   }
 
   @Override

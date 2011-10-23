@@ -14,7 +14,12 @@ import org.learningu.scheduling.graph.TimeBlock;
 
 import com.google.common.base.Objects;
 
-public final class PresentAssignment {
+/**
+ * A representation of a section of a class being present in a room during some particular period.
+ * 
+ * @author lowasser
+ */
+public final class PresentAssignment implements Assignment {
   private final StartAssignment startAssignment;
   private final int index;
 
@@ -29,18 +34,22 @@ public final class PresentAssignment {
         index);
   }
 
+  @Override
   public Room getRoom() {
     return startAssignment.getRoom();
   }
 
+  @Override
   public Section getSection() {
     return startAssignment.getSection();
   }
 
+  @Override
   public Program getProgram() {
     return startAssignment.getProgram();
   }
 
+  @Override
   public Course getCourse() {
     return startAssignment.getCourse();
   }
@@ -49,6 +58,7 @@ public final class PresentAssignment {
     return startAssignment.getTimeBlock();
   }
 
+  @Override
   public StartAssignment getStartAssignment() {
     return startAssignment;
   }
@@ -57,6 +67,7 @@ public final class PresentAssignment {
     return index;
   }
 
+  @Override
   public ClassPeriod getPeriod() {
     return startAssignment.getPresentPeriods().get(index);
   }

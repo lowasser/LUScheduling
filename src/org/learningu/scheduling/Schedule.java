@@ -143,7 +143,7 @@ public abstract class Schedule {
         StartAssignment assign = (StartAssignment) o;
         Map<ClassPeriod, Section> map = startingTimeTable.get(assign.getRoom());
         if (map != null) {
-          return Objects.equal(map.get(assign.getStartPeriod()), assign.getSection());
+          return Objects.equal(map.get(assign.getPeriod()), assign.getSection());
         }
       }
       return false;
