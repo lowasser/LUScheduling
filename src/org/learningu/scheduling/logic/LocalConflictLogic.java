@@ -1,5 +1,7 @@
 package org.learningu.scheduling.logic;
 
+import java.util.logging.Logger;
+
 import org.learningu.scheduling.PresentAssignment;
 import org.learningu.scheduling.Schedule;
 import org.learningu.scheduling.StartAssignment;
@@ -38,12 +40,17 @@ public final class LocalConflictLogic extends ScheduleLogic {
 
   @Inject
   LocalConflictLogic(@Named("minClassCapRatio") double minClassCapRatio,
-      @Named("maxEstClassSizeRatio") double maxEstClassSizeRatio) {
+      @Named("maxEstClassSizeRatio") double maxEstClassSizeRatio, Logger logger) {
     this.minClassCapRatio = minClassCapRatio;
     this.maxEstClassSizeRatio = maxEstClassSizeRatio;
     classCapRatioConditionText = "Class cap : room capacity ratio must be >= " + minClassCapRatio;
     estSizeRatioConditionText = "Est class size : room capacity ratio must be <= "
         + maxEstClassSizeRatio;
+    if (minClassCapRatio < 1.0) {
+      logger.warning("Min class cap ratio is " + minClassCapRatio
+          + ", which could result in classes being scheduled in rooms "
+          + "smaller than the class size.");
+    }
   }
 
   transient final String classCapRatioConditionText;
