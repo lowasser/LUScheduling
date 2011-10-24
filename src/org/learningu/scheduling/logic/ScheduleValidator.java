@@ -146,9 +146,12 @@ public final class ScheduleValidator {
     }
   }
 
+  public boolean isLocallyValid() {
+    return localStartConflicts.isEmpty() && localPresentConflicts.isEmpty();
+  }
+
   public boolean isValid() {
-    return localStartConflicts.isEmpty() && localPresentConflicts.isEmpty()
-        && globalPresentConflicts.isEmpty() && globalStartConflicts.isEmpty();
+    return isLocallyValid() && globalPresentConflicts.isEmpty() && globalStartConflicts.isEmpty();
   }
 
   @Override

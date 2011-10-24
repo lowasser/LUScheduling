@@ -6,9 +6,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.ComparisonChain;
 
-public final class Section {
+public final class Section implements Comparable<Section> {
   private final Course course;
+
   private final int section;
 
   Section(Course course, int section) {
@@ -49,6 +51,15 @@ public final class Section {
   @Override
   public String toString() {
     return Objects.toStringHelper(this).add("course", course).add("section", section).toString();
+  }
+
+  @Override
+  public int compareTo(Section o) {
+    return ComparisonChain
+        .start()
+        .compare(getCourse().getId(), o.getCourse().getId())
+        .compare(section, o.section)
+        .result();
   }
 
 }
