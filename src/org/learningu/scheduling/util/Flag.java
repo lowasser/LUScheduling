@@ -11,4 +11,5 @@ public @interface Flag {
   String value();
   String description() default "";
   String defaultValue() default "";
+  boolean multiple() default false;
 }

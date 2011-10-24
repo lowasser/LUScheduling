@@ -39,7 +39,6 @@ message SerialTimeBlock {
 	// TODO: multi-block class support; multi-day program support
 	required int32 blockId = 1;
 	optional string description = 2;
-
 	repeated SerialPeriod periods = 4;
 }
 
