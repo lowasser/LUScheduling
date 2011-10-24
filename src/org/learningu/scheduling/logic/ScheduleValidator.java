@@ -8,10 +8,10 @@ import org.learningu.scheduling.PresentAssignment;
 import org.learningu.scheduling.StartAssignment;
 import org.learningu.scheduling.util.Flag;
 
-import com.beust.jcommander.internal.Lists;
 import com.google.common.base.Objects;
 import com.google.common.base.Objects.ToStringHelper;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
