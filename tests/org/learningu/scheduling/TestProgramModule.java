@@ -17,7 +17,6 @@ import org.learningu.scheduling.graph.Serial.SerialTeacher;
 import org.learningu.scheduling.graph.Serial.SerialTimeBlock;
 import org.learningu.scheduling.graph.Teacher;
 import org.learningu.scheduling.graph.TimeBlock;
-import org.learningu.scheduling.logic.ScheduleLogicModule;
 import org.learningu.scheduling.util.CommandLineModule;
 
 import com.google.common.base.Throwables;
@@ -67,8 +66,7 @@ public class TestProgramModule extends AbstractModule {
     try {
       install(CommandLineModule.create(
           new String[0],
-          ProgramCacheFlags.class,
-          ScheduleLogicModule.class));
+          ProgramCacheFlags.class));
     } catch (ParseException e) {
       Throwables.propagate(e);
     }

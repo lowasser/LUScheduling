@@ -34,6 +34,7 @@ public abstract class ProgramObject<T extends Message & MessageOrBuilder> {
 
   public abstract int getId();
 
+  @Override
   public String toString() {
     return TextFormat.printToString(serial);
   }

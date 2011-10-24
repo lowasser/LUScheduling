@@ -72,7 +72,7 @@ public final class ScheduleValidator {
     return globalStartConflicts;
   }
 
-  private void log(Level level, String message, Object... params) {
+  void log(Level level, String message, Object... params) {
     logger.log(level, message, params);
   }
 

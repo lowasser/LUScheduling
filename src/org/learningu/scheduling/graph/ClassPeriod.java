@@ -42,8 +42,6 @@ public final class ClassPeriod extends ProgramObject<SerialPeriod> implements
     return Objects
         .toStringHelper(this)
         .add("name", getDescription())
-        .add("block", block)
-        .add("index", index)
         .toString();
   }
 

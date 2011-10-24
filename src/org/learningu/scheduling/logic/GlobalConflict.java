@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import org.learningu.scheduling.Assignment;
 
+import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 
@@ -21,7 +22,9 @@ public final class GlobalConflict<C extends Assignment> implements Conflict<C> {
   }
 
   private final C candidateAssignment;
+
   private final Iterable<C> conflictingAssignments;
+
   private final String failedCondition;
 
   private GlobalConflict(C candidateAssignment, Iterable<C> conflictingAssignments,
@@ -48,5 +51,15 @@ public final class GlobalConflict<C extends Assignment> implements Conflict<C> {
   @Override
   public String getFailedCondition() {
     return failedCondition;
+  }
+
+  @Override
+  public String toString() {
+    return Objects
+        .toStringHelper(this)
+        .add("candidateAssignment", candidateAssignment)
+        .add("failedCondition", failedCondition)
+        .add("conflictingAssignments", conflictingAssignments)
+        .toString();
   }
 }

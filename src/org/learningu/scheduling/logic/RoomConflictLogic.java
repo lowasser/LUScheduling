@@ -17,7 +17,7 @@ import com.google.common.collect.Ranges;
  * 
  * @author lowasser
  */
-final class RoomConflictScheduleLogic extends ScheduleLogic {
+final class RoomConflictLogic extends ScheduleLogic {
 
   @Override
   public void validate(ScheduleValidator validator, Schedule schedule, StartAssignment assignment) {
@@ -37,7 +37,7 @@ final class RoomConflictScheduleLogic extends ScheduleLogic {
     Range<Integer> range1 = periodIndexRange(assign1);
     Range<Integer> range2 = periodIndexRange(assign2);
     return !assign1.getTimeBlock().equals(assign2.getTimeBlock()) || !range1.isConnected(range2)
-        || range1.intersection(range2).canonical(DiscreteDomains.integers()).isEmpty();
+        || !range1.intersection(range2).canonical(DiscreteDomains.integers()).isEmpty();
   }
 
   private static Range<Integer> periodIndexRange(StartAssignment assign) {

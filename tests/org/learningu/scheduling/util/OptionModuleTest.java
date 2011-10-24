@@ -45,6 +45,7 @@ public class OptionModuleTest extends TestCase {
       this.boolFlag = boolFlag;
     }
 
+    @Override
     public boolean equals(@Nullable Object o) {
       if (o instanceof SampleFlags) {
         SampleFlags other = (SampleFlags) o;

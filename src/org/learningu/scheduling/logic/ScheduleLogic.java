@@ -1,6 +1,5 @@
 package org.learningu.scheduling.logic;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import org.learningu.scheduling.PresentAssignment;
@@ -13,14 +12,11 @@ import org.learningu.scheduling.StartAssignment;
  * 
  * @author lowasser
  */
-public class ScheduleLogic {
+public abstract class ScheduleLogic {
   public void validate(ScheduleValidator validator, Schedule schedule, StartAssignment assignment) {
     checkNotNull(validator);
     checkNotNull(schedule);
     checkNotNull(assignment);
-    checkArgument(
-        !schedule.startingAt(assignment.getRoom(), assignment.getPeriod()).isPresent(),
-        "Cannot validate an assignment already in the schedule");
   }
 
   protected final void validatePresentAssignments(ScheduleValidator validator, Schedule schedule,
@@ -34,8 +30,5 @@ public class ScheduleLogic {
     checkNotNull(validator);
     checkNotNull(schedule);
     checkNotNull(assignment);
-    checkArgument(
-        !schedule.occurringAt(assignment.getPeriod(), assignment.getRoom()).isPresent(),
-        "Cannot validate an assignment already in the schedule");
   }
 }

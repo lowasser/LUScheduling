@@ -65,6 +65,9 @@ public final class MutableSchedule extends Schedule {
   public ScheduleValidator putAssignment(StartAssignment assign) {
     ScheduleValidator validator = validatorProvider.get();
     logic.validate(validator, this, assign);
+    for (PresentAssignment pAssign : assign.getPresentAssignments()) {
+      logic.validate(validator, this, pAssign);
+    }
     if (validator.isValid()) {
       startingTimeTable.get(assign.getRoom()).put(assign.getPeriod(), assign.getSection());
     }
