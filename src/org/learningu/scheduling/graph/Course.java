@@ -66,6 +66,12 @@ public final class Course extends ProgramObject<SerialCourse> {
         Functions.forMap(program.teachers)));
   }
 
+  Set<RoomProperty> getRequiredProperties() {
+    return ImmutableSet.copyOf(Lists.transform(
+        serial.getRequiredPropertiesList(),
+        Functions.forMap(program.roomProperties)));
+  }
+
   public int getEstimatedClassSize() {
     return serial.getEstimatedClassSize();
   }

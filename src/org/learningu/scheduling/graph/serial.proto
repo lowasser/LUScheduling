@@ -1,6 +1,15 @@
 package org.learningu.scheduling.graph;
 
 /*
+ * A property of a room at an LU program.
+ */
+message SerialRoomProperty {
+	required int32 propertyId = 1;
+	optional string description = 2;
+	optional bool isBinding = 3 [default = true]; // if present, classes must require this property to get this room
+}
+
+/*
  * A course in an LU program.  Courses may have estimated and maximum class sizes,
  * room requirements, and teachers.
  */
@@ -12,6 +21,7 @@ message SerialCourse {
 	optional int32 maxClassSize = 6 [default = 20];
 	optional int32 sections = 7 [default = 1];
 	optional int32 periodLength = 8 [default = 1];
+	repeated int32 requiredProperties = 9 [packed = true];
 }
 
 /*
@@ -50,6 +60,7 @@ message SerialRoom {
 	optional string name = 3;
 	optional int32 capacity = 4 [default = 25];
 	repeated int32 availablePeriods = 5 [packed = true];
+	repeated int32 roomProperties = 6 [packed = true];
 }
 
 /*
@@ -61,6 +72,7 @@ message SerialProgram {
 	repeated SerialTeacher teachers = 2;
 	repeated SerialCourse courses = 3;
 	repeated SerialRoom rooms = 4;
+	repeated SerialRoomProperty roomProperties = 6;
 }
 
 message SerialSection {

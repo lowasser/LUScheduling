@@ -42,6 +42,12 @@ public final class Room extends ProgramObject<SerialRoom> {
         Functions.forMap(program.periods)));
   }
 
+  Set<RoomProperty> getRoomProperties() {
+    return ImmutableSet.copyOf(Lists.transform(
+        serial.getRoomPropertiesList(),
+        Functions.forMap(program.roomProperties)));
+  }
+
   @Override
   public String toString() {
     return serial.hasName() ? getName() : super.toString();
