@@ -64,6 +64,12 @@ public final class Course extends ProgramObject<SerialCourse> {
         program.teachers.asLookupFunction()));
   }
 
+  Set<RoomProperty> getRequiredProperties() {
+    return ProgramObjectSet.create(Lists.transform(
+        serial.getRequiredPropertiesList(),
+        program.roomProperties.asLookupFunction()));
+  }
+
   public int getEstimatedClassSize() {
     return serial.getEstimatedClassSize();
   }

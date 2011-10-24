@@ -38,17 +38,33 @@ import com.google.protobuf.TextFormat;
 @Singleton
 public final class Program {
   final ProgramObjectSet<Teacher> teachers;
+
   final ProgramObjectSet<Course> courses;
+
   final ProgramObjectSet<TimeBlock> timeBlocks;
+
   final ProgramObjectSet<Room> rooms;
+
   final ProgramObjectSet<ClassPeriod> periods;
 
+  final ProgramObjectSet<RoomProperty> roomProperties;
+
   private final ImmutableSetMultimap<Teacher, Course> teachingMap;
+
   private final SerialProgram serial;
+
   private final Cache<Course, Set<ClassPeriod>> courseCompatiblePeriods;
+
   private final Cache<Room, Set<ClassPeriod>> roomAvailablePeriods;
+
   private final Cache<Teacher, Set<ClassPeriod>> teacherAvailablePeriods;
+
   private final Cache<Course, Set<Teacher>> teachersForCourse;
+
+  private final Cache<Course, Set<RoomProperty>> requiredForCourse;
+
+  private final Cache<Room, Set<RoomProperty>> propertiesOfRoom;
+
   private final ImmutableSet<Section> sections;
 
   @VisibleForTesting
@@ -80,9 +96,13 @@ public final class Program {
             return input.getPeriods();
           }
         })));
+    roomProperties = ProgramObjectSet.create(Lists.transform(
+        serial.getRoomPropertiesList(),
+        RoomProperty.programWrapper(this)));
 
     // initialize teachingMap
-    ImmutableSetMultimap.Builder<Teacher, Course> teachingMapBuilder = ImmutableSetMultimap.builder();
+    ImmutableSetMultimap.Builder<Teacher, Course> teachingMapBuilder = ImmutableSetMultimap
+        .builder();
     for (Course c : courses) {
       for (Teacher t : c.getTeachers()) {
         teachingMapBuilder.put(t, c);
@@ -94,29 +114,32 @@ public final class Program {
     checkCoursesValid();
     checkRoomsValid();
 
-    this.teacherAvailablePeriods = CacheBuilder.newBuilder()
+    this.teacherAvailablePeriods = CacheBuilder
+        .newBuilder()
         .initialCapacity(teachers.size())
         .concurrencyLevel(flags.cacheConcurrencyLevel)
         .weigher(COLLECTION_WEIGHER)
         .maximumWeight(flags.teacherAvailableCacheSize)
         .build(new CacheLoader<Teacher, Set<ClassPeriod>>() {
           @Override
-          public Set<ClassPeriod> load(Teacher key) throws Exception {
+          public Set<ClassPeriod> load(Teacher key) {
             return key.getCompatiblePeriods();
           }
         });
-    this.roomAvailablePeriods = CacheBuilder.newBuilder()
+    this.roomAvailablePeriods = CacheBuilder
+        .newBuilder()
         .initialCapacity(rooms.size())
         .concurrencyLevel(flags.cacheConcurrencyLevel)
         .weigher(COLLECTION_WEIGHER)
         .maximumWeight(flags.roomAvailableCacheSize)
         .build(new CacheLoader<Room, Set<ClassPeriod>>() {
           @Override
-          public Set<ClassPeriod> load(Room key) throws Exception {
+          public Set<ClassPeriod> load(Room key) {
             return key.getCompatiblePeriods();
           }
         });
-    this.teachersForCourse = CacheBuilder.newBuilder()
+    this.teachersForCourse = CacheBuilder
+        .newBuilder()
         .initialCapacity(courses.size())
         .weigher(COLLECTION_WEIGHER)
         .concurrencyLevel(flags.cacheConcurrencyLevel)
@@ -127,19 +150,42 @@ public final class Program {
             return key.getTeachers();
           }
         });
-    this.courseCompatiblePeriods = CacheBuilder.newBuilder()
+    this.courseCompatiblePeriods = CacheBuilder
+        .newBuilder()
         .initialCapacity(courses.size())
         .weigher(COLLECTION_WEIGHER)
         .concurrencyLevel(flags.cacheConcurrencyLevel)
         .maximumWeight(flags.courseCompatibleCacheSize)
         .build(new CacheLoader<Course, Set<ClassPeriod>>() {
           @Override
-          public Set<ClassPeriod> load(Course key) throws Exception {
+          public Set<ClassPeriod> load(Course key) {
             Set<ClassPeriod> blocks = Sets.newLinkedHashSet(getPeriods());
             for (Teacher t : teachersForCourse(key)) {
               blocks.retainAll(compatiblePeriods(t));
             }
             return ImmutableSet.copyOf(blocks);
+          }
+        });
+    this.requiredForCourse = CacheBuilder
+        .newBuilder()
+        .initialCapacity(courses.size())
+        .weigher(COLLECTION_WEIGHER)
+        .maximumWeight(flags.reqPropsCacheSize)
+        .build(new CacheLoader<Course, Set<RoomProperty>>() {
+          @Override
+          public Set<RoomProperty> load(Course key) {
+            return key.getRequiredProperties();
+          }
+        });
+    this.propertiesOfRoom = CacheBuilder
+        .newBuilder()
+        .initialCapacity(rooms.size())
+        .weigher(COLLECTION_WEIGHER)
+        .maximumWeight(flags.reqPropsCacheSize)
+        .build(new CacheLoader<Room, Set<RoomProperty>>() {
+          @Override
+          public Set<RoomProperty> load(Room key) throws Exception {
+            return key.getRoomProperties();
           }
         });
 
@@ -176,6 +222,14 @@ public final class Program {
     return roomAvailablePeriods.getUnchecked(r);
   }
 
+  public Set<RoomProperty> roomRequirements(Course c) {
+    return requiredForCourse.getUnchecked(c);
+  }
+
+  public Set<RoomProperty> roomProperties(Room r) {
+    return propertiesOfRoom.getUnchecked(r);
+  }
+
   private void checkTeachersValid() {
     for (Teacher t : teachers) {
       t.getCompatiblePeriods();
@@ -198,30 +252,6 @@ public final class Program {
     for (Room r : rooms) {
       r.getCompatiblePeriods();
     }
-  }
-
-  public Teacher getTeacher(int teacherId) {
-    return teachers.getForId(teacherId);
-  }
-
-  public Course getCourse(int courseId) {
-    return courses.getForId(courseId);
-  }
-
-  public TimeBlock getTimeBlock(int blockId) {
-    return timeBlocks.getForId(blockId);
-  }
-
-  public ClassPeriod getPeriod(int periodId) {
-    return periods.getForId(periodId);
-  }
-
-  public ClassPeriod getPeriod(int blockId, int index) {
-    return getTimeBlock(blockId).getPeriod(index);
-  }
-
-  public Room getRoom(int roomId) {
-    return rooms.getForId(roomId);
   }
 
   public Set<Course> getCoursesForTeacher(Teacher t) {
