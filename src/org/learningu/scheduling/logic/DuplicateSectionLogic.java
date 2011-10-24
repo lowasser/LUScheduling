@@ -6,6 +6,11 @@ import org.learningu.scheduling.StartAssignment;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
+/**
+ * Logic for checking that there aren't multiple instances of the same section.
+ * 
+ * @author lowasser
+ */
 public final class DuplicateSectionLogic extends ScheduleLogic {
 
   @Override

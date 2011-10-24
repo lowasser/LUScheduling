@@ -11,7 +11,6 @@ import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.util.Flag;
 
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
 /**
@@ -20,7 +19,6 @@ import com.google.inject.name.Named;
  * 
  * @author lowasser
  */
-@Singleton
 public final class LocalConflictLogic extends ScheduleLogic {
   @Flag(
       value = "minClassCapRatio",

@@ -15,7 +15,7 @@ import com.google.inject.Inject;
  * 
  * @author lowasser
  */
-public final class ChainedScheduleLogic extends ScheduleLogic {
+final class ChainedScheduleLogic extends ScheduleLogic {
   public static ChainedScheduleLogic create(ScheduleLogic... logics) {
     return new ChainedScheduleLogic(Arrays.asList(logics));
   }
