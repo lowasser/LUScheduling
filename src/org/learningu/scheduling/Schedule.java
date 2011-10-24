@@ -13,7 +13,6 @@ import java.util.NavigableMap;
 import java.util.Set;
 
 import org.learningu.scheduling.graph.ClassPeriod;
-import org.learningu.scheduling.graph.Course;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Section;
@@ -36,6 +35,10 @@ public abstract class Schedule {
     this.startingTimeTable = checkNotNull(startingTimeTable);
   }
 
+  public Program getProgram() {
+    return program;
+  }
+
   public final Iterable<Section> scheduledSections() {
     return Iterables.concat(Collections2.transform(
         startingTimeTable.values(),
@@ -47,50 +50,72 @@ public abstract class Schedule {
         }));
   }
 
-  public final Map<Room, Section> occurringAt(final ClassPeriod period) {
+  public final Map<Room, PresentAssignment> occurringAt(final ClassPeriod period) {
     checkNotNull(period);
-    return new AbstractMap<Room, Section>() {
+    return new OccurringAtMap(period);
+  }
+
+  private final class OccurringAtMap extends AbstractMap<Room, PresentAssignment> {
+    private final class OccurringAtEntrySet extends AbstractSet<Entry<Room, PresentAssignment>> {
       @Override
-      public boolean containsKey(Object room) {
-        NavigableMap<ClassPeriod, Section> roomMap = startingTimeTable.get(room);
-        return roomMap != null && roomMap.containsKey(period);
+      public boolean contains(Object o) {
+        if (o instanceof Entry) {
+          Entry<?, ?> entry = (Entry<?, ?>) o;
+          return Objects.equal(get(entry.getKey()), entry.getValue());
+        }
+        return false;
       }
 
       @Override
-      public Section get(Object room) {
-        NavigableMap<ClassPeriod, Section> roomMap = startingTimeTable.get(room);
-        return roomMap == null ? null : roomMap.get(period);
-      }
+      public Iterator<Entry<Room, PresentAssignment>> iterator() {
+        return new AbstractIterator<Entry<Room, PresentAssignment>>() {
+          final Iterator<Room> roomIterator = program.getRooms().iterator();
 
-      @Override
-      public Set<Entry<Room, Section>> entrySet() {
-        return new AbstractSet<Entry<Room, Section>>() {
           @Override
-          public Iterator<Entry<Room, Section>> iterator() {
-            return new AbstractIterator<Entry<Room, Section>>() {
-              final Iterator<Room> roomIterator = program.getRooms().iterator();
-
-              @Override
-              protected Entry<Room, Section> computeNext() {
-                while (roomIterator.hasNext()) {
-                  Room room = roomIterator.next();
-                  Optional<Section> section = occurringAt(room, period);
-                  if (section.isPresent()) {
-                    return Maps.immutableEntry(room, section.get());
-                  }
-                }
-                return endOfData();
+          protected Entry<Room, PresentAssignment> computeNext() {
+            while (roomIterator.hasNext()) {
+              Room room = roomIterator.next();
+              Optional<PresentAssignment> section = occurringAt(room, period);
+              if (section.isPresent()) {
+                return Maps.immutableEntry(room, section.get());
               }
-            };
-          }
-
-          @Override
-          public int size() {
-            return Iterators.size(iterator());
+            }
+            return endOfData();
           }
         };
       }
-    };
+
+      @Override
+      public int size() {
+        return Iterators.size(iterator());
+      }
+    }
+
+    private final ClassPeriod period;
+
+    private OccurringAtMap(ClassPeriod period) {
+      this.period = period;
+    }
+
+    @Override
+    public boolean containsKey(Object room) {
+      NavigableMap<ClassPeriod, Section> roomMap = startingTimeTable.get(room);
+      return roomMap != null && roomMap.containsKey(period);
+    }
+
+    @Override
+    public PresentAssignment get(Object room) {
+      try {
+        return occurringAt((Room) room, period).orNull();
+      } catch (ClassCastException e) {
+        return null;
+      }
+    }
+
+    @Override
+    public Set<Entry<Room, PresentAssignment>> entrySet() {
+      return new OccurringAtEntrySet();
+    }
   }
 
   public final Set<StartAssignment> startAssignments() {
@@ -159,24 +184,37 @@ public abstract class Schedule {
     }
   }
 
-  public final Optional<Section> startingAt(Room room, ClassPeriod period) {
+  public final Optional<StartAssignment> startingAt(Room room, ClassPeriod period) {
     NavigableMap<ClassPeriod, Section> scheduleForRoom = startingTimeTable.get(room);
     assert scheduleForRoom != null;
-    return Optional.fromNullable(scheduleForRoom.get(period));
+    Section section = scheduleForRoom.get(period);
+    if (section != null) {
+      return Optional.of(StartAssignment.create(period, room, section));
+    } else {
+      return Optional.absent();
+    }
   }
 
-  public final Optional<Section> occurringAt(Room room, ClassPeriod period) {
+  public final Optional<StartAssignment> startingBefore(Room room, ClassPeriod period) {
     NavigableMap<ClassPeriod, Section> scheduleForRoom = startingTimeTable.get(room);
     assert scheduleForRoom != null;
-    Entry<ClassPeriod, Section> previousStart = scheduleForRoom.floorEntry(period);
-    ClassPeriod startPeriod = previousStart.getKey();
-    Section startSection = previousStart.getValue();
-    Course startCourse = startSection.getCourse();
-    if (!startPeriod.getTimeBlock().equals(period.getTimeBlock())
-        || startPeriod.getIndex() + startCourse.getPeriodLength() <= period.getIndex()) {
-      return Optional.absent();
+    Entry<ClassPeriod, Section> floorEntry = scheduleForRoom.floorEntry(period);
+    if (floorEntry != null && floorEntry.getKey().getTimeBlock().equals(period.getTimeBlock())) {
+      return Optional.of(StartAssignment.create(floorEntry.getKey(), room, floorEntry.getValue()));
     } else {
-      return Optional.of(startSection);
+      return Optional.absent();
     }
+  }
+
+  public final Optional<PresentAssignment> occurringAt(Room room, ClassPeriod period) {
+    Optional<StartAssignment> startingBefore = startingBefore(room, period);
+    if (startingBefore.isPresent()) {
+      StartAssignment prevStart = startingBefore.get();
+      int relativeIndex = period.getIndex() - prevStart.getPeriod().getIndex();
+      if (relativeIndex < prevStart.getCourse().getPeriodLength()) {
+        return Optional.of(prevStart.getPresentAssignment(relativeIndex));
+      }
+    }
+    return Optional.absent();
   }
 }

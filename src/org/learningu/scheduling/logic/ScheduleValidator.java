@@ -16,16 +16,26 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
 public final class ScheduleValidator {
-  private final List<LocalConflict<PresentAssignment>> localConflicts;
+  private final List<LocalConflict<StartAssignment>> localStartConflicts;
+
+  private final List<LocalConflict<PresentAssignment>> localPresentConflicts;
+
   private final List<GlobalConflict<PresentAssignment>> globalPresentConflicts;
+
   private final List<GlobalConflict<StartAssignment>> globalStartConflicts;
 
   private final Logger logger;
 
-  @Flag(value = "validateLogLevel", defaultValue = "FINEST", description = "Level at which to log each validation attempt")
+  @Flag(
+      value = "validateLogLevel",
+      defaultValue = "FINEST",
+      description = "Level at which to log each validation attempt")
   private final Level validateLogLevel;
 
-  @Flag(value = "validateFailureLogLevel", defaultValue = "FINER", description = "Level at which to log failed validations")
+  @Flag(
+      value = "validateFailureLogLevel",
+      defaultValue = "FINER",
+      description = "Level at which to log failed validations")
   private final Level failureLogLevel;
 
   @Inject
@@ -34,13 +44,27 @@ public final class ScheduleValidator {
     this.logger = logger;
     this.validateLogLevel = validateLogLevel;
     this.failureLogLevel = failureLogLevel;
-    this.localConflicts = Lists.newArrayList();
+    this.localStartConflicts = Lists.newArrayList();
+    this.localPresentConflicts = Lists.newArrayList();
     this.globalPresentConflicts = Lists.newArrayList();
     this.globalStartConflicts = Lists.newArrayList();
   }
 
   private void log(Level level, String message, Object... params) {
     logger.log(level, message, params);
+  }
+
+  public void validateLocal(boolean cond, StartAssignment assignment, String condition) {
+    log(
+        validateLogLevel,
+        "Doing local validation on {0} for condition: {1}",
+        assignment,
+        condition);
+    if (!cond) {
+      LocalConflict<StartAssignment> conflict = LocalConflict.create(assignment, condition);
+      log(failureLogLevel, "Validation failed: {0}", conflict);
+      localStartConflicts.add(conflict);
+    }
   }
 
   public void validateLocal(boolean cond, PresentAssignment assignment, String condition) {
@@ -52,7 +76,7 @@ public final class ScheduleValidator {
     if (!cond) {
       LocalConflict<PresentAssignment> conflict = LocalConflict.create(assignment, condition);
       log(failureLogLevel, "Validation failed: {0}", conflict);
-      localConflicts.add(conflict);
+      localPresentConflicts.add(conflict);
     }
   }
 
@@ -101,15 +125,18 @@ public final class ScheduleValidator {
   }
 
   public boolean isValid() {
-    return localConflicts.isEmpty() && globalPresentConflicts.isEmpty()
-        && globalStartConflicts.isEmpty();
+    return localStartConflicts.isEmpty() && localPresentConflicts.isEmpty()
+        && globalPresentConflicts.isEmpty() && globalStartConflicts.isEmpty();
   }
 
   @Override
   public String toString() {
     ToStringHelper helper = Objects.toStringHelper(this);
-    if (!localConflicts.isEmpty()) {
-      helper.add("localConflicts", localConflicts);
+    if (!localStartConflicts.isEmpty()) {
+      helper.add("localStartConflicts", localStartConflicts);
+    }
+    if (!localPresentConflicts.isEmpty()) {
+      helper.add("localPresentConflicts", localPresentConflicts);
     }
     if (!globalPresentConflicts.isEmpty()) {
       helper.add("globalPresentConflicts", globalPresentConflicts);

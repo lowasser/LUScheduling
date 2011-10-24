@@ -63,6 +63,10 @@ public final class StartAssignment implements Assignment {
     }
   }
 
+  public PresentAssignment getPresentAssignment(int index) {
+    return getPresentAssignments().get(index);
+  }
+
   public List<PresentAssignment> getPresentAssignments() {
     return new PresentAssignmentsList();
   }
