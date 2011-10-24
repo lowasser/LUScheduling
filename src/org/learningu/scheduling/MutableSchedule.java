@@ -74,8 +74,18 @@ public final class MutableSchedule extends Schedule {
     return validator;
   }
 
+  public Optional<StartAssignment> removeStartingAt(ClassPeriod period, Room room) {
+    Optional<StartAssignment> startingAt = this.startingAt(period, room);
+    if (startingAt.isPresent()) {
+      startingTimeTable.get(room).remove(period);
+      return startingAt;
+    } else {
+      return Optional.absent();
+    }
+  }
+
   public Optional<StartAssignment> removeStartingAt(StartAssignment assign) {
-    Optional<StartAssignment> startingAt = this.startingAt(assign.getRoom(), assign.getPeriod());
+    Optional<StartAssignment> startingAt = this.startingAt(assign.getPeriod(), assign.getRoom());
     if (startingAt.isPresent() && startingAt.get().equals(assign)) {
       startingTimeTable.get(assign.getRoom()).remove(assign.getPeriod());
       return startingAt;

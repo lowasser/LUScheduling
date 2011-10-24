@@ -187,7 +187,7 @@ public abstract class Schedule {
     }
   }
 
-  public final Optional<StartAssignment> startingAt(Room room, ClassPeriod period) {
+  public final Optional<StartAssignment> startingAt(ClassPeriod period, Room room) {
     NavigableMap<ClassPeriod, Section> scheduleForRoom = startingTimeTable.get(room);
     assert scheduleForRoom != null;
     Section section = scheduleForRoom.get(period);
