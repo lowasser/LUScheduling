@@ -29,9 +29,10 @@ import com.google.common.collect.Maps;
 public abstract class Schedule {
   private final Program program;
 
-  protected final Map<Room, NavigableMap<ClassPeriod, Section>> startingTimeTable;
+  protected final Map<Room, ? extends NavigableMap<ClassPeriod, Section>> startingTimeTable;
 
-  Schedule(Program program, Map<Room, NavigableMap<ClassPeriod, Section>> startingTimeTable) {
+  Schedule(Program program,
+      Map<Room, ? extends NavigableMap<ClassPeriod, Section>> startingTimeTable) {
     this.program = checkNotNull(program);
     this.startingTimeTable = checkNotNull(startingTimeTable);
   }
@@ -135,12 +136,13 @@ public abstract class Schedule {
         }));
   }
 
-  static enum TransformFunction implements
-      Function<Entry<Room, NavigableMap<ClassPeriod, Section>>, Iterator<StartAssignment>> {
+  static enum TransformFunction
+      implements
+      Function<Entry<Room, ? extends NavigableMap<ClassPeriod, Section>>, Iterator<StartAssignment>> {
     INSTANCE {
       @Override
       public Iterator<StartAssignment> apply(
-          Entry<Room, NavigableMap<ClassPeriod, Section>> roomEntry) {
+          Entry<Room, ? extends NavigableMap<ClassPeriod, Section>> roomEntry) {
         final Room room = roomEntry.getKey();
         return Iterators.transform(
             roomEntry.getValue().entrySet().iterator(),
