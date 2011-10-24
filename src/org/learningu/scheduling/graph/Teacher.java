@@ -7,6 +7,8 @@ import java.util.Set;
 import org.learningu.scheduling.graph.Serial.SerialTeacher;
 
 import com.google.common.base.Function;
+import com.google.common.base.Functions;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 
 /**
@@ -27,9 +29,9 @@ public final class Teacher extends ProgramObject<SerialTeacher> {
 
   // Does not cache!
   Set<ClassPeriod> getCompatiblePeriods() {
-    return ProgramObjectSet.create(Lists.transform(
+    return ImmutableSet.copyOf(Lists.transform(
         serial.getAvailablePeriodsList(),
-        program.periods.asLookupFunction()));
+        Functions.forMap(program.periods)));
   }
 
   public String getName() {

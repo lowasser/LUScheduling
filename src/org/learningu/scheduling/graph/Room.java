@@ -7,6 +7,8 @@ import java.util.Set;
 import org.learningu.scheduling.graph.Serial.SerialRoom;
 
 import com.google.common.base.Function;
+import com.google.common.base.Functions;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 
 /**
@@ -35,8 +37,9 @@ public final class Room extends ProgramObject<SerialRoom> {
 
   // Does not cache!
   Set<ClassPeriod> getCompatiblePeriods() {
-    return ProgramObjectSet.create(Lists.transform(serial.getAvailablePeriodsList(),
-        program.periods.asLookupFunction()));
+    return ImmutableSet.copyOf(Lists.transform(
+        serial.getAvailablePeriodsList(),
+        Functions.forMap(program.periods)));
   }
 
   @Override

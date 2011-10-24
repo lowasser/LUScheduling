@@ -8,7 +8,9 @@ import java.util.Set;
 import org.learningu.scheduling.graph.Serial.SerialCourse;
 
 import com.google.common.base.Function;
+import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 
 /**
@@ -59,9 +61,9 @@ public final class Course extends ProgramObject<SerialCourse> {
 
   // Does not cache!
   Set<Teacher> getTeachers() {
-    return ProgramObjectSet.create(Lists.transform(
+    return ImmutableSet.copyOf(Lists.transform(
         serial.getTeacherIdsList(),
-        program.teachers.asLookupFunction()));
+        Functions.forMap(program.teachers)));
   }
 
   public int getEstimatedClassSize() {
