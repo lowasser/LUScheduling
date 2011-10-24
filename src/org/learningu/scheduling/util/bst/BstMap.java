@@ -320,8 +320,6 @@ public final class BstMap<K, V> extends AbstractMap<K, V> implements SortedMap<K
   }
 
   private static final class RemoveModifier<K, V> implements BstModifier<K, TreapNode<K, V>> {
-    private V oldValue = null;
-
     private RemoveModifier() {
     }
 
@@ -331,7 +329,7 @@ public final class BstMap<K, V> extends AbstractMap<K, V> implements SortedMap<K
       if (originalEntry == null) {
         return BstModificationResult.identity(null);
       } else {
-        oldValue = originalEntry.getValue();
+        originalEntry.getValue();
         return BstModificationResult.rebalancingChange(originalEntry, null);
       }
     }

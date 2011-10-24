@@ -19,7 +19,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.BoundType.CLOSED;
 import static com.google.common.collect.BoundType.OPEN;
 
-import java.io.Serializable;
 import java.util.Comparator;
 
 import javax.annotation.Nullable;
@@ -35,15 +34,17 @@ import com.google.common.collect.Range;
  * {@link Range}, this allows the use of an arbitrary comparator. This is designed for use in the
  * implementation of subcollections of sorted collection types.
  * 
- * <p>Whenever possible, use {@code Range} instead, which is better supported.
+ * <p>
+ * Whenever possible, use {@code Range} instead, which is better supported.
  * 
  * @author Louis Wasserman
  */
 @GwtCompatible(serializable = true)
-final class GeneralRange<T> implements Serializable {
+final class GeneralRange<T> {
   /**
    * Converts a Range to a GeneralRange.
    */
+  @SuppressWarnings("rawtypes")
   static <T extends Comparable> GeneralRange<T> from(Range<T> range) {
     @Nullable
     T lowerEndpoint = range.hasLowerBound() ? range.lowerEndpoint() : null;
@@ -91,13 +92,19 @@ final class GeneralRange<T> implements Serializable {
   }
 
   private final Comparator<? super T> comparator;
+
   private final boolean hasLowerBound;
+
   @Nullable
   private final T lowerEndpoint;
+
   private final BoundType lowerBoundType;
+
   private final boolean hasUpperBound;
+
   @Nullable
   private final T upperEndpoint;
+
   private final BoundType upperBoundType;
 
   private GeneralRange(Comparator<? super T> comparator, boolean hasLowerBound,
@@ -120,7 +127,10 @@ final class GeneralRange<T> implements Serializable {
     if (hasLowerBound && hasUpperBound) {
       int cmp = comparator.compare(lowerEndpoint, upperEndpoint);
       // be consistent with Range
-      checkArgument(cmp <= 0, "lowerEndpoint (%s) > upperEndpoint (%s)", lowerEndpoint,
+      checkArgument(
+          cmp <= 0,
+          "lowerEndpoint (%s) > upperEndpoint (%s)",
+          lowerEndpoint,
           upperEndpoint);
       if (cmp == 0) {
         checkArgument(lowerBoundType != OPEN | upperBoundType != OPEN);
@@ -234,7 +244,11 @@ final class GeneralRange<T> implements Serializable {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(comparator, lowerEndpoint, lowerBoundType, upperEndpoint,
+    return Objects.hashCode(
+        comparator,
+        lowerEndpoint,
+        lowerBoundType,
+        upperEndpoint,
         upperBoundType);
   }
 
@@ -246,9 +260,8 @@ final class GeneralRange<T> implements Serializable {
   public GeneralRange<T> reverse() {
     GeneralRange<T> result = reverse;
     if (result == null) {
-      result =
-          new GeneralRange<T>(Ordering.from(comparator).reverse(), hasUpperBound, upperEndpoint,
-              upperBoundType, hasLowerBound, lowerEndpoint, lowerBoundType);
+      result = new GeneralRange<T>(Ordering.from(comparator).reverse(), hasUpperBound,
+          upperEndpoint, upperBoundType, hasLowerBound, lowerEndpoint, lowerBoundType);
       result.reverse = this;
       return this.reverse = result;
     }

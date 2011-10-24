@@ -10,13 +10,14 @@ import com.google.common.base.Function;
 import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
+import com.google.common.primitives.Ints;
 
 /**
  * A room at a LU program in which classes may be scheduled.
  * 
  * @author lowasser
  */
-public final class Room extends ProgramObject<SerialRoom> {
+public final class Room extends ProgramObject<SerialRoom> implements Comparable<Room> {
 
   public Room(Program program, SerialRoom serial) {
     super(program, serial);
@@ -61,5 +62,10 @@ public final class Room extends ProgramObject<SerialRoom> {
         return new Room(program, input);
       }
     };
+  }
+
+  @Override
+  public int compareTo(Room o) {
+    return Ints.compare(getId(), o.getId());
   }
 }

@@ -1,11 +1,11 @@
 package org.learningu.scheduling.logic;
 
-import org.learningu.scheduling.MutableSchedule;
+import org.learningu.scheduling.Schedule;
 import org.learningu.scheduling.StartAssignment;
 import org.learningu.scheduling.graph.ClassPeriod;
 import org.learningu.scheduling.graph.Course;
-import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
+import org.learningu.scheduling.util.ModifiedState;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
@@ -25,41 +25,47 @@ public class RoomConflictLogicTest extends BaseLogicTest {
   }
 
   public void testOverlappingRoomConflict() {
-    MutableSchedule.Factory factory = injector.getInstance(MutableSchedule.Factory.class);
-    Program program = injector.getInstance(Program.class);
-    MutableSchedule schedule = factory.create(program);
+    Schedule.Factory factory = injector.getInstance(Schedule.Factory.class);
+    Schedule schedule = factory.create();
     Course origami = getCourse("OrigamiCourse");
     Course math = getCourse("MathCourse");
     ClassPeriod tenAM = getPeriod("10AM");
     ClassPeriod elevenAM = getPeriod("11AM");
     Room harper142 = getRoom("Harper142");
     // Origami is two hours.
-    assertTrue(schedule.putAssignment(
-        StartAssignment.create(tenAM, harper142, origami.getSection(0))).isValid());
-    ScheduleValidator putOverlapping = schedule.putAssignment(StartAssignment.create(
+    ModifiedState<ScheduleValidator, Schedule> assign1 = schedule.assignStart(StartAssignment.create(
+        tenAM,
+        harper142,
+        origami.getSection(0)));
+    assertTrue(assign1.getResult().toString(), assign1.getResult().isValid());
+    schedule = assign1.getNewState();
+    ModifiedState<ScheduleValidator, Schedule> assign2 = schedule.assignStart(StartAssignment.create(
         elevenAM,
         harper142,
         math.getSection(0)));
-    assertFalse(putOverlapping.toString(), putOverlapping.isValid());
+    assertFalse(assign2.getResult().isValid());
   }
 
   public void testOverlappingRoomConflictCommutative() {
     // Same test in a different order.
-    MutableSchedule.Factory factory = injector.getInstance(MutableSchedule.Factory.class);
-    Program program = injector.getInstance(Program.class);
-    MutableSchedule schedule = factory.create(program);
+    Schedule.Factory factory = injector.getInstance(Schedule.Factory.class);
+    Schedule schedule = factory.create();
     Course origami = getCourse("OrigamiCourse");
     Course math = getCourse("MathCourse");
     ClassPeriod tenAM = getPeriod("10AM");
     ClassPeriod elevenAM = getPeriod("11AM");
     Room harper142 = getRoom("Harper142");
     // Origami is two hours.
-    assertTrue(schedule.putAssignment(
-        StartAssignment.create(elevenAM, harper142, math.getSection(0))).isValid());
-    ScheduleValidator putOverlapping = schedule.putAssignment(StartAssignment.create(
+    ModifiedState<ScheduleValidator, Schedule> assign1 = schedule.assignStart(StartAssignment.create(
+        elevenAM,
+        harper142,
+        math.getSection(0)));
+    assertTrue(assign1.getResult().toString(), assign1.getResult().isValid());
+    schedule = assign1.getNewState();
+    ModifiedState<ScheduleValidator, Schedule> assign2 = schedule.assignStart(StartAssignment.create(
         tenAM,
         harper142,
         origami.getSection(0)));
-    assertFalse(putOverlapping.toString(), putOverlapping.isValid());
+    assertFalse(assign2.getResult().isValid());
   }
 }
