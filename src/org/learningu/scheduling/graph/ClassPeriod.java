@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.learningu.scheduling.graph.Serial.SerialPeriod;
 
-import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 
 public final class ClassPeriod extends ProgramObject<SerialPeriod> implements
@@ -39,10 +38,7 @@ public final class ClassPeriod extends ProgramObject<SerialPeriod> implements
 
   @Override
   public String toString() {
-    return Objects
-        .toStringHelper(this)
-        .add("name", getDescription())
-        .toString();
+    return serial.getShortDescription();
   }
 
   /**

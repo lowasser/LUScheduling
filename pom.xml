@@ -40,6 +40,11 @@
   		<artifactId>jsr305</artifactId>
   		<version>1.3.9</version>
   	</dependency>
+  	<dependency>
+  		<groupId>org.json</groupId>
+  		<artifactId>json</artifactId>
+  		<version>20090211</version>
+  	</dependency>
   </dependencies>
   <organization>
   	<name>Learning Unlimited</name>

@@ -33,12 +33,24 @@ message SerialTeacher {
 	repeated int32 availablePeriods = 3 [packed = true]; // teacher availability
 }
 
+message SerialDateTime {
+	required int32 year = 1;
+	required int32 month = 2;
+	required int32 day = 3;
+	required int32 hour = 4;
+	required int32 minute = 5;
+	required int32 second = 6;
+}
+
 /*
  * A single period at an LU program; the shortest possible length of a class.
  */
 message SerialPeriod {
 	required int32 periodId = 1;
+	optional string shortDescription = 5;
 	optional string description = 2;
+	optional SerialDateTime start = 3;
+	optional SerialDateTime end = 4;
 }
 
 /*
