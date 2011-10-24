@@ -13,6 +13,13 @@ import org.learningu.scheduling.graph.Teacher;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
+/**
+ * Logic for verifying that an assignment would not require that teachers teach two classes at
+ * once.
+ * 
+ * @author lowasser
+ * 
+ */
 public class TeacherConflictScheduleLogic extends ScheduleLogic {
 
   @Override

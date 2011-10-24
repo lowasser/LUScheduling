@@ -28,14 +28,15 @@ import com.google.common.collect.Maps;
 
 public abstract class Schedule {
   private final Program program;
-  private final Map<Room, NavigableMap<ClassPeriod, Section>> startingTimeTable;
+
+  protected final Map<Room, NavigableMap<ClassPeriod, Section>> startingTimeTable;
 
   Schedule(Program program, Map<Room, NavigableMap<ClassPeriod, Section>> startingTimeTable) {
     this.program = checkNotNull(program);
     this.startingTimeTable = checkNotNull(startingTimeTable);
   }
 
-  public Program getProgram() {
+  public final Program getProgram() {
     return program;
   }
 
@@ -75,7 +76,7 @@ public abstract class Schedule {
           protected Entry<Room, PresentAssignment> computeNext() {
             while (roomIterator.hasNext()) {
               Room room = roomIterator.next();
-              Optional<PresentAssignment> section = occurringAt(room, period);
+              Optional<PresentAssignment> section = occurringAt(period, room);
               if (section.isPresent()) {
                 return Maps.immutableEntry(room, section.get());
               }
@@ -106,7 +107,7 @@ public abstract class Schedule {
     @Override
     public PresentAssignment get(Object room) {
       try {
-        return occurringAt((Room) room, period).orNull();
+        return occurringAt(period, (Room) room).orNull();
       } catch (ClassCastException e) {
         return null;
       }
@@ -206,7 +207,7 @@ public abstract class Schedule {
     }
   }
 
-  public final Optional<PresentAssignment> occurringAt(Room room, ClassPeriod period) {
+  public final Optional<PresentAssignment> occurringAt(ClassPeriod period, Room room) {
     Optional<StartAssignment> startingBefore = startingBefore(room, period);
     if (startingBefore.isPresent()) {
       StartAssignment prevStart = startingBefore.get();

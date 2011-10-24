@@ -1,5 +1,7 @@
 package org.learningu.scheduling.logic;
 
+import java.util.Arrays;
+
 import org.learningu.scheduling.PresentAssignment;
 import org.learningu.scheduling.Schedule;
 import org.learningu.scheduling.StartAssignment;
@@ -8,7 +10,20 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 
-final class ChainedScheduleLogic extends ScheduleLogic {
+/**
+ * A schedule logic that applies several sub-logics in sequence.
+ * 
+ * @author lowasser
+ */
+public final class ChainedScheduleLogic extends ScheduleLogic {
+  public static ChainedScheduleLogic create(ScheduleLogic... logics) {
+    return new ChainedScheduleLogic(Arrays.asList(logics));
+  }
+
+  public static ChainedScheduleLogic create(Iterable<? extends ScheduleLogic> logics) {
+    return new ChainedScheduleLogic(logics);
+  }
+
   private final ImmutableList<ScheduleLogic> logics;
 
   @Inject

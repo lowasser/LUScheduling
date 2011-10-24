@@ -15,6 +15,12 @@ import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
+/**
+ * A cumulative validator for schedules, accumulating any conflicts found for later analysis or
+ * corrective action.
+ * 
+ * @author lowasser
+ */
 public final class ScheduleValidator {
   private final List<LocalConflict<StartAssignment>> localStartConflicts;
 
@@ -48,6 +54,22 @@ public final class ScheduleValidator {
     this.localPresentConflicts = Lists.newArrayList();
     this.globalPresentConflicts = Lists.newArrayList();
     this.globalStartConflicts = Lists.newArrayList();
+  }
+
+  public List<LocalConflict<StartAssignment>> getLocalStartConflicts() {
+    return localStartConflicts;
+  }
+
+  public List<LocalConflict<PresentAssignment>> getLocalPresentConflicts() {
+    return localPresentConflicts;
+  }
+
+  public List<GlobalConflict<PresentAssignment>> getGlobalPresentConflicts() {
+    return globalPresentConflicts;
+  }
+
+  public List<GlobalConflict<StartAssignment>> getGlobalStartConflicts() {
+    return globalStartConflicts;
   }
 
   private void log(Level level, String message, Object... params) {

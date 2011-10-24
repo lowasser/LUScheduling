@@ -12,6 +12,12 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
+/**
+ * Logic for verifying that a schedule assignment is internally consistent: the course can be
+ * assigned to the room, the teachers are available during the period, etc.
+ * 
+ * @author lowasser
+ */
 @Singleton
 public final class LocalConflictLogic extends ScheduleLogic {
   @Flag(

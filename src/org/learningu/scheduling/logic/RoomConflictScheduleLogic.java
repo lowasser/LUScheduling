@@ -12,6 +12,11 @@ import com.google.common.collect.DiscreteDomains;
 import com.google.common.collect.Range;
 import com.google.common.collect.Ranges;
 
+/**
+ * Logic for verifying that the assignment would not conflict with some other class.
+ * 
+ * @author lowasser
+ */
 final class RoomConflictScheduleLogic extends ScheduleLogic {
 
   @Override
