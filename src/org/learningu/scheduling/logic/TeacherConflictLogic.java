@@ -5,7 +5,7 @@ import java.util.Set;
 
 import org.learningu.scheduling.PresentAssignment;
 import org.learningu.scheduling.Schedule;
-import org.learningu.scheduling.graph.Course;
+import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Teacher;
@@ -31,13 +31,13 @@ public class TeacherConflictLogic extends ScheduleLogic {
      * through every teacher who is teaching a class this period.
      */
     Set<Teacher> teachers = program.teachersForCourse(assignment.getCourse());
-    Set<Course> coursesTaughtBySame = coursesTaughtByTeachers(program, teachers);
+    Set<Section> coursesTaughtBySame = coursesTaughtByTeachers(program, teachers);
     Set<PresentAssignment> conflicts = Sets.newLinkedHashSet();
     for (Entry<Room, PresentAssignment> entry : schedule
         .occurringAt(assignment.getPeriod())
         .entrySet()) {
       PresentAssignment assign = entry.getValue();
-      Course course = assign.getCourse();
+      Section course = assign.getCourse();
       if (coursesTaughtBySame.contains(course)) {
         conflicts.add(assign);
       }
@@ -49,8 +49,8 @@ public class TeacherConflictLogic extends ScheduleLogic {
         "Teachers must not be assigned to teach more than one class at a time");
   }
 
-  static Set<Course> coursesTaughtByTeachers(Program program, Iterable<Teacher> teachers) {
-    ImmutableSet.Builder<Course> builder = ImmutableSet.builder();
+  static Set<Section> coursesTaughtByTeachers(Program program, Iterable<Teacher> teachers) {
+    ImmutableSet.Builder<Section> builder = ImmutableSet.builder();
     for (Teacher t : teachers) {
       builder.addAll(program.getCoursesForTeacher(t));
     }

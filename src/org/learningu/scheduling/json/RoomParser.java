@@ -16,7 +16,7 @@ final class RoomParser extends JsonParser<SerialRoom> {
     roomBuilder.setName(jsonRoom.getString("uid"));
     JSONArray jsonPeriods = jsonRoom.getJSONArray("availability");
     for (int j = 0; j < jsonPeriods.length(); j++) {
-      roomBuilder.addAvailablePeriods(jsonPeriods.getInt(j));
+      roomBuilder.addAvailablePeriod(jsonPeriods.getInt(j));
     }
     return roomBuilder.build();
   }

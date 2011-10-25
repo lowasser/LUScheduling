@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 import org.learningu.scheduling.PresentAssignment;
 import org.learningu.scheduling.Schedule;
 import org.learningu.scheduling.StartAssignment;
-import org.learningu.scheduling.graph.Course;
+import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.util.Flag;
@@ -58,7 +58,7 @@ public final class LocalConflictLogic extends ScheduleLogic {
   @Override
   public void validate(ScheduleValidator validator, Schedule schedule, StartAssignment assignment) {
     super.validate(validator, schedule, assignment);
-    Course course = assignment.getCourse();
+    Section course = assignment.getCourse();
     Room room = assignment.getRoom();
     double estClassSizeRatio = ((double) course.getEstimatedClassSize()) / room.getCapacity();
     validator.validateLocal(

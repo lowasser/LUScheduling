@@ -2,7 +2,7 @@ package org.learningu.scheduling.pass.scorers;
 
 import org.learningu.scheduling.Schedule;
 import org.learningu.scheduling.StartAssignment;
-import org.learningu.scheduling.graph.Course;
+import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.optimization.Scorer;
 
 /**
@@ -19,7 +19,7 @@ public final class RoomSizeDifferenceScorer implements Scorer<Schedule> {
     int count = 0;
     for (StartAssignment assign : input.startAssignments()) {
       int roomCapacity = assign.getRoom().getCapacity();
-      Course course = assign.getCourse();
+      Section course = assign.getCourse();
       int classCap = course.getMaxClassSize();
       int periodLength = course.getPeriodLength();
       double ratio = (double) roomCapacity / classCap;

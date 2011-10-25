@@ -5,14 +5,14 @@ import java.util.List;
 
 import org.apache.commons.cli.ParseException;
 import org.learningu.scheduling.graph.ClassPeriod;
-import org.learningu.scheduling.graph.Course;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.ProgramCacheFlags;
 import org.learningu.scheduling.graph.Room;
-import org.learningu.scheduling.graph.Serial.SerialCourse;
+import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Serial.SerialPeriod;
 import org.learningu.scheduling.graph.Serial.SerialProgram;
 import org.learningu.scheduling.graph.Serial.SerialRoom;
+import org.learningu.scheduling.graph.Serial.SerialSection;
 import org.learningu.scheduling.graph.Serial.SerialTeacher;
 import org.learningu.scheduling.graph.Serial.SerialTimeBlock;
 import org.learningu.scheduling.graph.Teacher;
@@ -47,8 +47,8 @@ public class TestProgramModule extends AbstractModule {
           bind(TimeBlock.class).annotatedWith(Names.named(block.getDescription())).toInstance(
               block);
         }
-        for (Course course : program.getCourses()) {
-          bind(Course.class).annotatedWith(Names.named(course.getTitle())).toInstance(course);
+        for (Section course : program.getSections()) {
+          bind(Section.class).annotatedWith(Names.named(course.getTitle())).toInstance(course);
         }
         for (Room room : program.getRooms()) {
           bind(Room.class).annotatedWith(Names.named(room.getName())).toInstance(room);
@@ -64,9 +64,7 @@ public class TestProgramModule extends AbstractModule {
   @Override
   protected void configure() {
     try {
-      install(CommandLineModule.create(
-          new String[0],
-          ProgramCacheFlags.class));
+      install(CommandLineModule.create(new String[0], ProgramCacheFlags.class));
     } catch (ParseException e) {
       Throwables.propagate(e);
     }
@@ -75,12 +73,16 @@ public class TestProgramModule extends AbstractModule {
   private int uid = 0;
 
   private List<SerialTeacher> serialTeachers = Lists.newArrayList();
+
   private List<SerialRoom> serialRooms = Lists.newArrayList();
+
   private List<SerialTimeBlock> serialTimeBlocks = Lists.newArrayList();
-  private List<SerialCourse> serialCourses = Lists.newArrayList();
+
+  private List<SerialSection> serialCourses = Lists.newArrayList();
 
   protected SerialPeriod bindPeriod(String name) {
-    SerialPeriod period = SerialPeriod.newBuilder()
+    SerialPeriod period = SerialPeriod
+        .newBuilder()
         .setPeriodId(uid++)
         .setDescription(name)
         .build();
@@ -91,7 +93,7 @@ public class TestProgramModule extends AbstractModule {
   protected SerialTeacher bindTeacher(String name, SerialPeriod... periods) {
     SerialTeacher.Builder builder = SerialTeacher.newBuilder().setTeacherId(uid++).setName(name);
     for (SerialPeriod period : periods) {
-      builder.addAvailablePeriods(period.getPeriodId());
+      builder.addAvailablePeriod(period.getPeriodId());
     }
     SerialTeacher teacher = builder.build();
     bind(SerialTeacher.class).annotatedWith(Names.named(name)).toInstance(teacher);
@@ -100,10 +102,11 @@ public class TestProgramModule extends AbstractModule {
   }
 
   protected SerialTimeBlock bindTimeBlock(String name, SerialPeriod... periods) {
-    SerialTimeBlock block = SerialTimeBlock.newBuilder()
+    SerialTimeBlock block = SerialTimeBlock
+        .newBuilder()
         .setBlockId(uid++)
         .setDescription(name)
-        .addAllPeriods(Arrays.asList(periods))
+        .addAllPeriod(Arrays.asList(periods))
         .build();
     bind(SerialTimeBlock.class).annotatedWith(Names.named(name)).toInstance(block);
     serialTimeBlocks.add(block);
@@ -111,12 +114,13 @@ public class TestProgramModule extends AbstractModule {
   }
 
   protected SerialRoom bindRoom(String name, int capacity, SerialPeriod... periods) {
-    SerialRoom.Builder builder = SerialRoom.newBuilder()
+    SerialRoom.Builder builder = SerialRoom
+        .newBuilder()
         .setRoomId(uid++)
         .setName(name)
         .setCapacity(capacity);
     for (SerialPeriod period : periods) {
-      builder.addAvailablePeriods(period.getPeriodId());
+      builder.addAvailablePeriod(period.getPeriodId());
     }
     SerialRoom room = builder.build();
     bind(SerialRoom.class).annotatedWith(Names.named(name)).toInstance(room);
@@ -124,10 +128,10 @@ public class TestProgramModule extends AbstractModule {
     return room;
   }
 
-  protected SerialCourse bindCourse(String name, int sections, int periods, int size, SerialTeacher... teachers) {
-    SerialCourse.Builder builder = SerialCourse.newBuilder()
-        .setCourseId(uid++)
-        .setSections(sections)
+  protected SerialSection bindCourse(String name, int periods, int size, SerialTeacher... teachers) {
+    SerialSection.Builder builder = SerialSection
+        .newBuilder()
+        .setSectionId(uid++)
         .setPeriodLength(periods)
         .setCourseTitle(name)
         .setEstimatedClassSize(size)
@@ -135,19 +139,20 @@ public class TestProgramModule extends AbstractModule {
     for (SerialTeacher t : teachers) {
       builder.addTeacherIds(t.getTeacherId());
     }
-    SerialCourse course = builder.build();
-    bind(SerialCourse.class).annotatedWith(Names.named(name)).toInstance(course);
+    SerialSection course = builder.build();
+    bind(SerialSection.class).annotatedWith(Names.named(name)).toInstance(course);
     serialCourses.add(course);
     return course;
   }
 
   @Provides
   SerialProgram createProgram() {
-    return SerialProgram.newBuilder()
-        .addAllTimeBlocks(serialTimeBlocks)
-        .addAllTeachers(serialTeachers)
-        .addAllRooms(serialRooms)
-        .addAllCourses(serialCourses)
+    return SerialProgram
+        .newBuilder()
+        .addAllTimeBlock(serialTimeBlocks)
+        .addAllTeacher(serialTeachers)
+        .addAllRoom(serialRooms)
+        .addAllSection(serialCourses)
         .build();
   }
 }

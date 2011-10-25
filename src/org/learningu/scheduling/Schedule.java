@@ -11,9 +11,9 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.learningu.scheduling.graph.ClassPeriod;
+import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
-import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.logic.GlobalConflict;
 import org.learningu.scheduling.logic.ScheduleLogic;
 import org.learningu.scheduling.logic.ScheduleValidator;
@@ -76,7 +76,7 @@ public final class Schedule {
     return factory.program;
   }
 
-  public Set<Section> scheduledSections() {
+  public Set<Section> getScheduledSections() {
     return assignments.keySet();
   }
 
@@ -198,7 +198,7 @@ public final class Schedule {
         StartAssignment assign = (StartAssignment) o;
         Map<ClassPeriod, Section> map = startingTimeTable.get(assign.getRoom());
         if (map != null) {
-          return Objects.equal(map.get(assign.getPeriod()), assign.getSection());
+          return Objects.equal(map.get(assign.getPeriod()), assign.getCourse());
         }
       }
       return false;
@@ -261,8 +261,8 @@ public final class Schedule {
           factory.create(
               startingTimeTable.insert(
                   assign.getRoom(),
-                  roomMap.insert(assign.getPeriod(), assign.getSection())),
-              assignments.insert(assign.getSection(), assign)));
+                  roomMap.insert(assign.getPeriod(), assign.getCourse())),
+              assignments.insert(assign.getCourse(), assign)));
     } else {
       return ModifiedState.of(validator, this);
     }
@@ -276,7 +276,7 @@ public final class Schedule {
       BstMap<ClassPeriod, Section> roomMap = startingTimeTable.get(room);
       revised = factory.create(
           startingTimeTable.insert(room, roomMap.delete(period)),
-          assignments.delete(startingAt.get().getSection()));
+          assignments.delete(startingAt.get().getCourse()));
     }
     return ModifiedState.of(startingAt, revised);
   }

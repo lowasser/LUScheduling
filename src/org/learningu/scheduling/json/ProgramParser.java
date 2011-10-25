@@ -29,20 +29,20 @@ public final class ProgramParser {
       JSONArray periods) throws JSONException {
     SerialProgram.Builder builder = SerialProgram.newBuilder();
     for (int i = 0; i < rooms.length(); i++) {
-      builder.addRooms(roomParser.parseJsonToProto(rooms.getJSONObject(i)));
+      builder.addRoom(roomParser.parseJsonToProto(rooms.getJSONObject(i)));
     }
     for (int i = 0; i < teachers.length(); i++) {
-      builder.addTeachers(teacherParser.parseJsonToProto(teachers.getJSONObject(i)));
+      builder.addTeacher(teacherParser.parseJsonToProto(teachers.getJSONObject(i)));
     }
     for (int i = 0; i < sections.length(); i++) {
-      builder.addCourses(courseParser.parseJsonToProto(sections.getJSONObject(i)));
+      builder.addSection(courseParser.parseJsonToProto(sections.getJSONObject(i)));
     }
     SerialTimeBlock.Builder timeBuilder = SerialTimeBlock.newBuilder();
     timeBuilder.setBlockId(0).setDescription("Program");
     for (int i = 0; i < periods.length(); i++) {
-      timeBuilder.addPeriods(periodParser.parseJsonToProto(periods.getJSONObject(i)));
+      timeBuilder.addPeriod(periodParser.parseJsonToProto(periods.getJSONObject(i)));
     }
-    builder.addTimeBlocks(timeBuilder);
+    builder.addTimeBlock(timeBuilder);
     return builder.build();
   }
 }

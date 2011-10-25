@@ -4,7 +4,7 @@ import java.util.Set;
 
 import org.learningu.scheduling.Schedule;
 import org.learningu.scheduling.StartAssignment;
-import org.learningu.scheduling.graph.Course;
+import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.optimization.Scorer;
 
 import com.google.common.collect.Sets;
@@ -18,8 +18,8 @@ public final class DistinctClassesScorer implements Scorer<Schedule> {
 
   @Override
   public double score(Schedule input) {
-    Set<Course> scheduled = Sets
-        .newHashSetWithExpectedSize(input.getProgram().getCourses().size());
+    Set<Section> scheduled = Sets
+        .newHashSetWithExpectedSize(input.getProgram().getSections().size());
     for (StartAssignment assign : input.startAssignments()) {
       scheduled.add(assign.getCourse());
     }

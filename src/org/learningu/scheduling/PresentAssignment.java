@@ -6,10 +6,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import javax.annotation.Nullable;
 
 import org.learningu.scheduling.graph.ClassPeriod;
-import org.learningu.scheduling.graph.Course;
+import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
-import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.TimeBlock;
 
 import com.google.common.base.Objects;
@@ -40,17 +39,12 @@ public final class PresentAssignment implements Assignment {
   }
 
   @Override
-  public Section getSection() {
-    return startAssignment.getSection();
-  }
-
-  @Override
   public Program getProgram() {
     return startAssignment.getProgram();
   }
 
   @Override
-  public Course getCourse() {
+  public Section getCourse() {
     return startAssignment.getCourse();
   }
 

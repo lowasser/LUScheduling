@@ -30,7 +30,7 @@ public final class Teacher extends ProgramObject<SerialTeacher> {
   // Does not cache!
   Set<ClassPeriod> getCompatiblePeriods() {
     return ImmutableSet.copyOf(Lists.transform(
-        serial.getAvailablePeriodsList(),
+        serial.getAvailablePeriodList(),
         Functions.forMap(program.periods)));
   }
 

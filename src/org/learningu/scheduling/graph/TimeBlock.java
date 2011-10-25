@@ -26,7 +26,7 @@ public final class TimeBlock extends ProgramObject<SerialTimeBlock> implements
     super(program, serial);
     ImmutableList.Builder<ClassPeriod> builder = ImmutableList.builder();
     int index = 0;
-    for (SerialPeriod period : serial.getPeriodsList()) {
+    for (SerialPeriod period : serial.getPeriodList()) {
       builder.add(new ClassPeriod(period, this, index++));
     }
     periods = builder.build();

@@ -39,13 +39,13 @@ public final class Room extends ProgramObject<SerialRoom> implements Comparable<
   // Does not cache!
   Set<ClassPeriod> getCompatiblePeriods() {
     return ImmutableSet.copyOf(Lists.transform(
-        serial.getAvailablePeriodsList(),
+        serial.getAvailablePeriodList(),
         Functions.forMap(program.periods)));
   }
 
   Set<RoomProperty> getRoomProperties() {
     return ImmutableSet.copyOf(Lists.transform(
-        serial.getRoomPropertiesList(),
+        serial.getRoomPropertyList(),
         Functions.forMap(program.roomProperties)));
   }
 

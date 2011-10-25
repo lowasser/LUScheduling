@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 
 import org.learningu.scheduling.TestProgramModule;
 import org.learningu.scheduling.graph.ClassPeriod;
-import org.learningu.scheduling.graph.Course;
+import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Serial.SerialPeriod;
 import org.learningu.scheduling.graph.Serial.SerialTeacher;
@@ -41,11 +41,11 @@ public abstract class BaseLogicTest extends TestCase {
         bindRoom("Harper135", 20, tenAM, elevenAM, noon);
         bindRoom("Harper141", 20, tenAM, noon);
         bindRoom("Harper142", 20, tenAM, elevenAM);
-        bindCourse("ScienceCourse", 1, 1, 15, alice, carol);
-        bindCourse("PiratesCourse", 1, 1, 40, bob);
-        bindCourse("MathCourse", 2, 1, 10, carol);
-        bindCourse("OrigamiCourse", 1, 2, 10, dave);
-        bindCourse("ZombiesCourse", 1, 3, 15, ellie);
+        bindCourse("ScienceCourse", 1, 15, alice, carol);
+        bindCourse("PiratesCourse", 1, 40, bob);
+        bindCourse("MathCourse", 1, 10, carol);
+        bindCourse("OrigamiCourse", 2, 10, dave);
+        bindCourse("ZombiesCourse", 3, 15, ellie);
       }
 
       @SuppressWarnings("unused")
@@ -68,8 +68,8 @@ public abstract class BaseLogicTest extends TestCase {
     injector = null;
   }
 
-  protected Course getCourse(String string) {
-    return injector.getInstance(Key.get(Course.class, Names.named(string)));
+  protected Section getCourse(String string) {
+    return injector.getInstance(Key.get(Section.class, Names.named(string)));
   }
 
   protected ClassPeriod getPeriod(String string) {

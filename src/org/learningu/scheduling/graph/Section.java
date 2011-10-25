@@ -1,65 +1,79 @@
 package org.learningu.scheduling.graph;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import javax.annotation.Nullable;
+import java.util.Set;
 
-import com.google.common.base.Objects;
-import com.google.common.collect.ComparisonChain;
+import org.learningu.scheduling.graph.Serial.SerialSection;
 
-public final class Section implements Comparable<Section> {
-  private final Course course;
+import com.google.common.base.Function;
+import com.google.common.base.Functions;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.common.primitives.Ints;
 
-  private final int section;
+/**
+ * A course in an LU program.
+ * 
+ * @author lowasser
+ */
+public final class Section extends ProgramObject<SerialSection> implements Comparable<Section> {
 
-  Section(Course course, int section) {
-    this.course = checkNotNull(course);
-    this.section = section;
-    checkArgument(section >= 0 && section < course.getSectionCount());
-  }
-
-  public Program getProgram() {
-    return course.getProgram();
-  }
-
-  public Course getCourse() {
-    return course;
-  }
-
-  public int getSection() {
-    return section;
+  Section(Program program, SerialSection serial) {
+    super(program, serial);
   }
 
   @Override
-  public int hashCode() {
-    return Objects.hashCode(course, section);
+  public int getId() {
+    return serial.getSectionId();
   }
 
-  @Override
-  public boolean equals(@Nullable Object obj) {
-    if (this == obj) {
-      return true;
-    } else if (obj instanceof Section) {
-      Section s = (Section) obj;
-      return course.equals(s.course) && section == s.section;
-    } else {
-      return false;
-    }
+  public int getPeriodLength() {
+    return serial.getPeriodLength();
+  }
+
+  public String getTitle() {
+    return serial.getCourseTitle();
+  }
+
+  // Does not cache!
+  Set<Teacher> getTeachers() {
+    return ImmutableSet.copyOf(Lists.transform(
+        serial.getTeacherIdsList(),
+        Functions.forMap(program.teachers)));
+  }
+
+  Set<RoomProperty> getRequiredProperties() {
+    return ImmutableSet.copyOf(Lists.transform(
+        serial.getRequiredPropertyList(),
+        Functions.forMap(program.roomProperties)));
+  }
+
+  public int getEstimatedClassSize() {
+    return serial.getEstimatedClassSize();
+  }
+
+  public int getMaxClassSize() {
+    return serial.getMaxClassSize();
   }
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this).add("course", course).add("section", section).toString();
+    return serial.hasCourseTitle() ? getTitle() : super.toString();
+  }
+
+  static Function<SerialSection, Section> programWrapper(final Program program) {
+    checkNotNull(program);
+    return new Function<SerialSection, Section>() {
+      @Override
+      public Section apply(SerialSection input) {
+        return new Section(program, input);
+      }
+    };
   }
 
   @Override
   public int compareTo(Section o) {
-    return ComparisonChain
-        .start()
-        .compare(getCourse().getId(), o.getCourse().getId())
-        .compare(section, o.section)
-        .result();
+    return Ints.compare(getId(), o.getId());
   }
-
 }

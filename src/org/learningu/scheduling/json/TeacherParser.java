@@ -14,7 +14,7 @@ final class TeacherParser extends JsonParser<SerialTeacher> {
     builder.setName(object.getString("text"));
     JSONArray availableArray = object.getJSONArray("availability");
     for (int i = 0; i < availableArray.length(); i++) {
-      builder.addAvailablePeriods(availableArray.getInt(i));
+      builder.addAvailablePeriod(availableArray.getInt(i));
     }
     return builder.build();
   }

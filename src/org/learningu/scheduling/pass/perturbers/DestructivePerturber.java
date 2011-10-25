@@ -33,9 +33,9 @@ final class DestructivePerturber implements Perturber<Schedule> {
   @Override
   public Schedule perturb(Schedule initial, double temperature) {
     Program program = initial.getProgram();
-    int numberUnscheduled = program.getSections().size() - initial.scheduledSections().size();
+    int numberUnscheduled = program.getSections().size() - initial.getScheduledSections().size();
     List<Section> unscheduled = Lists.newArrayListWithCapacity(numberUnscheduled);
-    unscheduled.addAll(Sets.difference(program.getSections(), initial.scheduledSections()));
+    unscheduled.addAll(Sets.difference(program.getSections(), initial.getScheduledSections()));
     Collections.shuffle(unscheduled, rand);
 
     int nAttempts = Math.max(1, (int) (unscheduled.size() * temperature));

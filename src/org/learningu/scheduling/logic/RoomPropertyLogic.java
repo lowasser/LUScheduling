@@ -4,7 +4,7 @@ import java.util.Set;
 
 import org.learningu.scheduling.Schedule;
 import org.learningu.scheduling.StartAssignment;
-import org.learningu.scheduling.graph.Course;
+import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.RoomProperty;
@@ -18,7 +18,7 @@ public class RoomPropertyLogic extends ScheduleLogic {
     Program program = schedule.getProgram();
     Room room = assignment.getRoom();
     Set<RoomProperty> roomProperties = program.roomProperties(room);
-    Course course = assignment.getCourse();
+    Section course = assignment.getCourse();
     Set<RoomProperty> roomRequirements = program.roomRequirements(course);
     validator.validateLocal(
         roomProperties.containsAll(roomRequirements),

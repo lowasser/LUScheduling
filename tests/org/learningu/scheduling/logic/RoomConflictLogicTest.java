@@ -3,7 +3,7 @@ package org.learningu.scheduling.logic;
 import org.learningu.scheduling.Schedule;
 import org.learningu.scheduling.StartAssignment;
 import org.learningu.scheduling.graph.ClassPeriod;
-import org.learningu.scheduling.graph.Course;
+import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.util.ModifiedState;
 
@@ -27,8 +27,8 @@ public class RoomConflictLogicTest extends BaseLogicTest {
   public void testOverlappingRoomConflict() {
     Schedule.Factory factory = injector.getInstance(Schedule.Factory.class);
     Schedule schedule = factory.create();
-    Course origami = getCourse("OrigamiCourse");
-    Course math = getCourse("MathCourse");
+    Section origami = getCourse("OrigamiCourse");
+    Section math = getCourse("MathCourse");
     ClassPeriod tenAM = getPeriod("10AM");
     ClassPeriod elevenAM = getPeriod("11AM");
     Room harper142 = getRoom("Harper142");
@@ -36,13 +36,13 @@ public class RoomConflictLogicTest extends BaseLogicTest {
     ModifiedState<ScheduleValidator, Schedule> assign1 = schedule.assignStart(StartAssignment.create(
         tenAM,
         harper142,
-        origami.getSection(0)));
+        origami));
     assertTrue(assign1.getResult().toString(), assign1.getResult().isValid());
     schedule = assign1.getNewState();
     ModifiedState<ScheduleValidator, Schedule> assign2 = schedule.assignStart(StartAssignment.create(
         elevenAM,
         harper142,
-        math.getSection(0)));
+        math));
     assertFalse(assign2.getResult().isValid());
   }
 
@@ -50,8 +50,8 @@ public class RoomConflictLogicTest extends BaseLogicTest {
     // Same test in a different order.
     Schedule.Factory factory = injector.getInstance(Schedule.Factory.class);
     Schedule schedule = factory.create();
-    Course origami = getCourse("OrigamiCourse");
-    Course math = getCourse("MathCourse");
+    Section origami = getCourse("OrigamiCourse");
+    Section math = getCourse("MathCourse");
     ClassPeriod tenAM = getPeriod("10AM");
     ClassPeriod elevenAM = getPeriod("11AM");
     Room harper142 = getRoom("Harper142");
@@ -59,13 +59,13 @@ public class RoomConflictLogicTest extends BaseLogicTest {
     ModifiedState<ScheduleValidator, Schedule> assign1 = schedule.assignStart(StartAssignment.create(
         elevenAM,
         harper142,
-        math.getSection(0)));
+        math));
     assertTrue(assign1.getResult().toString(), assign1.getResult().isValid());
     schedule = assign1.getNewState();
     ModifiedState<ScheduleValidator, Schedule> assign2 = schedule.assignStart(StartAssignment.create(
         tenAM,
         harper142,
-        origami.getSection(0)));
+        origami));
     assertFalse(assign2.getResult().isValid());
   }
 }
