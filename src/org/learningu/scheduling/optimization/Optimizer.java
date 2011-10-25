@@ -8,9 +8,5 @@ package org.learningu.scheduling.optimization;
 public interface Optimizer<T> {
   Scorer<T> getScorer();
 
-  void iterate(int steps);
-
-  T getCurrentBest();
-
-  boolean updateWithCandidate(T newCandidate);
+  T iterate(int steps, T initial);
 }
