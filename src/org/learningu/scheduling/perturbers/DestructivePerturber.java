@@ -1,4 +1,4 @@
-package org.learningu.scheduling.pass.perturbers;
+package org.learningu.scheduling.perturbers;
 
 import java.util.Collections;
 import java.util.List;

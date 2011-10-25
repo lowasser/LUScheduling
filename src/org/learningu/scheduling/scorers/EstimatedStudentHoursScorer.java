@@ -1,4 +1,4 @@
-package org.learningu.scheduling.pass.scorers;
+package org.learningu.scheduling.scorers;
 
 import org.learningu.scheduling.optimization.Scorer;
 import org.learningu.scheduling.schedule.Schedule;

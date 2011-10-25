@@ -1,0 +1,16 @@
+package org.learningu.scheduling.scorers;
+
+enum SerialScorerImpl {
+	DISTINCT_CLASSES = 1;
+	EST_STUDENT_HOURS = 2;
+}
+
+message ScaledScorer {
+	required SerialScorerImpl impl = 1;
+	optional double multiplier = 2 [default = 1.0];
+	optional double exponent = 3 [default =  1.0];
+}
+
+message CompleteScorer {
+	repeated ScaledScorer component = 1;
+}

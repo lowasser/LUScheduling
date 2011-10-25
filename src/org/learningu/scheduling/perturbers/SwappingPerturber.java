@@ -1,4 +1,4 @@
-package org.learningu.scheduling.pass.perturbers;
+package org.learningu.scheduling.perturbers;
 
 import org.learningu.scheduling.optimization.Perturber;
 import org.learningu.scheduling.schedule.Schedule;
