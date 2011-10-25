@@ -1,4 +1,4 @@
-package org.learningu.scheduling.scorers;
+package org.learningu.scheduling.pass.scorers;
 
 import org.learningu.scheduling.Schedule;
 import org.learningu.scheduling.StartAssignment;

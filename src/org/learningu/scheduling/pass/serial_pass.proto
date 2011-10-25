@@ -1,0 +1,32 @@
+package org.learningu.scheduling.pass;
+
+message PerturberSequence {
+	enum PerturberImpl {
+		GREEDY = 1;
+		SWAPPING = 2;
+		DESTRUCTIVE = 3;
+	}
+
+	message Perturber {
+		required PerturberImpl impl = 1;
+		optional double tempScaling = 2 [default = 1.0];
+	}
+
+	repeated Perturber perturb = 1;
+}
+
+message ScoreFunction {
+	enum ScorerImpl {
+		DISTINCT_CLASSES = 1;
+		ESTIMATED_STUDENT_HOURS = 2;
+		ROOM_SIZE_DIFFERENCE = 3;
+	}
+	
+	message Scorer {
+		required ScorerImpl impl = 1;
+		optional double scale = 2 [default = 1.0];
+		optional double exponent = 3 [default = 1.0];
+	}
+	
+	repeated Scorer scoreComponents = 1;
+}

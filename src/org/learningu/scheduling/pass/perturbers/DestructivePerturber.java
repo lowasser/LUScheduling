@@ -1,4 +1,4 @@
-package org.learningu.scheduling.perturbers;
+package org.learningu.scheduling.pass.perturbers;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,16 +17,11 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
-/**
- * Schedules classes greedily and randomly, without deleting any already-scheduled classes.
- * 
- * @author lowasser
- */
-final class GreedyPerturber implements Perturber<Schedule> {
+final class DestructivePerturber implements Perturber<Schedule> {
   private final Random rand;
 
   @Inject
-  GreedyPerturber(Random rand) {
+  DestructivePerturber(Random rand) {
     this.rand = rand;
   }
 
@@ -54,7 +49,7 @@ final class GreedyPerturber implements Perturber<Schedule> {
       ClassPeriod pd = getRandom(periods);
       try {
         StartAssignment assign = StartAssignment.create(pd, room, section);
-        current = current.assignStart(assign).getNewState();
+        current = current.forceAssignStart(assign).getNewState();
       } catch (IllegalArgumentException e) {
         // not enough periods left in the block
         continue;
@@ -63,4 +58,5 @@ final class GreedyPerturber implements Perturber<Schedule> {
 
     return current;
   }
+
 }
