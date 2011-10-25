@@ -1,6 +1,6 @@
 package org.learningu.scheduling.graph;
 
-import org.learningu.scheduling.util.Flag;
+import org.learningu.scheduling.Flag;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
@@ -11,6 +11,7 @@ import com.google.inject.name.Named;
  * @author lowasser
  */
 public final class ProgramCacheFlags {
+
   public static final ProgramCacheFlags DEFAULTS = new ProgramCacheFlags(10000, 10000, 10000,
       10000, 10000, 10000, 4);
 
@@ -57,7 +58,8 @@ public final class ProgramCacheFlags {
   final int cacheConcurrencyLevel;
 
   @Inject
-  ProgramCacheFlags(@Named("teacherAvailableCacheSize") int teacherAvailableCacheSize,
+  ProgramCacheFlags(
+      @Named("teacherAvailableCacheSize") int teacherAvailableCacheSize,
       @Named("roomAvailableCacheSize") int roomAvailableCacheSize,
       @Named("courseCompatibleCacheSize") int courseCompatibleCacheSize,
       @Named("courseTeachersCacheSize") int courseTeachersCacheSize,

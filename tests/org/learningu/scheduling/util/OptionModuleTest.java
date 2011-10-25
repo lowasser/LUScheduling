@@ -11,6 +11,8 @@ import junit.framework.TestCase;
 
 import org.apache.commons.cli.ParseException;
 import org.joda.time.Period;
+import org.learningu.scheduling.OptionsModule;
+import org.learningu.scheduling.Flag;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -70,7 +72,7 @@ public class OptionModuleTest extends TestCase {
   public void testBasicParsing() throws ParseException {
     String[] args = { "-someInteger", "25", "--somePeriod", "1h1s", "--boolFlag", "--someString",
         "abcdefg", "--someDouble", "-5.0", "--someBigInteger", "0", "--modes=DOWN,UP" };
-    Injector injector = Guice.createInjector(CommandLineModule.create(args, SampleFlags.class));
+    Injector injector = Guice.createInjector(OptionsModule.create(args, SampleFlags.class));
 
     SampleFlags instance = injector.getInstance(SampleFlags.class);
     assertEquals(new SampleFlags(25, -5.0, BigInteger.ZERO, Period.hours(1).plusSeconds(1),

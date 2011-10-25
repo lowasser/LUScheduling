@@ -2,7 +2,8 @@ package org.learningu.scheduling.logic;
 
 import java.util.List;
 
-import org.learningu.scheduling.util.Flag;
+import org.learningu.scheduling.Flag;
+import org.learningu.scheduling.FlagsModule;
 
 import com.google.common.collect.ImmutableList;
 import com.google.inject.AbstractModule;
@@ -37,6 +38,8 @@ public final class ScheduleLogicModule extends AbstractModule {
 
   @Override
   protected void configure() {
+    install(FlagsModule.create(ImplChooser.class));
+    install(FlagsModule.create(LocalConflictLogic.class));
     bind(ScheduleLogic.class).toProvider(ImplChooser.class);
   }
 

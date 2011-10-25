@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.joda.time.Period;
-import org.learningu.scheduling.util.Flag;
+import org.learningu.scheduling.Flag;
 
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.ListenableFuture;

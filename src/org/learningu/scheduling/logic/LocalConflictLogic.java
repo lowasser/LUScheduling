@@ -2,13 +2,13 @@ package org.learningu.scheduling.logic;
 
 import java.util.logging.Logger;
 
+import org.learningu.scheduling.Flag;
 import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.schedule.PresentAssignment;
 import org.learningu.scheduling.schedule.Schedule;
 import org.learningu.scheduling.schedule.StartAssignment;
-import org.learningu.scheduling.util.Flag;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;

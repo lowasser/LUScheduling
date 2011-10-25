@@ -1,4 +1,4 @@
-package org.learningu.scheduling.util;
+package org.learningu.scheduling;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -14,21 +14,20 @@ import java.util.logging.Level;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.OptionBuilder;
-import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
+import org.learningu.scheduling.AutoschedulingModule.FlagSpec;
 
 import com.google.common.base.Splitter;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.primitives.Primitives;
 import com.google.inject.AbstractModule;
+import com.google.inject.Inject;
 import com.google.inject.Key;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
@@ -42,45 +41,16 @@ import com.google.inject.name.Names;
  * 
  * @author lowasser
  */
-public class CommandLineModule extends AbstractModule {
-  public static CommandLineModule create(String[] args, Class<?>... flagSettings)
-      throws ParseException {
-    return new CommandLineModule(args, flagSettings);
-  }
-
+public class OptionsModule extends AbstractModule {
   private final Map<Flag, Field> flags;
 
   private final CommandLine commandLine;
 
-  private CommandLineModule(String[] args, Class<?>... flagSettings) throws ParseException {
-    Options options = new Options();
-    ImmutableMap.Builder<Flag, Field> flagsBuilder = ImmutableMap.builder();
-
-    for (Class<?> flags : flagSettings) {
-      for (Field field : flags.getDeclaredFields()) {
-        if (!field.isAnnotationPresent(Flag.class)) {
-          continue;
-        }
-        Flag annotation = field.getAnnotation(Flag.class);
-        flagsBuilder.put(annotation, field);
-        OptionBuilder.withDescription(annotation.description());
-        OptionBuilder.withLongOpt(annotation.value());
-        if (annotation.multiple()) {
-          OptionBuilder.hasArgs();
-        } else if (boolean.class.equals(field.getType())) {
-          OptionBuilder.hasArg(false);
-        } else {
-          OptionBuilder.hasArg();
-          OptionBuilder.withArgName(annotation.value());
-        }
-        options.addOption(OptionBuilder.create(annotation.value()));
-      }
-    }
-
-    this.flags = flagsBuilder.build();
-
+  @Inject
+  OptionsModule(@RuntimeArguments List<String> args, FlagSpec spec) throws ParseException {
     CommandLineParser parser = new PosixParser();
-    this.commandLine = parser.parse(options, args);
+    this.commandLine = parser.parse(spec.options, args.toArray(new String[0]));
+    this.flags = spec.flagMap;
   }
 
   @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -117,8 +87,7 @@ public class CommandLineModule extends AbstractModule {
         }
         Type[] actualTypeArguments = genericType.getActualTypeArguments();
         Type arg = actualTypeArguments[0];
-        Iterable<String> splitInput = Splitter
-            .on(',')
+        Iterable<String> splitInput = Splitter.on(',')
             .trimResults()
             .omitEmptyStrings()
             .split(argument);
@@ -160,8 +129,7 @@ public class CommandLineModule extends AbstractModule {
     }
   }
 
-  private static final PeriodFormatter PERIOD_FORMATTER = new PeriodFormatterBuilder()
-      .printZeroNever()
+  private static final PeriodFormatter PERIOD_FORMATTER = new PeriodFormatterBuilder().printZeroNever()
       .appendDays()
       .appendSuffix("d")
       .appendHours()
