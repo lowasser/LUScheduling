@@ -40,6 +40,11 @@
   		<artifactId>json</artifactId>
   		<version>20090211</version>
   	</dependency>
+  	<dependency>
+  		<groupId>com.google.guava</groupId>
+  		<artifactId>guava-testlib</artifactId>
+  		<version>latest</version>
+  	</dependency>
   </dependencies>
   <organization>
   	<name>Learning Unlimited</name>

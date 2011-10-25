@@ -126,6 +126,11 @@ public final class BstMap<K, V> extends AbstractMap<K, V> implements SortedMap<K
   }
 
   @Override
+  public V remove(@Nullable Object key) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public int size() {
     return Ints.saturatedCast(BstRangeOps.totalInRange(countAggregate, range, root));
   }
