@@ -1,13 +1,10 @@
 package org.learningu.scheduling.perturbers;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
-import org.learningu.scheduling.MutableSchedule;
+import org.learningu.scheduling.Schedule;
 import org.learningu.scheduling.StartAssignment;
 import org.learningu.scheduling.graph.ClassPeriod;
 import org.learningu.scheduling.graph.Program;
@@ -21,52 +18,49 @@ import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
 /**
- * Greedily attempts to schedule unscheduled classes, but will not remove any preexisting
- * assignments.
+ * Schedules classes greedily and randomly, without deleting any already-scheduled classes.
  * 
  * @author lowasser
  */
-public class GreedyPerturber implements Perturber<MutableSchedule> {
-  private final Random gen;
+final class GreedyPerturber implements Perturber<Schedule> {
+  private final Random rand;
 
   @Inject
-  GreedyPerturber(Random gen) {
-    this.gen = gen;
+  GreedyPerturber(Random rand) {
+    this.rand = rand;
   }
 
   private <E> E getRandom(List<E> list) {
-    checkArgument(!list.isEmpty());
-    return list.get(gen.nextInt(list.size()));
+    assert !list.isEmpty();
+    return list.get(rand.nextInt(list.size()));
   }
 
   @Override
-  public MutableSchedule perturb(MutableSchedule schedule, double temperature) {
-    Program program = schedule.getProgram();
-    Set<Section> unscheduled = Sets.newHashSet(program.getSections());
-    for (Section section : schedule.scheduledSections()) {
-      unscheduled.remove(section);
-    }
-    List<Section> unscheduledList = Lists.newArrayList(unscheduled);
-    Collections.shuffle(unscheduledList, gen);
-    if (unscheduledList.isEmpty()) {
-      return schedule;
-    }
-    unscheduledList = unscheduledList.subList(
-        0,
-        Math.max(1, (int) (unscheduledList.size() * temperature)));
-    List<Room> rooms = ImmutableList.copyOf(program.getRooms());
-    List<ClassPeriod> periods = ImmutableList.copyOf(program.getPeriods());
-    for (Section section : unscheduledList) {
+  public Schedule perturb(Schedule initial, double temperature) {
+    Program program = initial.getProgram();
+    int numberUnscheduled = program.getSections().size() - initial.scheduledSections().size();
+    List<Section> unscheduled = Lists.newArrayListWithCapacity(numberUnscheduled);
+    unscheduled.addAll(Sets.difference(program.getSections(), initial.scheduledSections()));
+    Collections.shuffle(unscheduled, rand);
+
+    int nAttempts = Math.max(1, (int) (unscheduled.size() * temperature));
+    unscheduled = unscheduled.subList(0, nAttempts);
+
+    ImmutableList<Room> rooms = ImmutableList.copyOf(program.getRooms());
+    ImmutableList<ClassPeriod> periods = ImmutableList.copyOf(program.getPeriods());
+    Schedule current = initial;
+    for (Section section : unscheduled) {
       Room room = getRandom(rooms);
-      ClassPeriod period = getRandom(periods);
+      ClassPeriod pd = getRandom(periods);
       try {
-        StartAssignment assign = StartAssignment.create(period, room, section);
-        schedule.putAssignment(assign);
-        // success or failure, we don't care; we keep attempting to perturb
+        StartAssignment assign = StartAssignment.create(pd, room, section);
+        current = current.assignStart(assign).getNewState();
       } catch (IllegalArgumentException e) {
-        // keep trying
+        // not enough periods left in the block
+        continue;
       }
     }
-    return schedule;
+
+    return current;
   }
 }

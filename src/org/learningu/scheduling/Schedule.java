@@ -4,52 +4,80 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.AbstractMap;
 import java.util.AbstractSet;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.NavigableMap;
 import java.util.Set;
 
 import org.learningu.scheduling.graph.ClassPeriod;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Section;
+import org.learningu.scheduling.logic.GlobalConflict;
+import org.learningu.scheduling.logic.ScheduleLogic;
+import org.learningu.scheduling.logic.ScheduleValidator;
+import org.learningu.scheduling.util.ModifiedState;
+import org.learningu.scheduling.util.bst.BstMap;
 
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.collect.AbstractIterator;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Maps;
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 
-public abstract class Schedule {
-  private final Program program;
+public final class Schedule {
+  public static final class Factory {
+    private final Program program;
 
-  protected final Map<Room, ? extends NavigableMap<ClassPeriod, Section>> startingTimeTable;
+    private final ScheduleLogic logic;
 
-  Schedule(Program program,
-      Map<Room, ? extends NavigableMap<ClassPeriod, Section>> startingTimeTable) {
-    this.program = checkNotNull(program);
+    private final Provider<ScheduleValidator> validatorProvider;
+
+    @Inject
+    Factory(Program program, ScheduleLogic logic, Provider<ScheduleValidator> validatorProvider) {
+      this.program = program;
+      this.logic = logic;
+      this.validatorProvider = validatorProvider;
+    }
+
+    private Schedule create(BstMap<Room, BstMap<ClassPeriod, Section>> startingTimeTable,
+        BstMap<Section, StartAssignment> assignments) {
+      return new Schedule(this, startingTimeTable, assignments);
+    }
+
+    public Schedule create() {
+      BstMap<Room, BstMap<ClassPeriod, Section>> roomMap = BstMap.create();
+      for (Room r : program.getRooms()) {
+        roomMap = roomMap.insert(r, BstMap.<ClassPeriod, Section> create());
+      }
+      return new Schedule(this, roomMap, BstMap.<Section, StartAssignment> create());
+    }
+  }
+
+  private final Factory factory;
+
+  private final BstMap<Room, BstMap<ClassPeriod, Section>> startingTimeTable;
+
+  private final BstMap<Section, StartAssignment> assignments;
+
+  Schedule(Factory factory, BstMap<Room, BstMap<ClassPeriod, Section>> startingTimeTable,
+      BstMap<Section, StartAssignment> assignments) {
     this.startingTimeTable = checkNotNull(startingTimeTable);
+    this.factory = checkNotNull(factory);
+    this.assignments = checkNotNull(assignments);
   }
 
-  public final Program getProgram() {
-    return program;
+  public Program getProgram() {
+    return factory.program;
   }
 
-  public final Iterable<Section> scheduledSections() {
-    return Iterables.concat(Collections2.transform(
-        startingTimeTable.values(),
-        new Function<Map<ClassPeriod, Section>, Collection<Section>>() {
-          @Override
-          public Collection<Section> apply(Map<ClassPeriod, Section> input) {
-            return input.values();
-          }
-        }));
+  public Set<Section> scheduledSections() {
+    return assignments.keySet();
   }
 
   public final Map<Room, PresentAssignment> occurringAt(final ClassPeriod period) {
@@ -71,7 +99,7 @@ public abstract class Schedule {
       @Override
       public Iterator<Entry<Room, PresentAssignment>> iterator() {
         return new AbstractIterator<Entry<Room, PresentAssignment>>() {
-          final Iterator<Room> roomIterator = program.getRooms().iterator();
+          final Iterator<Room> roomIterator = getProgram().getRooms().iterator();
 
           @Override
           protected Entry<Room, PresentAssignment> computeNext() {
@@ -101,7 +129,7 @@ public abstract class Schedule {
 
     @Override
     public boolean containsKey(Object room) {
-      NavigableMap<ClassPeriod, Section> roomMap = startingTimeTable.get(room);
+      BstMap<ClassPeriod, Section> roomMap = startingTimeTable.get(room);
       return roomMap != null && roomMap.containsKey(period);
     }
 
@@ -124,7 +152,7 @@ public abstract class Schedule {
     return new StartAssignmentSet();
   }
 
-  public final Iterable<PresentAssignment> presentAssignments() {
+  public Iterable<PresentAssignment> presentAssignments() {
     return Iterables.concat(Iterables.transform(
         startAssignments(),
         new Function<StartAssignment, List<PresentAssignment>>() {
@@ -136,13 +164,12 @@ public abstract class Schedule {
         }));
   }
 
-  static enum TransformFunction
-      implements
-      Function<Entry<Room, ? extends NavigableMap<ClassPeriod, Section>>, Iterator<StartAssignment>> {
+  static enum TransformFunction implements
+      Function<Entry<Room, ? extends Map<ClassPeriod, Section>>, Iterator<StartAssignment>> {
     INSTANCE {
       @Override
       public Iterator<StartAssignment> apply(
-          Entry<Room, ? extends NavigableMap<ClassPeriod, Section>> roomEntry) {
+          Entry<Room, ? extends Map<ClassPeriod, Section>> roomEntry) {
         final Room room = roomEntry.getKey();
         return Iterators.transform(
             roomEntry.getValue().entrySet().iterator(),
@@ -187,8 +214,8 @@ public abstract class Schedule {
     }
   }
 
-  public final Optional<StartAssignment> startingAt(ClassPeriod period, Room room) {
-    NavigableMap<ClassPeriod, Section> scheduleForRoom = startingTimeTable.get(room);
+  public Optional<StartAssignment> startingAt(ClassPeriod period, Room room) {
+    BstMap<ClassPeriod, Section> scheduleForRoom = startingTimeTable.get(room);
     assert scheduleForRoom != null;
     Section section = scheduleForRoom.get(period);
     if (section != null) {
@@ -198,8 +225,8 @@ public abstract class Schedule {
     }
   }
 
-  public final Optional<StartAssignment> startingBefore(Room room, ClassPeriod period) {
-    NavigableMap<ClassPeriod, Section> scheduleForRoom = startingTimeTable.get(room);
+  public Optional<StartAssignment> startingBefore(Room room, ClassPeriod period) {
+    BstMap<ClassPeriod, Section> scheduleForRoom = startingTimeTable.get(room);
     assert scheduleForRoom != null;
     Entry<ClassPeriod, Section> floorEntry = scheduleForRoom.floorEntry(period);
     if (floorEntry != null && floorEntry.getKey().getTimeBlock().equals(period.getTimeBlock())) {
@@ -209,7 +236,7 @@ public abstract class Schedule {
     }
   }
 
-  public final Optional<PresentAssignment> occurringAt(ClassPeriod period, Room room) {
+  public Optional<PresentAssignment> occurringAt(ClassPeriod period, Room room) {
     Optional<StartAssignment> startingBefore = startingBefore(room, period);
     if (startingBefore.isPresent()) {
       StartAssignment prevStart = startingBefore.get();
@@ -219,5 +246,82 @@ public abstract class Schedule {
       }
     }
     return Optional.absent();
+  }
+
+  public ModifiedState<ScheduleValidator, Schedule> assignStart(StartAssignment assign) {
+    ScheduleValidator validator = factory.validatorProvider.get();
+    factory.logic.validate(validator, this, assign);
+    for (PresentAssignment pAssign : assign.getPresentAssignments()) {
+      factory.logic.validate(validator, this, pAssign);
+    }
+    if (validator.isValid()) {
+      BstMap<ClassPeriod, Section> roomMap = startingTimeTable.get(assign.getRoom());
+      return ModifiedState.of(
+          validator,
+          factory.create(
+              startingTimeTable.insert(
+                  assign.getRoom(),
+                  roomMap.insert(assign.getPeriod(), assign.getSection())),
+              assignments.insert(assign.getSection(), assign)));
+    } else {
+      return ModifiedState.of(validator, this);
+    }
+  }
+
+  public ModifiedState<Optional<StartAssignment>, Schedule> removeStartingAt(ClassPeriod period,
+      Room room) {
+    Optional<StartAssignment> startingAt = startingAt(period, room);
+    Schedule revised = this;
+    if (startingAt.isPresent()) {
+      BstMap<ClassPeriod, Section> roomMap = startingTimeTable.get(room);
+      revised = factory.create(
+          startingTimeTable.insert(room, roomMap.delete(period)),
+          assignments.delete(startingAt.get().getSection()));
+    }
+    return ModifiedState.of(startingAt, revised);
+  }
+
+  public ModifiedState<ScheduleValidator, Schedule> forceAssignStart(StartAssignment assign) {
+    ScheduleValidator validator = factory.validatorProvider.get();
+    factory.logic.validate(validator, this, assign);
+    for (PresentAssignment pAssign : assign.getPresentAssignments()) {
+      factory.logic.validate(validator, this, pAssign);
+    }
+    if (!validator.isLocallyValid()) {
+      return ModifiedState.of(validator, this);
+    }
+    Schedule revised = this;
+    for (GlobalConflict<PresentAssignment> conflict : validator.getGlobalPresentConflicts()) {
+      for (PresentAssignment conflicting : conflict.getConflictingAssignments()) {
+        StartAssignment toRemove = conflicting.getStartAssignment();
+        revised = removeStartingAt(toRemove.getPeriod(), toRemove.getRoom()).getNewState();
+      }
+    }
+    for (GlobalConflict<StartAssignment> conflict : validator.getGlobalStartConflicts()) {
+      for (StartAssignment conflicting : conflict.getConflictingAssignments()) {
+        revised = removeStartingAt(conflicting.getPeriod(), conflicting.getRoom()).getNewState();
+      }
+    }
+    return revised.assignStart(assign);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(startAssignments(), getProgram());
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof Schedule) {
+      Schedule other = (Schedule) obj;
+      return Objects.equal(startAssignments(), other.startAssignments())
+          && getProgram().equals(other.getProgram());
+    }
+    return false;
+  }
+
+  @Override
+  public String toString() {
+    return Objects.toStringHelper(this).add("startAssignments", startAssignments()).toString();
   }
 }
