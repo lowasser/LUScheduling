@@ -4,7 +4,8 @@ import java.util.Random;
 
 import junit.framework.TestCase;
 
-import org.learningu.scheduling.optimization.impl.QuadraticTemperatureFunction;
+import org.joda.time.Period;
+import org.learningu.scheduling.optimization.impl.LinearTemperatureFunction;
 import org.learningu.scheduling.optimization.impl.StandardAcceptanceFunction;
 
 import com.google.inject.AbstractModule;
@@ -14,6 +15,7 @@ import com.google.inject.Key;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
+import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Names;
 
 /**
@@ -26,43 +28,57 @@ public class AnnealerTest extends TestCase {
 
   @SuppressWarnings("unused")
   public void testAnnealer() {
-    Injector injector = Guice.createInjector(new AbstractModule() {
+    Injector injector = Guice.createInjector(new OptimizationModule(), new AbstractModule() {
       @Override
       protected void configure() {
         bind(Random.class).toInstance(new Random(0));
-        bind(TemperatureFunction.class).to(QuadraticTemperatureFunction.class).asEagerSingleton();
-        bind(double.class).annotatedWith(Names.named("TemperatureScale")).toInstance(1000.0);
-        bind(Integer.class).annotatedWith(Names.named("Initial")).toInstance(-103);
+        bind(new TypeLiteral<Optimizer<Double>>() {}).to(
+            new TypeLiteral<ConcurrentOptimizer<Double>>() {});
+        install(new FactoryModuleBuilder().implement(
+            new TypeLiteral<Optimizer<Double>>() {},
+            new TypeLiteral<Annealer<Double>>() {}).build(
+            new TypeLiteral<OptimizerFactory<Double>>() {}));
+        bind(TemperatureFunction.class).to(LinearTemperatureFunction.class).asEagerSingleton();
+        bind(TemperatureFunction.class).annotatedWith(SingleThread.class).to(
+            LinearTemperatureFunction.class);
         bind(AcceptanceFunction.class).to(StandardAcceptanceFunction.class).asEagerSingleton();
+        bindConstant().annotatedWith(Names.named("stepsPerOptimizerIteration")).to(10);
+        bindConstant().annotatedWith(Names.named("nThreads")).to(4);
+        bind(Period.class).annotatedWith(Names.named("iterationTimeout")).toInstance(
+            Period.hours(1));
+
       }
 
       @Provides
       @Singleton
-      public Scorer<Integer> scoreFunction() {
-        return new Scorer<Integer>() {
+      public Scorer<Double> scoreFunction() {
+        return new Scorer<Double>() {
           @Override
-          public double score(Integer x) {
-            return - (x - 6) * (x - 6);
+          public double score(Double x) {
+            double x2 = x * x;
+            double x3 = x2 * x;
+            double f = x3 + x2 - x + 1;
+            return -f * f;
           }
         };
       }
 
       @Provides
       @Singleton
-      public Perturber<Integer> perturber(final Random gen) {
-        return new Perturber<Integer>() {
+      public Perturber<Double> perturber(final Random gen) {
+        return new Perturber<Double>() {
           @Override
-          public Integer perturb(Integer initial, double temperature) {
-            int sign = gen.nextBoolean() ? 1 : -1;
-            return initial + sign;
+          public Double perturb(Double initial, double temperature) {
+            return initial + (gen.nextGaussian() * temperature);
           }
         };
       }
     });
 
-    Annealer<Integer> annealer = injector.getInstance(Key
-        .get(new TypeLiteral<Annealer<Integer>>() {}));
-    annealer.iterate(1000);
-    assertEquals(6, annealer.getCurrentBest().intValue());
+    Optimizer<Double> optimizer = injector.getInstance(Key
+        .get(new TypeLiteral<Optimizer<Double>>() {}));
+    double initial = 25.0;
+    double opt = optimizer.iterate(50, initial);
+    assertEquals(-1.83929, opt, 0.002);
   }
 }

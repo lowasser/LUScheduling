@@ -16,13 +16,12 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 import com.google.inject.name.Named;
 
 public final class ConcurrentOptimizer<T> implements Optimizer<T> {
   private final Scorer<T> scorer;
 
-  private final Provider<Optimizer<T>> optimizerProvider;
+  private final OptimizerFactory<T> optimizerFactory;
 
   private final int nThreads;
 
@@ -42,18 +41,25 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
 
   private final Logger logger;
 
+  private final TemperatureFunction primaryTempFun;
+
+  private final TemperatureFunction subTempFun;
+
   @Inject
-  ConcurrentOptimizer(Scorer<T> scorer, @SingleThread Provider<Optimizer<T>> optimizerProvider,
+  ConcurrentOptimizer(Scorer<T> scorer, OptimizerFactory<T> optimizerProvider,
+      TemperatureFunction primaryTempFun, @SingleThread TemperatureFunction subTempFun,
       @Named("nThreads") int nThreads, ListeningExecutorService service,
       @Named("stepsPerOptimizerIteration") int stepsPerOptimizerIteration,
       @Named("iterationTimeout") Period timeout, Logger logger) {
     this.scorer = scorer;
-    this.optimizerProvider = optimizerProvider;
+    this.optimizerFactory = optimizerProvider;
     this.nThreads = nThreads;
     this.service = service;
     this.stepsPerOptimizerIteration = stepsPerOptimizerIteration;
     this.timeout = timeout;
     this.logger = logger;
+    this.primaryTempFun = primaryTempFun;
+    this.subTempFun = subTempFun;
   }
 
   @Override
@@ -67,11 +73,12 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
     T currentBest = initial;
     double currentBestScore = scorer.score(initial);
     for (int step = 0; step < steps; step++) {
-      logger.log(Level.INFO, "Concurrent optimizer, on iteration step {0}", step);
-      logger.log(Level.FINEST, "Current best is {0}", currentBest);
+      logger.log(Level.INFO, "On iteration step {0}, current best has score {1}", new Object[] {
+          step, currentBestScore });
       List<Callable<T>> independentThreads = Lists.newArrayListWithCapacity(nThreads);
+      double temp = primaryTempFun.temperature(step, steps);
       for (int i = 0; i < nThreads; i++) {
-        independentThreads.add(runSingleThreadPass(currentBest));
+        independentThreads.add(runSingleThreadPass(currentBest, temp));
       }
       try {
         @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -97,11 +104,17 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
     return currentBest;
   }
 
-  private Callable<T> runSingleThreadPass(final T initial) {
+  private Callable<T> runSingleThreadPass(final T initial, final double tempScale) {
     return new Callable<T>() {
       @Override
       public T call() {
-        Optimizer<T> optimizer = optimizerProvider.get();
+        Optimizer<T> optimizer = optimizerFactory.create(new TemperatureFunction() {
+
+          @Override
+          public double temperature(int currentStep, int nSteps) {
+            return tempScale * subTempFun.temperature(currentStep, nSteps);
+          }
+        });
         return optimizer.iterate(stepsPerOptimizerIteration, initial);
       }
     };
