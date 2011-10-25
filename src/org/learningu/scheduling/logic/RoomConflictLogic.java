@@ -4,8 +4,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import java.util.List;
 
-import org.learningu.scheduling.Schedule;
-import org.learningu.scheduling.StartAssignment;
+import org.learningu.scheduling.schedule.Schedule;
+import org.learningu.scheduling.schedule.StartAssignment;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.DiscreteDomains;

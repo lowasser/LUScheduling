@@ -1,4 +1,4 @@
-package org.learningu.scheduling;
+package org.learningu.scheduling.schedule;
 
 import org.learningu.scheduling.graph.ClassPeriod;
 import org.learningu.scheduling.graph.Section;

@@ -1,9 +1,9 @@
 package org.learningu.scheduling.pass.scorers;
 
-import org.learningu.scheduling.Schedule;
-import org.learningu.scheduling.StartAssignment;
 import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.optimization.Scorer;
+import org.learningu.scheduling.schedule.Schedule;
+import org.learningu.scheduling.schedule.StartAssignment;
 
 /**
  * Scorer that penalizes large ratios from room size to class caps at a cubic rate: a ratio of 3

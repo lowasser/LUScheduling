@@ -4,15 +4,14 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.joda.time.Period;
 import org.learningu.scheduling.util.Flag;
 
-import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
-import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.inject.Inject;
@@ -23,15 +22,21 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
 
   private final OptimizerFactory<T> optimizerFactory;
 
-  private final int nThreads;
+  @Flag(
+      value = "nSubOptimizers",
+      defaultValue = "1",
+      description = "Number of independent sub-optimizers to use in each concurrent optimizer "
+          + "iteration")
+  private final int nSubOptimizers;
 
   private final ListeningExecutorService service;
 
   @Flag(
-      value = "stepsPerOptimizerIteration",
-      description = "Number of steps with which to run each optimizer thread per concurrent optimizer iteration",
+      value = "subOptimizerSteps",
+      description = "Number of steps with which to run each sub-optimizer per concurrent optimizer"
+          + " iteration",
       defaultValue = "1000")
-  private final int stepsPerOptimizerIteration;
+  private final int subOptimizerSteps;
 
   @Flag(
       value = "iterationTimeout",
@@ -46,16 +51,21 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
   private final TemperatureFunction subTempFun;
 
   @Inject
-  ConcurrentOptimizer(Scorer<T> scorer, OptimizerFactory<T> optimizerProvider,
-      TemperatureFunction primaryTempFun, @SingleThread TemperatureFunction subTempFun,
-      @Named("nThreads") int nThreads, ListeningExecutorService service,
-      @Named("stepsPerOptimizerIteration") int stepsPerOptimizerIteration,
-      @Named("iterationTimeout") Period timeout, Logger logger) {
+  ConcurrentOptimizer(
+      Scorer<T> scorer,
+      OptimizerFactory<T> optimizerProvider,
+      TemperatureFunction primaryTempFun,
+      @SingleThread TemperatureFunction subTempFun,
+      @Named("nSubOptimizers") int nSubOptimizers,
+      ListeningExecutorService service,
+      @Named("subOptimizerSteps") int subOptimizerSteps,
+      @Named("iterationTimeout") Period timeout,
+      Logger logger) {
     this.scorer = scorer;
     this.optimizerFactory = optimizerProvider;
-    this.nThreads = nThreads;
+    this.nSubOptimizers = nSubOptimizers;
     this.service = service;
-    this.stepsPerOptimizerIteration = stepsPerOptimizerIteration;
+    this.subOptimizerSteps = subOptimizerSteps;
     this.timeout = timeout;
     this.logger = logger;
     this.primaryTempFun = primaryTempFun;
@@ -75,30 +85,32 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
     for (int step = 0; step < steps; step++) {
       logger.log(Level.INFO, "On iteration step {0}, current best has score {1}", new Object[] {
           step, currentBestScore });
-      List<Callable<T>> independentThreads = Lists.newArrayListWithCapacity(nThreads);
+      List<Callable<T>> independentThreads = Lists.newArrayListWithCapacity(nSubOptimizers);
       double temp = primaryTempFun.temperature(step, steps);
-      for (int i = 0; i < nThreads; i++) {
+      for (int i = 0; i < nSubOptimizers; i++) {
         independentThreads.add(runSingleThreadPass(currentBest, temp));
       }
       try {
         @SuppressWarnings({ "unchecked", "rawtypes" })
-        List<ListenableFuture<T>> futures = (List) service.invokeAll(
-            independentThreads,
-            timeoutMillis,
-            TimeUnit.MILLISECONDS);
-        ListenableFuture<List<T>> successfulAsList = Futures.successfulAsList(futures);
+        List<ListenableFuture<T>> futures = (List) service.invokeAll(independentThreads);
 
-        for (T better : successfulAsList.get()) {
-          double betterScore = scorer.score(better);
-          if (betterScore > currentBestScore) {
-            currentBest = better;
-            currentBestScore = betterScore;
+        for (ListenableFuture<T> future : futures) {
+          try {
+            T better = future.get(timeoutMillis, TimeUnit.MILLISECONDS);
+            double betterScore = scorer.score(better);
+            if (betterScore > currentBestScore) {
+              currentBest = better;
+              currentBestScore = betterScore;
+            }
+          } catch (TimeoutException e) {
+            logger.log(Level.WARNING, "Sub-optimizer timed out.  Skipping.");
+          } catch (ExecutionException e) {
+            logger.log(Level.SEVERE, "Sub-optimizer threw an exception.  Skipping.", e.getCause());
           }
         }
       } catch (InterruptedException e) {
-        Throwables.propagate(e);
-      } catch (ExecutionException e) {
-        Throwables.propagate(e);
+        logger.log(Level.WARNING, "Thread interrupted, returning current best.");
+        break;
       }
     }
     return currentBest;
@@ -115,7 +127,7 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
             return tempScale * subTempFun.temperature(currentStep, nSteps);
           }
         });
-        return optimizer.iterate(stepsPerOptimizerIteration, initial);
+        return optimizer.iterate(subOptimizerSteps, initial);
       }
     };
   }

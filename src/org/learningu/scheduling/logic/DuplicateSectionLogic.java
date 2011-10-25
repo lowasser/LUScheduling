@@ -1,7 +1,7 @@
 package org.learningu.scheduling.logic;
 
-import org.learningu.scheduling.Schedule;
-import org.learningu.scheduling.StartAssignment;
+import org.learningu.scheduling.schedule.Schedule;
+import org.learningu.scheduling.schedule.StartAssignment;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;

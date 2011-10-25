@@ -4,13 +4,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import org.learningu.scheduling.Schedule;
-import org.learningu.scheduling.StartAssignment;
 import org.learningu.scheduling.graph.ClassPeriod;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.optimization.Perturber;
+import org.learningu.scheduling.schedule.Schedule;
+import org.learningu.scheduling.schedule.StartAssignment;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;

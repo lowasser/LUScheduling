@@ -1,8 +1,8 @@
 package org.learningu.scheduling.pass.scorers;
 
-import org.learningu.scheduling.Schedule;
-import org.learningu.scheduling.StartAssignment;
 import org.learningu.scheduling.optimization.Scorer;
+import org.learningu.scheduling.schedule.Schedule;
+import org.learningu.scheduling.schedule.StartAssignment;
 
 public final class EstimatedStudentHoursScorer implements Scorer<Schedule> {
 

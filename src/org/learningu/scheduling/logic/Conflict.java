@@ -1,6 +1,6 @@
 package org.learningu.scheduling.logic;
 
-import org.learningu.scheduling.Assignment;
+import org.learningu.scheduling.schedule.Assignment;
 
 /**
  * A conflict stopping a schedule assignment from being made.

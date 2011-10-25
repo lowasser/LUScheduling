@@ -3,12 +3,12 @@ package org.learningu.scheduling.logic;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.learningu.scheduling.PresentAssignment;
-import org.learningu.scheduling.Schedule;
 import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Teacher;
+import org.learningu.scheduling.schedule.PresentAssignment;
+import org.learningu.scheduling.schedule.Schedule;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;

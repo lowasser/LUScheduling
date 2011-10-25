@@ -2,9 +2,9 @@ package org.learningu.scheduling.logic;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import org.learningu.scheduling.PresentAssignment;
-import org.learningu.scheduling.Schedule;
-import org.learningu.scheduling.StartAssignment;
+import org.learningu.scheduling.schedule.PresentAssignment;
+import org.learningu.scheduling.schedule.Schedule;
+import org.learningu.scheduling.schedule.StartAssignment;
 
 /**
  * Logic for verifying that an assignment can be made to a schedule without any conflicts or

@@ -3,7 +3,7 @@ package org.learningu.scheduling.logic;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import org.learningu.scheduling.Assignment;
+import org.learningu.scheduling.schedule.Assignment;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;

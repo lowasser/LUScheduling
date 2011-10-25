@@ -2,10 +2,10 @@ package org.learningu.scheduling.pass.scorers;
 
 import java.util.Set;
 
-import org.learningu.scheduling.Schedule;
-import org.learningu.scheduling.StartAssignment;
 import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.optimization.Scorer;
+import org.learningu.scheduling.schedule.Schedule;
+import org.learningu.scheduling.schedule.StartAssignment;
 
 import com.google.common.collect.Sets;
 

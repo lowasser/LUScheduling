@@ -1,10 +1,10 @@
 package org.learningu.scheduling.logic;
 
-import org.learningu.scheduling.Schedule;
-import org.learningu.scheduling.StartAssignment;
 import org.learningu.scheduling.graph.ClassPeriod;
 import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Room;
+import org.learningu.scheduling.schedule.Schedule;
+import org.learningu.scheduling.schedule.StartAssignment;
 import org.learningu.scheduling.util.ModifiedState;
 
 import com.google.common.collect.ImmutableList;

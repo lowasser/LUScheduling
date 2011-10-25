@@ -2,9 +2,9 @@ package org.learningu.scheduling.logic;
 
 import java.util.Arrays;
 
-import org.learningu.scheduling.PresentAssignment;
-import org.learningu.scheduling.Schedule;
-import org.learningu.scheduling.StartAssignment;
+import org.learningu.scheduling.schedule.PresentAssignment;
+import org.learningu.scheduling.schedule.Schedule;
+import org.learningu.scheduling.schedule.StartAssignment;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;

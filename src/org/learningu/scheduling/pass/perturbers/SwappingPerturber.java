@@ -1,7 +1,7 @@
 package org.learningu.scheduling.pass.perturbers;
 
-import org.learningu.scheduling.Schedule;
 import org.learningu.scheduling.optimization.Perturber;
+import org.learningu.scheduling.schedule.Schedule;
 
 final class SwappingPerturber implements Perturber<Schedule> {
 
