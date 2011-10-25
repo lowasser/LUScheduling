@@ -1,0 +1,15 @@
+package org.learningu.scheduling.perturbers;
+
+enum SerialPerturberImpl {
+	DESTRUCTIVE = 1;
+	GREEDY = 2;
+}
+
+message ScaledPerturber {
+	required SerialPerturberImpl impl = 1;
+	optional double temperatureScale = 2 [default = 1.0];
+}
+
+message SequencedPerturber {
+	repeated ScaledPerturber perturb = 1;
+}
