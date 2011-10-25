@@ -8,7 +8,10 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.learningu.scheduling.graph.ProgramCacheFlags;
 import org.learningu.scheduling.logic.ScheduleLogicModule;
+import org.learningu.scheduling.optimization.ConcurrentOptimizer;
 import org.learningu.scheduling.optimization.OptimizationModule;
+import org.learningu.scheduling.optimization.Optimizer;
+import org.learningu.scheduling.schedule.Schedule;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.AbstractModule;
@@ -22,6 +25,11 @@ public class AutoschedulingModule extends AbstractModule {
     install(FlagsModule.create(ProgramCacheFlags.class));
     install(new ScheduleLogicModule());
     install(new OptimizationModule());
+  }
+
+  @Provides
+  Optimizer<Schedule> optimizer(ConcurrentOptimizer<Schedule> opt) {
+    return opt;
   }
 
   static final class FlagSpec {

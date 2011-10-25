@@ -21,6 +21,7 @@ public final class OptimizationModule extends AbstractModule {
   protected void configure() {
     install(FlagsModule.create(ConcurrentOptimizer.class));
     install(FlagsModule.create(ExecutorServiceProvider.class));
+    install(FlagsModule.create(TemperatureFlags.class));
     bind(ExecutorService.class).toProvider(ExecutorServiceProvider.class).asEagerSingleton();
   }
 
@@ -28,6 +29,47 @@ public final class OptimizationModule extends AbstractModule {
   @Singleton
   ListeningExecutorService listening(ExecutorService service) {
     return MoreExecutors.listeningDecorator(service);
+  }
+
+  enum TempFunImpl implements TemperatureFunction {
+    LINEAR {
+      @Override
+      public double temperature(int currentStep, int nSteps) {
+        return ((double) (nSteps - 1 - currentStep)) / nSteps;
+      }
+    };
+  }
+
+  static final class TemperatureFlags {
+    @Flag(
+        value = "primaryTempFun",
+        description = "Temperature function for the primary optimizer",
+        defaultValue = "LINEAR")
+    final TempFunImpl primaryTempFun;
+
+    @Flag(
+        value = "subTempFun",
+        description = "Temperature function for the sub-optimizers",
+        defaultValue = "LINEAR")
+    final TempFunImpl subTempFun;
+
+    @Inject
+    TemperatureFlags(TempFunImpl primaryTempFun, TempFunImpl subTempFun) {
+      this.primaryTempFun = primaryTempFun;
+      this.subTempFun = subTempFun;
+    }
+  }
+
+  @Provides
+  @Named("primaryTempFun")
+  TemperatureFunction primTempFun(TemperatureFlags flags) {
+    return flags.primaryTempFun;
+  }
+
+  @Provides
+  @Named("subTempFun")
+  TemperatureFunction subTempFun(TemperatureFlags flags) {
+    return flags.subTempFun;
   }
 
   static final class ExecutorServiceProvider implements Provider<ExecutorService> {

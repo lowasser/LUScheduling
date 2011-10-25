@@ -54,8 +54,8 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
   ConcurrentOptimizer(
       Scorer<T> scorer,
       OptimizerFactory<T> optimizerProvider,
-      TemperatureFunction primaryTempFun,
-      @SingleThread TemperatureFunction subTempFun,
+      @Named("primaryTempFun") TemperatureFunction primaryTempFun,
+      @Named("subTempFun") TemperatureFunction subTempFun,
       @Named("nSubOptimizers") int nSubOptimizers,
       ListeningExecutorService service,
       @Named("subOptimizerSteps") int subOptimizerSteps,
