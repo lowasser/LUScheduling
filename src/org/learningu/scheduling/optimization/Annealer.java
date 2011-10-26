@@ -47,7 +47,7 @@ public final class Annealer<T> implements Optimizer<T> {
         currentScore });
     for (int i = 0; i < steps; i++) {
       double temp = tempFun.temperature(i, steps);
-      logger.log(Level.FINE, "On has temperature {1}; best current score is {2}", new Object[] {
+      logger.log(Level.FINE, "On step {0}; temperature is {1}; best current score is {2}", new Object[] {
           i, temp, currentScore });
       T next = perturber.perturb(current, temp);
       double nextScore = scorer.score(next);

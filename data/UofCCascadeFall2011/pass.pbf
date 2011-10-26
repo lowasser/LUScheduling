@@ -1,0 +1,12 @@
+perturber {
+	perturb {
+		impl: DESTRUCTIVE
+	}
+}
+scorer {
+	component {
+		impl: DISTINCT_CLASSES
+	}
+}
+subOptimizerSteps: 100
+numberOfSubOptimizers: 3
