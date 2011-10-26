@@ -17,7 +17,7 @@ import com.google.common.collect.Ranges;
  * 
  * @author lowasser
  */
-final class RoomConflictLogic extends ScheduleLogic {
+public final class RoomConflictLogic extends ScheduleLogic {
 
   @Override
   public void validate(ScheduleValidator validator, Schedule schedule, StartAssignment assignment) {

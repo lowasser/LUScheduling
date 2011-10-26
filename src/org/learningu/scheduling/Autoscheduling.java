@@ -16,6 +16,7 @@ import org.learningu.scheduling.annotations.Flag;
 import org.learningu.scheduling.annotations.Initial;
 import org.learningu.scheduling.annotations.RuntimeArguments;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
+import org.learningu.scheduling.logic.SerialLogic.SerialLogics;
 import org.learningu.scheduling.optimization.Optimizer;
 import org.learningu.scheduling.schedule.Schedule;
 import org.learningu.scheduling.schedule.Schedules;
@@ -35,14 +36,22 @@ import com.google.protobuf.TextFormat;
 public final class Autoscheduling {
   @Flag("programFile")
   private final File programFile;
+
   @Flag("optimizationSpecFile")
   private final File optimizationSpecFile;
+
   @Flag(value = "initialScheduleFile", defaultValue = " ")
   private final File initialScheduleFile;
+
   @Flag(value = "resultScheduleFile", defaultValue = " ")
   private final File resultScheduleFile;
+
+  @Flag(value = "logicFile")
+  private final File logicFile;
+
   @Flag(value = "outputFormat", defaultValue = "TEXT")
   private final MessageOutputFormat outputFormat;
+
   @Flag(value = "iterations", defaultValue = "1000")
   private final int iterations;
 
@@ -54,22 +63,27 @@ public final class Autoscheduling {
         writer.append(TextFormat.printToString(message));
         writer.close();
       }
+    },
+    PROTO {
+      @Override
+      public void output(OutputStream stream, Message message) throws IOException {
+        message.writeTo(stream);
+      }
     };
     public abstract void output(OutputStream stream, Message message) throws IOException;
   }
 
   @Inject
-  Autoscheduling(
-      @Named("programFile") File programFile,
+  Autoscheduling(@Named("programFile") File programFile,
       @Named("optimizationSpecFile") File optimizationSpecFile,
       @Named("initialScheduleFile") File initialScheduleFile,
-      @Named("resultScheduleFile") File resultScheduleFile,
-      @Named("outputFormat") MessageOutputFormat outputFormat,
-      @Named("iterations") int iterations) {
+      @Named("resultScheduleFile") File resultScheduleFile, @Named("logicFile") File logicFile,
+      @Named("outputFormat") MessageOutputFormat outputFormat, @Named("iterations") int iterations) {
     this.programFile = programFile;
     this.optimizationSpecFile = optimizationSpecFile;
     this.initialScheduleFile = initialScheduleFile;
     this.resultScheduleFile = resultScheduleFile;
+    this.logicFile = logicFile;
     this.outputFormat = outputFormat;
     this.iterations = iterations;
   }
@@ -80,8 +94,9 @@ public final class Autoscheduling {
    */
   public static void main(final String[] args) throws IOException {
     // First, initialize the very basic, completely run-independent bindings.
-    Injector baseInjector =
-        Guice.createInjector(new AutoschedulingBaseModule(), new AbstractModule() {
+    Injector baseInjector = Guice.createInjector(
+        new AutoschedulingBaseModule(),
+        new AbstractModule() {
           @Override
           protected void configure() {
           }
@@ -94,33 +109,34 @@ public final class Autoscheduling {
           }
         });
     // Next, inject the flags.
-    Injector flaggedInjector =
-        baseInjector.createChildInjector(baseInjector.getInstance(OptionsModule.class));
+    Injector flaggedInjector = baseInjector.createChildInjector(baseInjector
+        .getInstance(OptionsModule.class));
     // We now have enough to initialize the Autoscheduling runner with files and the like.
     Autoscheduling auto = flaggedInjector.getInstance(Autoscheduling.class);
     // Perform the necessary file I/O here, since it's evil to do that from inside providers.
     final SerialProgram serialProgram = auto.getSerialProgram();
     final OptimizerSpec optimizerSpec = auto.getOptimizerSpec();
+    final SerialLogics serialLogics = auto.getSerialLogics();
     final SerialSchedule serialSchedule = auto.getSerialSchedule();
-    Injector completeInjector =
-        flaggedInjector.createChildInjector(
-            new AutoschedulingConfigModule(),
-            new AbstractModule() {
-              @Override
-              protected void configure() {
-                bind(SerialProgram.class).toInstance(serialProgram);
-                bind(OptimizerSpec.class).toInstance(optimizerSpec);
-                bind(SerialSchedule.class).toInstance(serialSchedule);
-              }
-            });
-    final Schedule initSchedule =
-        completeInjector.getInstance(Key.get(Schedule.class, Initial.class));
-    final Optimizer<Schedule> optimizer =
-        completeInjector.getInstance(Key.get(new TypeLiteral<Optimizer<Schedule>>() {}));
+    Injector completeInjector = flaggedInjector.createChildInjector(
+        new AutoschedulingConfigModule(),
+        new AbstractModule() {
+          @Override
+          protected void configure() {
+            bind(SerialLogics.class).toInstance(serialLogics);
+            bind(SerialProgram.class).toInstance(serialProgram);
+            bind(OptimizerSpec.class).toInstance(optimizerSpec);
+            bind(SerialSchedule.class).toInstance(serialSchedule);
+          }
+        });
+    final Schedule initSchedule = completeInjector.getInstance(Key.get(
+        Schedule.class,
+        Initial.class));
+    final Optimizer<Schedule> optimizer = completeInjector.getInstance(Key
+        .get(new TypeLiteral<Optimizer<Schedule>>() {}));
     Schedule optSchedule = optimizer.iterate(auto.getIterations(), initSchedule);
-    OutputStream outStream =
-        auto.resultScheduleFile.getPath().equals(" ") ? System.out : new FileOutputStream(
-            auto.resultScheduleFile);
+    OutputStream outStream = auto.resultScheduleFile.getPath().equals(" ") ? System.out
+        : new FileOutputStream(auto.resultScheduleFile);
     auto.outputFormat.output(outStream, Schedules.serialize(optSchedule));
     outStream.close();
     completeInjector.getInstance(ExecutorService.class).shutdown();
@@ -136,6 +152,10 @@ public final class Autoscheduling {
     } else {
       return readMessage(SerialSchedule.newBuilder(), initialScheduleFile).build();
     }
+  }
+
+  public SerialLogics getSerialLogics() throws IOException {
+    return readMessage(SerialLogics.newBuilder(), logicFile).build();
   }
 
   public SerialProgram getSerialProgram() throws IOException {
