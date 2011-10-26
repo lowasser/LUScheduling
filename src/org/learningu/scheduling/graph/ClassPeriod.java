@@ -15,7 +15,7 @@ public final class ClassPeriod extends ProgramObject<SerialPeriod> implements
 
   ClassPeriod(SerialPeriod serial, TimeBlock block, int index) {
     super(block.getProgram(), serial);
-    this.block = checkNotNull(block); 
+    this.block = checkNotNull(block);
     this.index = index;
   }
 
