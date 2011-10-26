@@ -6,6 +6,8 @@ import java.util.Set;
 
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
+import org.learningu.scheduling.annotations.ClassWithFlags;
+import org.learningu.scheduling.annotations.Flag;
 import org.learningu.scheduling.graph.ProgramCacheFlags;
 import org.learningu.scheduling.logic.LogicProvider;
 import org.learningu.scheduling.optimization.ConcurrentOptimizer;
@@ -30,6 +32,7 @@ public final class AutoschedulingBaseModule extends AbstractModule {
     install(FlagsModule.create(LogicProvider.class));
     install(FlagsModule.create(ConcurrentOptimizer.class));
     install(FlagsModule.create(ExecutorServiceProvider.class));
+    install(FlagsModule.create(Autoscheduling.class));
   }
 
   @Provides

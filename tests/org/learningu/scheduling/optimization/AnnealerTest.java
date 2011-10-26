@@ -7,8 +7,7 @@ import java.util.concurrent.Executors;
 import junit.framework.TestCase;
 
 import org.joda.time.Period;
-import org.learningu.scheduling.optimization.impl.StandardAcceptanceFunction;
-import org.learningu.scheduling.pass.PassModule;
+import org.learningu.scheduling.PassModule;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;

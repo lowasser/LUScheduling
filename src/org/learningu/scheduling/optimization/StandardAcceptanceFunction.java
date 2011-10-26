@@ -1,8 +1,7 @@
-package org.learningu.scheduling.optimization.impl;
+package org.learningu.scheduling.optimization;
 
 import java.util.Random;
 
-import org.learningu.scheduling.optimization.AcceptanceFunction;
 
 import com.google.inject.Inject;
 

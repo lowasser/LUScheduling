@@ -1,13 +1,15 @@
-package org.learningu.scheduling.pass;
+package org.learningu.scheduling;
 
 import org.learningu.scheduling.Pass.OptimizerSpec;
 import org.learningu.scheduling.Pass.SerialTemperatureFunction;
+import org.learningu.scheduling.optimization.AcceptanceFunction;
+import org.learningu.scheduling.optimization.StandardAcceptanceFunction;
 import org.learningu.scheduling.optimization.TemperatureFunction;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Provider;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
-import com.google.inject.name.Names;
 
 public final class PassModule extends AbstractModule {
   public static final TemperatureFunction LINEAR_FUNCTION = new TemperatureFunction() {
@@ -17,42 +19,44 @@ public final class PassModule extends AbstractModule {
     }
   };
 
-  private final OptimizerSpec spec;
-
-  public PassModule(OptimizerSpec spec) {
-    this.spec = spec;
-  }
-
   @Override
   protected void configure() {
-    bind(TemperatureFunction.class).annotatedWith(Names.named("primaryTempFun")).toInstance(
-        deserialize(spec.getPrimaryTempFun()));
-    bind(TemperatureFunction.class).annotatedWith(Names.named("subTempFun")).toInstance(
-        deserialize(spec.getSubTempFun()));
   }
 
   @Provides
   @Named("primaryTempFun")
-  TemperatureFunction primaryTemperatureFunction() {
+  TemperatureFunction primaryTemperatureFunction(OptimizerSpec spec) {
     return deserialize(spec.getPrimaryTempFun());
   }
 
   @Provides
   @Named("subTempFun")
-  TemperatureFunction subTemperatureFunction() {
+  TemperatureFunction subTemperatureFunction(OptimizerSpec spec) {
     return deserialize(spec.getSubTempFun());
   }
 
   @Provides
   @Named("subOptimizerSteps")
-  int subOptimizerSteps() {
+  int subOptimizerSteps(OptimizerSpec spec) {
     return spec.getSubOptimizerSteps();
   }
 
   @Provides
   @Named("nSubOptimizers")
-  int nSubOptimizers() {
+  int nSubOptimizers(OptimizerSpec spec) {
     return spec.getSubOptimizerSteps();
+  }
+
+  @Provides
+  AcceptanceFunction acceptFun(
+      OptimizerSpec spec,
+      Provider<StandardAcceptanceFunction> standardProv) {
+    switch (spec.getSubAcceptFun()) {
+      case STANDARD_EXPONENTIAL:
+        return standardProv.get();
+      default:
+        throw new AssertionError();
+    }
   }
 
   private static TemperatureFunction deserialize(SerialTemperatureFunction serial) {

@@ -20,6 +20,8 @@ import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 import org.learningu.scheduling.AutoschedulingBaseModule.FlagSpec;
+import org.learningu.scheduling.annotations.Flag;
+import org.learningu.scheduling.annotations.RuntimeArguments;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;

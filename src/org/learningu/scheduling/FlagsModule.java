@@ -1,5 +1,7 @@
 package org.learningu.scheduling;
 
+import org.learningu.scheduling.annotations.ClassWithFlags;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.multibindings.Multibinder;
 

@@ -1,6 +1,6 @@
 package org.learningu.scheduling.graph;
 
-import org.learningu.scheduling.Flag;
+import org.learningu.scheduling.annotations.Flag;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;

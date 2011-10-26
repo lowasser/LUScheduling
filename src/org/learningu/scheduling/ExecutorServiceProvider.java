@@ -3,6 +3,8 @@ package org.learningu.scheduling;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.learningu.scheduling.annotations.Flag;
+
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;

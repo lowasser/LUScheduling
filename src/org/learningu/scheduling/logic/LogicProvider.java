@@ -2,7 +2,7 @@ package org.learningu.scheduling.logic;
 
 import java.util.List;
 
-import org.learningu.scheduling.Flag;
+import org.learningu.scheduling.annotations.Flag;
 
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;

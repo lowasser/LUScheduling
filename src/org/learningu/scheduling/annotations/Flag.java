@@ -1,4 +1,4 @@
-package org.learningu.scheduling;
+package org.learningu.scheduling.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

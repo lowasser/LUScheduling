@@ -7,9 +7,14 @@ enum SerialTemperatureFunction {
 	LINEAR = 1;
 }
 
+enum SerialAcceptanceFunction {
+	STANDARD_EXPONENTIAL = 1;
+}
+
 message OptimizerSpec {
 	optional SerialTemperatureFunction primaryTempFun = 1;
 	optional SerialTemperatureFunction subTempFun = 2;
+	optional SerialAcceptanceFunction subAcceptFun = 7;
 	required org.learningu.scheduling.perturbers.SequencedPerturber perturber = 3;
 	required org.learningu.scheduling.scorers.CompleteScorer scorer = 4;
 	required int32 subOptimizerSteps = 5;
