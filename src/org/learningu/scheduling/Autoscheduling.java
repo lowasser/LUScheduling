@@ -74,11 +74,14 @@ public final class Autoscheduling {
   }
 
   @Inject
-  Autoscheduling(@Named("programFile") File programFile,
+  Autoscheduling(
+      @Named("programFile") File programFile,
       @Named("optimizationSpecFile") File optimizationSpecFile,
       @Named("initialScheduleFile") File initialScheduleFile,
-      @Named("resultScheduleFile") File resultScheduleFile, @Named("logicFile") File logicFile,
-      @Named("outputFormat") MessageOutputFormat outputFormat, @Named("iterations") int iterations) {
+      @Named("resultScheduleFile") File resultScheduleFile,
+      @Named("logicFile") File logicFile,
+      @Named("outputFormat") MessageOutputFormat outputFormat,
+      @Named("iterations") int iterations) {
     this.programFile = programFile;
     this.optimizationSpecFile = optimizationSpecFile;
     this.initialScheduleFile = initialScheduleFile;
@@ -96,6 +99,7 @@ public final class Autoscheduling {
     // First, initialize the very basic, completely run-independent bindings.
     Injector baseInjector = Guice.createInjector(
         new AutoschedulingBaseModule(),
+        new FlagOptionsModule(),
         new AbstractModule() {
           @Override
           protected void configure() {

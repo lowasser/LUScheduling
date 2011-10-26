@@ -19,7 +19,7 @@ import org.apache.commons.cli.PosixParser;
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
-import org.learningu.scheduling.AutoschedulingBaseModule.FlagSpec;
+import org.learningu.scheduling.FlagOptionsModule.FlagSpec;
 import org.learningu.scheduling.annotations.Flag;
 import org.learningu.scheduling.annotations.RuntimeArguments;
 
