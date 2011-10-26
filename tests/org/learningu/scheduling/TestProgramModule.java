@@ -3,7 +3,6 @@ package org.learningu.scheduling;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.cli.ParseException;
 import org.learningu.scheduling.graph.ClassPeriod;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.ProgramCacheFlags;
@@ -18,7 +17,6 @@ import org.learningu.scheduling.graph.Serial.SerialTimeBlock;
 import org.learningu.scheduling.graph.Teacher;
 import org.learningu.scheduling.graph.TimeBlock;
 
-import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
@@ -62,11 +60,7 @@ public class TestProgramModule extends AbstractModule {
 
   @Override
   protected void configure() {
-    try {
-      install(OptionsModule.create(new String[0], ProgramCacheFlags.class));
-    } catch (ParseException e) {
-      Throwables.propagate(e);
-    }
+    bind(ProgramCacheFlags.class).toInstance(ProgramCacheFlags.DEFAULTS);
   }
 
   private int uid = 0;

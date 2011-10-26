@@ -1,12 +1,14 @@
 package org.learningu.scheduling.optimization;
 
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import junit.framework.TestCase;
 
 import org.joda.time.Period;
-import org.learningu.scheduling.optimization.impl.LinearTemperatureFunction;
 import org.learningu.scheduling.optimization.impl.StandardAcceptanceFunction;
+import org.learningu.scheduling.pass.PassModule;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
@@ -16,6 +18,7 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
+import com.google.inject.name.Named;
 import com.google.inject.name.Names;
 
 /**
@@ -28,25 +31,39 @@ public class AnnealerTest extends TestCase {
 
   @SuppressWarnings("unused")
   public void testAnnealer() {
-    Injector injector = Guice.createInjector(new OptimizationModule(), new AbstractModule() {
+    Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
         bind(Random.class).toInstance(new Random(0));
+        bind(ExecutorService.class).toInstance(Executors.newSingleThreadExecutor());
         bind(new TypeLiteral<Optimizer<Double>>() {}).to(
             new TypeLiteral<ConcurrentOptimizer<Double>>() {});
         install(new FactoryModuleBuilder().implement(
             new TypeLiteral<Optimizer<Double>>() {},
             new TypeLiteral<Annealer<Double>>() {}).build(
             new TypeLiteral<OptimizerFactory<Double>>() {}));
-        bind(TemperatureFunction.class).to(LinearTemperatureFunction.class).asEagerSingleton();
-        bind(TemperatureFunction.class).annotatedWith(SingleThread.class).to(
-            LinearTemperatureFunction.class);
+        bind(TemperatureFunction.class).annotatedWith(Names.named("primaryTempFun")).toInstance(
+            PassModule.LINEAR_FUNCTION);
+        bind(TemperatureFunction.class).annotatedWith(Names.named("subTempFun")).toInstance(
+            PassModule.LINEAR_FUNCTION);
         bind(AcceptanceFunction.class).to(StandardAcceptanceFunction.class).asEagerSingleton();
         bindConstant().annotatedWith(Names.named("stepsPerOptimizerIteration")).to(10);
         bindConstant().annotatedWith(Names.named("nThreads")).to(4);
         bind(Period.class).annotatedWith(Names.named("iterationTimeout")).toInstance(
             Period.hours(1));
 
+      }
+
+      @Provides
+      @Named("nSubOptimizers")
+      int nSubOptimizers() {
+        return 4;
+      }
+
+      @Provides
+      @Named("subOptimizerSteps")
+      int subOptimizerSteps() {
+        return 100;
       }
 
       @Provides

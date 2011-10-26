@@ -1,0 +1,17 @@
+package org.learningu.scheduling;
+
+import "org/learningu/scheduling/proto/serial_perturbers.proto";
+import "org/learningu/scheduling/proto/serial_scorers.proto";
+
+enum SerialTemperatureFunction {
+	LINEAR = 1;
+}
+
+message OptimizerSpec {
+	optional SerialTemperatureFunction primaryTempFun = 1;
+	optional SerialTemperatureFunction subTempFun = 2;
+	required org.learningu.scheduling.perturbers.SequencedPerturber perturber = 3;
+	required org.learningu.scheduling.scorers.CompleteScorer scorer = 4;
+	required int32 subOptimizerSteps = 5;
+	required int32 numberOfSubOptimizers = 6;
+}

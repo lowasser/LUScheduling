@@ -7,9 +7,8 @@ import java.util.Set;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.learningu.scheduling.graph.ProgramCacheFlags;
-import org.learningu.scheduling.logic.ScheduleLogicModule;
+import org.learningu.scheduling.logic.LogicProvider;
 import org.learningu.scheduling.optimization.ConcurrentOptimizer;
-import org.learningu.scheduling.optimization.OptimizationModule;
 import org.learningu.scheduling.optimization.Optimizer;
 import org.learningu.scheduling.schedule.Schedule;
 
@@ -18,13 +17,19 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
-public class AutoschedulingModule extends AbstractModule {
+/**
+ * The first module for autoscheduling, including bindings common to all runs.
+ * 
+ * @author lowasser
+ */
+public final class AutoschedulingBaseModule extends AbstractModule {
 
   @Override
   protected void configure() {
     install(FlagsModule.create(ProgramCacheFlags.class));
-    install(new ScheduleLogicModule());
-    install(new OptimizationModule());
+    install(FlagsModule.create(LogicProvider.class));
+    install(FlagsModule.create(ConcurrentOptimizer.class));
+    install(FlagsModule.create(ExecutorServiceProvider.class));
   }
 
   @Provides
@@ -34,6 +39,7 @@ public class AutoschedulingModule extends AbstractModule {
 
   static final class FlagSpec {
     final Options options;
+
     final Map<Flag, Field> flagMap;
 
     FlagSpec(Options options, Map<Flag, Field> flagMap) {
