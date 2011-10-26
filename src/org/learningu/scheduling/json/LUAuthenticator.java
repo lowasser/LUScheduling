@@ -60,8 +60,9 @@ public final class LUAuthenticator {
   }
 
   private HttpPost authPost() {
-    HttpPost httppost = new HttpPost("http://" + hostname + "/myesp/ajax_login/");
+    HttpPost httppost = new HttpPost("https://" + hostname + "/myesp/ajax_login/");
     httppost.setEntity(authEntity());
+    httppost.setHeader("Host", hostname);
     return httppost;
   }
 
