@@ -2,8 +2,8 @@ package org.learningu.scheduling.json;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.learningu.scheduling.graph.Serial.SerialProgram;
-import org.learningu.scheduling.graph.Serial.SerialTimeBlock;
+import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
+import org.learningu.scheduling.graph.SerialGraph.SerialTimeBlock;
 
 import com.google.inject.Inject;
 

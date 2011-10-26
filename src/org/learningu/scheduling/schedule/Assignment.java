@@ -13,7 +13,7 @@ import org.learningu.scheduling.graph.Room;
 public interface Assignment {
   StartAssignment getStartAssignment();
 
-  Section getCourse();
+  Section getSection();
 
   Room getRoom();
 

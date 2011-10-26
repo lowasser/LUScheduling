@@ -4,7 +4,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Set;
 
-import org.learningu.scheduling.graph.Serial.SerialSection;
+import org.learningu.scheduling.graph.SerialGraph.SerialSection;
 
 import com.google.common.base.Function;
 import com.google.common.base.Functions;

@@ -21,7 +21,7 @@ public final class DistinctClassesScorer implements Scorer<Schedule> {
     Set<Section> scheduled = Sets
         .newHashSetWithExpectedSize(input.getProgram().getSections().size());
     for (StartAssignment assign : input.startAssignments()) {
-      scheduled.add(assign.getCourse());
+      scheduled.add(assign.getSection());
     }
     return scheduled.size();
   }

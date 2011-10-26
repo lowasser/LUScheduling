@@ -18,7 +18,7 @@ public class RoomPropertyLogic extends ScheduleLogic {
     Program program = schedule.getProgram();
     Room room = assignment.getRoom();
     Set<RoomProperty> roomProperties = program.roomProperties(room);
-    Section course = assignment.getCourse();
+    Section course = assignment.getSection();
     Set<RoomProperty> roomRequirements = program.roomRequirements(course);
     validator.validateLocal(
         roomProperties.containsAll(roomRequirements),

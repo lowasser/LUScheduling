@@ -3,7 +3,7 @@ package org.learningu.scheduling.json;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.learningu.scheduling.graph.Serial.SerialRoom;
+import org.learningu.scheduling.graph.SerialGraph.SerialRoom;
 
 final class RoomParser extends JsonParser<SerialRoom> {
   private int uid = 0;

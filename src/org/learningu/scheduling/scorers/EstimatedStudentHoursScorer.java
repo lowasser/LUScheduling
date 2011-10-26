@@ -10,7 +10,7 @@ public final class EstimatedStudentHoursScorer implements Scorer<Schedule> {
   public double score(Schedule input) {
     long total = 0;
     for (StartAssignment assign : input.startAssignments()) {
-      total += assign.getCourse().getEstimatedClassSize() * assign.getCourse().getPeriodLength();
+      total += assign.getSection().getEstimatedClassSize() * assign.getSection().getPeriodLength();
     }
     return total;
   }

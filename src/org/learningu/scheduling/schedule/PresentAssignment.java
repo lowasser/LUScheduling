@@ -26,10 +26,10 @@ public final class PresentAssignment implements Assignment {
     this.startAssignment = checkNotNull(startAssignment);
     this.index = index;
     checkArgument(
-        index >= 0 && index < getCourse().getPeriodLength(),
+        index >= 0 && index < getSection().getPeriodLength(),
         "Course %s only has %s periods, but index is %s",
-        getCourse(),
-        getCourse().getPeriodLength(),
+        getSection(),
+        getSection().getPeriodLength(),
         index);
   }
 
@@ -44,8 +44,8 @@ public final class PresentAssignment implements Assignment {
   }
 
   @Override
-  public Section getCourse() {
-    return startAssignment.getCourse();
+  public Section getSection() {
+    return startAssignment.getSection();
   }
 
   public TimeBlock getTimeBlock() {

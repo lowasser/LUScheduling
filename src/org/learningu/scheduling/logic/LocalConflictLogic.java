@@ -58,7 +58,7 @@ public final class LocalConflictLogic extends ScheduleLogic {
   @Override
   public void validate(ScheduleValidator validator, Schedule schedule, StartAssignment assignment) {
     super.validate(validator, schedule, assignment);
-    Section course = assignment.getCourse();
+    Section course = assignment.getSection();
     Room room = assignment.getRoom();
     double estClassSizeRatio = ((double) course.getEstimatedClassSize()) / room.getCapacity();
     validator.validateLocal(
@@ -77,7 +77,7 @@ public final class LocalConflictLogic extends ScheduleLogic {
     super.validate(validator, schedule, assignment);
     Program program = schedule.getProgram();
     validator.validateLocal(
-        program.compatiblePeriods(assignment.getCourse()).contains(assignment.getPeriod()),
+        program.compatiblePeriods(assignment.getSection()).contains(assignment.getPeriod()),
         assignment,
         "All teachers for a course must be available during all periods in which it is scheduled");
     validator.validateLocal(

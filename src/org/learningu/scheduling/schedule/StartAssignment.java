@@ -39,13 +39,13 @@ public final class StartAssignment implements Assignment {
     this.section = checkNotNull(section);
     checkArgument(period.getProgram() == room.getProgram()
         && period.getProgram() == section.getProgram());
-    checkArgument(period.getIndex() + getCourse().getPeriodLength() <= getTimeBlock()
+    checkArgument(period.getIndex() + getSection().getPeriodLength() <= getTimeBlock()
         .getPeriods()
         .size());
   }
 
   public List<ClassPeriod> getPresentPeriods() {
-    return period.getTailPeriods(getCourse().getPeriodLength());
+    return period.getTailPeriods(getSection().getPeriodLength());
   }
 
   final class PresentAssignmentsList extends AbstractList<PresentAssignment> implements
@@ -58,7 +58,7 @@ public final class StartAssignment implements Assignment {
 
     @Override
     public int size() {
-      return getCourse().getPeriodLength();
+      return getSection().getPeriodLength();
     }
   }
 
@@ -76,7 +76,7 @@ public final class StartAssignment implements Assignment {
   }
 
   @Override
-  public Section getCourse() {
+  public Section getSection() {
     return section;
   }
 

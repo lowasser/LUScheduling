@@ -42,7 +42,7 @@ final class RoomConflictLogic extends ScheduleLogic {
 
   private static Range<Integer> periodIndexRange(StartAssignment assign) {
     int start = assign.getPeriod().getIndex();
-    int length = assign.getCourse().getPeriodLength();
+    int length = assign.getSection().getPeriodLength();
     return Ranges.closedOpen(start, start + length);
   }
 

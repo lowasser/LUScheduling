@@ -4,12 +4,12 @@ import java.util.Arrays;
 
 import junit.framework.TestCase;
 
-import org.learningu.scheduling.graph.Serial.SerialPeriod;
-import org.learningu.scheduling.graph.Serial.SerialProgram;
-import org.learningu.scheduling.graph.Serial.SerialRoom;
-import org.learningu.scheduling.graph.Serial.SerialSection;
-import org.learningu.scheduling.graph.Serial.SerialTeacher;
-import org.learningu.scheduling.graph.Serial.SerialTimeBlock;
+import org.learningu.scheduling.graph.SerialGraph.SerialPeriod;
+import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
+import org.learningu.scheduling.graph.SerialGraph.SerialRoom;
+import org.learningu.scheduling.graph.SerialGraph.SerialSection;
+import org.learningu.scheduling.graph.SerialGraph.SerialTeacher;
+import org.learningu.scheduling.graph.SerialGraph.SerialTimeBlock;
 
 import com.google.common.primitives.Ints;
 import com.google.protobuf.ByteString;

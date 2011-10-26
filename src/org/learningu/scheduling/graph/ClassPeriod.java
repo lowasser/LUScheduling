@@ -4,7 +4,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
-import org.learningu.scheduling.graph.Serial.SerialPeriod;
+import org.learningu.scheduling.graph.SerialGraph.SerialPeriod;
 
 import com.google.common.collect.ComparisonChain;
 
@@ -15,7 +15,7 @@ public final class ClassPeriod extends ProgramObject<SerialPeriod> implements
 
   ClassPeriod(SerialPeriod serial, TimeBlock block, int index) {
     super(block.getProgram(), serial);
-    this.block = checkNotNull(block);
+    this.block = checkNotNull(block); 
     this.index = index;
   }
 

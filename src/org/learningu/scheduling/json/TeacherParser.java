@@ -3,7 +3,7 @@ package org.learningu.scheduling.json;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.learningu.scheduling.graph.Serial.SerialTeacher;
+import org.learningu.scheduling.graph.SerialGraph.SerialTeacher;
 
 final class TeacherParser extends JsonParser<SerialTeacher> {
 

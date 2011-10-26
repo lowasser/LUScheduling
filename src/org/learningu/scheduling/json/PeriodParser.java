@@ -3,8 +3,8 @@ package org.learningu.scheduling.json;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.learningu.scheduling.graph.Serial.SerialDateTime;
-import org.learningu.scheduling.graph.Serial.SerialPeriod;
+import org.learningu.scheduling.graph.SerialGraph.SerialDateTime;
+import org.learningu.scheduling.graph.SerialGraph.SerialPeriod;
 
 final class PeriodParser extends JsonParser<SerialPeriod> {
 

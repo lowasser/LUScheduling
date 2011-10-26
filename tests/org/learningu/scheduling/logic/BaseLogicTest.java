@@ -7,10 +7,10 @@ import junit.framework.TestCase;
 
 import org.learningu.scheduling.TestProgramModule;
 import org.learningu.scheduling.graph.ClassPeriod;
-import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Room;
-import org.learningu.scheduling.graph.Serial.SerialPeriod;
-import org.learningu.scheduling.graph.Serial.SerialTeacher;
+import org.learningu.scheduling.graph.Section;
+import org.learningu.scheduling.graph.SerialGraph.SerialPeriod;
+import org.learningu.scheduling.graph.SerialGraph.SerialTeacher;
 
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Guice;

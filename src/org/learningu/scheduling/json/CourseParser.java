@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.learningu.scheduling.graph.Serial.SerialSection;
+import org.learningu.scheduling.graph.SerialGraph.SerialSection;
 
 import com.google.common.math.DoubleMath;
 

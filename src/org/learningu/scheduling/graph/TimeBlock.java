@@ -5,8 +5,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
-import org.learningu.scheduling.graph.Serial.SerialPeriod;
-import org.learningu.scheduling.graph.Serial.SerialTimeBlock;
+import org.learningu.scheduling.graph.SerialGraph.SerialPeriod;
+import org.learningu.scheduling.graph.SerialGraph.SerialTimeBlock;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;

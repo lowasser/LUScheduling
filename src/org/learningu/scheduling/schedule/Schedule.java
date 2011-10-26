@@ -198,7 +198,7 @@ public final class Schedule {
         StartAssignment assign = (StartAssignment) o;
         Map<ClassPeriod, Section> map = startingTimeTable.get(assign.getRoom());
         if (map != null) {
-          return Objects.equal(map.get(assign.getPeriod()), assign.getCourse());
+          return Objects.equal(map.get(assign.getPeriod()), assign.getSection());
         }
       }
       return false;
@@ -241,7 +241,7 @@ public final class Schedule {
     if (startingBefore.isPresent()) {
       StartAssignment prevStart = startingBefore.get();
       int relativeIndex = period.getIndex() - prevStart.getPeriod().getIndex();
-      if (relativeIndex < prevStart.getCourse().getPeriodLength()) {
+      if (relativeIndex < prevStart.getSection().getPeriodLength()) {
         return Optional.of(prevStart.getPresentAssignment(relativeIndex));
       }
     }
@@ -261,8 +261,8 @@ public final class Schedule {
           factory.create(
               startingTimeTable.insert(
                   assign.getRoom(),
-                  roomMap.insert(assign.getPeriod(), assign.getCourse())),
-              assignments.insert(assign.getCourse(), assign)));
+                  roomMap.insert(assign.getPeriod(), assign.getSection())),
+              assignments.insert(assign.getSection(), assign)));
     } else {
       return ModifiedState.of(validator, this);
     }
@@ -276,7 +276,7 @@ public final class Schedule {
       BstMap<ClassPeriod, Section> roomMap = startingTimeTable.get(room);
       revised = factory.create(
           startingTimeTable.insert(room, roomMap.delete(period)),
-          assignments.delete(startingAt.get().getCourse()));
+          assignments.delete(startingAt.get().getSection()));
     }
     return ModifiedState.of(startingAt, revised);
   }

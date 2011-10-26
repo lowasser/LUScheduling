@@ -22,7 +22,7 @@ public final class DuplicateSectionLogic extends ScheduleLogic {
         new Predicate<StartAssignment>() {
           @Override
           public boolean apply(StartAssignment input) {
-            return input.getCourse().equals(assignment.getCourse());
+            return input.getSection().equals(assignment.getSection());
           }
         });
     validator.validateGlobal(
