@@ -8,15 +8,16 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 import org.learningu.scheduling.Pass.OptimizerSpec;
 import org.learningu.scheduling.annotations.Flag;
 import org.learningu.scheduling.annotations.Initial;
 import org.learningu.scheduling.annotations.RuntimeArguments;
-import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
 import org.learningu.scheduling.optimization.Optimizer;
 import org.learningu.scheduling.schedule.Schedule;
+import org.learningu.scheduling.schedule.Schedules;
 import org.learningu.scheduling.schedule.SerialSchedules.SerialSchedule;
 
 import com.google.inject.AbstractModule;
@@ -49,9 +50,10 @@ public final class Autoscheduling {
       @Override
       public void output(OutputStream stream, Message message) throws IOException {
         TextFormat.print(message, new OutputStreamWriter(stream));
+        stream.flush();
       }
     };
-    public abstract void output(OutputStream file, Message message) throws IOException;
+    public abstract void output(OutputStream stream, Message message) throws IOException;
   }
 
   @Inject
@@ -78,7 +80,6 @@ public final class Autoscheduling {
     // First, initialize the very basic, completely run-independent bindings.
     Injector baseInjector =
         Guice.createInjector(new AutoschedulingBaseModule(), new AbstractModule() {
-
           @Override
           protected void configure() {
           }
@@ -110,13 +111,13 @@ public final class Autoscheduling {
                 bind(SerialSchedule.class).toInstance(serialSchedule);
               }
             });
-    final Program program = completeInjector.getInstance(Program.class);
     final Schedule initSchedule =
         completeInjector.getInstance(Key.get(Schedule.class, Initial.class));
     final Optimizer<Schedule> optimizer =
         completeInjector.getInstance(Key.get(new TypeLiteral<Optimizer<Schedule>>() {}));
     Schedule optSchedule = optimizer.iterate(auto.getIterations(), initSchedule);
-    System.out.println(optSchedule);
+    auto.outputFormat.output(System.out, Schedules.serialize(optSchedule));
+    completeInjector.getInstance(ExecutorService.class).shutdown();
   }
 
   public int getIterations() {

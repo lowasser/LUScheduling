@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 import junit.framework.TestCase;
 
 import org.joda.time.Period;
-import org.learningu.scheduling.PassModule;
+import org.learningu.scheduling.AutoschedulingConfigModule;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
@@ -42,9 +42,9 @@ public class AnnealerTest extends TestCase {
             new TypeLiteral<Annealer<Double>>() {}).build(
             new TypeLiteral<OptimizerFactory<Double>>() {}));
         bind(TemperatureFunction.class).annotatedWith(Names.named("primaryTempFun")).toInstance(
-            PassModule.LINEAR_FUNCTION);
+            AutoschedulingConfigModule.LINEAR_FUNCTION);
         bind(TemperatureFunction.class).annotatedWith(Names.named("subTempFun")).toInstance(
-            PassModule.LINEAR_FUNCTION);
+            AutoschedulingConfigModule.LINEAR_FUNCTION);
         bind(AcceptanceFunction.class).to(StandardAcceptanceFunction.class).asEagerSingleton();
         bindConstant().annotatedWith(Names.named("stepsPerOptimizerIteration")).to(10);
         bindConstant().annotatedWith(Names.named("nThreads")).to(4);
