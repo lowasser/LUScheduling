@@ -11,9 +11,9 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.learningu.scheduling.graph.ClassPeriod;
-import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
+import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.logic.GlobalConflict;
 import org.learningu.scheduling.logic.ScheduleLogic;
 import org.learningu.scheduling.logic.ScheduleValidator;
@@ -45,7 +45,8 @@ public final class Schedule {
       this.validatorProvider = validatorProvider;
     }
 
-    private Schedule create(BstMap<Room, BstMap<ClassPeriod, Section>> startingTimeTable,
+    private Schedule create(
+        BstMap<Room, BstMap<ClassPeriod, Section>> startingTimeTable,
         BstMap<Section, StartAssignment> assignments) {
       return new Schedule(this, startingTimeTable, assignments);
     }
@@ -65,7 +66,9 @@ public final class Schedule {
 
   private final BstMap<Section, StartAssignment> assignments;
 
-  Schedule(Factory factory, BstMap<Room, BstMap<ClassPeriod, Section>> startingTimeTable,
+  Schedule(
+      Factory factory,
+      BstMap<Room, BstMap<ClassPeriod, Section>> startingTimeTable,
       BstMap<Section, StartAssignment> assignments) {
     this.startingTimeTable = checkNotNull(startingTimeTable);
     this.factory = checkNotNull(factory);
@@ -241,7 +244,7 @@ public final class Schedule {
     if (startingBefore.isPresent()) {
       StartAssignment prevStart = startingBefore.get();
       int relativeIndex = period.getIndex() - prevStart.getPeriod().getIndex();
-      if (relativeIndex < prevStart.getSection().getPeriodLength()) {
+      if (relativeIndex >= 0 && relativeIndex < prevStart.getSection().getPeriodLength()) {
         return Optional.of(prevStart.getPresentAssignment(relativeIndex));
       }
     }
@@ -268,15 +271,17 @@ public final class Schedule {
     }
   }
 
-  public ModifiedState<Optional<StartAssignment>, Schedule> removeStartingAt(ClassPeriod period,
+  public ModifiedState<Optional<StartAssignment>, Schedule> removeStartingAt(
+      ClassPeriod period,
       Room room) {
     Optional<StartAssignment> startingAt = startingAt(period, room);
     Schedule revised = this;
     if (startingAt.isPresent()) {
       BstMap<ClassPeriod, Section> roomMap = startingTimeTable.get(room);
-      revised = factory.create(
-          startingTimeTable.insert(room, roomMap.delete(period)),
-          assignments.delete(startingAt.get().getSection()));
+      revised =
+          factory.create(
+              startingTimeTable.insert(room, roomMap.delete(period)),
+              assignments.delete(startingAt.get().getSection()));
     }
     return ModifiedState.of(startingAt, revised);
   }

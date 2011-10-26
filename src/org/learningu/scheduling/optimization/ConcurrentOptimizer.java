@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 import org.joda.time.Period;
 import org.learningu.scheduling.annotations.Flag;
+import org.learningu.scheduling.annotations.SingleThread;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
@@ -41,12 +42,16 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
   private final TemperatureFunction subTempFun;
 
   @Inject
-  ConcurrentOptimizer(Scorer<T> scorer, OptimizerFactory<T> optimizerProvider,
+  ConcurrentOptimizer(
+      Scorer<T> scorer,
+      @SingleThread OptimizerFactory<T> optimizerProvider,
       @Named("primaryTempFun") TemperatureFunction primaryTempFun,
       @Named("subTempFun") TemperatureFunction subTempFun,
-      @Named("nSubOptimizers") int nSubOptimizers, ExecutorService service,
+      @Named("nSubOptimizers") int nSubOptimizers,
+      ExecutorService service,
       @Named("subOptimizerSteps") int subOptimizerSteps,
-      @Named("iterationTimeout") Period timeout, Logger logger) {
+      @Named("iterationTimeout") Period timeout,
+      Logger logger) {
     this.scorer = scorer;
     this.optimizerFactory = optimizerProvider;
     this.nSubOptimizers = nSubOptimizers;

@@ -71,6 +71,10 @@ public final class Program {
   Program(SerialProgram serial) {
     this(serial, ProgramCacheFlags.DEFAULTS);
   }
+  
+  public SerialProgram getSerial() {
+    return serial;
+  }
 
   @Inject
   Program(SerialProgram serial, ProgramCacheFlags flags) {

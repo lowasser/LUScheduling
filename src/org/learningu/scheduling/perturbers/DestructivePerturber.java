@@ -38,6 +38,9 @@ final class DestructivePerturber implements Perturber<Schedule> {
     unscheduled.addAll(Sets.difference(program.getSections(), initial.getScheduledSections()));
     Collections.shuffle(unscheduled, rand);
 
+    if (unscheduled.isEmpty()) {
+      return initial;
+    }
     int nAttempts = Math.max(1, (int) (unscheduled.size() * temperature));
     unscheduled = unscheduled.subList(0, nAttempts);
 

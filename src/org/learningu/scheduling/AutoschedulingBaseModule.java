@@ -9,10 +9,10 @@ import org.apache.commons.cli.Options;
 import org.learningu.scheduling.annotations.ClassWithFlags;
 import org.learningu.scheduling.annotations.Flag;
 import org.learningu.scheduling.graph.ProgramCacheFlags;
+import org.learningu.scheduling.logic.LocalConflictLogic;
 import org.learningu.scheduling.logic.LogicProvider;
+import org.learningu.scheduling.logic.ScheduleValidator;
 import org.learningu.scheduling.optimization.ConcurrentOptimizer;
-import org.learningu.scheduling.optimization.Optimizer;
-import org.learningu.scheduling.schedule.Schedule;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.AbstractModule;
@@ -33,11 +33,8 @@ public final class AutoschedulingBaseModule extends AbstractModule {
     install(FlagsModule.create(ConcurrentOptimizer.class));
     install(FlagsModule.create(ExecutorServiceProvider.class));
     install(FlagsModule.create(Autoscheduling.class));
-  }
-
-  @Provides
-  Optimizer<Schedule> optimizer(ConcurrentOptimizer<Schedule> opt) {
-    return opt;
+    install(FlagsModule.create(ScheduleValidator.class));
+    install(FlagsModule.create(LocalConflictLogic.class));
   }
 
   static final class FlagSpec {

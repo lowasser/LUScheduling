@@ -1,4 +1,4 @@
-package org.learningu.scheduling.optimization;
+package org.learningu.scheduling.annotations;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;

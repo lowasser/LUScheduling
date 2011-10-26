@@ -3,14 +3,20 @@ package org.learningu.scheduling;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.List;
 
 import org.learningu.scheduling.Pass.OptimizerSpec;
 import org.learningu.scheduling.annotations.Flag;
 import org.learningu.scheduling.annotations.Initial;
+import org.learningu.scheduling.annotations.RuntimeArguments;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
+import org.learningu.scheduling.optimization.Optimizer;
+import org.learningu.scheduling.schedule.Schedule;
 import org.learningu.scheduling.schedule.SerialSchedules.SerialSchedule;
 
 import com.google.inject.AbstractModule;
@@ -18,6 +24,8 @@ import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Key;
+import com.google.inject.Provides;
+import com.google.inject.TypeLiteral;
 import com.google.inject.name.Named;
 import com.google.protobuf.Message;
 import com.google.protobuf.TextFormat;
@@ -27,28 +35,23 @@ public final class Autoscheduling {
   private final File programFile;
   @Flag("optimizationSpecFile")
   private final File optimizationSpecFile;
-  @Flag(value = "initialScheduleFile", defaultValue = "")
+  @Flag(value = "initialScheduleFile", defaultValue = " ")
   private final File initialScheduleFile;
-
-  @Flag(value = "resultScheduleFile", defaultValue = "")
+  @Flag(value = "resultScheduleFile", defaultValue = " ")
   private final File resultScheduleFile;
-
-  @Flag(value = "outputFormat")
+  @Flag(value = "outputFormat", defaultValue = "TEXT")
   private final MessageOutputFormat outputFormat;
+  @Flag(value = "iterations", defaultValue = "1000")
+  private final int iterations;
 
   enum MessageOutputFormat {
     TEXT {
       @Override
-      public void output(File file, Message message) throws IOException {
-        FileWriter fileWriter = new FileWriter(file);
-        try {
-          TextFormat.print(message, fileWriter);
-        } finally {
-          fileWriter.close();
-        }
+      public void output(OutputStream stream, Message message) throws IOException {
+        TextFormat.print(message, new OutputStreamWriter(stream));
       }
     };
-    public abstract void output(File file, Message message) throws IOException;
+    public abstract void output(OutputStream file, Message message) throws IOException;
   }
 
   @Inject
@@ -57,21 +60,36 @@ public final class Autoscheduling {
       @Named("optimizationSpecFile") File optimizationSpecFile,
       @Named("initialScheduleFile") File initialScheduleFile,
       @Named("resultScheduleFile") File resultScheduleFile,
-      @Named("outputFormat") MessageOutputFormat outputFormat) {
+      @Named("outputFormat") MessageOutputFormat outputFormat,
+      @Named("iterations") int iterations) {
     this.programFile = programFile;
     this.optimizationSpecFile = optimizationSpecFile;
     this.initialScheduleFile = initialScheduleFile;
     this.resultScheduleFile = resultScheduleFile;
     this.outputFormat = outputFormat;
+    this.iterations = iterations;
   }
 
   /**
    * @param args
    * @throws IOException
    */
-  public static void main(String[] args) throws IOException {
+  public static void main(final String[] args) throws IOException {
     // First, initialize the very basic, completely run-independent bindings.
-    Injector baseInjector = Guice.createInjector(new AutoschedulingBaseModule());
+    Injector baseInjector =
+        Guice.createInjector(new AutoschedulingBaseModule(), new AbstractModule() {
+
+          @Override
+          protected void configure() {
+          }
+
+          @SuppressWarnings("unused")
+          @Provides
+          @RuntimeArguments
+          List<String> arguments() {
+            return Arrays.asList(args);
+          }
+        });
     // Next, inject the flags.
     Injector flaggedInjector =
         baseInjector.createChildInjector(baseInjector.getInstance(OptionsModule.class));
@@ -84,7 +102,6 @@ public final class Autoscheduling {
     Injector completeInjector =
         flaggedInjector.createChildInjector(
             new AutoschedulingConfigModule(),
-            new PassModule(),
             new AbstractModule() {
               @Override
               protected void configure() {
@@ -93,12 +110,21 @@ public final class Autoscheduling {
                 bind(SerialSchedule.class).toInstance(serialSchedule);
               }
             });
-    final Program initProgram = completeInjector.getInstance(Key.get(Program.class, Initial.class));
-    final SerialSchedule initSchedule = 
+    final Program program = completeInjector.getInstance(Program.class);
+    final Schedule initSchedule =
+        completeInjector.getInstance(Key.get(Schedule.class, Initial.class));
+    final Optimizer<Schedule> optimizer =
+        completeInjector.getInstance(Key.get(new TypeLiteral<Optimizer<Schedule>>() {}));
+    Schedule optSchedule = optimizer.iterate(auto.getIterations(), initSchedule);
+    System.out.println(optSchedule);
+  }
+
+  public int getIterations() {
+    return iterations;
   }
 
   public SerialSchedule getSerialSchedule() throws IOException {
-    if (initialScheduleFile.getPath().isEmpty()) {
+    if (initialScheduleFile.getPath().equals(" ")) {
       return SerialSchedule.newBuilder().build();
     } else {
       return readMessage(SerialSchedule.newBuilder(), initialScheduleFile).build();
