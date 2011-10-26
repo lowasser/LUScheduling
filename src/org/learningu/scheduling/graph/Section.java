@@ -8,6 +8,7 @@ import org.learningu.scheduling.graph.SerialGraph.SerialSection;
 
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
+import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Ints;
@@ -59,7 +60,7 @@ public final class Section extends ProgramObject<SerialSection> implements Compa
 
   @Override
   public String toString() {
-    return serial.hasCourseTitle() ? getTitle() : super.toString();
+    return Objects.toStringHelper(this).add("id", getId()).toString();
   }
 
   static Function<SerialSection, Section> programWrapper(final Program program) {

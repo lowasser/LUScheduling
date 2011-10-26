@@ -26,26 +26,26 @@ public final class LocalConflictLogic extends ScheduleLogic {
       description = "The minimum ratio of the maximum capacity of a class to the capacity of the room for which it is scheduled. "
           + "For example, if this was 1.25, the class would be forced to use a room at least 25% bigger than its cap. "
           + "The default value is 1.0.")
-  private final double minClassCapRatio;
+  private final double maxClassCapRatio;
 
   @Flag(
       value = "maxEstClassSizeRatio",
-      defaultValue = "Infinity",
+      defaultValue = "1.0",
       description = "The maximum ratio of the estimated size of a class to the capacity of the room for which it is scheduled. "
-          + "For example, if this was 3.0, the class would be forced to use a room at most 3 times bigger than its expected size. "
-          + "The default value is infinity.")
+          + "For example, if this was 0.5, the class would be forced to use a room at most 2 times bigger than its expected size. "
+          + "The default value is 1.0.")
   private final double maxEstClassSizeRatio;
 
   @Inject
-  LocalConflictLogic(@Named("minClassCapRatio") double minClassCapRatio,
+  LocalConflictLogic(@Named("minClassCapRatio") double maxClassCapRatio,
       @Named("maxEstClassSizeRatio") double maxEstClassSizeRatio, Logger logger) {
-    this.minClassCapRatio = minClassCapRatio;
+    this.maxClassCapRatio = maxClassCapRatio;
     this.maxEstClassSizeRatio = maxEstClassSizeRatio;
-    classCapRatioConditionText = "Class cap : room capacity ratio must be >= " + minClassCapRatio;
+    classCapRatioConditionText = "Class cap : room capacity ratio must be <= " + maxClassCapRatio;
     estSizeRatioConditionText = "Est class size : room capacity ratio must be <= "
         + maxEstClassSizeRatio;
-    if (minClassCapRatio < 1.0) {
-      logger.warning("Min class cap ratio is " + minClassCapRatio
+    if (maxClassCapRatio < 1.0) {
+      logger.warning("Max class cap ratio is " + maxClassCapRatio
           + ", which could result in classes being scheduled in rooms "
           + "smaller than the class size.");
     }
@@ -67,7 +67,7 @@ public final class LocalConflictLogic extends ScheduleLogic {
         estSizeRatioConditionText);
     double classCapRatio = ((double) course.getMaxClassSize()) / room.getCapacity();
     validator.validateLocal(
-        classCapRatio >= minClassCapRatio,
+        classCapRatio <= maxClassCapRatio,
         assignment,
         classCapRatioConditionText);
   }

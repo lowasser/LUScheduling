@@ -2,6 +2,7 @@ package org.learningu.scheduling;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -49,8 +50,9 @@ public final class Autoscheduling {
     TEXT {
       @Override
       public void output(OutputStream stream, Message message) throws IOException {
-        TextFormat.print(message, new OutputStreamWriter(stream));
-        stream.flush();
+        OutputStreamWriter writer = new OutputStreamWriter(stream);
+        writer.append(TextFormat.printToString(message));
+        writer.close();
       }
     };
     public abstract void output(OutputStream stream, Message message) throws IOException;
@@ -116,7 +118,11 @@ public final class Autoscheduling {
     final Optimizer<Schedule> optimizer =
         completeInjector.getInstance(Key.get(new TypeLiteral<Optimizer<Schedule>>() {}));
     Schedule optSchedule = optimizer.iterate(auto.getIterations(), initSchedule);
-    auto.outputFormat.output(System.out, Schedules.serialize(optSchedule));
+    OutputStream outStream =
+        auto.resultScheduleFile.getPath().equals(" ") ? System.out : new FileOutputStream(
+            auto.resultScheduleFile);
+    auto.outputFormat.output(outStream, Schedules.serialize(optSchedule));
+    outStream.close();
     completeInjector.getInstance(ExecutorService.class).shutdown();
   }
 
