@@ -1,4 +1,4 @@
-package org.learningu.scheduling;
+package org.learningu.scheduling.flags;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
@@ -35,9 +35,9 @@ import org.apache.commons.cli.PosixParser;
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
-import org.learningu.scheduling.FlagOptionsModule.FlagSpec;
 import org.learningu.scheduling.annotations.Flag;
 import org.learningu.scheduling.annotations.RuntimeArguments;
+import org.learningu.scheduling.flags.FlagOptionsModule.FlagSpec;
 
 /**
  * A Guice module that reads command-line arguments based on the annotated elements of the

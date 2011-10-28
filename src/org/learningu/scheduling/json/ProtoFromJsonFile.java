@@ -16,9 +16,9 @@ import com.google.protobuf.TextFormat;
 import java.io.File;
 import java.io.IOException;
 
-import org.learningu.scheduling.FlagsModule;
-import org.learningu.scheduling.OptionsModule;
 import org.learningu.scheduling.annotations.Flag;
+import org.learningu.scheduling.flags.FlagsModule;
+import org.learningu.scheduling.flags.OptionsModule;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
 
 public final class ProtoFromJsonFile {

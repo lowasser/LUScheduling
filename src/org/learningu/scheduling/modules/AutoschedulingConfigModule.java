@@ -1,4 +1,4 @@
-package org.learningu.scheduling;
+package org.learningu.scheduling.modules;
 
 import java.util.concurrent.ExecutorService;
 

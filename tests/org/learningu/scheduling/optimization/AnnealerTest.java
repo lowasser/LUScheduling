@@ -18,7 +18,7 @@ import java.util.concurrent.Executors;
 import junit.framework.TestCase;
 
 import org.joda.time.Period;
-import org.learningu.scheduling.OptimizerModule;
+import org.learningu.scheduling.modules.OptimizerModule;
 
 /**
  * Tests that annealing gets the correct answer on a simple use case. This test case may fail

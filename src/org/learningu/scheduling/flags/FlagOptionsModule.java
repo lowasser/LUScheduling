@@ -1,4 +1,4 @@
-package org.learningu.scheduling;
+package org.learningu.scheduling.flags;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;

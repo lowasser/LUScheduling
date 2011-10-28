@@ -1,7 +1,8 @@
-package org.learningu.scheduling;
+package org.learningu.scheduling.modules;
 
 import java.util.Map;
 
+import org.learningu.scheduling.Pass;
 import org.learningu.scheduling.Pass.OptimizerSpec;
 import org.learningu.scheduling.Pass.SerialAcceptanceFunction;
 import org.learningu.scheduling.Pass.SerialTemperatureFunction;

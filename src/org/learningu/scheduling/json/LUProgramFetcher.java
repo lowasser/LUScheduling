@@ -9,8 +9,8 @@ import java.io.IOException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.learningu.scheduling.FlagsModule;
-import org.learningu.scheduling.OptionsModule;
+import org.learningu.scheduling.flags.FlagsModule;
+import org.learningu.scheduling.flags.OptionsModule;
 
 public final class LUProgramFetcher {
   public static void main(final String[] args) throws ClientProtocolException, IOException {

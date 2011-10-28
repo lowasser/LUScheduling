@@ -1,5 +1,7 @@
-package org.learningu.scheduling;
+package org.learningu.scheduling.modules;
 
+import org.learningu.scheduling.Autoscheduling;
+import org.learningu.scheduling.flags.FlagsModule;
 import org.learningu.scheduling.graph.ProgramCacheFlags;
 import org.learningu.scheduling.logic.LocalConflictLogic;
 import org.learningu.scheduling.logic.LogicProvider;

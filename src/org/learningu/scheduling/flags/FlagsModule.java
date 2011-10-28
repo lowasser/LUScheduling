@@ -1,4 +1,4 @@
-package org.learningu.scheduling;
+package org.learningu.scheduling.flags;
 
 import org.learningu.scheduling.annotations.ClassWithFlags;
 
