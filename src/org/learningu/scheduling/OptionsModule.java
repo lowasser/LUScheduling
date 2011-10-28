@@ -1,10 +1,26 @@
 package org.learningu.scheduling;
 
+import com.google.common.base.Splitter;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import com.google.common.primitives.Primitives;
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.Key;
+import com.google.inject.Module;
+import com.google.inject.name.Named;
+import com.google.inject.name.Names;
+
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -23,17 +39,6 @@ import org.learningu.scheduling.FlagOptionsModule.FlagSpec;
 import org.learningu.scheduling.annotations.Flag;
 import org.learningu.scheduling.annotations.RuntimeArguments;
 
-import com.google.common.base.Splitter;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-import com.google.common.primitives.Primitives;
-import com.google.inject.AbstractModule;
-import com.google.inject.Inject;
-import com.google.inject.Key;
-import com.google.inject.name.Named;
-import com.google.inject.name.Names;
-
 /**
  * A Guice module that reads command-line arguments based on the annotated elements of the
  * specified classes, and injects the values specified on the command line.
@@ -44,6 +49,13 @@ import com.google.inject.name.Names;
  * @author lowasser
  */
 public class OptionsModule extends AbstractModule {
+  public static Injector buildOptionsInjector(String[] args, Module... modules) {
+    Injector baseInjector = Guice.createInjector(Iterables.concat(
+        Arrays.asList(modules),
+        ImmutableList.of(FlagOptionsModule.create(args))));
+    return baseInjector.createChildInjector(baseInjector.getInstance(OptionsModule.class));
+  }
+
   private final Map<Flag, Field> flags;
 
   private final CommandLine commandLine;
@@ -89,7 +101,8 @@ public class OptionsModule extends AbstractModule {
         }
         Type[] actualTypeArguments = genericType.getActualTypeArguments();
         Type arg = actualTypeArguments[0];
-        Iterable<String> splitInput = Splitter.on(',')
+        Iterable<String> splitInput = Splitter
+            .on(',')
             .trimResults()
             .omitEmptyStrings()
             .split(argument);
@@ -131,7 +144,8 @@ public class OptionsModule extends AbstractModule {
     }
   }
 
-  private static final PeriodFormatter PERIOD_FORMATTER = new PeriodFormatterBuilder().printZeroNever()
+  private static final PeriodFormatter PERIOD_FORMATTER = new PeriodFormatterBuilder()
+      .printZeroNever()
       .appendDays()
       .appendSuffix("d")
       .appendHours()

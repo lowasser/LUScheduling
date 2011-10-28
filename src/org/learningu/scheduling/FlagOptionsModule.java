@@ -1,6 +1,13 @@
 package org.learningu.scheduling;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
+import com.google.inject.Singleton;
+
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -8,16 +15,29 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.learningu.scheduling.annotations.ClassWithFlags;
 import org.learningu.scheduling.annotations.Flag;
-
-import com.google.common.collect.ImmutableMap;
-import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
+import org.learningu.scheduling.annotations.RuntimeArguments;
 
 public final class FlagOptionsModule extends AbstractModule {
 
+  static FlagOptionsModule create(String... args) {
+    return new FlagOptionsModule(ImmutableList.copyOf(args));
+  }
+
+  private final ImmutableList<String> args;
+
+  private FlagOptionsModule(ImmutableList<String> args) {
+    this.args = args;
+  }
+
   @Override
   protected void configure() {
+  }
+
+  @Provides
+  @Singleton
+  @RuntimeArguments
+  List<String> args() {
+    return args;
   }
 
   static final class FlagSpec {

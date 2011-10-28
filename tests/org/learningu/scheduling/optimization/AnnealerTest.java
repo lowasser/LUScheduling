@@ -1,14 +1,5 @@
 package org.learningu.scheduling.optimization;
 
-import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import junit.framework.TestCase;
-
-import org.joda.time.Period;
-import org.learningu.scheduling.AutoschedulingConfigModule;
-
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -19,6 +10,15 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
+
+import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import junit.framework.TestCase;
+
+import org.joda.time.Period;
+import org.learningu.scheduling.OptimizerModule;
 
 /**
  * Tests that annealing gets the correct answer on a simple use case. This test case may fail
@@ -42,9 +42,9 @@ public class AnnealerTest extends TestCase {
             new TypeLiteral<Annealer<Double>>() {}).build(
             new TypeLiteral<OptimizerFactory<Double>>() {}));
         bind(TemperatureFunction.class).annotatedWith(Names.named("primaryTempFun")).toInstance(
-            AutoschedulingConfigModule.LINEAR_FUNCTION);
+            OptimizerModule.LINEAR_FUNCTION);
         bind(TemperatureFunction.class).annotatedWith(Names.named("subTempFun")).toInstance(
-            AutoschedulingConfigModule.LINEAR_FUNCTION);
+            OptimizerModule.LINEAR_FUNCTION);
         bind(AcceptanceFunction.class).to(StandardAcceptanceFunction.class).asEagerSingleton();
         bindConstant().annotatedWith(Names.named("stepsPerOptimizerIteration")).to(10);
         bindConstant().annotatedWith(Names.named("nThreads")).to(4);

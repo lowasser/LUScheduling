@@ -4,7 +4,9 @@ import com.google.common.math.DoubleMath;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.google.inject.name.Named;
 
 import java.math.RoundingMode;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -79,16 +81,20 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
   private final JsonArray periods;
   private final JsonArray resources;
   private final JsonArray sections;
+  private final JsonArray rooms;
 
+  @Inject
   JsonProgramProvider(
-      JsonArray teachers,
-      JsonArray periods,
-      JsonArray resources,
-      JsonArray sections) {
+      @Named("json_rooms") JsonArray rooms,
+      @Named("json_teachers") JsonArray teachers,
+      @Named("json_periods") JsonArray periods,
+      @Named("json_resources") JsonArray resources,
+      @Named("json_sections") JsonArray sections) {
     this.teachers = teachers;
     this.periods = periods;
     this.resources = resources;
     this.sections = sections;
+    this.rooms = rooms;
   }
 
   @Override
@@ -110,6 +116,10 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     for (JsonElement section : sections) {
       builder.addSection(parseSection(section.getAsJsonObject()));
     }
+    for (JsonElement room : rooms) {
+      builder.addRoom(parseRoom(room.getAsJsonObject()));
+    }
     return builder.build();
   }
+
 }

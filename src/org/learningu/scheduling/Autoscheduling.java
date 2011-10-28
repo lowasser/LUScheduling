@@ -1,5 +1,14 @@
 package org.learningu.scheduling;
 
+import com.google.inject.AbstractModule;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.Key;
+import com.google.inject.TypeLiteral;
+import com.google.inject.name.Named;
+import com.google.protobuf.Message;
+import com.google.protobuf.TextFormat;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -7,31 +16,17 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 import org.learningu.scheduling.Pass.OptimizerSpec;
 import org.learningu.scheduling.annotations.Flag;
 import org.learningu.scheduling.annotations.Initial;
-import org.learningu.scheduling.annotations.RuntimeArguments;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
 import org.learningu.scheduling.logic.SerialLogic.SerialLogics;
 import org.learningu.scheduling.optimization.Optimizer;
 import org.learningu.scheduling.schedule.Schedule;
 import org.learningu.scheduling.schedule.Schedules;
 import org.learningu.scheduling.schedule.SerialSchedules.SerialSchedule;
-
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.Key;
-import com.google.inject.Provides;
-import com.google.inject.TypeLiteral;
-import com.google.inject.name.Named;
-import com.google.protobuf.Message;
-import com.google.protobuf.TextFormat;
 
 public final class Autoscheduling {
   @Flag("programFile")
@@ -97,24 +92,9 @@ public final class Autoscheduling {
    */
   public static void main(final String[] args) throws IOException {
     // First, initialize the very basic, completely run-independent bindings.
-    Injector baseInjector = Guice.createInjector(
-        new AutoschedulingBaseModule(),
-        new FlagOptionsModule(),
-        new AbstractModule() {
-          @Override
-          protected void configure() {
-          }
-
-          @SuppressWarnings("unused")
-          @Provides
-          @RuntimeArguments
-          List<String> arguments() {
-            return Arrays.asList(args);
-          }
-        });
-    // Next, inject the flags.
-    Injector flaggedInjector = baseInjector.createChildInjector(baseInjector
-        .getInstance(OptionsModule.class));
+    Injector flaggedInjector = OptionsModule.buildOptionsInjector(
+        args,
+        new AutoschedulingBaseModule());
     // We now have enough to initialize the Autoscheduling runner with files and the like.
     Autoscheduling auto = flaggedInjector.getInstance(Autoscheduling.class);
     // Perform the necessary file I/O here, since it's evil to do that from inside providers.
