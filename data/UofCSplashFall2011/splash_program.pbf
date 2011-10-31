@@ -33,12 +33,12 @@ timeBlock {
   period {
     periodId: 65
     description: "Fifth Class Period: Sat 3:30-4:20"
-    shortDescription: "Sat 3:30-4:30 PM"
+    shortDescription: "3:30-4:30 PM"
   }
   period {
     periodId: 66
     description: "Sixth Class Period: Sat 4:30-5:20 PM"
-    shortDescription: "Sat 4:30-5:30 PM"
+    shortDescription: "4:30-5:30 PM"
   }
 }
 teacher {
@@ -2909,6 +2909,7 @@ room {
   availablePeriod: 64
   availablePeriod: 62
   roomProperty: 36
+  roomProperty: 43
 }
 room {
   roomId: 3
@@ -3434,6 +3435,7 @@ room {
   availablePeriod: 64
   availablePeriod: 62
   roomProperty: 36
+  roomProperty: 43
 }
 roomProperty {
   propertyId: 36
@@ -3454,20 +3456,20 @@ roomProperty {
 roomProperty {
   propertyId: 40
   description: "Dance Space"
-  binding: true
+  isBinding: true
 }
 roomProperty {
   propertyId: 41
   description: "Hardwood Floors"
-  binding: true
+  isBinding: true
 }
 roomProperty {
   propertyId: 42
   description: "Meeting Point"
-  binding: true
+  isBinding: true
 }
 roomProperty {
   propertyId: 43
   description: "Computer Lab"
-  binding: true
+  isBinding: true
 }

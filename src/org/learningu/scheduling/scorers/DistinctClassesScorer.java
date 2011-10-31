@@ -18,12 +18,7 @@ public final class DistinctClassesScorer implements Scorer<Schedule> {
 
   @Override
   public double score(Schedule input) {
-    Set<Section> scheduled = Sets
-        .newHashSetWithExpectedSize(input.getProgram().getSections().size());
-    for (StartAssignment assign : input.startAssignments()) {
-      scheduled.add(assign.getSection());
-    }
-    return scheduled.size();
+    return input.getScheduledSections().size();
   }
 
 }

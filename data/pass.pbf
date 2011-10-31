@@ -1,12 +1,13 @@
 perturber {
 	perturb {
 		impl: DESTRUCTIVE
+		temperatureScale: 1
 	}
 }
 scorer {
 	component {
-		impl: DISTINCT_CLASSES
+		impl: EST_STUDENT_HOURS
 	}
 }
-subOptimizerSteps: 100
-numberOfSubOptimizers: 3
+subOptimizerSteps: 20
+numberOfSubOptimizers: 4

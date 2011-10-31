@@ -1,5 +1,9 @@
 package org.learningu.scheduling;
 
+import com.google.common.base.Charsets;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
+import com.google.common.io.Files;
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -17,16 +21,21 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.concurrent.ExecutorService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.learningu.scheduling.Pass.OptimizerSpec;
 import org.learningu.scheduling.annotations.Flag;
 import org.learningu.scheduling.annotations.Initial;
 import org.learningu.scheduling.flags.OptionsModule;
+import org.learningu.scheduling.graph.Program;
+import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
 import org.learningu.scheduling.logic.SerialLogic.SerialLogics;
 import org.learningu.scheduling.modules.AutoschedulingBaseModule;
 import org.learningu.scheduling.modules.AutoschedulingConfigModule;
 import org.learningu.scheduling.optimization.Optimizer;
+import org.learningu.scheduling.pretty.PrettySchedulePrinters;
 import org.learningu.scheduling.schedule.Schedule;
 import org.learningu.scheduling.schedule.Schedules;
 import org.learningu.scheduling.schedule.SerialSchedules.SerialSchedule;
@@ -56,6 +65,11 @@ public final class Autoscheduling {
   @Flag(value = "teacherScheduleOutput")
   private final File teacherScheduleOutput;
 
+  @Flag(value = "roomScheduleOutput")
+  private final File roomScheduleOutput;
+
+  private final Logger logger;
+
   enum MessageOutputFormat {
     TEXT {
       @Override
@@ -83,7 +97,9 @@ public final class Autoscheduling {
       @Named("logicFile") File logicFile,
       @Named("outputFormat") MessageOutputFormat outputFormat,
       @Named("iterations") int iterations,
-      @Named("teacherScheduleOutput") File teacherScheduleOutput) {
+      @Named("teacherScheduleOutput") File teacherScheduleOutput,
+      @Named("roomScheduleOutput") File roomScheduleOutput,
+      Logger logger) {
     this.programFile = programFile;
     this.optimizationSpecFile = optimizationSpecFile;
     this.initialScheduleFile = initialScheduleFile;
@@ -92,6 +108,8 @@ public final class Autoscheduling {
     this.outputFormat = outputFormat;
     this.iterations = iterations;
     this.teacherScheduleOutput = teacherScheduleOutput;
+    this.roomScheduleOutput = roomScheduleOutput;
+    this.logger = logger;
   }
 
   /**
@@ -131,11 +149,46 @@ public final class Autoscheduling {
         : new FileOutputStream(auto.resultScheduleFile);
     auto.outputFormat.output(outStream, Schedules.serialize(optSchedule));
     outStream.close();
+    auto.logProgramStats(optSchedule.getProgram());
+    auto.logScheduleStats(optSchedule);
+    ImmutableSet<Section> unscheduled = ImmutableSet.copyOf(Sets.difference(optSchedule
+        .getProgram()
+        .getSections(), optSchedule.getScheduledSections()));
+    if (!unscheduled.isEmpty()) {
+      auto.logger.warning("The following sections were not scheduled: " + unscheduled);
+    }
+    if (!auto.teacherScheduleOutput.getPath().equals(" ")) {
+      Files.write(
+          PrettySchedulePrinters.buildTeacherScheduleCsv(optSchedule).toString(),
+          auto.teacherScheduleOutput,
+          Charsets.UTF_8);
+    }
+    if (!auto.roomScheduleOutput.getPath().equals(" ")) {
+      Files.write(
+          PrettySchedulePrinters.buildRoomScheduleCsv(optSchedule).toString(),
+          auto.roomScheduleOutput,
+          Charsets.UTF_8);
+    }
     completeInjector.getInstance(ExecutorService.class).shutdown();
   }
 
   public int getIterations() {
     return iterations;
+  }
+
+  public void logProgramStats(Program program) {
+    logger.log(Level.INFO, "Program has {0} sections", program.getSections().size());
+  }
+
+  public void logScheduleStats(Schedule schedule) {
+    logger.log(Level.INFO, "Schedule scheduled {0} sections", schedule
+        .getScheduledSections()
+        .size());
+    int classHours = 0;
+    for (Section section : schedule.getScheduledSections()) {
+      classHours += section.getPeriodLength();
+    }
+    logger.log(Level.INFO, "Schedule scheduled {0} class hours", classHours);
   }
 
   public SerialSchedule getSerialSchedule() throws IOException {

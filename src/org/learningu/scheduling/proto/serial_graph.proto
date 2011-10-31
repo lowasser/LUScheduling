@@ -6,7 +6,7 @@ package org.learningu.scheduling.graph;
 message SerialRoomProperty {
 	required int32 propertyId = 1;
 	optional string description = 2;
-	optional bool isBinding = 3 [default = true]; // if present, classes must require this property to get this room
+	optional bool isBinding = 3 [default = false]; // if present, classes must require this property to get this room
 }
 
 /*

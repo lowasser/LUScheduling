@@ -73,7 +73,18 @@ public final class Schedule {
       BstMap<Section, StartAssignment> assignments) {
     this.startingTimeTable = checkNotNull(startingTimeTable);
     this.factory = checkNotNull(factory);
-    this.assignments = checkNotNull(assignments);
+    assignments = BstMap.create();
+    for (Entry<Room, BstMap<ClassPeriod, Section>> roomEntry : startingTimeTable.entrySet()) {
+      for (Entry<ClassPeriod, Section> periodEntry : roomEntry.getValue().entrySet()) {
+        assignments = assignments.insert(
+            periodEntry.getValue(),
+            StartAssignment.create(
+                periodEntry.getKey(),
+                roomEntry.getKey(),
+                periodEntry.getValue()));
+      }
+    }
+    this.assignments = assignments;
   }
 
   public Program getProgram() {
@@ -207,9 +218,7 @@ public final class Schedule {
 
     @Override
     public Iterator<StartAssignment> iterator() {
-      return Iterators.concat(Iterators.transform(
-          startingTimeTable.entrySet().iterator(),
-          TransformFunction.INSTANCE));
+      return assignments.values().iterator();
     }
 
     @Override

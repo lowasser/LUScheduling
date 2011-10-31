@@ -33,7 +33,7 @@ public class PrettySchedulePrinters {
           Csv.RowBuilder rowBuilder = Csv.newRowBuilder();
           rowBuilder
               .addBlank()
-              .add(present.getTimeBlock().getDescription())
+              .add(present.getPeriod().getDescription())
               .add(present.getSection().getTitle());
           builder.add(rowBuilder.build());
         }

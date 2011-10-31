@@ -19,7 +19,6 @@ public final class AutoschedulingConfigModule extends AbstractModule {
   protected void configure() {
     install(new OptimizerModule());
     install(new ScheduleLogicModule());
-    bind(ScheduleLogic.class).toProvider(LogicProvider.class);
     bind(ExecutorService.class).toProvider(ExecutorServiceProvider.class).in(Scopes.SINGLETON);
   }
 
