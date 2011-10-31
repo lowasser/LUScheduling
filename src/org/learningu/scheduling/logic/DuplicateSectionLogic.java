@@ -18,7 +18,7 @@ public final class DuplicateSectionLogic extends ScheduleLogic {
       final StartAssignment assignment) {
     super.validate(validator, schedule, assignment);
     Iterable<StartAssignment> duplicates = Iterables.filter(
-        schedule.startAssignments(),
+        schedule.getStartAssignments(),
         new Predicate<StartAssignment>() {
           @Override
           public boolean apply(StartAssignment input) {

@@ -40,6 +40,6 @@ public class TeacherConflictLogicTest extends BaseLogicTest {
     ModifiedState<ScheduleValidator, Schedule> assign2 = schedule.assignStart(StartAssignment
         .create(tenAM, harper141, math));
     assertFalse(assign2.toString(), assign2.getResult().isValid());
-    assertEquals(schedule.startAssignments(), assign2.getNewState().startAssignments());
+    assertEquals(schedule.getStartAssignments(), assign2.getNewState().getStartAssignments());
   }
 }

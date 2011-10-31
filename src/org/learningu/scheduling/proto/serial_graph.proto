@@ -20,6 +20,7 @@ message SerialSection {
 	optional int32 estimatedClassSize = 5 [default = 15];
 	optional int32 maxClassSize = 6 [default = 20];
 	optional int32 periodLength = 8 [default = 1];
+	required int32 classId = 10;
 	repeated int32 requiredProperty = 9 [packed = true];
 }
 

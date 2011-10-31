@@ -30,7 +30,7 @@ public class TeacherConflictLogic extends ScheduleLogic {
      * Collecting the set of all courses taught by the same teachers is more efficient than going
      * through every teacher who is teaching a class this period.
      */
-    Set<Teacher> teachers = program.teachersForCourse(assignment.getSection());
+    Set<Teacher> teachers = program.teachersForSection(assignment.getSection());
     Set<Section> coursesTaughtBySame = coursesTaughtByTeachers(program, teachers);
     Set<PresentAssignment> conflicts = Sets.newLinkedHashSet();
     for (Entry<Room, PresentAssignment> entry : schedule
@@ -52,7 +52,7 @@ public class TeacherConflictLogic extends ScheduleLogic {
   static Set<Section> coursesTaughtByTeachers(Program program, Iterable<Teacher> teachers) {
     ImmutableSet.Builder<Section> builder = ImmutableSet.builder();
     for (Teacher t : teachers) {
-      builder.addAll(program.getCoursesForTeacher(t));
+      builder.addAll(program.getSectionsForTeacher(t));
     }
     return builder.build();
   }

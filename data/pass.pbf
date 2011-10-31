@@ -13,7 +13,28 @@ perturber {
 }
 scorer {
 	component {
-		impl: EST_STUDENT_HOURS
+		impl: TEACHERS_WITH_CLASSES_SCHEDULED
+		multiplier: 50
+	}
+	component {
+		impl: DISTINCT_CLASSES_SCHEDULED
+		multiplier: 10
+	}
+	component {
+		impl: SECTIONS_SCHEDULED
+		multiplier: 3
+	}
+	component {
+		impl: CLASS_HOURS_SCHEDULED
+		multiplier: 0.5
+	}
+	component {
+		impl: STUDENT_CLASS_HOURS_SCHEDULED
+		multiplier: 0.05
+	}
+	component {
+		impl: SPREAD_OUT_CLASSES
+		exponent: 2
 	}
 }
 subOptimizerSteps: 20

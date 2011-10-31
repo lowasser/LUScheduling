@@ -46,7 +46,7 @@ public class PrettySchedulePrinters {
     Map<Section, StartAssignment> assignments = schedule.getAssignmentsBySection();
     for (Teacher t : program.getTeachers()) {
       builder.add(Csv.newRowBuilder().add(t.getName()).build());
-      Set<Section> sections = program.getCoursesForTeacher(t);
+      Iterable<Section> sections = program.getSectionsForTeacher(t);
       Set<Section> unassigned = Sets.newHashSet(sections);
       SortedMap<ClassPeriod, StartAssignment> periods = Maps.newTreeMap();
       for (Section s : sections) {

@@ -168,13 +168,13 @@ public final class Schedule {
     }
   }
 
-  public final Set<StartAssignment> startAssignments() {
+  public final Set<StartAssignment> getStartAssignments() {
     return new StartAssignmentSet();
   }
 
   public Iterable<PresentAssignment> presentAssignments() {
     return Iterables.concat(Iterables.transform(
-        startAssignments(),
+        getStartAssignments(),
         new Function<StartAssignment, List<PresentAssignment>>() {
 
           @Override
@@ -326,14 +326,14 @@ public final class Schedule {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(startAssignments(), getProgram());
+    return Objects.hashCode(getStartAssignments(), getProgram());
   }
 
   @Override
   public boolean equals(Object obj) {
     if (obj instanceof Schedule) {
       Schedule other = (Schedule) obj;
-      return Objects.equal(startAssignments(), other.startAssignments())
+      return Objects.equal(getStartAssignments(), other.getStartAssignments())
           && getProgram().equals(other.getProgram());
     }
     return false;
@@ -341,6 +341,6 @@ public final class Schedule {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this).add("startAssignments", startAssignments()).toString();
+    return Objects.toStringHelper(this).add("startAssignments", getStartAssignments()).toString();
   }
 }

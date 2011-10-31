@@ -71,6 +71,7 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     for (JsonElement t : obj.get("teachers").getAsJsonArray()) {
       builder.addTeacherIds(t.getAsInt());
     }
+    builder.setClassId(obj.get("class_id").getAsInt());
     builder.setPeriodLength(DoubleMath.roundToInt(
         obj.get("length").getAsDouble(),
         RoundingMode.HALF_EVEN));

@@ -4,7 +4,6 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Key;
 import com.google.inject.Provider;
 import com.google.inject.Provides;
-import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.multibindings.MapBinder;
@@ -22,12 +21,11 @@ import org.learningu.scheduling.optimization.ConcurrentOptimizer;
 import org.learningu.scheduling.optimization.Optimizer;
 import org.learningu.scheduling.optimization.OptimizerFactory;
 import org.learningu.scheduling.optimization.Perturber;
-import org.learningu.scheduling.optimization.Scorer;
 import org.learningu.scheduling.optimization.StandardAcceptanceFunction;
 import org.learningu.scheduling.optimization.TemperatureFunction;
 import org.learningu.scheduling.perturbers.Perturbers;
 import org.learningu.scheduling.schedule.Schedule;
-import org.learningu.scheduling.scorers.Scorers;
+import org.learningu.scheduling.scorers.SerialScorers.CompleteScorer;
 
 public class OptimizerModule extends AbstractModule {
 
@@ -49,6 +47,7 @@ public class OptimizerModule extends AbstractModule {
         new TypeLiteral<Optimizer<Schedule>>() {},
         new TypeLiteral<Annealer<Schedule>>() {}).build(
         Key.get(new TypeLiteral<OptimizerFactory<Schedule>>() {}, SingleThread.class)));
+    install(new ScorerModule());
   }
 
   @Provides
@@ -57,9 +56,8 @@ public class OptimizerModule extends AbstractModule {
   }
 
   @Provides
-  @Singleton
-  Scorer<Schedule> scorer(OptimizerSpec spec) {
-    return Scorers.deserialize(spec.getScorer());
+  CompleteScorer completeScorer(OptimizerSpec spec) {
+    return spec.getScorer();
   }
 
   @Provides
@@ -69,14 +67,16 @@ public class OptimizerModule extends AbstractModule {
 
   @Provides
   @Named("primaryTempFun")
-  TemperatureFunction primaryTemperatureFunction(OptimizerSpec spec,
+  TemperatureFunction primaryTemperatureFunction(
+      OptimizerSpec spec,
       Map<SerialTemperatureFunction, Provider<TemperatureFunction>> bindings) {
     return bindings.get(spec.getPrimaryTempFun()).get();
   }
 
   @Provides
   @Named("subTempFun")
-  TemperatureFunction subTemperatureFunction(OptimizerSpec spec,
+  TemperatureFunction subTemperatureFunction(
+      OptimizerSpec spec,
       Map<SerialTemperatureFunction, Provider<TemperatureFunction>> bindings) {
     return bindings.get(spec.getSubTempFun()).get();
   }
@@ -94,7 +94,8 @@ public class OptimizerModule extends AbstractModule {
   }
 
   @Provides
-  AcceptanceFunction acceptFun(OptimizerSpec spec,
+  AcceptanceFunction acceptFun(
+      OptimizerSpec spec,
       Map<SerialAcceptanceFunction, Provider<AcceptanceFunction>> map) {
     return map.get(spec.getSubAcceptFun()).get();
   }
@@ -105,9 +106,9 @@ public class OptimizerModule extends AbstractModule {
       return ((double) (nSteps - 1 - currentStep)) / nSteps;
     }
   };
-  
+
   public static final TemperatureFunction QUADRATIC_FUNCTION = new TemperatureFunction() {
-    
+
     @Override
     public double temperature(int currentStep, int nSteps) {
       int numerator = nSteps - 1 - currentStep;

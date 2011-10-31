@@ -1,8 +1,12 @@
 package org.learningu.scheduling.scorers;
 
 enum SerialScorerImpl {
-	DISTINCT_CLASSES = 1;
-	EST_STUDENT_HOURS = 2;
+	TEACHERS_WITH_CLASSES_SCHEDULED = 1;
+	DISTINCT_CLASSES_SCHEDULED = 2;
+	SECTIONS_SCHEDULED = 3;
+	CLASS_HOURS_SCHEDULED = 4;
+	STUDENT_CLASS_HOURS_SCHEDULED = 5;
+	SPREAD_OUT_CLASSES = 6;
 }
 
 message ScaledScorer {

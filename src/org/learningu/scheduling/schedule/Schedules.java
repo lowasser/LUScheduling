@@ -35,7 +35,7 @@ public final class Schedules {
 
   public static final SerialSchedule serialize(Schedule schedule) {
     SerialSchedule.Builder scheduleBuilder = SerialSchedule.newBuilder();
-    for (StartAssignment assign : schedule.startAssignments()) {
+    for (StartAssignment assign : schedule.getStartAssignments()) {
       scheduleBuilder.addAssignment(SerialStartAssignment.newBuilder()
           .setPeriodId(assign.getPeriod().getId())
           .setRoomId(assign.getRoom().getId())

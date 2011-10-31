@@ -125,7 +125,7 @@ public class ProgramTest extends TestCase {
     builder.setCourseTitle(course.getTitle());
     builder.setEstimatedClassSize(course.getEstimatedClassSize());
     builder.setMaxClassSize(course.getMaxClassSize());
-    for (Teacher teacher : course.getProgram().teachersForCourse(course)) {
+    for (Teacher teacher : course.getProgram().teachersForSection(course)) {
       builder.addTeacherIds(teacher.getId());
     }
     return builder.build();

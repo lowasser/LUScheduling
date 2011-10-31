@@ -4,6 +4,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkElementIndex;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.common.base.Objects;
+
 import java.util.AbstractList;
 import java.util.List;
 import java.util.RandomAccess;
@@ -11,12 +13,11 @@ import java.util.RandomAccess;
 import javax.annotation.Nullable;
 
 import org.learningu.scheduling.graph.ClassPeriod;
-import org.learningu.scheduling.graph.Section;
+import org.learningu.scheduling.graph.Course;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
+import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.TimeBlock;
-
-import com.google.common.base.Objects;
 
 /**
  * A representation of the assignment of a specific section of a specific class to begin in a
@@ -73,6 +74,10 @@ public final class StartAssignment implements Assignment {
   @Override
   public Room getRoom() {
     return room;
+  }
+
+  public Course getCourse() {
+    return section.getCourse();
   }
 
   @Override
