@@ -3,6 +3,9 @@ perturber {
 		impl: DESTRUCTIVE
 		temperatureScale: 1
 	}
+	perturb {
+		impl: GREEDY
+	}
 }
 scorer {
 	component {
