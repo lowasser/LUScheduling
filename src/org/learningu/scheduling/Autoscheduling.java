@@ -8,6 +8,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Key;
+import com.google.inject.Module;
 import com.google.inject.TypeLiteral;
 import com.google.inject.name.Named;
 import com.google.protobuf.Message;
@@ -15,6 +16,7 @@ import com.google.protobuf.TextFormat;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -70,6 +72,8 @@ public final class Autoscheduling {
 
   private final Logger logger;
 
+  private final Injector injector;
+
   enum MessageOutputFormat {
     TEXT {
       @Override
@@ -99,7 +103,8 @@ public final class Autoscheduling {
       @Named("iterations") int iterations,
       @Named("teacherScheduleOutput") File teacherScheduleOutput,
       @Named("roomScheduleOutput") File roomScheduleOutput,
-      Logger logger) {
+      Logger logger,
+      Injector injector) {
     this.programFile = programFile;
     this.optimizationSpecFile = optimizationSpecFile;
     this.initialScheduleFile = initialScheduleFile;
@@ -110,6 +115,36 @@ public final class Autoscheduling {
     this.teacherScheduleOutput = teacherScheduleOutput;
     this.roomScheduleOutput = roomScheduleOutput;
     this.logger = logger;
+    this.injector = injector;
+  }
+
+  private Module dataModule() throws IOException {
+    final SerialProgram serialProgram = getSerialProgram();
+    final OptimizerSpec optimizerSpec = getOptimizerSpec();
+    final SerialLogics serialLogics = getSerialLogics();
+    final SerialSchedule serialSchedule = getSerialSchedule();
+    return new AbstractModule() {
+      @Override
+      protected void configure() {
+        bind(SerialLogics.class).toInstance(serialLogics);
+        bind(SerialProgram.class).toInstance(serialProgram);
+        bind(OptimizerSpec.class).toInstance(optimizerSpec);
+        bind(SerialSchedule.class).toInstance(serialSchedule);
+      }
+    };
+  }
+
+  private Injector createInjectorWithData() throws IOException {
+    return injector.createChildInjector(new AutoschedulingConfigModule(), dataModule());
+  }
+
+  public Schedule optimizedSchedule() throws IOException {
+    Injector completeInjector = createInjectorWithData();
+    Schedule initialSchedule = completeInjector
+        .getInstance(Key.get(Schedule.class, Initial.class));
+    final Optimizer<Schedule> optimizer = completeInjector.getInstance(Key
+        .get(new TypeLiteral<Optimizer<Schedule>>() {}));
+    return optimizer.iterate(getIterations(), initialSchedule);
   }
 
   /**
@@ -121,55 +156,43 @@ public final class Autoscheduling {
     Injector flaggedInjector = OptionsModule.buildOptionsInjector(
         args,
         new AutoschedulingBaseModule());
-    // We now have enough to initialize the Autoscheduling runner with files and the like.
-    Autoscheduling auto = flaggedInjector.getInstance(Autoscheduling.class);
-    // Perform the necessary file I/O here, since it's evil to do that from inside providers.
-    final SerialProgram serialProgram = auto.getSerialProgram();
-    final OptimizerSpec optimizerSpec = auto.getOptimizerSpec();
-    final SerialLogics serialLogics = auto.getSerialLogics();
-    final SerialSchedule serialSchedule = auto.getSerialSchedule();
-    Injector completeInjector = flaggedInjector.createChildInjector(
-        new AutoschedulingConfigModule(),
-        new AbstractModule() {
-          @Override
-          protected void configure() {
-            bind(SerialLogics.class).toInstance(serialLogics);
-            bind(SerialProgram.class).toInstance(serialProgram);
-            bind(OptimizerSpec.class).toInstance(optimizerSpec);
-            bind(SerialSchedule.class).toInstance(serialSchedule);
-          }
-        });
-    final Schedule initSchedule = completeInjector.getInstance(Key.get(
-        Schedule.class,
-        Initial.class));
-    final Optimizer<Schedule> optimizer = completeInjector.getInstance(Key
-        .get(new TypeLiteral<Optimizer<Schedule>>() {}));
-    Schedule optSchedule = optimizer.iterate(auto.getIterations(), initSchedule);
+    try {
+      // We now have enough to initialize the Autoscheduling runner with files and the like.
+      Autoscheduling auto = flaggedInjector.getInstance(Autoscheduling.class);
+      // Perform the necessary file I/O here, since it's evil to do that from inside providers.
+      final Schedule optSchedule = auto.optimizedSchedule();
+      outputSchedule(auto, optSchedule);
+      auto.logProgramStats(optSchedule.getProgram());
+      auto.logScheduleStats(optSchedule);
+      ImmutableSet<Section> unscheduled = ImmutableSet.copyOf(Sets.difference(optSchedule
+          .getProgram()
+          .getSections(), optSchedule.getScheduledSections()));
+      if (!unscheduled.isEmpty()) {
+        auto.logger.warning("The following sections were not scheduled: " + unscheduled);
+      }
+      if (!auto.teacherScheduleOutput.getPath().equals(" ")) {
+        Files.write(
+            PrettySchedulePrinters.buildTeacherScheduleCsv(optSchedule).toString(),
+            auto.teacherScheduleOutput,
+            Charsets.UTF_8);
+      }
+      if (!auto.roomScheduleOutput.getPath().equals(" ")) {
+        Files.write(
+            PrettySchedulePrinters.buildRoomScheduleCsv(optSchedule).toString(),
+            auto.roomScheduleOutput,
+            Charsets.UTF_8);
+      }
+    } finally {
+      flaggedInjector.getInstance(ExecutorService.class).shutdown();
+    }
+  }
+
+  static void outputSchedule(Autoscheduling auto, final Schedule optSchedule)
+      throws FileNotFoundException, IOException {
     OutputStream outStream = auto.resultScheduleFile.getPath().equals(" ") ? System.out
         : new FileOutputStream(auto.resultScheduleFile);
     auto.outputFormat.output(outStream, Schedules.serialize(optSchedule));
     outStream.close();
-    auto.logProgramStats(optSchedule.getProgram());
-    auto.logScheduleStats(optSchedule);
-    ImmutableSet<Section> unscheduled = ImmutableSet.copyOf(Sets.difference(optSchedule
-        .getProgram()
-        .getSections(), optSchedule.getScheduledSections()));
-    if (!unscheduled.isEmpty()) {
-      auto.logger.warning("The following sections were not scheduled: " + unscheduled);
-    }
-    if (!auto.teacherScheduleOutput.getPath().equals(" ")) {
-      Files.write(
-          PrettySchedulePrinters.buildTeacherScheduleCsv(optSchedule).toString(),
-          auto.teacherScheduleOutput,
-          Charsets.UTF_8);
-    }
-    if (!auto.roomScheduleOutput.getPath().equals(" ")) {
-      Files.write(
-          PrettySchedulePrinters.buildRoomScheduleCsv(optSchedule).toString(),
-          auto.roomScheduleOutput,
-          Charsets.UTF_8);
-    }
-    completeInjector.getInstance(ExecutorService.class).shutdown();
   }
 
   public int getIterations() {
@@ -193,21 +216,26 @@ public final class Autoscheduling {
 
   public SerialSchedule getSerialSchedule() throws IOException {
     if (initialScheduleFile.getPath().equals(" ")) {
+      logger.info("No initial schedule specified; starting with an empty schedule.");
       return SerialSchedule.newBuilder().build();
     } else {
+      logger.info("Reading in initial schedule.");
       return readMessage(SerialSchedule.newBuilder(), initialScheduleFile).build();
     }
   }
 
   public SerialLogics getSerialLogics() throws IOException {
+    logger.info("Reading in schedule validity logic specification");
     return readMessage(SerialLogics.newBuilder(), logicFile).build();
   }
 
   public SerialProgram getSerialProgram() throws IOException {
+    logger.info("Reading in serialized program specification");
     return readMessage(SerialProgram.newBuilder(), programFile).build();
   }
 
   public OptimizerSpec getOptimizerSpec() throws IOException {
+    logger.info("Reading in serialized optimizer specification");
     return readMessage(OptimizerSpec.newBuilder(), optimizationSpecFile).build();
   }
 
