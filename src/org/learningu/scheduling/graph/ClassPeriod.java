@@ -56,7 +56,7 @@ public final class ClassPeriod extends ProgramObject<SerialPeriod> implements
     return ComparisonChain
         .start()
         .compare(block.getId(), o.getTimeBlock().getId())
-        .compare(index, index)
+        .compare(index, o.getIndex())
         .result();
   }
 }

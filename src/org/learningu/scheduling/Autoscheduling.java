@@ -140,11 +140,17 @@ public final class Autoscheduling {
 
   public Schedule optimizedSchedule() throws IOException {
     Injector completeInjector = createInjectorWithData();
-    Schedule initialSchedule = completeInjector
-        .getInstance(Key.get(Schedule.class, Initial.class));
-    final Optimizer<Schedule> optimizer = completeInjector.getInstance(Key
-        .get(new TypeLiteral<Optimizer<Schedule>>() {}));
-    return optimizer.iterate(getIterations(), initialSchedule);
+    try {
+      Schedule initialSchedule = completeInjector.getInstance(Key.get(
+          Schedule.class,
+          Initial.class));
+      final Optimizer<Schedule> optimizer = completeInjector.getInstance(Key
+          .get(new TypeLiteral<Optimizer<Schedule>>() {}));
+      return optimizer.iterate(getIterations(), initialSchedule);
+    } finally {
+      completeInjector.getInstance(ExecutorService.class).shutdown();
+    }
+
   }
 
   /**
@@ -183,7 +189,6 @@ public final class Autoscheduling {
             Charsets.UTF_8);
       }
     } finally {
-      flaggedInjector.getInstance(ExecutorService.class).shutdown();
     }
   }
 

@@ -78,6 +78,7 @@ public class TestProgramModule extends AbstractModule {
         .newBuilder()
         .setPeriodId(uid++)
         .setDescription(name)
+        .setShortDescription(name)
         .build();
     bind(SerialPeriod.class).annotatedWith(Names.named(name)).toInstance(period);
     return period;
