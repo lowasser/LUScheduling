@@ -15,6 +15,10 @@ public final class Course {
     this.program = program;
   }
 
+  public int getId() {
+    return id;
+  }
+
   @Override
   public int hashCode() {
     return id ^ System.identityHashCode(program);

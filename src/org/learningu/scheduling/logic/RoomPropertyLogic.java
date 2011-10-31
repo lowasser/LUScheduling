@@ -11,7 +11,7 @@ import org.learningu.scheduling.schedule.StartAssignment;
 
 import com.google.common.collect.Sets;
 
-public class RoomPropertyLogic extends ScheduleLogic {
+public final class RoomPropertyLogic extends ScheduleLogic {
   @Override
   public void validate(ScheduleValidator validator, Schedule schedule, StartAssignment assignment) {
     super.validate(validator, schedule, assignment);

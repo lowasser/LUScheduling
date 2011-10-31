@@ -1,9 +1,9 @@
 package org.learningu.scheduling.graph;
 
-import org.learningu.scheduling.annotations.Flag;
-
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
+
+import org.learningu.scheduling.annotations.Flag;
 
 /**
  * Flags for configuring the caches in a {@code Program}.
@@ -12,8 +12,14 @@ import com.google.inject.name.Named;
  */
 public final class ProgramCacheFlags {
 
-  public static final ProgramCacheFlags DEFAULTS = new ProgramCacheFlags(10000, 10000, 10000,
-      10000, 10000, 10000, 4);
+  public static final ProgramCacheFlags DEFAULTS = new ProgramCacheFlags(1000, 10000, 10000,
+      10000, 10000, 10000, 10000, 4);
+
+  @Flag(
+      value = "prerequisiteCacheSize",
+      description = "Maximum cache size to use for prerequisites",
+      defaultValue = "1000")
+  final int prerequisiteCacheSize;
 
   @Flag(
       value = "teacherAvailableCacheSize",
@@ -59,6 +65,7 @@ public final class ProgramCacheFlags {
 
   @Inject
   ProgramCacheFlags(
+      @Named("prerequisiteCacheSize") int prerequisiteCacheSize,
       @Named("teacherAvailableCacheSize") int teacherAvailableCacheSize,
       @Named("roomAvailableCacheSize") int roomAvailableCacheSize,
       @Named("courseCompatibleCacheSize") int courseCompatibleCacheSize,
@@ -66,6 +73,7 @@ public final class ProgramCacheFlags {
       @Named("roomPropsCacheSize") int roomPropsCacheSize,
       @Named("reqPropsCacheSize") int reqPropsCacheSize,
       @Named("programCacheConcurrencyLevel") int cacheConcurrencyLevel) {
+    this.prerequisiteCacheSize = prerequisiteCacheSize;
     this.teacherAvailableCacheSize = teacherAvailableCacheSize;
     this.roomAvailableCacheSize = roomAvailableCacheSize;
     this.courseCompatibleCacheSize = courseCompatibleCacheSize;

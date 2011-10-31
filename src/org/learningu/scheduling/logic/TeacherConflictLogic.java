@@ -20,7 +20,7 @@ import com.google.common.collect.Sets;
  * @author lowasser
  * 
  */
-public class TeacherConflictLogic extends ScheduleLogic {
+public final class TeacherConflictLogic extends ScheduleLogic {
 
   @Override
   public void validate(ScheduleValidator validator, Schedule schedule, PresentAssignment assignment) {

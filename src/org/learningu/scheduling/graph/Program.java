@@ -52,6 +52,8 @@ public final class Program {
 
   final ImmutableBiMap<Integer, RoomProperty> roomProperties;
 
+  final ImmutableBiMap<Integer, Course> courses;
+
   private final ImmutableSetMultimap<Course, Section> courseMap;
 
   private final ImmutableSetMultimap<Teacher, Course> teachingMap;
@@ -69,6 +71,8 @@ public final class Program {
   private final Cache<Section, Set<RoomProperty>> requiredForCourse;
 
   private final Cache<Room, Set<RoomProperty>> propertiesOfRoom;
+
+  private final Cache<Section, Set<Course>> prerequisites;
 
   @VisibleForTesting
   Program(SerialProgram serial) {
@@ -106,11 +110,15 @@ public final class Program {
         RoomProperty.programWrapper(this)));
 
     // initialize courseMap
+    ImmutableBiMap.Builder<Integer, Course> courseBuilder = ImmutableBiMap.builder();
     ImmutableSetMultimap.Builder<Course, Section> courseMapBuilder = ImmutableSetMultimap
         .builder();
     for (Section section : getSections()) {
-      courseMapBuilder.put(section.getCourse(), section);
+      Course course = section.getCourse();
+      courseMapBuilder.put(course, section);
+      courseBuilder.put(course.getId(), course);
     }
+    courses = courseBuilder.build();
     courseMap = courseMapBuilder.build();
 
     // initialize teachingMap
@@ -137,6 +145,18 @@ public final class Program {
           @Override
           public Set<ClassPeriod> load(Teacher key) {
             return key.getCompatiblePeriods();
+          }
+        });
+    this.prerequisites = CacheBuilder
+        .newBuilder()
+        .initialCapacity(sections.size())
+        .concurrencyLevel(flags.cacheConcurrencyLevel)
+        .weigher(COLLECTION_WEIGHER)
+        .maximumWeight(flags.prerequisiteCacheSize)
+        .build(new CacheLoader<Section, Set<Course>>() {
+          @Override
+          public Set<Course> load(Section key) throws Exception {
+            return key.getPrerequisites();
           }
         });
     this.roomAvailablePeriods = CacheBuilder
@@ -219,6 +239,14 @@ public final class Program {
     }
   };
 
+  public Course getCourse(int id) {
+    return courses.get(id);
+  }
+
+  public Set<Course> getPrerequisites(Section s) {
+    return prerequisites.getUnchecked(s);
+  }
+
   public Set<Teacher> teachersForSection(Section c) {
     return teachersForCourse.getUnchecked(c);
   }
@@ -296,7 +324,8 @@ public final class Program {
 
   public Iterable<Section> getSectionsForTeacher(Teacher t) {
     checkArgument(teachers.containsValue(t));
-    return Iterables.concat(Iterables.transform(teachingMap.get(t),
+    return Iterables.concat(Iterables.transform(
+        teachingMap.get(t),
         Functions.forMap(courseMap.asMap())));
   }
 
