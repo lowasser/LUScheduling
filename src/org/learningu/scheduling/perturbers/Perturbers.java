@@ -1,5 +1,7 @@
 package org.learningu.scheduling.perturbers;
 
+import com.google.common.collect.ImmutableList;
+
 import java.util.Random;
 
 import org.learningu.scheduling.optimization.Perturber;
@@ -7,8 +9,6 @@ import org.learningu.scheduling.perturbers.SerialPerturbers.ScaledPerturber;
 import org.learningu.scheduling.perturbers.SerialPerturbers.SequencedPerturber;
 import org.learningu.scheduling.perturbers.SerialPerturbers.SerialPerturberImpl;
 import org.learningu.scheduling.schedule.Schedule;
-
-import com.google.common.collect.ImmutableList;
 
 public final class Perturbers {
   private Perturbers() {
@@ -50,6 +50,8 @@ public final class Perturbers {
         return new DestructivePerturber(random);
       case GREEDY:
         return new GreedyPerturber(random);
+      case DESTRUCTIVE_BY_ROOM:
+        return new DestructiveByRoomPerturber(random);
       default:
         throw new AssertionError();
     }

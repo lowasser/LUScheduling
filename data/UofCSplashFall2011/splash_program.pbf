@@ -2229,7 +2229,7 @@ section {
   maxClassSize: 25
   periodLength: 1
 }
-section {Dance
+section {
   sectionId: 1106
   courseTitle: "A841s1: So You Think You Can Jig? (Beginner Irish Dance)"
   teacherIds: 4933
@@ -3195,7 +3195,6 @@ room {
   availablePeriod: 64
   availablePeriod: 62
   roomProperty: 40
-  roomProperty: 42
 }
 room {
   roomId: 25
@@ -3460,6 +3459,11 @@ roomProperty {
 roomProperty {
   propertyId: 40
   description: "Dance Space"
+  isBinding: true
+}
+roomProperty {
+  propertyId: 41
+  description: "Hardwood Floors"
   isBinding: true
 }
 roomProperty {

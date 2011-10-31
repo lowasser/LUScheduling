@@ -5,6 +5,7 @@ import "org/learningu/scheduling/proto/serial_scorers.proto";
 
 enum SerialTemperatureFunction {
 	LINEAR = 1;
+	QUADRATIC = 2;
 }
 
 enum SerialAcceptanceFunction {

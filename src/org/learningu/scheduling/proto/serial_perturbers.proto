@@ -3,6 +3,7 @@ package org.learningu.scheduling.perturbers;
 enum SerialPerturberImpl {
 	DESTRUCTIVE = 1;
 	GREEDY = 2;
+	DESTRUCTIVE_BY_ROOM = 3;
 }
 
 message ScaledPerturber {

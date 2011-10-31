@@ -21,55 +21,54 @@ import com.google.inject.name.Named;
  */
 public final class LocalConflictLogic extends ScheduleLogic {
   @Flag(
-      value = "minClassCapRatio",
-      defaultValue = "1.0",
-      description = "The minimum ratio of the maximum capacity of a class to the capacity of the room for which it is scheduled. "
-          + "For example, if this was 1.25, the class would be forced to use a room at least 25% bigger than its cap. "
-          + "The default value is 1.0.")
+      value = "maxClassCapRatio",
+      defaultValue = "4.0",
+      description = "The maximum ratio of room capacity: class capacity.  "
+          + "For example, if this was 1.25, the class would be forced to use a room at most 25% bigger than its cap. "
+          + "The default value is 2.0.")
   private final double maxClassCapRatio;
 
   @Flag(
-      value = "maxEstClassSizeRatio",
+      value = "minClassCapRatio",
       defaultValue = "1.0",
-      description = "The maximum ratio of the estimated size of a class to the capacity of the room for which it is scheduled. "
+      description = "The min ratio of room capacity: class capacity.  " 
           + "For example, if this was 0.5, the class would be forced to use a room at most 2 times bigger than its expected size. "
           + "The default value is 1.0.")
-  private final double maxEstClassSizeRatio;
+  private final double minClassCapRatio;
 
   @Inject
-  LocalConflictLogic(@Named("minClassCapRatio") double maxClassCapRatio,
-      @Named("maxEstClassSizeRatio") double maxEstClassSizeRatio, Logger logger) {
+  LocalConflictLogic(@Named("maxClassCapRatio") double maxClassCapRatio,
+      @Named("minClassCapRatio") double minClassCapRatio, Logger logger) {
     this.maxClassCapRatio = maxClassCapRatio;
-    this.maxEstClassSizeRatio = maxEstClassSizeRatio;
-    classCapRatioConditionText = "Class cap : room capacity ratio must be <= " + maxClassCapRatio;
-    estSizeRatioConditionText = "Est class size : room capacity ratio must be <= "
-        + maxEstClassSizeRatio;
-    if (maxClassCapRatio < 1.0) {
-      logger.warning("Max class cap ratio is " + maxClassCapRatio
+    this.minClassCapRatio = minClassCapRatio;
+    maxRatioConditionText = "Class cap : room capacity ratio must be <= " + maxClassCapRatio;
+    minRatioConditionText = "Class cap : room capacity ratio must be >= "
+        + minClassCapRatio;
+    if (minClassCapRatio < 1.0) {
+      logger.warning("Min class cap ratio is " + minClassCapRatio
           + ", which could result in classes being scheduled in rooms "
           + "smaller than the class size.");
     }
   }
 
-  transient final String classCapRatioConditionText;
+  transient final String maxRatioConditionText;
 
-  transient final String estSizeRatioConditionText;
+  transient final String minRatioConditionText;
 
   @Override
   public void validate(ScheduleValidator validator, Schedule schedule, StartAssignment assignment) {
     super.validate(validator, schedule, assignment);
     Section course = assignment.getSection();
     Room room = assignment.getRoom();
-    double estClassSizeRatio = ((double) course.getEstimatedClassSize()) / room.getCapacity();
+    double classSizeRatio = ((double) room.getCapacity()) / course.getMaxClassSize();
     validator.validateLocal(
-        estClassSizeRatio <= maxEstClassSizeRatio,
+        classSizeRatio <= maxClassCapRatio,
         assignment,
-        estSizeRatioConditionText);
-    double classCapRatio = ((double) course.getMaxClassSize()) / room.getCapacity();
+        maxRatioConditionText);
     validator.validateLocal(
-        classCapRatio <= maxClassCapRatio,
+        classSizeRatio >= minClassCapRatio,
         assignment,
-        classCapRatioConditionText);
+        minRatioConditionText);
   }
 
   @Override

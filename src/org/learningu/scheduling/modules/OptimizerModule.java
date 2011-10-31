@@ -1,8 +1,17 @@
 package org.learningu.scheduling.modules;
 
+import com.google.inject.AbstractModule;
+import com.google.inject.Key;
+import com.google.inject.Provider;
+import com.google.inject.Provides;
+import com.google.inject.Singleton;
+import com.google.inject.TypeLiteral;
+import com.google.inject.assistedinject.FactoryModuleBuilder;
+import com.google.inject.multibindings.MapBinder;
+import com.google.inject.name.Named;
+
 import java.util.Map;
 
-import org.learningu.scheduling.Pass;
 import org.learningu.scheduling.Pass.OptimizerSpec;
 import org.learningu.scheduling.Pass.SerialAcceptanceFunction;
 import org.learningu.scheduling.Pass.SerialTemperatureFunction;
@@ -20,16 +29,6 @@ import org.learningu.scheduling.perturbers.Perturbers;
 import org.learningu.scheduling.schedule.Schedule;
 import org.learningu.scheduling.scorers.Scorers;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Key;
-import com.google.inject.Provider;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
-import com.google.inject.TypeLiteral;
-import com.google.inject.assistedinject.FactoryModuleBuilder;
-import com.google.inject.multibindings.MapBinder;
-import com.google.inject.name.Named;
-
 public class OptimizerModule extends AbstractModule {
 
   @Override
@@ -45,6 +44,7 @@ public class OptimizerModule extends AbstractModule {
         SerialTemperatureFunction.class,
         TemperatureFunction.class);
     tempBinder.addBinding(SerialTemperatureFunction.LINEAR).toInstance(LINEAR_FUNCTION);
+    tempBinder.addBinding(SerialTemperatureFunction.QUADRATIC).toInstance(QUADRATIC_FUNCTION);
     install(new FactoryModuleBuilder().implement(
         new TypeLiteral<Optimizer<Schedule>>() {},
         new TypeLiteral<Annealer<Schedule>>() {}).build(
@@ -103,6 +103,16 @@ public class OptimizerModule extends AbstractModule {
     @Override
     public double temperature(int currentStep, int nSteps) {
       return ((double) (nSteps - 1 - currentStep)) / nSteps;
+    }
+  };
+  
+  public static final TemperatureFunction QUADRATIC_FUNCTION = new TemperatureFunction() {
+    
+    @Override
+    public double temperature(int currentStep, int nSteps) {
+      int numerator = nSteps - 1 - currentStep;
+      numerator *= numerator;
+      return ((double) numerator) / (nSteps * nSteps);
     }
   };
 }
