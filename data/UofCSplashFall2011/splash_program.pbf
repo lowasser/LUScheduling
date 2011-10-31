@@ -1320,6 +1320,7 @@ section {
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 2
+  requiredProperty: 40
 }
 section {
   sectionId: 966
@@ -1328,6 +1329,7 @@ section {
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 2
+  requiredProperty: 40
 }
 section {
   sectionId: 967
@@ -1336,6 +1338,7 @@ section {
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
+  requiredProperty: 40
 }
 section {
   sectionId: 968
@@ -1730,6 +1733,7 @@ section {
   estimatedClassSize: 6
   maxClassSize: 6
   periodLength: 2
+  requiredProperty: 42
 }
 section {
   sectionId: 1027
@@ -1738,6 +1742,7 @@ section {
   estimatedClassSize: 6
   maxClassSize: 6
   periodLength: 2
+  requiredProperty: 42
 }
 section {
   sectionId: 1031
@@ -1770,6 +1775,7 @@ section {
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 1
+  requiredProperty: 42
 }
 section {
   sectionId: 1035
@@ -1844,6 +1850,7 @@ section {
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 1
+  requiredProperty: 40
 }
 section {
   sectionId: 1053
@@ -1972,6 +1979,7 @@ section {
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 1
+  requiredProperty: 42
 }
 section {
   sectionId: 1069
@@ -2228,6 +2236,7 @@ section {
   estimatedClassSize: 16
   maxClassSize: 16
   periodLength: 1
+  requiredProperty: 40
 }
 section {
   sectionId: 1107
@@ -2236,6 +2245,7 @@ section {
   estimatedClassSize: 16
   maxClassSize: 16
   periodLength: 1
+  requiredProperty: 40
 }
 section {
   sectionId: 1111
@@ -2284,6 +2294,7 @@ section {
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
+  requiredProperty: 40
 }
 section {
   sectionId: 1117
@@ -2292,6 +2303,7 @@ section {
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
+  requiredProperty: 40
 }
 section {
   sectionId: 1118
@@ -2301,6 +2313,7 @@ section {
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 2
+  requiredProperty: 42
 }
 section {
   sectionId: 1119
@@ -2310,6 +2323,7 @@ section {
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 2
+  requiredProperty: 42
 }
 section {
   sectionId: 1120
@@ -2359,6 +2373,7 @@ section {
   estimatedClassSize: 8
   maxClassSize: 8
   periodLength: 1
+  requiredProperty: 40
 }
 section {
   sectionId: 1128
@@ -2367,6 +2382,7 @@ section {
   estimatedClassSize: 8
   maxClassSize: 8
   periodLength: 1
+  requiredProperty: 40
 }
 section {
   sectionId: 1129
@@ -2490,6 +2506,7 @@ section {
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
+  requiredProperty: 42
 }
 section {
   sectionId: 1147
@@ -2522,6 +2539,7 @@ section {
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
+  requiredProperty: 43
 }
 section {
   sectionId: 1151
@@ -2538,6 +2556,7 @@ section {
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 2
+  requiredProperty: 42
 }
 section {
   sectionId: 1153
@@ -2828,20 +2847,6 @@ section {
   periodLength: 2
 }
 section {
-  sectionId: 1210
-  courseTitle: "L898s1: Lunch Period"
-  estimatedClassSize: 350
-  maxClassSize: 350
-  periodLength: 1
-}
-section {
-  sectionId: 1211
-  courseTitle: "L898s2: Lunch Period"
-  estimatedClassSize: 350
-  maxClassSize: 350
-  periodLength: 1
-}
-section {
   sectionId: 1213
   courseTitle: "L850s2: Basic Chinese"
   teacherIds: 4911
@@ -3003,7 +3008,6 @@ room {
   availablePeriod: 62
   roomProperty: 38
   roomProperty: 40
-  roomProperty: 41
 }
 room {
   roomId: 10
@@ -3082,18 +3086,6 @@ room {
   availablePeriod: 62
   roomProperty: 36
   roomProperty: 39
-}
-room {
-  roomId: 16
-  name: "Ida Noyes Hall"
-  capacity: 1000
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
 }
 room {
   roomId: 17
@@ -3338,7 +3330,6 @@ room {
   availablePeriod: 62
   roomProperty: 38
   roomProperty: 40
-  roomProperty: 41
 }
 room {
   roomId: 35
@@ -3402,7 +3393,6 @@ room {
   availablePeriod: 65
   availablePeriod: 66
   roomProperty: 40
-  roomProperty: 41
 }
 room {
   roomId: 40
@@ -3417,20 +3407,6 @@ room {
   availablePeriod: 62
   roomProperty: 36
   roomProperty: 39
-}
-room {
-  roomId: 41
-  name: "Ida Noyes Dance Room"
-  capacity: 40
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 40
-  roomProperty: 41
 }
 room {
   roomId: 42
@@ -3478,8 +3454,20 @@ roomProperty {
 roomProperty {
   propertyId: 40
   description: "Dance Space"
+  binding: true
 }
 roomProperty {
   propertyId: 41
   description: "Hardwood Floors"
+  binding: true
+}
+roomProperty {
+  propertyId: 42
+  description: "Meeting Point"
+  binding: true
+}
+roomProperty {
+  propertyId: 43
+  description: "Computer Lab"
+  binding: true
 }
