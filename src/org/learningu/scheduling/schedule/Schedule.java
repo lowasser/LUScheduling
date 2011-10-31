@@ -2,6 +2,17 @@ package org.learningu.scheduling.schedule;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.common.base.Function;
+import com.google.common.base.Objects;
+import com.google.common.base.Optional;
+import com.google.common.collect.AbstractIterator;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Iterators;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Maps.EntryTransformer;
+import com.google.inject.Inject;
+import com.google.inject.Provider;
+
 import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.Iterator;
@@ -19,16 +30,6 @@ import org.learningu.scheduling.logic.ScheduleLogic;
 import org.learningu.scheduling.logic.ScheduleValidator;
 import org.learningu.scheduling.util.ModifiedState;
 import org.learningu.scheduling.util.bst.BstMap;
-
-import com.google.common.base.Function;
-import com.google.common.base.Objects;
-import com.google.common.base.Optional;
-import com.google.common.collect.AbstractIterator;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Iterators;
-import com.google.common.collect.Maps;
-import com.google.inject.Inject;
-import com.google.inject.Provider;
 
 public final class Schedule {
   public static final class Factory {
@@ -81,6 +82,22 @@ public final class Schedule {
 
   public Set<Section> getScheduledSections() {
     return assignments.keySet();
+  }
+
+  public Map<Section, StartAssignment> getAssignmentsBySection() {
+    return assignments;
+  }
+
+  public final Map<ClassPeriod, StartAssignment> startingIn(final Room room) {
+    return Maps.transformEntries(
+        startingTimeTable.get(room),
+        new EntryTransformer<ClassPeriod, Section, StartAssignment>() {
+
+          @Override
+          public StartAssignment transformEntry(ClassPeriod period, Section section) {
+            return StartAssignment.create(period, room, section);
+          }
+        });
   }
 
   public final Map<Room, PresentAssignment> occurringAt(final ClassPeriod period) {
@@ -278,10 +295,9 @@ public final class Schedule {
     Schedule revised = this;
     if (startingAt.isPresent()) {
       BstMap<ClassPeriod, Section> roomMap = startingTimeTable.get(room);
-      revised =
-          factory.create(
-              startingTimeTable.insert(room, roomMap.delete(period)),
-              assignments.delete(startingAt.get().getSection()));
+      revised = factory.create(
+          startingTimeTable.insert(room, roomMap.delete(period)),
+          assignments.delete(startingAt.get().getSection()));
     }
     return ModifiedState.of(startingAt, revised);
   }

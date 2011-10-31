@@ -53,6 +53,9 @@ public final class Autoscheduling {
   @Flag(value = "iterations", defaultValue = "1000")
   private final int iterations;
 
+  @Flag(value = "teacherScheduleOutput")
+  private final File teacherScheduleOutput;
+
   enum MessageOutputFormat {
     TEXT {
       @Override
@@ -79,7 +82,8 @@ public final class Autoscheduling {
       @Named("resultScheduleFile") File resultScheduleFile,
       @Named("logicFile") File logicFile,
       @Named("outputFormat") MessageOutputFormat outputFormat,
-      @Named("iterations") int iterations) {
+      @Named("iterations") int iterations,
+      @Named("teacherScheduleOutput") File teacherScheduleOutput) {
     this.programFile = programFile;
     this.optimizationSpecFile = optimizationSpecFile;
     this.initialScheduleFile = initialScheduleFile;
@@ -87,6 +91,7 @@ public final class Autoscheduling {
     this.logicFile = logicFile;
     this.outputFormat = outputFormat;
     this.iterations = iterations;
+    this.teacherScheduleOutput = teacherScheduleOutput;
   }
 
   /**
