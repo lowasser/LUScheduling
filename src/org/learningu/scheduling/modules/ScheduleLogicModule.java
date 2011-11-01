@@ -6,6 +6,7 @@ import java.util.Map;
 import org.learningu.scheduling.logic.ChainedScheduleLogic;
 import org.learningu.scheduling.logic.DuplicateSectionLogic;
 import org.learningu.scheduling.logic.LocalConflictLogic;
+import org.learningu.scheduling.logic.PrerequisiteLogic;
 import org.learningu.scheduling.logic.RoomConflictLogic;
 import org.learningu.scheduling.logic.RoomPropertyLogic;
 import org.learningu.scheduling.logic.ScheduleLogic;
@@ -32,6 +33,7 @@ public class ScheduleLogicModule extends AbstractModule {
     logicBindings.addBinding(SerialLogicImpl.ROOM_CONFLICT).to(RoomConflictLogic.class);
     logicBindings.addBinding(SerialLogicImpl.ROOM_PROPERTY).to(RoomPropertyLogic.class);
     logicBindings.addBinding(SerialLogicImpl.TEACHER_CONFLICT).to(TeacherConflictLogic.class);
+    logicBindings.addBinding(SerialLogicImpl.PREREQUISITES).to(PrerequisiteLogic.class);
   }
 
   @Provides
