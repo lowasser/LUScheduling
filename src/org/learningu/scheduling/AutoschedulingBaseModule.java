@@ -1,6 +1,5 @@
-package org.learningu.scheduling.modules;
+package org.learningu.scheduling;
 
-import org.learningu.scheduling.Autoscheduling;
 import org.learningu.scheduling.flags.Flags;
 import org.learningu.scheduling.graph.ProgramCacheFlags;
 import org.learningu.scheduling.logic.LocalConflictLogic;
@@ -19,14 +18,17 @@ public final class AutoschedulingBaseModule extends AbstractModule {
 
   @Override
   protected void configure() {
-    Flags.addFlagBindings(
-        binder(),
+    install(Flags.flagBindings(
         ProgramCacheFlags.class,
         LogicProvider.class,
         ConcurrentOptimizer.class,
-        ExecutorServiceProvider.class,
         Autoscheduling.class,
         ScheduleValidator.class,
-        LocalConflictLogic.class);
+        LocalConflictLogic.class,
+        Autoscheduler.class,
+        AutoschedulerDataSource.class,
+        RoomPrettyPrinter.class,
+        TeacherPrettyPrinter.class,
+        ScheduleOutputCallback.class));
   }
 }

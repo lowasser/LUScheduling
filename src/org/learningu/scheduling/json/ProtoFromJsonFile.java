@@ -36,7 +36,7 @@ public final class ProtoFromJsonFile {
     Injector configuredInjector = Flags.bootstrapFlagInjector(args, new AbstractModule() {
       @Override
       protected void configure() {
-        Flags.addFlagBindings(binder(), ProtoFromJsonFile.class);
+        install(Flags.flagBindings(ProtoFromJsonFile.class));
       }
     });
     ProtoFromJsonFile io = configuredInjector.getInstance(ProtoFromJsonFile.class);

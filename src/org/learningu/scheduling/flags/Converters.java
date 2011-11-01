@@ -9,6 +9,11 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Set;
 
+import org.joda.time.Duration;
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
+
 import com.google.common.base.Optional;
 import com.google.common.base.Splitter;
 import com.google.common.base.Throwables;
@@ -66,6 +71,35 @@ final class Converters {
       } catch (URISyntaxException e) {
         throw Throwables.propagate(e);
       }
+    }
+  };
+
+  private static final PeriodFormatter PERIOD_FORMATTER =
+      new PeriodFormatterBuilder().appendDays()
+          .appendSuffix("d")
+          .printZeroRarelyLast()
+          .appendHours()
+          .appendSuffix("h")
+          .printZeroRarelyLast()
+          .appendMinutes()
+          .appendSuffix("m")
+          .printZeroRarelyLast()
+          .appendSecondsWithOptionalMillis()
+          .appendSuffix("s")
+          .printZeroRarelyLast()
+          .toFormatter();
+
+  private static final Converter<Period> PERIOD_CONVERTER = new Converter<Period>() {
+    @Override
+    public Period parse(String string) {
+      return Period.parse(string, PERIOD_FORMATTER);
+    }
+  };
+
+  private static final Converter<Duration> DURATION_CONVERTER = new Converter<Duration>() {
+    @Override
+    public Duration parse(String string) {
+      return PERIOD_CONVERTER.parse(string).toStandardDuration();
     }
   };
 
@@ -148,6 +182,10 @@ final class Converters {
       return (Converter<T>) FILE_CONVERTER;
     } else if (literal.getRawType().equals(URI.class)) {
       return (Converter<T>) URI_CONVERTER;
+    } else if(literal.getRawType().equals(Period.class)){
+      return (Converter<T>) PERIOD_CONVERTER;
+    }else if(literal.getRawType().equals(Duration.class)){
+      return (Converter<T>) DURATION_CONVERTER;
     }
     throw new IllegalArgumentException("Don't know what to do with " + literal);
   }
