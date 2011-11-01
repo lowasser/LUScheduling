@@ -41,6 +41,12 @@ public final class Section extends ProgramObject<SerialSection> implements Compa
     return serial.getCourseTitle();
   }
 
+  Set<Course> getPrerequisites() {
+    return ImmutableSet.copyOf(Lists.transform(
+        serial.getPrereqCourseIdsList(),
+        Functions.forMap(program.courses)));
+  }
+
   // Does not cache!
   Set<Teacher> getTeachers() {
     return ImmutableSet.copyOf(Lists.transform(

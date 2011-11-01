@@ -14,6 +14,11 @@ public final class ProgramCacheFlags {
   int teacherAvailableCacheSize = 10000;
 
   @Flag(
+      name = "prerequisiteCacheSize",
+      description = "Maximum cache size to use for prerequisites")
+  int prerequisiteCacheSize = 1000;
+
+  @Flag(
       name = "roomAvailableCacheSize",
       description = "Maximum cache size to use for room available blocks")
   int roomAvailableCacheSize = 10000;

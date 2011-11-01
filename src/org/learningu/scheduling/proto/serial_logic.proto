@@ -6,6 +6,7 @@ enum SerialLogicImpl {
 	ROOM_CONFLICT = 3;
 	ROOM_PROPERTY = 4;
 	TEACHER_CONFLICT = 5;
+	PREREQUISITES = 6;
 }
 
 message SerialLogics {

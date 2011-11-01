@@ -22,6 +22,7 @@ message SerialSection {
 	optional int32 periodLength = 8 [default = 1];
 	required int32 courseId = 10;
 	repeated int32 requiredProperty = 9 [packed = true];
+	repeated int32 prereqCourseIds = 11 [packed = true];
 }
 
 /*
