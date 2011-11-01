@@ -1,19 +1,5 @@
 package org.learningu.scheduling;
 
-import com.google.common.base.Charsets;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
-import com.google.common.io.Files;
-import com.google.inject.AbstractModule;
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.Key;
-import com.google.inject.Module;
-import com.google.inject.TypeLiteral;
-import com.google.inject.name.Named;
-import com.google.protobuf.Message;
-import com.google.protobuf.TextFormat;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -27,9 +13,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.learningu.scheduling.Pass.OptimizerSpec;
-import org.learningu.scheduling.annotations.Flag;
 import org.learningu.scheduling.annotations.Initial;
-import org.learningu.scheduling.flags.OptionsModule;
+import org.learningu.scheduling.flags.Flag;
+import org.learningu.scheduling.flags.Flags;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
@@ -42,33 +28,56 @@ import org.learningu.scheduling.schedule.Schedule;
 import org.learningu.scheduling.schedule.Schedules;
 import org.learningu.scheduling.schedule.SerialSchedules.SerialSchedule;
 
+import com.google.common.base.Charsets;
+import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
+import com.google.common.io.Files;
+import com.google.inject.AbstractModule;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.Key;
+import com.google.inject.Module;
+import com.google.inject.TypeLiteral;
+import com.google.protobuf.Message;
+import com.google.protobuf.TextFormat;
+
 public final class Autoscheduling {
-  @Flag("programFile")
-  private final File programFile;
+  @Inject
+  @Flag(name = "programFile")
+  private File programFile;
 
-  @Flag("optimizationSpecFile")
-  private final File optimizationSpecFile;
+  @Inject
+  @Flag(name = "optimizationSpecFile")
+  private File optimizationSpecFile;
 
-  @Flag(value = "initialScheduleFile", defaultValue = " ")
-  private final File initialScheduleFile;
+  @Inject
+  @Flag(name = "initialScheduleFile")
+  private Optional<File> initialScheduleFile;
 
-  @Flag(value = "resultScheduleFile", defaultValue = " ")
-  private final File resultScheduleFile;
+  @Inject
+  @Flag(name = "resultScheduleFile")
+  private Optional<File> resultScheduleFile;
 
-  @Flag(value = "logicFile")
-  private final File logicFile;
+  @Inject
+  @Flag(name = "logicFile")
+  private File logicFile;
 
-  @Flag(value = "outputFormat", defaultValue = "TEXT")
-  private final MessageOutputFormat outputFormat;
+  @Inject(optional = true)
+  @Flag(name = "outputFormat")
+  private MessageOutputFormat outputFormat = MessageOutputFormat.TEXT;
 
-  @Flag(value = "iterations", defaultValue = "1000")
-  private final int iterations;
+  @Inject(optional = true)
+  @Flag(name = "iterations")
+  private int iterations = 1000;
 
-  @Flag(value = "teacherScheduleOutput")
-  private final File teacherScheduleOutput;
+  @Inject
+  @Flag(name = "teacherScheduleOutput")
+  private Optional<File> teacherScheduleOutput;
 
-  @Flag(value = "roomScheduleOutput")
-  private final File roomScheduleOutput;
+  @Inject
+  @Flag(name = "roomScheduleOutput")
+  private Optional<File> roomScheduleOutput;
 
   private final Logger logger;
 
@@ -93,27 +102,7 @@ public final class Autoscheduling {
   }
 
   @Inject
-  Autoscheduling(
-      @Named("programFile") File programFile,
-      @Named("optimizationSpecFile") File optimizationSpecFile,
-      @Named("initialScheduleFile") File initialScheduleFile,
-      @Named("resultScheduleFile") File resultScheduleFile,
-      @Named("logicFile") File logicFile,
-      @Named("outputFormat") MessageOutputFormat outputFormat,
-      @Named("iterations") int iterations,
-      @Named("teacherScheduleOutput") File teacherScheduleOutput,
-      @Named("roomScheduleOutput") File roomScheduleOutput,
-      Logger logger,
-      Injector injector) {
-    this.programFile = programFile;
-    this.optimizationSpecFile = optimizationSpecFile;
-    this.initialScheduleFile = initialScheduleFile;
-    this.resultScheduleFile = resultScheduleFile;
-    this.logicFile = logicFile;
-    this.outputFormat = outputFormat;
-    this.iterations = iterations;
-    this.teacherScheduleOutput = teacherScheduleOutput;
-    this.roomScheduleOutput = roomScheduleOutput;
+  Autoscheduling(Logger logger, Injector injector) {
     this.logger = logger;
     this.injector = injector;
   }
@@ -141,11 +130,10 @@ public final class Autoscheduling {
   public Schedule optimizedSchedule() throws IOException {
     Injector completeInjector = createInjectorWithData();
     try {
-      Schedule initialSchedule = completeInjector.getInstance(Key.get(
-          Schedule.class,
-          Initial.class));
-      final Optimizer<Schedule> optimizer = completeInjector.getInstance(Key
-          .get(new TypeLiteral<Optimizer<Schedule>>() {}));
+      Schedule initialSchedule =
+          completeInjector.getInstance(Key.get(Schedule.class, Initial.class));
+      final Optimizer<Schedule> optimizer =
+          completeInjector.getInstance(Key.get(new TypeLiteral<Optimizer<Schedule>>() {}));
       return optimizer.iterate(getIterations(), initialSchedule);
     } finally {
       completeInjector.getInstance(ExecutorService.class).shutdown();
@@ -159,9 +147,7 @@ public final class Autoscheduling {
    */
   public static void main(final String[] args) throws IOException {
     // First, initialize the very basic, completely run-independent bindings.
-    Injector flaggedInjector = OptionsModule.buildOptionsInjector(
-        args,
-        new AutoschedulingBaseModule());
+    Injector flaggedInjector = Flags.bootstrapFlagInjector(args, new AutoschedulingBaseModule());
     try {
       // We now have enough to initialize the Autoscheduling runner with files and the like.
       Autoscheduling auto = flaggedInjector.getInstance(Autoscheduling.class);
@@ -170,32 +156,34 @@ public final class Autoscheduling {
       outputSchedule(auto, optSchedule);
       auto.logProgramStats(optSchedule.getProgram());
       auto.logScheduleStats(optSchedule);
-      ImmutableSet<Section> unscheduled = ImmutableSet.copyOf(Sets.difference(optSchedule
-          .getProgram()
-          .getSections(), optSchedule.getScheduledSections()));
+      ImmutableSet<Section> unscheduled =
+          ImmutableSet.copyOf(Sets.difference(
+              optSchedule.getProgram().getSections(),
+              optSchedule.getScheduledSections()));
       if (!unscheduled.isEmpty()) {
         auto.logger.warning("The following sections were not scheduled: " + unscheduled);
       }
-      if (!auto.teacherScheduleOutput.getPath().equals(" ")) {
+      if (auto.teacherScheduleOutput.isPresent()) {
         Files.write(
             PrettySchedulePrinters.buildTeacherScheduleCsv(optSchedule).toString(),
-            auto.teacherScheduleOutput,
+            auto.teacherScheduleOutput.get(),
             Charsets.UTF_8);
       }
-      if (!auto.roomScheduleOutput.getPath().equals(" ")) {
+      if (auto.roomScheduleOutput.isPresent()) {
         Files.write(
             PrettySchedulePrinters.buildRoomScheduleCsv(optSchedule).toString(),
-            auto.roomScheduleOutput,
+            auto.roomScheduleOutput.get(),
             Charsets.UTF_8);
       }
-    } finally {
-    }
+    } finally {}
   }
 
   static void outputSchedule(Autoscheduling auto, final Schedule optSchedule)
       throws FileNotFoundException, IOException {
-    OutputStream outStream = auto.resultScheduleFile.getPath().equals(" ") ? System.out
-        : new FileOutputStream(auto.resultScheduleFile);
+    OutputStream outStream =
+        auto.resultScheduleFile.isPresent()
+            ? new FileOutputStream(auto.resultScheduleFile.get())
+            : System.out;
     auto.outputFormat.output(outStream, Schedules.serialize(optSchedule));
     outStream.close();
   }
@@ -209,8 +197,7 @@ public final class Autoscheduling {
   }
 
   public void logScheduleStats(Schedule schedule) {
-    logger.log(Level.INFO, "Schedule scheduled {0} sections", schedule
-        .getScheduledSections()
+    logger.log(Level.INFO, "Schedule scheduled {0} sections", schedule.getScheduledSections()
         .size());
     int classHours = 0;
     for (Section section : schedule.getScheduledSections()) {
@@ -220,12 +207,12 @@ public final class Autoscheduling {
   }
 
   public SerialSchedule getSerialSchedule() throws IOException {
-    if (initialScheduleFile.getPath().equals(" ")) {
+    if (initialScheduleFile.isPresent()) {
+      logger.info("Reading in initial schedule.");
+      return readMessage(SerialSchedule.newBuilder(), initialScheduleFile.get()).build();
+    } else {
       logger.info("No initial schedule specified; starting with an empty schedule.");
       return SerialSchedule.newBuilder().build();
-    } else {
-      logger.info("Reading in initial schedule.");
-      return readMessage(SerialSchedule.newBuilder(), initialScheduleFile).build();
     }
   }
 

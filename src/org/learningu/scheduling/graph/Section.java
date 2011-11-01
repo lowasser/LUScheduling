@@ -30,7 +30,7 @@ public final class Section extends ProgramObject<SerialSection> implements Compa
   }
 
   public Course getCourse() {
-    return new Course(serial.getClassId(), getTitle(), getProgram());
+    return new Course(serial.getCourseId(), getTitle(), getProgram());
   }
 
   public int getPeriodLength() {

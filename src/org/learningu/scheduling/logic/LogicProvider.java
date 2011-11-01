@@ -1,8 +1,9 @@
 package org.learningu.scheduling.logic;
 
+import java.util.EnumSet;
 import java.util.List;
 
-import org.learningu.scheduling.annotations.Flag;
+import org.learningu.scheduling.flags.Flag;
 
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
@@ -27,13 +28,11 @@ public final class LogicProvider implements Provider<ScheduleLogic> {
   }
 
   @Flag(
-      value = "scheduleLogics",
-      multiple = true,
-      defaultValue = "DUP_SECTIONS,TEACHER_CONFLICT,LOCAL_CONFLICT,ROOM_CONFLICT,ROOM_PROPERTIES",
+      name = "scheduleLogics",
       description = "Logics to use when validating schedules.  Options include DUP_SECTIONS, "
           + "TEACHER_CONFLICT, LOCAL_CONFLICT, ROOM_CONFLICT, ROOM_PROPERTIES. "
           + "The default is all of the above.")
-  final List<LogicImpl> logics;
+  List<LogicImpl> logics = ImmutableList.copyOf(EnumSet.allOf(LogicImpl.class));
 
   final Injector injector;
 

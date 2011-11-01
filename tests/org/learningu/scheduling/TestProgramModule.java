@@ -60,7 +60,7 @@ public class TestProgramModule extends AbstractModule {
 
   @Override
   protected void configure() {
-    bind(ProgramCacheFlags.class).toInstance(ProgramCacheFlags.DEFAULTS);
+    bind(ProgramCacheFlags.class).toInstance(new ProgramCacheFlags());
   }
 
   private int uid = 0;

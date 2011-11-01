@@ -51,7 +51,7 @@ public abstract class BaseLogicTest extends TestCase {
       @SuppressWarnings("unused")
       @Provides
       ScheduleValidator validator(Logger logger) {
-        return new ScheduleValidator(logger, Level.INFO, Level.WARNING);
+        return new ScheduleValidator(logger);
       }
     });
   }

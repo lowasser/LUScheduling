@@ -1,60 +1,44 @@
 package org.learningu.scheduling.json;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.learningu.scheduling.flags.Flag;
+import org.learningu.scheduling.flags.Flags;
+import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
+
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.google.inject.AbstractModule;
-import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Scopes;
-import com.google.inject.name.Named;
 import com.google.inject.name.Names;
 import com.google.protobuf.TextFormat;
 
-import java.io.File;
-import java.io.IOException;
-
-import org.learningu.scheduling.annotations.Flag;
-import org.learningu.scheduling.flags.FlagsModule;
-import org.learningu.scheduling.flags.OptionsModule;
-import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
-
 public final class ProtoFromJsonFile {
-  @Flag("teachers")
-  private final File teachersFile;
-  @Flag("periods")
-  private final File periodsFile;
-  @Flag("rooms")
-  private final File roomsFile;
-  @Flag("sections")
-  private final File sectionsFile;
-  @Flag("resources")
-  private final File resourcesFile;
-  @Flag("output")
-  private final File outputFile;
-
-  @Inject
-  ProtoFromJsonFile(
-      @Named("teachers") File teachersFile,
-      @Named("periods") File periodsFile,
-      @Named("sections") File sectionsFile,
-      @Named("resources") File resourcesFile,
-      @Named("rooms") File roomsFile,
-      @Named("output") File outputFile) {
-    this.teachersFile = teachersFile;
-    this.periodsFile = periodsFile;
-    this.roomsFile = roomsFile;
-    this.sectionsFile = sectionsFile;
-    this.resourcesFile = resourcesFile;
-    this.outputFile = outputFile;
-  }
+  @Flag(name = "teachers")
+  private File teachersFile;
+  @Flag(name = "periods")
+  private File periodsFile;
+  @Flag(name = "rooms")
+  private File roomsFile;
+  @Flag(name = "sections")
+  private File sectionsFile;
+  @Flag(name = "resources")
+  private File resourcesFile;
+  @Flag(name = "output")
+  private File outputFile;
 
   public static void main(final String[] args) throws JsonSyntaxException, IOException {
-    Injector configuredInjector = OptionsModule.buildOptionsInjector(
-        args,
-        FlagsModule.create(ProtoFromJsonFile.class));
+    Injector configuredInjector = Flags.bootstrapFlagInjector(args, new AbstractModule() {
+      @Override
+      protected void configure() {
+        Flags.addFlagBindings(binder(), ProtoFromJsonFile.class);
+      }
+    });
     ProtoFromJsonFile io = configuredInjector.getInstance(ProtoFromJsonFile.class);
     final JsonArray teachers = io.getTeachers();
     final JsonArray periods = io.getPeriods();

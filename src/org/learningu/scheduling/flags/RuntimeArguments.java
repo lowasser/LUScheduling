@@ -1,4 +1,4 @@
-package org.learningu.scheduling.annotations;
+package org.learningu.scheduling.flags;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;

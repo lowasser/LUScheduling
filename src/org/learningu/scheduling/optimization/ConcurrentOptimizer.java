@@ -11,8 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.joda.time.Period;
-import org.learningu.scheduling.annotations.Flag;
 import org.learningu.scheduling.annotations.SingleThread;
+import org.learningu.scheduling.flags.Flag;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
@@ -29,11 +29,11 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
 
   private final int subOptimizerSteps;
 
+  @Inject(optional = true)
   @Flag(
-      value = "iterationTimeout",
-      description = "Maximum timeout for each concurrent optimizer iteration",
-      defaultValue = "10s")
-  private final Period timeout;
+      name = "iterationTimeout",
+      description = "Maximum timeout for each concurrent optimizer iteration")
+  private Period timeout = Period.seconds(10);
 
   private final Logger logger;
 
@@ -50,14 +50,12 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
       @Named("nSubOptimizers") int nSubOptimizers,
       ExecutorService service,
       @Named("subOptimizerSteps") int subOptimizerSteps,
-      @Named("iterationTimeout") Period timeout,
       Logger logger) {
     this.scorer = scorer;
     this.optimizerFactory = optimizerProvider;
     this.nSubOptimizers = nSubOptimizers;
     this.service = service;
     this.subOptimizerSteps = subOptimizerSteps;
-    this.timeout = timeout;
     this.logger = logger;
     this.primaryTempFun = primaryTempFun;
     this.subTempFun = subTempFun;

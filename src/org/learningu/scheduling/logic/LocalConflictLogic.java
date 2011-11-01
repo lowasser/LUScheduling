@@ -1,17 +1,12 @@
 package org.learningu.scheduling.logic;
 
-import java.util.logging.Logger;
-
-import org.learningu.scheduling.annotations.Flag;
-import org.learningu.scheduling.graph.Section;
+import org.learningu.scheduling.flags.Flag;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
+import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.schedule.PresentAssignment;
 import org.learningu.scheduling.schedule.Schedule;
 import org.learningu.scheduling.schedule.StartAssignment;
-
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
 
 /**
  * Logic for verifying that a schedule assignment is internally consistent: the course can be
@@ -21,39 +16,18 @@ import com.google.inject.name.Named;
  */
 public final class LocalConflictLogic extends ScheduleLogic {
   @Flag(
-      value = "maxClassCapRatio",
-      defaultValue = "4.0",
+      name = "maxClassCapRatio",
       description = "The maximum ratio of room capacity: class capacity.  "
           + "For example, if this was 1.25, the class would be forced to use a room at most 25% bigger than its cap. "
-          + "The default value is 2.0.")
-  private final double maxClassCapRatio;
+          + "The default value is 4.0.")
+  private double maxClassCapRatio = 4.0;
 
   @Flag(
-      value = "minClassCapRatio",
-      defaultValue = "1.0",
-      description = "The min ratio of room capacity: class capacity.  " 
+      name = "minClassCapRatio",
+      description = "The min ratio of room capacity: class capacity.  "
           + "For example, if this was 0.5, the class would be forced to use a room at most 2 times bigger than its expected size. "
           + "The default value is 1.0.")
-  private final double minClassCapRatio;
-
-  @Inject
-  LocalConflictLogic(@Named("maxClassCapRatio") double maxClassCapRatio,
-      @Named("minClassCapRatio") double minClassCapRatio, Logger logger) {
-    this.maxClassCapRatio = maxClassCapRatio;
-    this.minClassCapRatio = minClassCapRatio;
-    maxRatioConditionText = "Class cap : room capacity ratio must be <= " + maxClassCapRatio;
-    minRatioConditionText = "Class cap : room capacity ratio must be >= "
-        + minClassCapRatio;
-    if (minClassCapRatio < 1.0) {
-      logger.warning("Min class cap ratio is " + minClassCapRatio
-          + ", which could result in classes being scheduled in rooms "
-          + "smaller than the class size.");
-    }
-  }
-
-  transient final String maxRatioConditionText;
-
-  transient final String minRatioConditionText;
+  private double minClassCapRatio = 1.0;
 
   @Override
   public void validate(ScheduleValidator validator, Schedule schedule, StartAssignment assignment) {
@@ -64,11 +38,11 @@ public final class LocalConflictLogic extends ScheduleLogic {
     validator.validateLocal(
         classSizeRatio <= maxClassCapRatio,
         assignment,
-        maxRatioConditionText);
+        "Class cap:room capacity ratio is too high");
     validator.validateLocal(
         classSizeRatio >= minClassCapRatio,
         assignment,
-        minRatioConditionText);
+        "Class cap:room capacity ratio is too low");
   }
 
   @Override

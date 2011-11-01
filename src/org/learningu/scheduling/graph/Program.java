@@ -72,7 +72,7 @@ public final class Program {
 
   @VisibleForTesting
   Program(SerialProgram serial) {
-    this(serial, ProgramCacheFlags.DEFAULTS);
+    this(serial, new ProgramCacheFlags());
   }
 
   public SerialProgram getSerial() {
