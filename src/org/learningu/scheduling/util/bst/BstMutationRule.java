@@ -23,10 +23,12 @@ import com.google.common.annotations.GwtCompatible;
  * to specifying how it modifies a particular entry via a {@code BstModifier}, it specifies a
  * {@link BstBalancePolicy} for rebalancing the tree after the modification is performed and a
  * {@link BstNodeFactory} for constructing newly rebalanced nodes.
- *
+ * 
  * @author Louis Wasserman
- * @param <K> The key type of the nodes in binary search trees that this rule can modify.
- * @param <N> The type of the nodes in binary search trees that this rule can modify.
+ * @param <K>
+ *          The key type of the nodes in binary search trees that this rule can modify.
+ * @param <N>
+ *          The type of the nodes in binary search trees that this rule can modify.
  */
 @GwtCompatible
 final class BstMutationRule<K, N extends BstNode<K, N>> {
@@ -35,7 +37,8 @@ final class BstMutationRule<K, N extends BstNode<K, N>> {
    * factory.
    */
   public static <K, N extends BstNode<K, N>> BstMutationRule<K, N> createRule(
-      BstModifier<K, N> modifier, BstBalancePolicy<N> balancePolicy,
+      BstModifier<K, N> modifier,
+      BstBalancePolicy<N> balancePolicy,
       BstNodeFactory<N> nodeFactory) {
     return new BstMutationRule<K, N>(modifier, balancePolicy, nodeFactory);
   }
@@ -44,7 +47,9 @@ final class BstMutationRule<K, N extends BstNode<K, N>> {
   private final BstBalancePolicy<N> balancePolicy;
   private final BstNodeFactory<N> nodeFactory;
 
-  private BstMutationRule(BstModifier<K, N> modifier, BstBalancePolicy<N> balancePolicy,
+  private BstMutationRule(
+      BstModifier<K, N> modifier,
+      BstBalancePolicy<N> balancePolicy,
       BstNodeFactory<N> nodeFactory) {
     this.balancePolicy = checkNotNull(balancePolicy);
     this.nodeFactory = checkNotNull(nodeFactory);

@@ -19,32 +19,40 @@ import static org.learningu.scheduling.util.bst.BstModificationResult.Modificati
 import static org.learningu.scheduling.util.bst.BstSide.LEFT;
 import static org.learningu.scheduling.util.bst.BstSide.RIGHT;
 
+import com.google.common.annotations.GwtCompatible;
+
 import javax.annotation.Nullable;
 
 import org.learningu.scheduling.util.bst.BstModificationResult.ModificationType;
 
-import com.google.common.annotations.GwtCompatible;
-
 /**
  * The result of a mutation operation performed at a single location in a binary search tree.
- *
+ * 
  * @author Louis Wasserman
- * @param <K> The key type of the nodes in the modified binary search tree.
- * @param <N> The type of the nodes in the modified binary search tree.
+ * @param <K>
+ *          The key type of the nodes in the modified binary search tree.
+ * @param <N>
+ *          The type of the nodes in the modified binary search tree.
  */
 @GwtCompatible
 final class BstMutationResult<K, N extends BstNode<K, N>> {
   /**
    * Creates a {@code BstMutationResult}.
-   *
-   * @param targetKey The key targeted for modification. If {@code originalTarget} or {@code
-   *        changedTarget} are non-null, their keys must compare as equal to {@code targetKey}.
-   * @param originalRoot The root of the subtree that was modified.
-   * @param changedRoot The root of the subtree, after the modification and any rebalancing.
-   * @param modificationResult The result of the local modification to an entry.
+   * 
+   * @param targetKey
+   *          The key targeted for modification. If {@code originalTarget} or {@code changedTarget}
+   *          are non-null, their keys must compare as equal to {@code targetKey}.
+   * @param originalRoot
+   *          The root of the subtree that was modified.
+   * @param changedRoot
+   *          The root of the subtree, after the modification and any rebalancing.
+   * @param modificationResult
+   *          The result of the local modification to an entry.
    */
   public static <K, N extends BstNode<K, N>> BstMutationResult<K, N> mutationResult(
-      @Nullable K targetKey, @Nullable N originalRoot, @Nullable N changedRoot,
+      @Nullable K targetKey,
+      @Nullable N originalRoot,
+      @Nullable N changedRoot,
       BstModificationResult<N> modificationResult) {
     return new BstMutationResult<K, N>(targetKey, originalRoot, changedRoot, modificationResult);
   }
@@ -56,11 +64,14 @@ final class BstMutationResult<K, N extends BstNode<K, N>> {
 
   @Nullable
   private N changedRoot;
-  
+
   private final BstModificationResult<N> modificationResult;
 
-  private BstMutationResult(@Nullable K targetKey, @Nullable N originalRoot,
-      @Nullable N changedRoot, BstModificationResult<N> modificationResult) {
+  private BstMutationResult(
+      @Nullable K targetKey,
+      @Nullable N originalRoot,
+      @Nullable N changedRoot,
+      BstModificationResult<N> modificationResult) {
     this.targetKey = targetKey;
     this.originalRoot = originalRoot;
     this.changedRoot = changedRoot;
@@ -119,8 +130,11 @@ final class BstMutationResult<K, N extends BstNode<K, N>> {
    * side, returns the {@code BstMutationResult} of applying the mutation to the appropriate child
    * of the specified root and rebalancing using the specified mutation rule.
    */
-  public BstMutationResult<K, N> lift(N liftOriginalRoot, BstSide side,
-      BstNodeFactory<N> nodeFactory, BstBalancePolicy<N> balancePolicy) {
+  public BstMutationResult<K, N> lift(
+      N liftOriginalRoot,
+      BstSide side,
+      BstNodeFactory<N> nodeFactory,
+      BstBalancePolicy<N> balancePolicy) {
     assert liftOriginalRoot != null & side != null & nodeFactory != null & balancePolicy != null;
     switch (modificationType()) {
       case IDENTITY:
@@ -144,8 +158,11 @@ final class BstMutationResult<K, N extends BstNode<K, N>> {
         if (modificationType() == REBUILDING_CHANGE) {
           this.changedRoot = nodeFactory.createNode(liftOriginalRoot, resultLeft, resultRight);
         } else {
-          this.changedRoot =
-              balancePolicy.balance(nodeFactory, liftOriginalRoot, resultLeft, resultRight);
+          this.changedRoot = balancePolicy.balance(
+              nodeFactory,
+              liftOriginalRoot,
+              resultLeft,
+              resultRight);
         }
         return this;
       default:

@@ -19,15 +19,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.BoundType.CLOSED;
 import static com.google.common.collect.BoundType.OPEN;
 
-import java.util.Comparator;
-
-import javax.annotation.Nullable;
-
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Objects;
 import com.google.common.collect.BoundType;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Range;
+
+import java.util.Comparator;
+
+import javax.annotation.Nullable;
 
 /**
  * A generalized interval on any ordering, for internal use. Supports {@code null}. Unlike
@@ -68,7 +68,9 @@ final class GeneralRange<T> {
    * Returns everything above the endpoint relative to the specified comparator, with the specified
    * endpoint behavior.
    */
-  static <T> GeneralRange<T> downTo(Comparator<? super T> comparator, @Nullable T endpoint,
+  static <T> GeneralRange<T> downTo(
+      Comparator<? super T> comparator,
+      @Nullable T endpoint,
       BoundType boundType) {
     return new GeneralRange<T>(comparator, true, endpoint, boundType, false, null, OPEN);
   }
@@ -77,7 +79,9 @@ final class GeneralRange<T> {
    * Returns everything below the endpoint relative to the specified comparator, with the specified
    * endpoint behavior.
    */
-  static <T> GeneralRange<T> upTo(Comparator<? super T> comparator, @Nullable T endpoint,
+  static <T> GeneralRange<T> upTo(
+      Comparator<? super T> comparator,
+      @Nullable T endpoint,
       BoundType boundType) {
     return new GeneralRange<T>(comparator, false, null, OPEN, true, endpoint, boundType);
   }
@@ -86,8 +90,12 @@ final class GeneralRange<T> {
    * Returns everything between the endpoints relative to the specified comparator, with the
    * specified endpoint behavior.
    */
-  static <T> GeneralRange<T> range(Comparator<? super T> comparator, @Nullable T lower,
-      BoundType lowerType, @Nullable T upper, BoundType upperType) {
+  static <T> GeneralRange<T> range(
+      Comparator<? super T> comparator,
+      @Nullable T lower,
+      BoundType lowerType,
+      @Nullable T upper,
+      BoundType upperType) {
     return new GeneralRange<T>(comparator, true, lower, lowerType, true, upper, upperType);
   }
 
@@ -107,9 +115,14 @@ final class GeneralRange<T> {
 
   private final BoundType upperBoundType;
 
-  private GeneralRange(Comparator<? super T> comparator, boolean hasLowerBound,
-      @Nullable T lowerEndpoint, BoundType lowerBoundType, boolean hasUpperBound,
-      @Nullable T upperEndpoint, BoundType upperBoundType) {
+  private GeneralRange(
+      Comparator<? super T> comparator,
+      boolean hasLowerBound,
+      @Nullable T lowerEndpoint,
+      BoundType lowerBoundType,
+      boolean hasUpperBound,
+      @Nullable T upperEndpoint,
+      BoundType upperBoundType) {
     this.comparator = checkNotNull(comparator);
     this.hasLowerBound = hasLowerBound;
     this.hasUpperBound = hasUpperBound;

@@ -2,11 +2,11 @@ package org.learningu.scheduling.graph;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import org.learningu.scheduling.graph.SerialGraph.SerialRoomProperty;
-
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
+
+import org.learningu.scheduling.graph.SerialGraph.SerialRoomProperty;
 
 /**
  * A property of a room that some courses may require. If the property is <i>binding</i>, no course

@@ -1,5 +1,7 @@
 package org.learningu.scheduling;
 
+import com.google.inject.Inject;
+
 import java.util.concurrent.Callable;
 
 import org.joda.time.Duration;
@@ -7,8 +9,6 @@ import org.learningu.scheduling.flags.Flag;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.optimization.ConcurrentOptimizer;
 import org.learningu.scheduling.schedule.Schedule;
-
-import com.google.inject.Inject;
 
 final class Autoscheduler implements Callable<Schedule> {
   private final Program program;
@@ -22,10 +22,7 @@ final class Autoscheduler implements Callable<Schedule> {
   private Duration optimizerTime = Duration.standardMinutes(1);
 
   @Inject
-  Autoscheduler(
-      Program program,
-      Schedule initialSchedule,
-      ConcurrentOptimizer<Schedule> optimizer) {
+  Autoscheduler(Program program, Schedule initialSchedule, ConcurrentOptimizer<Schedule> optimizer) {
     this.program = program;
     this.initialSchedule = initialSchedule;
     this.optimizer = optimizer;

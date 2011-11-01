@@ -20,10 +20,10 @@ import javax.annotation.Nullable;
 
 /**
  * A local balancing policy for modified nodes in binary search trees.
- *
+ * 
  * @author Louis Wasserman
- * @param <N> The type of the nodes in the trees that this {@code BstRebalancePolicy} can
- *        rebalance.
+ * @param <N>
+ *          The type of the nodes in the trees that this {@code BstRebalancePolicy} can rebalance.
  */
 @GwtCompatible
 interface BstBalancePolicy<N extends BstNode<?, N>> {

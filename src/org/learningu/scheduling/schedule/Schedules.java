@@ -17,11 +17,10 @@ public final class Schedules {
     Program program = current.getProgram();
 
     for (SerialStartAssignment serialAssign : serial.getAssignmentList()) {
-      StartAssignment assign =
-          StartAssignment.create(
-              program.getPeriod(serialAssign.getPeriodId()),
-              program.getRoom(serialAssign.getRoomId()),
-              program.getSection(serialAssign.getSectionId()));
+      StartAssignment assign = StartAssignment.create(
+          program.getPeriod(serialAssign.getPeriodId()),
+          program.getRoom(serialAssign.getRoomId()),
+          program.getSection(serialAssign.getSectionId()));
       ModifiedState<ScheduleValidator, Schedule> modified = current.assignStart(assign);
       checkState(
           modified.getResult().isValid(),
@@ -36,7 +35,8 @@ public final class Schedules {
   public static final SerialSchedule serialize(Schedule schedule) {
     SerialSchedule.Builder scheduleBuilder = SerialSchedule.newBuilder();
     for (StartAssignment assign : schedule.getStartAssignments()) {
-      scheduleBuilder.addAssignment(SerialStartAssignment.newBuilder()
+      scheduleBuilder.addAssignment(SerialStartAssignment
+          .newBuilder()
           .setPeriodId(assign.getPeriod().getId())
           .setRoomId(assign.getRoom().getId())
           .setSectionId(assign.getSection().getId()));

@@ -1,11 +1,9 @@
 package org.learningu.scheduling.util;
 
+import com.google.common.collect.ForwardingSortedMap;
+
 import java.util.NavigableMap;
 import java.util.NavigableSet;
-import java.util.SortedMap;
-import java.util.Map.Entry;
-
-import com.google.common.collect.ForwardingSortedMap;
 
 public abstract class ForwardingNavigableMap<K, V> extends ForwardingSortedMap<K, V> implements
     NavigableMap<K, V> {

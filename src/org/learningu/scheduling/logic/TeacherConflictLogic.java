@@ -1,17 +1,17 @@
 package org.learningu.scheduling.logic;
 
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
+
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
+import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Teacher;
 import org.learningu.scheduling.schedule.PresentAssignment;
 import org.learningu.scheduling.schedule.Schedule;
-
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 
 /**
  * Logic for verifying that an assignment would not require that teachers teach two classes at
@@ -23,7 +23,9 @@ import com.google.common.collect.Sets;
 public final class TeacherConflictLogic extends ScheduleLogic {
 
   @Override
-  public void validate(ScheduleValidator validator, Schedule schedule, PresentAssignment assignment) {
+  public
+      void
+      validate(ScheduleValidator validator, Schedule schedule, PresentAssignment assignment) {
     super.validate(validator, schedule, assignment);
     Program program = schedule.getProgram();
     /*

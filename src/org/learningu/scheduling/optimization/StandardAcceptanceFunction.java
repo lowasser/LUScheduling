@@ -1,9 +1,8 @@
 package org.learningu.scheduling.optimization;
 
-import java.util.Random;
-
-
 import com.google.inject.Inject;
+
+import java.util.Random;
 
 public final class StandardAcceptanceFunction implements AcceptanceFunction {
   private final Random random;

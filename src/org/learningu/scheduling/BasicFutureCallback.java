@@ -1,9 +1,9 @@
 package org.learningu.scheduling;
 
+import com.google.common.util.concurrent.FutureCallback;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.google.common.util.concurrent.FutureCallback;
 
 public abstract class BasicFutureCallback<V> implements FutureCallback<V> {
   protected final Logger logger;

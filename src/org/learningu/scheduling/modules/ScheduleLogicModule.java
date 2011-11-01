@@ -1,5 +1,11 @@
 package org.learningu.scheduling.modules;
 
+import com.google.common.collect.Lists;
+import com.google.inject.AbstractModule;
+import com.google.inject.Provider;
+import com.google.inject.Provides;
+import com.google.inject.multibindings.MapBinder;
+
 import java.util.List;
 import java.util.Map;
 
@@ -13,12 +19,6 @@ import org.learningu.scheduling.logic.ScheduleLogic;
 import org.learningu.scheduling.logic.SerialLogic.SerialLogicImpl;
 import org.learningu.scheduling.logic.SerialLogic.SerialLogics;
 import org.learningu.scheduling.logic.TeacherConflictLogic;
-
-import com.google.common.collect.Lists;
-import com.google.inject.AbstractModule;
-import com.google.inject.Provider;
-import com.google.inject.Provides;
-import com.google.inject.multibindings.MapBinder;
 
 public class ScheduleLogicModule extends AbstractModule {
 

@@ -1,13 +1,13 @@
 package org.learningu.scheduling;
 
+import com.google.inject.AbstractModule;
+
 import org.learningu.scheduling.flags.Flags;
 import org.learningu.scheduling.graph.ProgramCacheFlags;
 import org.learningu.scheduling.logic.LocalConflictLogic;
 import org.learningu.scheduling.logic.LogicProvider;
 import org.learningu.scheduling.logic.ScheduleValidator;
 import org.learningu.scheduling.optimization.ConcurrentOptimizer;
-
-import com.google.inject.AbstractModule;
 
 /**
  * The first module for autoscheduling, including bindings common to all runs.

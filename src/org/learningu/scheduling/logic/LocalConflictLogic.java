@@ -46,7 +46,9 @@ public final class LocalConflictLogic extends ScheduleLogic {
   }
 
   @Override
-  public void validate(ScheduleValidator validator, Schedule schedule, PresentAssignment assignment) {
+  public
+      void
+      validate(ScheduleValidator validator, Schedule schedule, PresentAssignment assignment) {
     super.validate(validator, schedule, assignment);
     Program program = schedule.getProgram();
     validator.validateLocal(

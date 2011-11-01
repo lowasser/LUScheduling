@@ -1,14 +1,14 @@
 package org.learningu.scheduling.logic;
 
+import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableList;
+import com.google.inject.Inject;
+
 import java.util.Arrays;
 
 import org.learningu.scheduling.schedule.PresentAssignment;
 import org.learningu.scheduling.schedule.Schedule;
 import org.learningu.scheduling.schedule.StartAssignment;
-
-import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableList;
-import com.google.inject.Inject;
 
 /**
  * A schedule logic that applies several sub-logics in sequence.
@@ -39,7 +39,9 @@ public final class ChainedScheduleLogic extends ScheduleLogic {
   }
 
   @Override
-  public void validate(ScheduleValidator validator, Schedule schedule, PresentAssignment assignment) {
+  public
+      void
+      validate(ScheduleValidator validator, Schedule schedule, PresentAssignment assignment) {
     for (ScheduleLogic logic : logics) {
       logic.validate(validator, schedule, assignment);
     }

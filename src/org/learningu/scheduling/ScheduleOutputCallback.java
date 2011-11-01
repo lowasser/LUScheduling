@@ -1,5 +1,9 @@
 package org.learningu.scheduling;
 
+import com.google.common.base.Optional;
+import com.google.protobuf.Message;
+import com.google.protobuf.TextFormat;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,10 +15,6 @@ import org.learningu.scheduling.flags.Flag;
 import org.learningu.scheduling.schedule.Schedule;
 import org.learningu.scheduling.schedule.Schedules;
 import org.learningu.scheduling.schedule.SerialSchedules.SerialSchedule;
-
-import com.google.common.base.Optional;
-import com.google.protobuf.Message;
-import com.google.protobuf.TextFormat;
 
 final class ScheduleOutputCallback extends BasicFutureCallback<Schedule> {
   enum MessageOutputFormat {

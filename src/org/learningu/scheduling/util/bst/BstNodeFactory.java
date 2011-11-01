@@ -20,13 +20,15 @@ import javax.annotation.Nullable;
 
 /**
  * A factory for copying nodes in binary search trees with different children.
- *
- * <p>Typically, nodes will carry more information than the fields in the {@link BstNode} class,
- * often some kind of value or some aggregate data for the subtree. This factory is responsible for
+ * 
+ * <p>
+ * Typically, nodes will carry more information than the fields in the {@link BstNode} class, often
+ * some kind of value or some aggregate data for the subtree. This factory is responsible for
  * copying this additional data between nodes.
- *
+ * 
  * @author Louis Wasserman
- * @param <N> The type of the tree nodes constructed with this {@code BstNodeFactory}.
+ * @param <N>
+ *          The type of the tree nodes constructed with this {@code BstNodeFactory}.
  */
 @GwtCompatible
 abstract class BstNodeFactory<N extends BstNode<?, N>> {

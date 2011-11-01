@@ -21,8 +21,9 @@ import javax.annotation.Nullable;
 /**
  * An integer-valued function on binary search tree nodes that adds between nodes.
  * 
- * <p>The value of individual entries must fit into an {@code int}, but the value of an entire
- * tree can require a {@code long}.
+ * <p>
+ * The value of individual entries must fit into an {@code int}, but the value of an entire tree
+ * can require a {@code long}.
  * 
  * @author Louis Wasserman
  */

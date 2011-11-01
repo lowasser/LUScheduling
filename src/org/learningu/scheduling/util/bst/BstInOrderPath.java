@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 
 /**
  * A {@code BstPath} supporting inorder traversal operations.
- *
+ * 
  * @author Louis Wasserman
  */
 @GwtCompatible
@@ -48,7 +48,8 @@ final class BstInOrderPath<N extends BstNode<?, N>> extends BstPath<N, BstInOrde
   }
 
   private static <N extends BstNode<?, N>> BstInOrderPath<N> extension(
-      BstInOrderPath<N> path, BstSide side) {
+      BstInOrderPath<N> path,
+      BstSide side) {
     checkNotNull(path);
     N tip = path.getTip();
     return new BstInOrderPath<N>(tip.getChild(side), side, path);
@@ -58,8 +59,7 @@ final class BstInOrderPath<N extends BstNode<?, N>> extends BstPath<N, BstInOrde
   private transient Optional<BstInOrderPath<N>> prevInOrder;
   private transient Optional<BstInOrderPath<N>> nextInOrder;
 
-  private BstInOrderPath(
-      N tip, @Nullable BstSide sideExtension, @Nullable BstInOrderPath<N> tail) {
+  private BstInOrderPath(N tip, @Nullable BstSide sideExtension, @Nullable BstInOrderPath<N> tail) {
     super(tip, tail);
     this.sideExtension = sideExtension;
     assert (sideExtension == null) == (tail == null);
@@ -106,8 +106,9 @@ final class BstInOrderPath<N extends BstNode<?, N>> extends BstPath<N, BstInOrde
 
   /**
    * Returns the next path in an in-order traversal in the given direction.
-   *
-   * @throws NoSuchElementException if this would be the last path in an in-order traversal
+   * 
+   * @throws NoSuchElementException
+   *           if this would be the last path in an in-order traversal
    */
   public BstInOrderPath<N> next(BstSide side) {
     if (!hasNext(side)) {

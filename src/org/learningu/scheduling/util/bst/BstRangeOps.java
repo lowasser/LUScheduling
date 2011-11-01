@@ -18,13 +18,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static org.learningu.scheduling.util.bst.BstSide.LEFT;
 import static org.learningu.scheduling.util.bst.BstSide.RIGHT;
 
-import javax.annotation.Nullable;
-
 import com.google.common.annotations.GwtCompatible;
+
+import javax.annotation.Nullable;
 
 /**
  * A utility class with operations on binary search trees that operate on some interval.
- *
+ * 
  * @author Louis Wasserman
  */
 @GwtCompatible
@@ -35,7 +35,9 @@ final class BstRangeOps {
    * relative to {@code range.comparator()}.
    */
   public static <K, N extends BstNode<K, N>> long totalInRange(
-      BstAggregate<? super N> aggregate, GeneralRange<K> range, @Nullable N root) {
+      BstAggregate<? super N> aggregate,
+      GeneralRange<K> range,
+      @Nullable N root) {
     checkNotNull(aggregate);
     checkNotNull(range);
     if (root == null || range.isEmpty()) {
@@ -53,7 +55,10 @@ final class BstRangeOps {
 
   // Returns total value strictly to the specified side of the specified range.
   private static <K, N extends BstNode<K, N>> long totalBeyondRangeToSide(
-      BstAggregate<? super N> aggregate, GeneralRange<K> range, BstSide side, @Nullable N root) {
+      BstAggregate<? super N> aggregate,
+      GeneralRange<K> range,
+      BstSide side,
+      @Nullable N root) {
     long accum = 0;
     while (root != null) {
       if (beyond(range, root.getKey(), side)) {
@@ -73,17 +78,26 @@ final class BstRangeOps {
    * binary search ordering property relative to {@code range.comparator()}.
    */
   @Nullable
-  public static <K, N extends BstNode<K, N>> N minusRange(GeneralRange<K> range,
-      BstBalancePolicy<N> balancePolicy, BstNodeFactory<N> nodeFactory, @Nullable N root) {
+  public static <K, N extends BstNode<K, N>> N minusRange(
+      GeneralRange<K> range,
+      BstBalancePolicy<N> balancePolicy,
+      BstNodeFactory<N> nodeFactory,
+      @Nullable N root) {
     checkNotNull(range);
     checkNotNull(balancePolicy);
     checkNotNull(nodeFactory);
-    N higher = range.hasUpperBound()
-        ? subTreeBeyondRangeToSide(range, balancePolicy, nodeFactory, RIGHT, root)
-        : null;
-    N lower = range.hasLowerBound()
-        ? subTreeBeyondRangeToSide(range, balancePolicy, nodeFactory, LEFT, root)
-        : null;
+    N higher = range.hasUpperBound() ? subTreeBeyondRangeToSide(
+        range,
+        balancePolicy,
+        nodeFactory,
+        RIGHT,
+        root) : null;
+    N lower = range.hasLowerBound() ? subTreeBeyondRangeToSide(
+        range,
+        balancePolicy,
+        nodeFactory,
+        LEFT,
+        root) : null;
     return balancePolicy.combine(nodeFactory, lower, higher);
   }
 
@@ -92,8 +106,11 @@ final class BstRangeOps {
    * specified side of the specified range.
    */
   @Nullable
-  private static <K, N extends BstNode<K, N>> N subTreeBeyondRangeToSide(GeneralRange<K> range,
-      BstBalancePolicy<N> balancePolicy, BstNodeFactory<N> nodeFactory, BstSide side,
+  private static <K, N extends BstNode<K, N>> N subTreeBeyondRangeToSide(
+      GeneralRange<K> range,
+      BstBalancePolicy<N> balancePolicy,
+      BstNodeFactory<N> nodeFactory,
+      BstSide side,
       @Nullable N root) {
     if (root == null) {
       return null;
@@ -114,7 +131,11 @@ final class BstRangeOps {
       return balancePolicy.balance(nodeFactory, root, left, right);
     } else {
       return subTreeBeyondRangeToSide(
-          range, balancePolicy, nodeFactory, side, root.childOrNull(side));
+          range,
+          balancePolicy,
+          nodeFactory,
+          side,
+          root.childOrNull(side));
     }
   }
 
@@ -124,7 +145,10 @@ final class BstRangeOps {
    */
   @Nullable
   public static <K, N extends BstNode<K, N>, P extends BstPath<N, P>> P furthestPath(
-      GeneralRange<K> range, BstSide side, BstPathFactory<N, P> pathFactory, @Nullable N root) {
+      GeneralRange<K> range,
+      BstSide side,
+      BstPathFactory<N, P> pathFactory,
+      @Nullable N root) {
     checkNotNull(range);
     checkNotNull(pathFactory);
     checkNotNull(side);
@@ -136,7 +160,10 @@ final class BstRangeOps {
   }
 
   private static <K, N extends BstNode<K, N>, P extends BstPath<N, P>> P furthestPath(
-      GeneralRange<K> range, BstSide side, BstPathFactory<N, P> pathFactory, P currentPath) {
+      GeneralRange<K> range,
+      BstSide side,
+      BstPathFactory<N, P> pathFactory,
+      P currentPath) {
     N tip = currentPath.getTip();
     K tipKey = tip.getKey();
     if (beyond(range, tipKey, side)) {
@@ -171,5 +198,6 @@ final class BstRangeOps {
     }
   }
 
-  private BstRangeOps() {}
+  private BstRangeOps() {
+  }
 }

@@ -1,5 +1,10 @@
 package org.learningu.scheduling.perturbers;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import com.google.inject.Inject;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -11,11 +16,6 @@ import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.optimization.Perturber;
 import org.learningu.scheduling.schedule.Schedule;
 import org.learningu.scheduling.schedule.StartAssignment;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-import com.google.inject.Inject;
 
 /**
  * Schedules classes greedily and randomly, without deleting any already-scheduled classes.

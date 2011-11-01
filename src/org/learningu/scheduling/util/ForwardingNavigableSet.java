@@ -1,9 +1,9 @@
 package org.learningu.scheduling.util;
 
+import com.google.common.collect.ForwardingSortedSet;
+
 import java.util.Iterator;
 import java.util.NavigableSet;
-
-import com.google.common.collect.ForwardingSortedSet;
 
 public abstract class ForwardingNavigableSet<E> extends ForwardingSortedSet<E> implements
     NavigableSet<E> {
@@ -49,7 +49,10 @@ public abstract class ForwardingNavigableSet<E> extends ForwardingSortedSet<E> i
   }
 
   @Override
-  public NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement,
+  public NavigableSet<E> subSet(
+      E fromElement,
+      boolean fromInclusive,
+      E toElement,
       boolean toInclusive) {
     return delegate().subSet(fromElement, fromInclusive, toElement, toInclusive);
   }

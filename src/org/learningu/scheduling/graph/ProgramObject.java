@@ -2,11 +2,11 @@ package org.learningu.scheduling.graph;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import javax.annotation.Nullable;
-
 import com.google.protobuf.Message;
 import com.google.protobuf.MessageOrBuilder;
 import com.google.protobuf.TextFormat;
+
+import javax.annotation.Nullable;
 
 /**
  * A component in the object graph associated with an LU program, with its own protocol buffer.
@@ -43,7 +43,7 @@ public abstract class ProgramObject<T extends Message & MessageOrBuilder> {
   public int hashCode() {
     return getId();
   }
-  
+
   public Program getProgram() {
     return program;
   }
@@ -52,7 +52,8 @@ public abstract class ProgramObject<T extends Message & MessageOrBuilder> {
   public boolean equals(@Nullable Object obj) {
     if (obj instanceof ProgramObject) {
       ProgramObject<?> other = (ProgramObject<?>) obj;
-      return program == other.program && getId() == other.getId() && getClass().equals(other.getClass());
+      return program == other.program && getId() == other.getId()
+          && getClass().equals(other.getClass());
     }
     return false;
   }

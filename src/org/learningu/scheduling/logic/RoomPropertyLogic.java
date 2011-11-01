@@ -1,15 +1,15 @@
 package org.learningu.scheduling.logic;
 
+import com.google.common.collect.Sets;
+
 import java.util.Set;
 
-import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.RoomProperty;
+import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.schedule.Schedule;
 import org.learningu.scheduling.schedule.StartAssignment;
-
-import com.google.common.collect.Sets;
 
 public final class RoomPropertyLogic extends ScheduleLogic {
   @Override

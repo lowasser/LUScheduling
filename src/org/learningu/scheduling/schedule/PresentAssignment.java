@@ -3,15 +3,15 @@ package org.learningu.scheduling.schedule;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.common.base.Objects;
+
 import javax.annotation.Nullable;
 
 import org.learningu.scheduling.graph.ClassPeriod;
-import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
+import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.TimeBlock;
-
-import com.google.common.base.Objects;
 
 /**
  * A representation of a section of a class being present in a room during some particular period.

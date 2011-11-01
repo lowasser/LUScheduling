@@ -1,15 +1,15 @@
 package org.learningu.scheduling.util;
 
+import com.google.common.collect.ForwardingSortedMap;
+import com.google.common.collect.ForwardingSortedSet;
+import com.google.common.collect.Iterators;
+
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.NavigableMap;
 import java.util.NavigableSet;
 import java.util.SortedMap;
 import java.util.SortedSet;
-
-import com.google.common.collect.ForwardingSortedMap;
-import com.google.common.collect.ForwardingSortedSet;
-import com.google.common.collect.Iterators;
 
 public final class Navigables {
   private Navigables() {
@@ -77,7 +77,10 @@ public final class Navigables {
     }
 
     @Override
-    public NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement,
+    public NavigableSet<E> subSet(
+        E fromElement,
+        boolean fromInclusive,
+        E toElement,
         boolean toInclusive) {
       return unmodifiableNavigableSet(delegate.subSet(
           fromElement,
@@ -194,7 +197,9 @@ public final class Navigables {
     }
 
     @Override
-    public NavigableMap<K, V> subMap(K fromKey, boolean fromInclusive, K toKey, boolean toInclusive) {
+    public
+        NavigableMap<K, V>
+        subMap(K fromKey, boolean fromInclusive, K toKey, boolean toInclusive) {
       return unmodifiableNavigableMap(delegate.subMap(fromKey, fromInclusive, toKey, toInclusive));
     }
 

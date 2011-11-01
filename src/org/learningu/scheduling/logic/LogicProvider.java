@@ -1,15 +1,15 @@
 package org.learningu.scheduling.logic;
 
-import java.util.EnumSet;
-import java.util.List;
-
-import org.learningu.scheduling.flags.Flag;
-
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
+
+import java.util.EnumSet;
+import java.util.List;
+
+import org.learningu.scheduling.flags.Flag;
 
 public final class LogicProvider implements Provider<ScheduleLogic> {
 

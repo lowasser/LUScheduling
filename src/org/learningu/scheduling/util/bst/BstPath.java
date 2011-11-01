@@ -23,10 +23,12 @@ import javax.annotation.Nullable;
 
 /**
  * A path to a node in a binary search tree, originating at the root.
- *
+ * 
  * @author Louis Wasserman
- * @param <N> The type of nodes in this binary search tree.
- * @param <P> This path type, and the path type of all suffix paths.
+ * @param <N>
+ *          The type of nodes in this binary search tree.
+ * @param <P>
+ *          This path type, and the path type of all suffix paths.
  */
 @GwtCompatible
 abstract class BstPath<N extends BstNode<?, N>, P extends BstPath<N, P>> {
@@ -64,8 +66,9 @@ abstract class BstPath<N extends BstNode<?, N>, P extends BstPath<N, P>> {
 
   /**
    * Returns the prefix of this path, which reaches to the parent of the end of this path.
-   *
-   * @throws IllegalStateException if this path has no prefix.
+   * 
+   * @throws IllegalStateException
+   *           if this path has no prefix.
    */
   public final P getPrefix() {
     checkState(hasPrefix());

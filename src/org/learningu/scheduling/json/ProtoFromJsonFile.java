@@ -1,12 +1,5 @@
 package org.learningu.scheduling.json;
 
-import java.io.File;
-import java.io.IOException;
-
-import org.learningu.scheduling.flags.Flag;
-import org.learningu.scheduling.flags.Flags;
-import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
-
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.google.gson.JsonArray;
@@ -17,6 +10,13 @@ import com.google.inject.Injector;
 import com.google.inject.Scopes;
 import com.google.inject.name.Names;
 import com.google.protobuf.TextFormat;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.learningu.scheduling.flags.Flag;
+import org.learningu.scheduling.flags.Flags;
+import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
 
 public final class ProtoFromJsonFile {
   @Flag(name = "teachers")

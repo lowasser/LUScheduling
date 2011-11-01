@@ -1,8 +1,8 @@
 package org.learningu.scheduling.util;
 
-import java.util.NavigableMap;
-
 import com.google.common.collect.Maps;
+
+import java.util.NavigableMap;
 
 public final class ImmutableNavigableMap<K, V> extends ForwardingNavigableMap<K, V> {
   public static <K, V> ImmutableNavigableMap<K, V> copyOf(NavigableMap<K, V> map) {

@@ -19,26 +19,30 @@ import static com.google.common.base.Preconditions.checkState;
 import static org.learningu.scheduling.util.bst.BstSide.LEFT;
 import static org.learningu.scheduling.util.bst.BstSide.RIGHT;
 
+import com.google.common.annotations.GwtCompatible;
+
 import java.util.Comparator;
 
 import javax.annotation.Nullable;
 
-import com.google.common.annotations.GwtCompatible;
-
 /**
  * A reusable abstraction for a node in a binary search tree. Null keys are allowed.
- *
- * <p>The node is considered to be immutable. Any subclass with mutable fields must create a new
+ * 
+ * <p>
+ * The node is considered to be immutable. Any subclass with mutable fields must create a new
  * {@code BstNode} object upon any mutation, as the {@code Bst} classes assume that two nodes
  * {@code a} and {@code b} represent exactly the same tree if and only if {@code a == b}.
- *
- * <p>A {@code BstNode} can be considered to be an <i>entry</i>, containing a key and possibly some
+ * 
+ * <p>
+ * A {@code BstNode} can be considered to be an <i>entry</i>, containing a key and possibly some
  * value data, or it can be considered to be a <i>subtree</i>, representative of it and all its
  * descendants.
- *
+ * 
  * @author Louis Wasserman
- * @param <K> The key type associated with this tree.
- * @param <N> The type of the nodes in this tree.
+ * @param <K>
+ *          The key type associated with this tree.
+ * @param <N>
+ *          The type of the nodes in this tree.
  */
 @GwtCompatible
 class BstNode<K, N extends BstNode<K, N>> {
@@ -98,8 +102,9 @@ class BstNode<K, N extends BstNode<K, N>> {
 
   /**
    * Returns this node's child on the specified side.
-   *
-   * @throws IllegalStateException if this node has no such child
+   * 
+   * @throws IllegalStateException
+   *           if this node has no such child
    */
   public final N getChild(BstSide side) {
     N child = childOrNull(side);

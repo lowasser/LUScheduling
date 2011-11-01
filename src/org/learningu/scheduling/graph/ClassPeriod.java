@@ -2,11 +2,11 @@ package org.learningu.scheduling.graph;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.common.collect.ComparisonChain;
+
 import java.util.List;
 
 import org.learningu.scheduling.graph.SerialGraph.SerialPeriod;
-
-import com.google.common.collect.ComparisonChain;
 
 public final class ClassPeriod extends ProgramObject<SerialPeriod> implements
     Comparable<ClassPeriod> {

@@ -3,13 +3,13 @@ package org.learningu.scheduling.graph;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.common.base.Function;
+import com.google.common.collect.ImmutableList;
+
 import java.util.List;
 
 import org.learningu.scheduling.graph.SerialGraph.SerialPeriod;
 import org.learningu.scheduling.graph.SerialGraph.SerialTimeBlock;
-
-import com.google.common.base.Function;
-import com.google.common.collect.ImmutableList;
 
 /**
  * A block of time at an LU program, in which a single section of a single course might be

@@ -10,7 +10,11 @@ public final class TreapNode<K, V> extends BstNode<K, TreapNode<K, V>> {
 
   final int heapKey;
 
-  TreapNode(K key, V value, @Nullable TreapNode<K, V> left, @Nullable TreapNode<K, V> right,
+  TreapNode(
+      K key,
+      V value,
+      @Nullable TreapNode<K, V> left,
+      @Nullable TreapNode<K, V> right,
       int heapKey) {
     super(key, left, right);
     this.value = value;
@@ -34,8 +38,10 @@ public final class TreapNode<K, V> extends BstNode<K, TreapNode<K, V>> {
   private static final BstNodeFactory<TreapNode<Object, Object>> NODE_FACTORY = new BstNodeFactory<TreapNode<Object, Object>>() {
 
     @Override
-    public TreapNode<Object, Object> createNode(TreapNode<Object, Object> source,
-        TreapNode<Object, Object> left, TreapNode<Object, Object> right) {
+    public TreapNode<Object, Object> createNode(
+        TreapNode<Object, Object> source,
+        TreapNode<Object, Object> left,
+        TreapNode<Object, Object> right) {
       return new TreapNode<Object, Object>(source.getKey(), source.getValue(), left, right,
           source.heapKey);
     }
@@ -46,8 +52,10 @@ public final class TreapNode<K, V> extends BstNode<K, TreapNode<K, V>> {
 
     @Override
     public TreapNode<Object, Object> balance(
-        BstNodeFactory<TreapNode<Object, Object>> nodeFactory, TreapNode<Object, Object> source,
-        @Nullable TreapNode<Object, Object> left, @Nullable TreapNode<Object, Object> right) {
+        BstNodeFactory<TreapNode<Object, Object>> nodeFactory,
+        TreapNode<Object, Object> source,
+        @Nullable TreapNode<Object, Object> left,
+        @Nullable TreapNode<Object, Object> right) {
       if (left != null && left.heapKey < source.heapKey
           && (right == null || right.heapKey >= left.heapKey)) {
         return nodeFactory.createNode(
@@ -67,7 +75,8 @@ public final class TreapNode<K, V> extends BstNode<K, TreapNode<K, V>> {
     @Override
     public TreapNode<Object, Object> combine(
         BstNodeFactory<TreapNode<Object, Object>> nodeFactory,
-        @Nullable TreapNode<Object, Object> left, @Nullable TreapNode<Object, Object> right) {
+        @Nullable TreapNode<Object, Object> left,
+        @Nullable TreapNode<Object, Object> right) {
       if (left == null) {
         return right;
       } else if (right == null) {

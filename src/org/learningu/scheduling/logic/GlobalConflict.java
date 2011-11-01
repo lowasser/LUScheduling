@@ -3,11 +3,11 @@ package org.learningu.scheduling.logic;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import org.learningu.scheduling.schedule.Assignment;
-
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
+
+import org.learningu.scheduling.schedule.Assignment;
 
 /**
  * A conflict between a candidate assignment and several assignments already in the schedule, which
@@ -16,8 +16,10 @@ import com.google.common.collect.Iterables;
  * @author lowasser
  */
 public final class GlobalConflict<C extends Assignment> implements Conflict<C> {
-  public static <C extends Assignment> GlobalConflict<C> create(C candidateAssignment,
-      Iterable<C> conflictingAssignments, String failedCondition) {
+  public static <C extends Assignment> GlobalConflict<C> create(
+      C candidateAssignment,
+      Iterable<C> conflictingAssignments,
+      String failedCondition) {
     return new GlobalConflict<C>(candidateAssignment, conflictingAssignments, failedCondition);
   }
 
@@ -27,7 +29,9 @@ public final class GlobalConflict<C extends Assignment> implements Conflict<C> {
 
   private final String failedCondition;
 
-  private GlobalConflict(C candidateAssignment, Iterable<C> conflictingAssignments,
+  private GlobalConflict(
+      C candidateAssignment,
+      Iterable<C> conflictingAssignments,
       String failedCondition) {
     this.candidateAssignment = checkNotNull(candidateAssignment);
     this.conflictingAssignments = ImmutableList.copyOf(conflictingAssignments);

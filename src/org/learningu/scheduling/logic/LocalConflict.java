@@ -1,8 +1,8 @@
 package org.learningu.scheduling.logic;
 
-import org.learningu.scheduling.schedule.Assignment;
-
 import com.google.common.base.Objects;
+
+import org.learningu.scheduling.schedule.Assignment;
 
 /**
  * A schedule conflict that invalidates a single period/room/section assignment, not caused by a
@@ -12,7 +12,8 @@ import com.google.common.base.Objects;
  * @author lowasser
  */
 public final class LocalConflict<C extends Assignment> implements Conflict<C> {
-  public static <C extends Assignment> LocalConflict<C> create(C candidateAssignment,
+  public static <C extends Assignment> LocalConflict<C> create(
+      C candidateAssignment,
       String failedCondition) {
     return new LocalConflict<C>(candidateAssignment, failedCondition);
   }

@@ -1,5 +1,9 @@
 package org.learningu.scheduling.optimization;
 
+import com.google.common.collect.Lists;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
+
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -13,10 +17,6 @@ import java.util.logging.Logger;
 import org.joda.time.Duration;
 import org.learningu.scheduling.annotations.SingleThread;
 import org.learningu.scheduling.flags.Flag;
-
-import com.google.common.collect.Lists;
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
 
 public final class ConcurrentOptimizer<T> implements Optimizer<T> {
   private final Scorer<T> scorer;
@@ -114,8 +114,9 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
       logger.log(Level.INFO, "On iteration step {0}, current best has score {1}", new Object[] {
           step, currentBestScore });
       List<Callable<T>> independentThreads = Lists.newArrayListWithCapacity(nSubOptimizers);
-      double temp =
-          primaryTempFun.temperature((int) (System.currentTimeMillis() - start), (int) dur);
+      double temp = primaryTempFun.temperature(
+          (int) (System.currentTimeMillis() - start),
+          (int) dur);
       for (int i = 0; i < nSubOptimizers; i++) {
         independentThreads.add(runSingleThreadPass(currentBest, temp));
       }

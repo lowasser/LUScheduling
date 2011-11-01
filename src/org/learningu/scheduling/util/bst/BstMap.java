@@ -20,6 +20,12 @@ import static com.google.common.base.Preconditions.checkState;
 import static org.learningu.scheduling.util.bst.BstSide.LEFT;
 import static org.learningu.scheduling.util.bst.BstSide.RIGHT;
 
+import com.google.common.collect.AbstractLinkedIterator;
+import com.google.common.collect.BoundType;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Ordering;
+import com.google.common.primitives.Ints;
+
 import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.Comparator;
@@ -30,12 +36,6 @@ import java.util.Set;
 import java.util.SortedMap;
 
 import javax.annotation.Nullable;
-
-import com.google.common.collect.AbstractLinkedIterator;
-import com.google.common.collect.BoundType;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Ordering;
-import com.google.common.primitives.Ints;
 
 /**
  * Drop-in replacement for JDK 6 TreeMap that is JDK 5 compatible.
@@ -312,7 +312,8 @@ public final class BstMap<K, V> extends AbstractMap<K, V> implements SortedMap<K
     }
 
     @Override
-    public BstModificationResult<TreapNode<K, V>> modify(K key,
+    public BstModificationResult<TreapNode<K, V>> modify(
+        K key,
         @Nullable TreapNode<K, V> originalEntry) {
       if (originalEntry == null) {
         return BstModificationResult.rebalancingChange(null, new TreapNode<K, V>(key, newValue,
@@ -329,7 +330,8 @@ public final class BstMap<K, V> extends AbstractMap<K, V> implements SortedMap<K
     }
 
     @Override
-    public BstModificationResult<TreapNode<K, V>> modify(K key,
+    public BstModificationResult<TreapNode<K, V>> modify(
+        K key,
         @Nullable TreapNode<K, V> originalEntry) {
       if (originalEntry == null) {
         return BstModificationResult.identity(null);

@@ -1,5 +1,11 @@
 package org.learningu.scheduling.logic;
 
+import com.google.common.base.Objects;
+import com.google.common.base.Objects.ToStringHelper;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+import com.google.inject.Inject;
+
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -7,12 +13,6 @@ import java.util.logging.Logger;
 import org.learningu.scheduling.flags.Flag;
 import org.learningu.scheduling.schedule.PresentAssignment;
 import org.learningu.scheduling.schedule.StartAssignment;
-
-import com.google.common.base.Objects;
-import com.google.common.base.Objects.ToStringHelper;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import com.google.inject.Inject;
 
 /**
  * A cumulative validator for schedules, accumulating any conflicts found for later analysis or
@@ -110,8 +110,10 @@ public final class ScheduleValidator {
         assignment,
         condition);
     if (!cond && !Iterables.isEmpty(conflicting)) {
-      GlobalConflict<StartAssignment> conflict =
-          GlobalConflict.create(assignment, conflicting, condition);
+      GlobalConflict<StartAssignment> conflict = GlobalConflict.create(
+          assignment,
+          conflicting,
+          condition);
       log(failureLogLevel, "Validation failed: {0}", conflict);
       globalStartConflicts.add(conflict);
     }
@@ -135,8 +137,10 @@ public final class ScheduleValidator {
         assignment,
         condition);
     if (!cond && !Iterables.isEmpty(conflicting)) {
-      GlobalConflict<PresentAssignment> conflict =
-          GlobalConflict.create(assignment, conflicting, condition);
+      GlobalConflict<PresentAssignment> conflict = GlobalConflict.create(
+          assignment,
+          conflicting,
+          condition);
       log(failureLogLevel, "Validation failed: {0}", conflict);
       globalPresentConflicts.add(conflict);
     }

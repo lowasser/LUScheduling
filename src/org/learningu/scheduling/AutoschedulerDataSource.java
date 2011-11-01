@@ -1,5 +1,12 @@
 package org.learningu.scheduling;
 
+import com.google.common.base.Optional;
+import com.google.inject.AbstractModule;
+import com.google.inject.Inject;
+import com.google.inject.Module;
+import com.google.protobuf.Message;
+import com.google.protobuf.TextFormat;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -11,13 +18,6 @@ import org.learningu.scheduling.flags.Flag;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
 import org.learningu.scheduling.logic.SerialLogic.SerialLogics;
 import org.learningu.scheduling.schedule.SerialSchedules.SerialSchedule;
-
-import com.google.common.base.Optional;
-import com.google.inject.AbstractModule;
-import com.google.inject.Inject;
-import com.google.inject.Module;
-import com.google.protobuf.Message;
-import com.google.protobuf.TextFormat;
 
 public final class AutoschedulerDataSource {
   @Inject

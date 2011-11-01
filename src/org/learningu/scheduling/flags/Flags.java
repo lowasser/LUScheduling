@@ -1,5 +1,20 @@
 package org.learningu.scheduling.flags;
 
+import com.google.common.base.Throwables;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
+import com.google.inject.AbstractModule;
+import com.google.inject.Binder;
+import com.google.inject.Guice;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.Module;
+import com.google.inject.Provides;
+import com.google.inject.Singleton;
+import com.google.inject.TypeLiteral;
+import com.google.inject.multibindings.MapBinder;
+import com.google.inject.util.Modules;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -16,29 +31,16 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 
-import com.google.common.base.Throwables;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterables;
-import com.google.inject.AbstractModule;
-import com.google.inject.Binder;
-import com.google.inject.Guice;
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.Module;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
-import com.google.inject.TypeLiteral;
-import com.google.inject.multibindings.MapBinder;
-import com.google.inject.util.Modules;
-
 public final class Flags {
-  private Flags() {}
+  private Flags() {
+  }
 
   public static void addFlagBinding(
       Binder binder,
       final Flag flagAnnotation,
       final TypeLiteral<?> parameterType) {
-    MapBinder.newMapBinder(binder, Flag.class, Type.class)
+    MapBinder
+        .newMapBinder(binder, Flag.class, Type.class)
         .addBinding(flagAnnotation)
         .toInstance(parameterType.getType());
   }
@@ -80,7 +82,8 @@ public final class Flags {
     AbstractModule linkingModule = new AbstractModule() {
 
       @Override
-      protected void configure() {}
+      protected void configure() {
+      }
 
       @SuppressWarnings("unused")
       @Provides
@@ -114,10 +117,9 @@ public final class Flags {
         }
       }
     };
-    Injector baseInjector =
-        Guice.createInjector(Modules.combine(Iterables.concat(
-            Arrays.asList(baseModules),
-            ImmutableList.of(linkingModule))));
+    Injector baseInjector = Guice.createInjector(Modules.combine(Iterables.concat(
+        Arrays.asList(baseModules),
+        ImmutableList.of(linkingModule))));
     System.out.println(baseInjector.getAllBindings());
     return baseInjector.createChildInjector(baseInjector.getInstance(FlagBootstrapModule.class));
   }

@@ -19,14 +19,18 @@ public abstract class ScheduleLogic {
     checkNotNull(assignment);
   }
 
-  protected final void validatePresentAssignments(ScheduleValidator validator, Schedule schedule,
+  protected final void validatePresentAssignments(
+      ScheduleValidator validator,
+      Schedule schedule,
       StartAssignment assignment) {
     for (PresentAssignment present : assignment.getPresentAssignments()) {
       validate(validator, schedule, present);
     }
   }
 
-  public void validate(ScheduleValidator validator, Schedule schedule, PresentAssignment assignment) {
+  public
+      void
+      validate(ScheduleValidator validator, Schedule schedule, PresentAssignment assignment) {
     checkNotNull(validator);
     checkNotNull(schedule);
     checkNotNull(assignment);

@@ -2,14 +2,14 @@ package org.learningu.scheduling.graph;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.Set;
-
-import org.learningu.scheduling.graph.SerialGraph.SerialTeacher;
-
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
+
+import java.util.Set;
+
+import org.learningu.scheduling.graph.SerialGraph.SerialTeacher;
 
 /**
  * A teacher at an LU program.

@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 
 /**
  * The result of a {@code BstModifier}.
- *
+ * 
  * @author Louis Wasserman
  */
 @GwtCompatible
@@ -36,23 +36,29 @@ final class BstModificationResult<N extends BstNode<?, N>> {
   }
 
   static <N extends BstNode<?, N>> BstModificationResult<N> rebuildingChange(
-      @Nullable N originalTarget, @Nullable N changedTarget) {
-    return new BstModificationResult<N>(
-        originalTarget, changedTarget, ModificationType.REBUILDING_CHANGE);
+      @Nullable N originalTarget,
+      @Nullable N changedTarget) {
+    return new BstModificationResult<N>(originalTarget, changedTarget,
+        ModificationType.REBUILDING_CHANGE);
   }
 
   static <N extends BstNode<?, N>> BstModificationResult<N> rebalancingChange(
-      @Nullable N originalTarget, @Nullable N changedTarget) {
-    return new BstModificationResult<N>(
-        originalTarget, changedTarget, ModificationType.REBALANCING_CHANGE);
+      @Nullable N originalTarget,
+      @Nullable N changedTarget) {
+    return new BstModificationResult<N>(originalTarget, changedTarget,
+        ModificationType.REBALANCING_CHANGE);
   }
 
-  @Nullable private final N originalTarget;
-  @Nullable private final N changedTarget;
+  @Nullable
+  private final N originalTarget;
+  @Nullable
+  private final N changedTarget;
   private final ModificationType type;
 
   private BstModificationResult(
-      @Nullable N originalTarget, @Nullable N changedTarget, ModificationType type) {
+      @Nullable N originalTarget,
+      @Nullable N changedTarget,
+      ModificationType type) {
     this.originalTarget = originalTarget;
     this.changedTarget = changedTarget;
     this.type = checkNotNull(type);

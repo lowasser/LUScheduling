@@ -2,6 +2,13 @@ package org.learningu.scheduling.flags;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+import com.google.common.base.Optional;
+import com.google.common.base.Splitter;
+import com.google.common.base.Throwables;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.inject.TypeLiteral;
+
 import java.io.File;
 import java.lang.reflect.ParameterizedType;
 import java.net.URI;
@@ -14,15 +21,9 @@ import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
-import com.google.common.base.Optional;
-import com.google.common.base.Splitter;
-import com.google.common.base.Throwables;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-import com.google.inject.TypeLiteral;
-
 final class Converters {
-  private Converters() {}
+  private Converters() {
+  }
 
   private static final Converter<Integer> INT_CONVERTER = new Converter<Integer>() {
     @Override
@@ -74,20 +75,20 @@ final class Converters {
     }
   };
 
-  private static final PeriodFormatter PERIOD_FORMATTER =
-      new PeriodFormatterBuilder().appendDays()
-          .appendSuffix("d")
-          .printZeroRarelyLast()
-          .appendHours()
-          .appendSuffix("h")
-          .printZeroRarelyLast()
-          .appendMinutes()
-          .appendSuffix("m")
-          .printZeroRarelyLast()
-          .appendSecondsWithOptionalMillis()
-          .appendSuffix("s")
-          .printZeroRarelyLast()
-          .toFormatter();
+  private static final PeriodFormatter PERIOD_FORMATTER = new PeriodFormatterBuilder()
+      .appendDays()
+      .appendSuffix("d")
+      .printZeroRarelyLast()
+      .appendHours()
+      .appendSuffix("h")
+      .printZeroRarelyLast()
+      .appendMinutes()
+      .appendSuffix("m")
+      .printZeroRarelyLast()
+      .appendSecondsWithOptionalMillis()
+      .appendSuffix("s")
+      .printZeroRarelyLast()
+      .toFormatter();
 
   private static final Converter<Period> PERIOD_CONVERTER = new Converter<Period>() {
     @Override
@@ -161,8 +162,8 @@ final class Converters {
   public static <T> Converter<T> converterFor(TypeLiteral<T> literal) {
     if (literal.getType() instanceof ParameterizedType) {
       Class<?> outer = literal.getRawType();
-      TypeLiteral<?> inner =
-          TypeLiteral.get(((ParameterizedType) literal.getType()).getActualTypeArguments()[0]);
+      TypeLiteral<?> inner = TypeLiteral.get(((ParameterizedType) literal.getType())
+          .getActualTypeArguments()[0]);
       Converter<?> innerConverter = converterFor(inner);
       if (outer.equals(List.class)) {
         return (Converter<T>) listConverter(innerConverter);
@@ -182,9 +183,9 @@ final class Converters {
       return (Converter<T>) FILE_CONVERTER;
     } else if (literal.getRawType().equals(URI.class)) {
       return (Converter<T>) URI_CONVERTER;
-    } else if(literal.getRawType().equals(Period.class)){
+    } else if (literal.getRawType().equals(Period.class)) {
       return (Converter<T>) PERIOD_CONVERTER;
-    }else if(literal.getRawType().equals(Duration.class)){
+    } else if (literal.getRawType().equals(Duration.class)) {
       return (Converter<T>) DURATION_CONVERTER;
     }
     throw new IllegalArgumentException("Don't know what to do with " + literal);
