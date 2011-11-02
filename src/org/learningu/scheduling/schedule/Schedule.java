@@ -172,7 +172,7 @@ public final class Schedule {
     return new StartAssignmentSet();
   }
 
-  public Iterable<PresentAssignment> presentAssignments() {
+  public Iterable<PresentAssignment> getPresentAssignments() {
     return Iterables.concat(Iterables.transform(
         getStartAssignments(),
         new Function<StartAssignment, List<PresentAssignment>>() {

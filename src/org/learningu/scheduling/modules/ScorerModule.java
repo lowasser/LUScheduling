@@ -1,7 +1,10 @@
 package org.learningu.scheduling.modules;
 
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Multiset;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import com.google.inject.AbstractModule;
@@ -9,14 +12,18 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 
+import org.learningu.scheduling.graph.ClassPeriod;
 import org.learningu.scheduling.graph.Course;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Section;
+import org.learningu.scheduling.graph.Subject;
 import org.learningu.scheduling.graph.Teacher;
 import org.learningu.scheduling.optimization.Scorer;
+import org.learningu.scheduling.schedule.PresentAssignment;
 import org.learningu.scheduling.schedule.Schedule;
 import org.learningu.scheduling.schedule.StartAssignment;
 import org.learningu.scheduling.scorers.SerialScorers.CompleteScorer;
@@ -88,6 +95,52 @@ public final class ScorerModule extends AbstractModule {
 
         for (Collection<Room> roomsForOneCourse : roomsForCourse.asMap().values()) {
           accum.subtract(roomsForOneCourse.size());
+        }
+      }
+    },
+    GLOBAL_ATTENDANCE_LEVELS {
+      @Override
+      void score(Schedule schedule, ScoreAccumulator accum) {
+        Program program = schedule.getProgram();
+        Multiset<ClassPeriod> attendanceLevels = HashMultiset.create(program.getPeriods().size());
+        for (PresentAssignment assign : schedule.getPresentAssignments()) {
+          attendanceLevels.add(assign.getPeriod(), assign.getSection().getMaxClassSize());
+        }
+        int totalAttendance = attendanceLevels.size();
+        for (ClassPeriod period : program.getPeriods()) {
+          int actualAttendance = attendanceLevels.count(period);
+          double expectedAttendance = program.getAttendanceRatio(period) * totalAttendance;
+          if (expectedAttendance != 0.0) {
+            double ratio = actualAttendance / expectedAttendance;
+            accum.subtract(Math.abs(ratio - 1.0));
+          }
+        }
+      }
+    },
+    SUBJECT_ATTENDANCE_LEVELS {
+      @Override
+      void score(Schedule schedule, ScoreAccumulator accum) {
+        Program program = schedule.getProgram();
+        Map<Subject, Multiset<ClassPeriod>> attendanceLevels = Maps.newHashMap();
+        for (Subject subj : program.getSubjects()) {
+          attendanceLevels.put(subj, HashMultiset.<ClassPeriod> create());
+        }
+
+        for (PresentAssignment assign : schedule.getPresentAssignments()) {
+          attendanceLevels.get(assign.getSection().getSubject()).add(
+              assign.getPeriod(),
+              assign.getSection().getMaxClassSize());
+        }
+        for (Map.Entry<Subject, Multiset<ClassPeriod>> subjectEntry : attendanceLevels.entrySet()) {
+          int totalAttendance = subjectEntry.getValue().size();
+          for (ClassPeriod period : program.getPeriods()) {
+            int actualAttendance = subjectEntry.getValue().count(period);
+            double expectedAttendance = program.getAttendanceRatio(period) * totalAttendance;
+            if (expectedAttendance != 0.0) {
+              double ratio = actualAttendance / expectedAttendance;
+              accum.subtract(Math.abs(ratio - 1.0));
+            }
+          }
         }
       }
     };
@@ -167,6 +220,10 @@ public final class ScorerModule extends AbstractModule {
         return ScorerImpl.STUDENT_CLASS_HOURS_SCHEDULED;
       case TEACHERS_WITH_CLASSES_SCHEDULED:
         return ScorerImpl.TEACHERS_WITH_CLASSES_SCHEDULED;
+      case GLOBAL_ATTENDANCE_LEVELS:
+        return ScorerImpl.GLOBAL_ATTENDANCE_LEVELS;
+      case SUBJECT_ATTENDANCE_LEVELS:
+        return ScorerImpl.SUBJECT_ATTENDANCE_LEVELS;
       default:
         throw new AssertionError();
     }

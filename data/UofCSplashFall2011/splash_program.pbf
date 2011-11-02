@@ -1108,6 +1108,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 752
+  subjectId: 0
 }
 section {
   sectionId: 926
@@ -1117,6 +1118,7 @@ section {
   maxClassSize: 25
   periodLength: 1
   courseId: 753
+  subjectId: 0
 }
 section {
   sectionId: 927
@@ -1126,6 +1128,7 @@ section {
   maxClassSize: 25
   periodLength: 1
   courseId: 753
+  subjectId: 0
 }
 section {
   sectionId: 928
@@ -1135,6 +1138,7 @@ section {
   maxClassSize: 15
   periodLength: 1
   courseId: 754
+  subjectId: 1
 }
 section {
   sectionId: 929
@@ -1144,6 +1148,7 @@ section {
   maxClassSize: 15
   periodLength: 1
   courseId: 754
+  subjectId: 1
 }
 section {
   sectionId: 930
@@ -1153,6 +1158,7 @@ section {
   maxClassSize: 25
   periodLength: 1
   courseId: 755
+  subjectId: 1
 }
 section {
   sectionId: 931
@@ -1162,6 +1168,7 @@ section {
   maxClassSize: 25
   periodLength: 1
   courseId: 755
+  subjectId: 1
 }
 section {
   sectionId: 932
@@ -1171,6 +1178,7 @@ section {
   maxClassSize: 40
   periodLength: 1
   courseId: 756
+  subjectId: 2
 }
 section {
   sectionId: 936
@@ -1180,6 +1188,7 @@ section {
   maxClassSize: 40
   periodLength: 1
   courseId: 758
+  subjectId: 0
 }
 section {
   sectionId: 937
@@ -1189,6 +1198,7 @@ section {
   maxClassSize: 40
   periodLength: 1
   courseId: 758
+  subjectId: 0
 }
 section {
   sectionId: 938
@@ -1198,6 +1208,7 @@ section {
   maxClassSize: 40
   periodLength: 1
   courseId: 758
+  subjectId: 0
 }
 section {
   sectionId: 939
@@ -1207,6 +1218,7 @@ section {
   maxClassSize: 40
   periodLength: 1
   courseId: 758
+  subjectId: 0
 }
 section {
   sectionId: 940
@@ -1216,6 +1228,7 @@ section {
   maxClassSize: 40
   periodLength: 1
   courseId: 758
+  subjectId: 0
 }
 section {
   sectionId: 941
@@ -1225,6 +1238,7 @@ section {
   maxClassSize: 40
   periodLength: 1
   courseId: 758
+  subjectId: 0
 }
 section {
   sectionId: 942
@@ -1234,6 +1248,7 @@ section {
   maxClassSize: 50
   periodLength: 1
   courseId: 759
+  subjectId: 0
 }
 section {
   sectionId: 946
@@ -1243,6 +1258,7 @@ section {
   maxClassSize: 15
   periodLength: 1
   courseId: 761
+  subjectId: 3
 }
 section {
   sectionId: 947
@@ -1252,6 +1268,7 @@ section {
   maxClassSize: 15
   periodLength: 1
   courseId: 762
+  subjectId: 0
 }
 section {
   sectionId: 948
@@ -1261,6 +1278,7 @@ section {
   maxClassSize: 15
   periodLength: 1
   courseId: 762
+  subjectId: 0
 }
 section {
   sectionId: 949
@@ -1270,6 +1288,7 @@ section {
   maxClassSize: 15
   periodLength: 1
   courseId: 762
+  subjectId: 0
 }
 section {
   sectionId: 950
@@ -1279,6 +1298,7 @@ section {
   maxClassSize: 15
   periodLength: 1
   courseId: 762
+  subjectId: 0
 }
 section {
   sectionId: 951
@@ -1288,6 +1308,7 @@ section {
   maxClassSize: 15
   periodLength: 1
   courseId: 762
+  subjectId: 0
 }
 section {
   sectionId: 952
@@ -1297,6 +1318,7 @@ section {
   maxClassSize: 15
   periodLength: 1
   courseId: 762
+  subjectId: 0
 }
 section {
   sectionId: 958
@@ -1307,6 +1329,7 @@ section {
   maxClassSize: 23
   periodLength: 1
   courseId: 765
+  subjectId: 1
 }
 section {
   sectionId: 959
@@ -1316,6 +1339,7 @@ section {
   maxClassSize: 30
   periodLength: 2
   courseId: 766
+  subjectId: 0
 }
 section {
   sectionId: 960
@@ -1325,6 +1349,7 @@ section {
   maxClassSize: 30
   periodLength: 1
   courseId: 767
+  subjectId: 0
 }
 section {
   sectionId: 962
@@ -1334,6 +1359,7 @@ section {
   maxClassSize: 30
   periodLength: 1
   courseId: 769
+  subjectId: 2
 }
 section {
   sectionId: 965
@@ -1343,7 +1369,7 @@ section {
   maxClassSize: 25
   periodLength: 2
   courseId: 770
-  requiredProperty: 40
+  subjectId: 4
 }
 section {
   sectionId: 966
@@ -1353,7 +1379,7 @@ section {
   maxClassSize: 25
   periodLength: 2
   courseId: 770
-  requiredProperty: 40
+  subjectId: 4
 }
 section {
   sectionId: 967
@@ -1363,7 +1389,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 771
-  requiredProperty: 40
+  subjectId: 4
 }
 section {
   sectionId: 968
@@ -1373,6 +1399,7 @@ section {
   maxClassSize: 15
   periodLength: 2
   courseId: 772
+  subjectId: 0
 }
 section {
   sectionId: 969
@@ -1382,6 +1409,7 @@ section {
   maxClassSize: 15
   periodLength: 2
   courseId: 772
+  subjectId: 0
 }
 section {
   sectionId: 970
@@ -1391,6 +1419,7 @@ section {
   maxClassSize: 12
   periodLength: 1
   courseId: 773
+  subjectId: 0
 }
 section {
   sectionId: 971
@@ -1400,6 +1429,7 @@ section {
   maxClassSize: 12
   periodLength: 1
   courseId: 773
+  subjectId: 0
 }
 section {
   sectionId: 972
@@ -1410,6 +1440,7 @@ section {
   maxClassSize: 50
   periodLength: 1
   courseId: 774
+  subjectId: 1
 }
 section {
   sectionId: 973
@@ -1420,6 +1451,7 @@ section {
   maxClassSize: 50
   periodLength: 1
   courseId: 774
+  subjectId: 1
 }
 section {
   sectionId: 974
@@ -1429,6 +1461,7 @@ section {
   maxClassSize: 8
   periodLength: 2
   courseId: 775
+  subjectId: 2
 }
 section {
   sectionId: 975
@@ -1438,6 +1471,7 @@ section {
   maxClassSize: 8
   periodLength: 2
   courseId: 775
+  subjectId: 2
 }
 section {
   sectionId: 976
@@ -1447,6 +1481,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 776
+  subjectId: 3
 }
 section {
   sectionId: 977
@@ -1456,6 +1491,7 @@ section {
   maxClassSize: 25
   periodLength: 1
   courseId: 777
+  subjectId: 0
 }
 section {
   sectionId: 978
@@ -1467,6 +1503,7 @@ section {
   maxClassSize: 21
   periodLength: 2
   courseId: 778
+  subjectId: 0
 }
 section {
   sectionId: 979
@@ -1478,6 +1515,7 @@ section {
   maxClassSize: 21
   periodLength: 2
   courseId: 778
+  subjectId: 0
 }
 section {
   sectionId: 980
@@ -1487,6 +1525,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 779
+  subjectId: 0
 }
 section {
   sectionId: 981
@@ -1496,6 +1535,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 779
+  subjectId: 0
 }
 section {
   sectionId: 982
@@ -1505,6 +1545,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 779
+  subjectId: 0
 }
 section {
   sectionId: 983
@@ -1514,6 +1555,7 @@ section {
   maxClassSize: 10
   periodLength: 2
   courseId: 780
+  subjectId: 0
 }
 section {
   sectionId: 984
@@ -1523,6 +1565,7 @@ section {
   maxClassSize: 10
   periodLength: 2
   courseId: 780
+  subjectId: 0
 }
 section {
   sectionId: 985
@@ -1532,6 +1575,7 @@ section {
   maxClassSize: 10
   periodLength: 2
   courseId: 780
+  subjectId: 0
 }
 section {
   sectionId: 986
@@ -1541,6 +1585,7 @@ section {
   maxClassSize: 10
   periodLength: 1
   courseId: 781
+  subjectId: 0
 }
 section {
   sectionId: 987
@@ -1550,6 +1595,7 @@ section {
   maxClassSize: 10
   periodLength: 1
   courseId: 781
+  subjectId: 0
 }
 section {
   sectionId: 988
@@ -1559,6 +1605,7 @@ section {
   maxClassSize: 10
   periodLength: 1
   courseId: 781
+  subjectId: 0
 }
 section {
   sectionId: 989
@@ -1568,6 +1615,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 782
+  subjectId: 4
 }
 section {
   sectionId: 992
@@ -1578,6 +1626,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 785
+  subjectId: 4
 }
 section {
   sectionId: 995
@@ -1587,6 +1636,7 @@ section {
   maxClassSize: 30
   periodLength: 3
   courseId: 787
+  subjectId: 0
 }
 section {
   sectionId: 996
@@ -1597,6 +1647,7 @@ section {
   maxClassSize: 45
   periodLength: 1
   courseId: 788
+  subjectId: 4
 }
 section {
   sectionId: 997
@@ -1607,6 +1658,7 @@ section {
   maxClassSize: 200
   periodLength: 1
   courseId: 789
+  subjectId: 1
 }
 section {
   sectionId: 998
@@ -1617,6 +1669,7 @@ section {
   maxClassSize: 25
   periodLength: 1
   courseId: 790
+  subjectId: 3
 }
 section {
   sectionId: 1006
@@ -1626,6 +1679,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 796
+  subjectId: 0
 }
 section {
   sectionId: 1007
@@ -1635,6 +1689,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 796
+  subjectId: 0
 }
 section {
   sectionId: 1008
@@ -1644,6 +1699,7 @@ section {
   maxClassSize: 12
   periodLength: 3
   courseId: 797
+  subjectId: 0
 }
 section {
   sectionId: 1009
@@ -1653,6 +1709,7 @@ section {
   maxClassSize: 12
   periodLength: 3
   courseId: 798
+  subjectId: 0
 }
 section {
   sectionId: 1010
@@ -1662,6 +1719,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 799
+  subjectId: 4
 }
 section {
   sectionId: 1011
@@ -1671,6 +1729,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 799
+  subjectId: 4
 }
 section {
   sectionId: 1012
@@ -1680,6 +1739,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 799
+  subjectId: 4
 }
 section {
   sectionId: 1013
@@ -1689,6 +1749,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 800
+  subjectId: 0
 }
 section {
   sectionId: 1014
@@ -1698,6 +1759,7 @@ section {
   maxClassSize: 30
   periodLength: 2
   courseId: 801
+  subjectId: 0
 }
 section {
   sectionId: 1015
@@ -1707,6 +1769,7 @@ section {
   maxClassSize: 50
   periodLength: 1
   courseId: 802
+  subjectId: 0
 }
 section {
   sectionId: 1016
@@ -1716,6 +1779,7 @@ section {
   maxClassSize: 50
   periodLength: 1
   courseId: 802
+  subjectId: 0
 }
 section {
   sectionId: 1017
@@ -1725,6 +1789,7 @@ section {
   maxClassSize: 50
   periodLength: 1
   courseId: 802
+  subjectId: 0
 }
 section {
   sectionId: 1018
@@ -1734,6 +1799,7 @@ section {
   maxClassSize: 50
   periodLength: 1
   courseId: 802
+  subjectId: 0
 }
 section {
   sectionId: 1019
@@ -1743,6 +1809,7 @@ section {
   maxClassSize: 50
   periodLength: 1
   courseId: 802
+  subjectId: 0
 }
 section {
   sectionId: 1020
@@ -1752,6 +1819,7 @@ section {
   maxClassSize: 50
   periodLength: 1
   courseId: 802
+  subjectId: 0
 }
 section {
   sectionId: 1021
@@ -1761,6 +1829,7 @@ section {
   maxClassSize: 12
   periodLength: 1
   courseId: 803
+  subjectId: 0
 }
 section {
   sectionId: 1022
@@ -1770,6 +1839,7 @@ section {
   maxClassSize: 30
   periodLength: 1
   courseId: 804
+  subjectId: 3
 }
 section {
   sectionId: 1023
@@ -1779,6 +1849,7 @@ section {
   maxClassSize: 30
   periodLength: 1
   courseId: 804
+  subjectId: 3
 }
 section {
   sectionId: 1024
@@ -1788,6 +1859,7 @@ section {
   maxClassSize: 30
   periodLength: 1
   courseId: 804
+  subjectId: 3
 }
 section {
   sectionId: 1025
@@ -1797,6 +1869,7 @@ section {
   maxClassSize: 30
   periodLength: 1
   courseId: 804
+  subjectId: 3
 }
 section {
   sectionId: 1026
@@ -1806,7 +1879,7 @@ section {
   maxClassSize: 6
   periodLength: 2
   courseId: 805
-  requiredProperty: 42
+  subjectId: 4
 }
 section {
   sectionId: 1027
@@ -1816,7 +1889,7 @@ section {
   maxClassSize: 6
   periodLength: 2
   courseId: 805
-  requiredProperty: 42
+  subjectId: 4
 }
 section {
   sectionId: 1031
@@ -1826,6 +1899,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 807
+  subjectId: 4
 }
 section {
   sectionId: 1032
@@ -1835,6 +1909,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 808
+  subjectId: 0
 }
 section {
   sectionId: 1033
@@ -1844,6 +1919,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 808
+  subjectId: 0
 }
 section {
   sectionId: 1034
@@ -1853,7 +1929,7 @@ section {
   maxClassSize: 15
   periodLength: 1
   courseId: 809
-  requiredProperty: 42
+  subjectId: 4
 }
 section {
   sectionId: 1035
@@ -1863,7 +1939,7 @@ section {
   maxClassSize: 15
   periodLength: 1
   courseId: 809
-  requiredProperty: 42
+  subjectId: 4
 }
 section {
   sectionId: 1036
@@ -1873,6 +1949,7 @@ section {
   maxClassSize: 15
   periodLength: 2
   courseId: 810
+  subjectId: 1
 }
 section {
   sectionId: 1037
@@ -1882,6 +1959,7 @@ section {
   maxClassSize: 15
   periodLength: 2
   courseId: 810
+  subjectId: 1
 }
 section {
   sectionId: 1038
@@ -1892,6 +1970,7 @@ section {
   maxClassSize: 20
   periodLength: 3
   courseId: 811
+  subjectId: 5
 }
 section {
   sectionId: 1048
@@ -1901,6 +1980,7 @@ section {
   maxClassSize: 15
   periodLength: 1
   courseId: 815
+  subjectId: 0
 }
 section {
   sectionId: 1049
@@ -1910,6 +1990,7 @@ section {
   maxClassSize: 15
   periodLength: 1
   courseId: 815
+  subjectId: 0
 }
 section {
   sectionId: 1050
@@ -1919,6 +2000,7 @@ section {
   maxClassSize: 15
   periodLength: 1
   courseId: 815
+  subjectId: 0
 }
 section {
   sectionId: 1051
@@ -1929,6 +2011,7 @@ section {
   maxClassSize: 200
   periodLength: 2
   courseId: 816
+  subjectId: 1
 }
 section {
   sectionId: 1052
@@ -1938,7 +2021,7 @@ section {
   maxClassSize: 25
   periodLength: 1
   courseId: 817
-  requiredProperty: 40
+  subjectId: 4
 }
 section {
   sectionId: 1053
@@ -1948,6 +2031,7 @@ section {
   maxClassSize: 18
   periodLength: 1
   courseId: 818
+  subjectId: 1
 }
 section {
   sectionId: 1054
@@ -1957,6 +2041,7 @@ section {
   maxClassSize: 18
   periodLength: 1
   courseId: 818
+  subjectId: 1
 }
 section {
   sectionId: 1055
@@ -1966,6 +2051,7 @@ section {
   maxClassSize: 18
   periodLength: 1
   courseId: 818
+  subjectId: 1
 }
 section {
   sectionId: 1056
@@ -1975,6 +2061,7 @@ section {
   maxClassSize: 18
   periodLength: 1
   courseId: 818
+  subjectId: 1
 }
 section {
   sectionId: 1057
@@ -1984,6 +2071,7 @@ section {
   maxClassSize: 15
   periodLength: 2
   courseId: 819
+  subjectId: 1
 }
 section {
   sectionId: 1058
@@ -1993,6 +2081,7 @@ section {
   maxClassSize: 15
   periodLength: 2
   courseId: 819
+  subjectId: 1
 }
 section {
   sectionId: 1059
@@ -2002,6 +2091,7 @@ section {
   maxClassSize: 15
   periodLength: 2
   courseId: 819
+  subjectId: 1
 }
 section {
   sectionId: 1060
@@ -2011,6 +2101,7 @@ section {
   maxClassSize: 10
   periodLength: 1
   courseId: 820
+  subjectId: 0
 }
 section {
   sectionId: 1061
@@ -2020,6 +2111,7 @@ section {
   maxClassSize: 10
   periodLength: 1
   courseId: 820
+  subjectId: 0
 }
 section {
   sectionId: 1062
@@ -2029,6 +2121,7 @@ section {
   maxClassSize: 10
   periodLength: 1
   courseId: 820
+  subjectId: 0
 }
 section {
   sectionId: 1063
@@ -2038,6 +2131,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 821
+  subjectId: 0
 }
 section {
   sectionId: 1064
@@ -2047,6 +2141,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 821
+  subjectId: 0
 }
 section {
   sectionId: 1065
@@ -2056,6 +2151,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 822
+  subjectId: 0
 }
 section {
   sectionId: 1066
@@ -2065,6 +2161,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 822
+  subjectId: 0
 }
 section {
   sectionId: 1067
@@ -2074,6 +2171,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 822
+  subjectId: 0
 }
 section {
   sectionId: 1068
@@ -2083,7 +2181,7 @@ section {
   maxClassSize: 15
   periodLength: 1
   courseId: 823
-  requiredProperty: 42
+  subjectId: 0
 }
 section {
   sectionId: 1069
@@ -2093,6 +2191,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 824
+  subjectId: 5
 }
 section {
   sectionId: 1070
@@ -2102,6 +2201,7 @@ section {
   maxClassSize: 100
   periodLength: 1
   courseId: 825
+  subjectId: 2
 }
 section {
   sectionId: 1071
@@ -2111,6 +2211,7 @@ section {
   maxClassSize: 200
   periodLength: 1
   courseId: 826
+  subjectId: 0
 }
 section {
   sectionId: 1072
@@ -2120,6 +2221,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 827
+  subjectId: 1
 }
 section {
   sectionId: 1073
@@ -2129,6 +2231,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 827
+  subjectId: 1
 }
 section {
   sectionId: 1074
@@ -2138,6 +2241,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 827
+  subjectId: 1
 }
 section {
   sectionId: 1078
@@ -2147,6 +2251,7 @@ section {
   maxClassSize: 16
   periodLength: 2
   courseId: 828
+  subjectId: 4
 }
 section {
   sectionId: 1081
@@ -2156,6 +2261,7 @@ section {
   maxClassSize: 25
   periodLength: 1
   courseId: 830
+  subjectId: 3
 }
 section {
   sectionId: 1082
@@ -2165,6 +2271,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 831
+  subjectId: 0
 }
 section {
   sectionId: 1083
@@ -2174,6 +2281,7 @@ section {
   maxClassSize: 25
   periodLength: 1
   courseId: 832
+  subjectId: 1
 }
 section {
   sectionId: 1084
@@ -2183,6 +2291,7 @@ section {
   maxClassSize: 50
   periodLength: 1
   courseId: 833
+  subjectId: 4
 }
 section {
   sectionId: 1085
@@ -2192,6 +2301,7 @@ section {
   maxClassSize: 50
   periodLength: 1
   courseId: 833
+  subjectId: 4
 }
 section {
   sectionId: 1086
@@ -2201,6 +2311,7 @@ section {
   maxClassSize: 40
   periodLength: 1
   courseId: 834
+  subjectId: 0
 }
 section {
   sectionId: 1087
@@ -2210,6 +2321,7 @@ section {
   maxClassSize: 40
   periodLength: 1
   courseId: 834
+  subjectId: 0
 }
 section {
   sectionId: 1088
@@ -2219,6 +2331,7 @@ section {
   maxClassSize: 40
   periodLength: 1
   courseId: 834
+  subjectId: 0
 }
 section {
   sectionId: 1089
@@ -2228,6 +2341,7 @@ section {
   maxClassSize: 40
   periodLength: 1
   courseId: 834
+  subjectId: 0
 }
 section {
   sectionId: 1090
@@ -2237,6 +2351,7 @@ section {
   maxClassSize: 40
   periodLength: 1
   courseId: 834
+  subjectId: 0
 }
 section {
   sectionId: 1091
@@ -2246,6 +2361,7 @@ section {
   maxClassSize: 40
   periodLength: 1
   courseId: 834
+  subjectId: 0
 }
 section {
   sectionId: 1092
@@ -2255,6 +2371,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 835
+  subjectId: 5
 }
 section {
   sectionId: 1093
@@ -2264,6 +2381,7 @@ section {
   maxClassSize: 30
   periodLength: 1
   courseId: 836
+  subjectId: 5
 }
 section {
   sectionId: 1094
@@ -2273,6 +2391,7 @@ section {
   maxClassSize: 25
   periodLength: 1
   courseId: 837
+  subjectId: 1
 }
 section {
   sectionId: 1095
@@ -2282,6 +2401,7 @@ section {
   maxClassSize: 25
   periodLength: 1
   courseId: 837
+  subjectId: 1
 }
 section {
   sectionId: 1096
@@ -2291,6 +2411,7 @@ section {
   maxClassSize: 25
   periodLength: 1
   courseId: 837
+  subjectId: 1
 }
 section {
   sectionId: 1097
@@ -2300,6 +2421,7 @@ section {
   maxClassSize: 25
   periodLength: 1
   courseId: 837
+  subjectId: 1
 }
 section {
   sectionId: 1098
@@ -2309,6 +2431,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 838
+  subjectId: 5
 }
 section {
   sectionId: 1099
@@ -2318,6 +2441,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 838
+  subjectId: 5
 }
 section {
   sectionId: 1100
@@ -2327,6 +2451,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 838
+  subjectId: 5
 }
 section {
   sectionId: 1101
@@ -2336,6 +2461,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 839
+  subjectId: 5
 }
 section {
   sectionId: 1102
@@ -2345,6 +2471,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 839
+  subjectId: 5
 }
 section {
   sectionId: 1103
@@ -2354,6 +2481,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 839
+  subjectId: 5
 }
 section {
   sectionId: 1104
@@ -2363,6 +2491,7 @@ section {
   maxClassSize: 25
   periodLength: 1
   courseId: 840
+  subjectId: 2
 }
 section {
   sectionId: 1106
@@ -2372,7 +2501,7 @@ section {
   maxClassSize: 16
   periodLength: 1
   courseId: 841
-  requiredProperty: 40
+  subjectId: 4
 }
 section {
   sectionId: 1107
@@ -2382,7 +2511,7 @@ section {
   maxClassSize: 16
   periodLength: 1
   courseId: 841
-  requiredProperty: 40
+  subjectId: 4
 }
 section {
   sectionId: 1111
@@ -2392,6 +2521,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 843
+  subjectId: 4
 }
 section {
   sectionId: 1112
@@ -2401,6 +2531,7 @@ section {
   maxClassSize: 24
   periodLength: 1
   courseId: 844
+  subjectId: 0
 }
 section {
   sectionId: 1113
@@ -2410,6 +2541,7 @@ section {
   maxClassSize: 24
   periodLength: 1
   courseId: 844
+  subjectId: 0
 }
 section {
   sectionId: 1114
@@ -2419,6 +2551,7 @@ section {
   maxClassSize: 24
   periodLength: 1
   courseId: 844
+  subjectId: 0
 }
 section {
   sectionId: 1115
@@ -2428,6 +2561,7 @@ section {
   maxClassSize: 24
   periodLength: 1
   courseId: 844
+  subjectId: 0
 }
 section {
   sectionId: 1116
@@ -2437,7 +2571,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 845
-  requiredProperty: 40
+  subjectId: 4
 }
 section {
   sectionId: 1117
@@ -2447,7 +2581,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 845
-  requiredProperty: 40
+  subjectId: 4
 }
 section {
   sectionId: 1118
@@ -2458,6 +2592,7 @@ section {
   maxClassSize: 15
   periodLength: 2
   courseId: 846
+  subjectId: 2
 }
 section {
   sectionId: 1119
@@ -2468,6 +2603,7 @@ section {
   maxClassSize: 15
   periodLength: 2
   courseId: 846
+  subjectId: 2
 }
 section {
   sectionId: 1120
@@ -2478,6 +2614,7 @@ section {
   maxClassSize: 15
   periodLength: 2
   courseId: 846
+  subjectId: 2
 }
 section {
   sectionId: 1121
@@ -2487,6 +2624,7 @@ section {
   maxClassSize: 16
   periodLength: 1
   courseId: 847
+  subjectId: 4
 }
 section {
   sectionId: 1123
@@ -2496,6 +2634,7 @@ section {
   maxClassSize: 15
   periodLength: 2
   courseId: 849
+  subjectId: 0
 }
 section {
   sectionId: 1124
@@ -2505,6 +2644,7 @@ section {
   maxClassSize: 15
   periodLength: 2
   courseId: 849
+  subjectId: 0
 }
 section {
   sectionId: 1126
@@ -2514,6 +2654,7 @@ section {
   maxClassSize: 10
   periodLength: 1
   courseId: 850
+  subjectId: 3
 }
 section {
   sectionId: 1127
@@ -2523,7 +2664,7 @@ section {
   maxClassSize: 8
   periodLength: 1
   courseId: 851
-  requiredProperty: 40
+  subjectId: 2
 }
 section {
   sectionId: 1128
@@ -2533,7 +2674,7 @@ section {
   maxClassSize: 8
   periodLength: 1
   courseId: 851
-  requiredProperty: 40
+  subjectId: 2
 }
 section {
   sectionId: 1129
@@ -2544,6 +2685,7 @@ section {
   maxClassSize: 40
   periodLength: 1
   courseId: 852
+  subjectId: 2
 }
 section {
   sectionId: 1130
@@ -2554,6 +2696,7 @@ section {
   maxClassSize: 40
   periodLength: 1
   courseId: 852
+  subjectId: 2
 }
 section {
   sectionId: 1131
@@ -2564,6 +2707,7 @@ section {
   maxClassSize: 40
   periodLength: 1
   courseId: 852
+  subjectId: 2
 }
 section {
   sectionId: 1132
@@ -2573,6 +2717,7 @@ section {
   maxClassSize: 30
   periodLength: 2
   courseId: 853
+  subjectId: 5
 }
 section {
   sectionId: 1133
@@ -2582,6 +2727,7 @@ section {
   maxClassSize: 23
   periodLength: 2
   courseId: 854
+  subjectId: 0
 }
 section {
   sectionId: 1134
@@ -2591,6 +2737,7 @@ section {
   maxClassSize: 23
   periodLength: 2
   courseId: 854
+  subjectId: 0
 }
 section {
   sectionId: 1135
@@ -2600,6 +2747,7 @@ section {
   maxClassSize: 25
   periodLength: 1
   courseId: 855
+  subjectId: 0
 }
 section {
   sectionId: 1136
@@ -2609,6 +2757,7 @@ section {
   maxClassSize: 25
   periodLength: 1
   courseId: 855
+  subjectId: 0
 }
 section {
   sectionId: 1138
@@ -2618,6 +2767,7 @@ section {
   maxClassSize: 35
   periodLength: 1
   courseId: 857
+  subjectId: 0
 }
 section {
   sectionId: 1139
@@ -2627,6 +2777,7 @@ section {
   maxClassSize: 35
   periodLength: 1
   courseId: 857
+  subjectId: 0
 }
 section {
   sectionId: 1140
@@ -2636,6 +2787,7 @@ section {
   maxClassSize: 35
   periodLength: 1
   courseId: 857
+  subjectId: 0
 }
 section {
   sectionId: 1141
@@ -2645,6 +2797,7 @@ section {
   maxClassSize: 35
   periodLength: 1
   courseId: 857
+  subjectId: 0
 }
 section {
   sectionId: 1142
@@ -2654,6 +2807,7 @@ section {
   maxClassSize: 35
   periodLength: 1
   courseId: 857
+  subjectId: 0
 }
 section {
   sectionId: 1143
@@ -2663,6 +2817,7 @@ section {
   maxClassSize: 35
   periodLength: 1
   courseId: 857
+  subjectId: 0
 }
 section {
   sectionId: 1144
@@ -2672,7 +2827,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 858
-  requiredProperty: 42
+  subjectId: 4
 }
 section {
   sectionId: 1147
@@ -2682,6 +2837,7 @@ section {
   maxClassSize: 40
   periodLength: 1
   courseId: 860
+  subjectId: 1
 }
 section {
   sectionId: 1148
@@ -2691,6 +2847,7 @@ section {
   maxClassSize: 40
   periodLength: 1
   courseId: 860
+  subjectId: 1
 }
 section {
   sectionId: 1149
@@ -2700,6 +2857,7 @@ section {
   maxClassSize: 50
   periodLength: 1
   courseId: 861
+  subjectId: 0
 }
 section {
   sectionId: 1150
@@ -2709,7 +2867,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 862
-  requiredProperty: 43
+  subjectId: 5
 }
 section {
   sectionId: 1151
@@ -2719,6 +2877,7 @@ section {
   maxClassSize: 12
   periodLength: 1
   courseId: 863
+  subjectId: 1
 }
 section {
   sectionId: 1152
@@ -2728,7 +2887,7 @@ section {
   maxClassSize: 15
   periodLength: 2
   courseId: 864
-  requiredProperty: 42
+  subjectId: 4
 }
 section {
   sectionId: 1153
@@ -2740,6 +2899,7 @@ section {
   maxClassSize: 25
   periodLength: 2
   courseId: 865
+  subjectId: 0
 }
 section {
   sectionId: 1154
@@ -2751,6 +2911,7 @@ section {
   maxClassSize: 25
   periodLength: 2
   courseId: 865
+  subjectId: 0
 }
 section {
   sectionId: 1156
@@ -2760,6 +2921,7 @@ section {
   maxClassSize: 12
   periodLength: 2
   courseId: 866
+  subjectId: 0
 }
 section {
   sectionId: 1157
@@ -2770,6 +2932,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 867
+  subjectId: 4
 }
 section {
   sectionId: 1158
@@ -2780,6 +2943,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 868
+  subjectId: 3
 }
 section {
   sectionId: 1163
@@ -2789,6 +2953,7 @@ section {
   maxClassSize: 10
   periodLength: 1
   courseId: 872
+  subjectId: 0
 }
 section {
   sectionId: 1164
@@ -2798,6 +2963,7 @@ section {
   maxClassSize: 10
   periodLength: 1
   courseId: 872
+  subjectId: 0
 }
 section {
   sectionId: 1167
@@ -2807,6 +2973,7 @@ section {
   maxClassSize: 30
   periodLength: 1
   courseId: 874
+  subjectId: 0
 }
 section {
   sectionId: 1168
@@ -2816,6 +2983,7 @@ section {
   maxClassSize: 30
   periodLength: 1
   courseId: 874
+  subjectId: 0
 }
 section {
   sectionId: 1169
@@ -2825,6 +2993,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 875
+  subjectId: 0
 }
 section {
   sectionId: 1176
@@ -2835,6 +3004,7 @@ section {
   maxClassSize: 200
   periodLength: 1
   courseId: 877
+  subjectId: 0
 }
 section {
   sectionId: 1177
@@ -2845,6 +3015,7 @@ section {
   maxClassSize: 200
   periodLength: 1
   courseId: 877
+  subjectId: 0
 }
 section {
   sectionId: 1178
@@ -2854,6 +3025,7 @@ section {
   maxClassSize: 17
   periodLength: 1
   courseId: 878
+  subjectId: 5
 }
 section {
   sectionId: 1179
@@ -2863,6 +3035,7 @@ section {
   maxClassSize: 17
   periodLength: 1
   courseId: 878
+  subjectId: 5
 }
 section {
   sectionId: 1180
@@ -2872,6 +3045,7 @@ section {
   maxClassSize: 30
   periodLength: 1
   courseId: 879
+  subjectId: 3
 }
 section {
   sectionId: 1181
@@ -2880,6 +3054,7 @@ section {
   maxClassSize: 12
   periodLength: 1
   courseId: 880
+  subjectId: 0
 }
 section {
   sectionId: 1183
@@ -2889,6 +3064,7 @@ section {
   maxClassSize: 30
   periodLength: 1
   courseId: 881
+  subjectId: 5
 }
 section {
   sectionId: 1184
@@ -2898,6 +3074,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 882
+  subjectId: 1
 }
 section {
   sectionId: 1185
@@ -2907,6 +3084,7 @@ section {
   maxClassSize: 20
   periodLength: 2
   courseId: 882
+  subjectId: 1
 }
 section {
   sectionId: 1186
@@ -2916,6 +3094,7 @@ section {
   maxClassSize: 25
   periodLength: 2
   courseId: 883
+  subjectId: 1
 }
 section {
   sectionId: 1187
@@ -2925,6 +3104,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 884
+  subjectId: 0
 }
 section {
   sectionId: 1188
@@ -2934,6 +3114,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 884
+  subjectId: 0
 }
 section {
   sectionId: 1189
@@ -2943,6 +3124,7 @@ section {
   maxClassSize: 15
   periodLength: 1
   courseId: 885
+  subjectId: 0
 }
 section {
   sectionId: 1190
@@ -2952,6 +3134,7 @@ section {
   maxClassSize: 15
   periodLength: 1
   courseId: 885
+  subjectId: 0
 }
 section {
   sectionId: 1191
@@ -2961,6 +3144,7 @@ section {
   maxClassSize: 15
   periodLength: 1
   courseId: 885
+  subjectId: 0
 }
 section {
   sectionId: 1192
@@ -2970,6 +3154,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 886
+  subjectId: 0
 }
 section {
   sectionId: 1197
@@ -2979,6 +3164,7 @@ section {
   maxClassSize: 200
   periodLength: 1
   courseId: 888
+  subjectId: 1
 }
 section {
   sectionId: 1198
@@ -2988,6 +3174,7 @@ section {
   maxClassSize: 60
   periodLength: 1
   courseId: 889
+  subjectId: 1
 }
 section {
   sectionId: 1201
@@ -2997,6 +3184,7 @@ section {
   maxClassSize: 10
   periodLength: 2
   courseId: 891
+  subjectId: 4
 }
 section {
   sectionId: 1202
@@ -3006,6 +3194,7 @@ section {
   maxClassSize: 10
   periodLength: 2
   courseId: 891
+  subjectId: 4
 }
 section {
   sectionId: 1203
@@ -3016,6 +3205,7 @@ section {
   maxClassSize: 23
   periodLength: 1
   courseId: 765
+  subjectId: 1
 }
 section {
   sectionId: 1204
@@ -3025,6 +3215,7 @@ section {
   maxClassSize: 20
   periodLength: 1
   courseId: 892
+  subjectId: 1
 }
 section {
   sectionId: 1205
@@ -3034,6 +3225,7 @@ section {
   maxClassSize: 30
   periodLength: 1
   courseId: 893
+  subjectId: 2
 }
 section {
   sectionId: 1206
@@ -3043,6 +3235,7 @@ section {
   maxClassSize: 25
   periodLength: 2
   courseId: 894
+  subjectId: 1
 }
 section {
   sectionId: 1207
@@ -3052,6 +3245,25 @@ section {
   maxClassSize: 25
   periodLength: 2
   courseId: 894
+  subjectId: 1
+}
+section {
+  sectionId: 1210
+  courseTitle: "L898s1: Lunch Period"
+  estimatedClassSize: 350
+  maxClassSize: 350
+  periodLength: 1
+  courseId: 898
+  subjectId: 6
+}
+section {
+  sectionId: 1211
+  courseTitle: "L898s2: Lunch Period"
+  estimatedClassSize: 350
+  maxClassSize: 350
+  periodLength: 1
+  courseId: 898
+  subjectId: 6
 }
 section {
   sectionId: 1213
@@ -3061,8 +3273,27 @@ section {
   maxClassSize: 10
   periodLength: 1
   courseId: 850
+  subjectId: 3
 }
-
+section {
+  sectionId: 1214
+  courseTitle: "H900s1: Splash! 2011 Photo"
+  estimatedClassSize: 1000
+  maxClassSize: 1000
+  periodLength: 0
+  courseId: 900
+  subjectId: 2
+}
+section {
+  sectionId: 1215
+  courseTitle: "L901s1: Test class"
+  teacherIds: 448
+  estimatedClassSize: 2
+  maxClassSize: 2
+  periodLength: 1
+  courseId: 901
+  subjectId: 3
+}
 room {
   roomId: 0
   name: "Stuart 102"
@@ -3103,7 +3334,6 @@ room {
   availablePeriod: 64
   availablePeriod: 62
   roomProperty: 36
-  roomProperty: 43
 }
 room {
   roomId: 3
@@ -3203,6 +3433,7 @@ room {
   availablePeriod: 62
   roomProperty: 38
   roomProperty: 40
+  roomProperty: 41
 }
 room {
   roomId: 10
@@ -3241,7 +3472,6 @@ room {
   availablePeriod: 61
   availablePeriod: 64
   availablePeriod: 62
-  roomProperty: 42
 }
 room {
   roomId: 13
@@ -3254,7 +3484,6 @@ room {
   availablePeriod: 61
   availablePeriod: 64
   availablePeriod: 62
-  roomProperty: 42
 }
 room {
   roomId: 14
@@ -3283,6 +3512,18 @@ room {
   availablePeriod: 62
   roomProperty: 36
   roomProperty: 39
+}
+room {
+  roomId: 16
+  name: "Ida Noyes Hall"
+  capacity: 1000
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 61
+  availablePeriod: 64
+  availablePeriod: 62
 }
 room {
   roomId: 17
@@ -3363,7 +3604,6 @@ room {
   availablePeriod: 61
   availablePeriod: 64
   availablePeriod: 62
-  roomProperty: 42
 }
 room {
   roomId: 23
@@ -3528,6 +3768,7 @@ room {
   availablePeriod: 62
   roomProperty: 38
   roomProperty: 40
+  roomProperty: 41
 }
 room {
   roomId: 35
@@ -3591,6 +3832,7 @@ room {
   availablePeriod: 65
   availablePeriod: 66
   roomProperty: 40
+  roomProperty: 41
 }
 room {
   roomId: 40
@@ -3605,6 +3847,20 @@ room {
   availablePeriod: 62
   roomProperty: 36
   roomProperty: 39
+}
+room {
+  roomId: 41
+  name: "Ida Noyes Dance Room"
+  capacity: 40
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 61
+  availablePeriod: 64
+  availablePeriod: 62
+  roomProperty: 40
+  roomProperty: 41
 }
 room {
   roomId: 42
@@ -3632,7 +3888,6 @@ room {
   availablePeriod: 64
   availablePeriod: 62
   roomProperty: 36
-  roomProperty: 43
 }
 roomProperty {
   propertyId: 36
@@ -3653,15 +3908,36 @@ roomProperty {
 roomProperty {
   propertyId: 40
   description: "Dance Space"
-  isBinding: true
 }
 roomProperty {
-  propertyId: 42
-  description: "Meeting Point"
-  isBinding: true
+  propertyId: 41
+  description: "Hardwood Floors"
 }
-roomProperty {
-  propertyId: 43
-  description: "Computer Lab"
-  isBinding: true
+subject {
+  subjectId: 4
+  title: "Art, Music, and Performance"
+}
+subject {
+  subjectId: 3
+  title: "Literature, Language, and Writing"
+}
+subject {
+  subjectId: 2
+  title: "Sports and Hobbies"
+}
+subject {
+  subjectId: 0
+  title: "Thought, Culture, and Society"
+}
+subject {
+  subjectId: 6
+  title: "Lunch"
+}
+subject {
+  subjectId: 5
+  title: "Math and Computers"
+}
+subject {
+  subjectId: 1
+  title: "Science"
 }

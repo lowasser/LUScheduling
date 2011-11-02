@@ -30,7 +30,7 @@ public final class Section extends ProgramObject<SerialSection> implements Compa
   }
 
   public Course getCourse() {
-    return new Course(serial.getCourseId(), getTitle(), getProgram());
+    return new Course(serial.getCourseId(), this);
   }
 
   public int getPeriodLength() {
@@ -71,6 +71,10 @@ public final class Section extends ProgramObject<SerialSection> implements Compa
   @Override
   public String toString() {
     return Objects.toStringHelper(this).add("id", getId()).toString();
+  }
+
+  public Subject getSubject() {
+    return checkNotNull(getProgram().subjects.get(serial.getSubjectId()));
   }
 
   static Function<SerialSection, Section> programWrapper(final Program program) {

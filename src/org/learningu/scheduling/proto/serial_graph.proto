@@ -9,6 +9,11 @@ message SerialRoomProperty {
 	optional bool isBinding = 3 [default = false]; // if present, classes must require this property to get this room
 }
 
+message SerialSubject {
+	required int32 subjectId = 1;
+	optional string title = 2;
+}
+
 /*
  * A course in an LU program.  Courses may have estimated and maximum class sizes,
  * room requirements, and teachers.
@@ -16,6 +21,7 @@ message SerialRoomProperty {
 message SerialSection {
 	required int32 sectionId = 1;
 	optional string courseTitle = 2;
+	optional int32 subjectId = 12 [default = -1];
 	repeated int32 teacherIds = 3 [packed = true];
 	optional int32 estimatedClassSize = 5 [default = 15];
 	optional int32 maxClassSize = 6 [default = 20];
@@ -52,6 +58,7 @@ message SerialPeriod {
 	optional string description = 2;
 	optional SerialDateTime start = 3;
 	optional SerialDateTime end = 4;
+	optional double attendanceLevel = 6 [default = 1.0];
 }
 
 /*
@@ -81,6 +88,7 @@ message SerialRoom {
  */
 message SerialProgram {
 	optional string name = 5 [default = ""];
+	repeated SerialSubject subject = 7;
 	repeated SerialTimeBlock timeBlock = 1;
 	repeated SerialTeacher teacher = 2;
 	repeated SerialSection section = 3;

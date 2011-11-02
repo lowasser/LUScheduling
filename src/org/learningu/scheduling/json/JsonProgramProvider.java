@@ -1,5 +1,6 @@
 package org.learningu.scheduling.json;
 
+import com.google.common.collect.Maps;
 import com.google.common.math.DoubleMath;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -9,6 +10,8 @@ import com.google.inject.Provider;
 import com.google.inject.name.Named;
 
 import java.math.RoundingMode;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.learningu.scheduling.graph.SerialGraph.SerialPeriod;
@@ -16,6 +19,7 @@ import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
 import org.learningu.scheduling.graph.SerialGraph.SerialRoom;
 import org.learningu.scheduling.graph.SerialGraph.SerialRoomProperty;
 import org.learningu.scheduling.graph.SerialGraph.SerialSection;
+import org.learningu.scheduling.graph.SerialGraph.SerialSubject;
 import org.learningu.scheduling.graph.SerialGraph.SerialTeacher;
 import org.learningu.scheduling.graph.SerialGraph.SerialTimeBlock;
 
@@ -63,6 +67,13 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
 
   private SerialSection parseSection(JsonObject obj) {
     SerialSection.Builder builder = SerialSection.newBuilder();
+
+    Integer subjId = subjects.get(obj.get("category").getAsString());
+    if (subjId == null) {
+      subjects.put(obj.get("category").getAsString(), subjId = subjects.size());
+    }
+    builder.setSubjectId(subjId);
+
     builder.setCourseTitle(obj.get("emailcode").getAsString() + ": "
         + obj.get("text").getAsString());
     builder.setSectionId(obj.get("id").getAsInt());
@@ -83,6 +94,7 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
   private final JsonArray resources;
   private final JsonArray sections;
   private final JsonArray rooms;
+  private final Map<String, Integer> subjects = Maps.newHashMap();
 
   @Inject
   JsonProgramProvider(
@@ -119,6 +131,12 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     }
     for (JsonElement room : rooms) {
       builder.addRoom(parseRoom(room.getAsJsonObject()));
+    }
+    for (Entry<String, Integer> entry : subjects.entrySet()) {
+      builder.addSubject(SerialSubject
+          .newBuilder()
+          .setSubjectId(entry.getValue())
+          .setTitle(entry.getKey()));
     }
     return builder.build();
   }

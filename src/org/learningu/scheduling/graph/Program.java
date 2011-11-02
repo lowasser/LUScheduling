@@ -56,6 +56,8 @@ public final class Program {
 
   final ImmutableBiMap<Integer, Course> courses;
 
+  final ImmutableBiMap<Integer, Subject> subjects;
+
   private final ImmutableSetMultimap<Course, Section> courseMap;
 
   private final ImmutableSetMultimap<Teacher, Course> teachingMap;
@@ -76,6 +78,8 @@ public final class Program {
 
   private final Cache<Section, Set<Course>> prerequisites;
 
+  private final double totalAttendanceRatio;
+
   @VisibleForTesting
   Program(SerialProgram serial) {
     this(serial, new ProgramCacheFlags());
@@ -89,6 +93,9 @@ public final class Program {
   Program(SerialProgram serial, ProgramCacheFlags flags) {
     checkNotNull(flags);
     this.serial = checkNotNull(serial);
+    subjects = programObjectSet(Lists.transform(
+        serial.getSubjectList(),
+        Subject.programWrapper(this)));
     teachers = programObjectSet(Lists.transform(
         serial.getTeacherList(),
         Teacher.programWrapper(this)));
@@ -223,6 +230,12 @@ public final class Program {
             return key.getRoomProperties();
           }
         });
+
+    double totAttendanceRatio = 0;
+    for (ClassPeriod period : getPeriods()) {
+      totAttendanceRatio += period.serial.getAttendanceLevel();
+    }
+    totalAttendanceRatio = totAttendanceRatio;
   }
 
   private static <T extends ProgramObject<?>> ImmutableBiMap<Integer, T> programObjectSet(
@@ -240,6 +253,10 @@ public final class Program {
       return value.size();
     }
   };
+
+  public double getAttendanceRatio(ClassPeriod period) {
+    return period.serial.getAttendanceLevel() / totalAttendanceRatio;
+  }
 
   public Course getCourse(int id) {
     return courses.get(id);
@@ -307,6 +324,7 @@ public final class Program {
           c.getMaxClassSize());
       c.getTeachers();
       c.getRequiredProperties();
+      c.getSubject();
     }
   }
 
@@ -353,6 +371,10 @@ public final class Program {
 
   public Set<RoomProperty> getRoomProperties() {
     return roomProperties.values();
+  }
+
+  public Set<Subject> getSubjects() {
+    return subjects.values();
   }
 
   @Override

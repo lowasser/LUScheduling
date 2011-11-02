@@ -36,6 +36,16 @@ scorer {
 		impl: SPREAD_OUT_CLASSES
 		exponent: 2
 	}
+	component {
+		impl: GLOBAL_ATTENDANCE_LEVELS
+		exponent: 3
+		multiplier: 10
+	}
+	component {
+		impl: SUBJECT_ATTENDANCE_LEVELS
+		exponent: 2
+		multiplier: 2
+	}
 }
 subOptimizerSteps: 200
 numberOfSubOptimizers: 4

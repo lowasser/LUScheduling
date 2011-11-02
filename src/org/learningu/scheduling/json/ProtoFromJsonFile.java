@@ -6,6 +6,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.google.inject.AbstractModule;
+import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Scopes;
 import com.google.inject.name.Names;
@@ -19,16 +20,22 @@ import org.learningu.scheduling.flags.Flags;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
 
 public final class ProtoFromJsonFile {
+  @Inject
   @Flag(name = "teachers")
   private File teachersFile;
+  @Inject
   @Flag(name = "periods")
   private File periodsFile;
+  @Inject
   @Flag(name = "rooms")
   private File roomsFile;
+  @Inject
   @Flag(name = "sections")
   private File sectionsFile;
+  @Inject
   @Flag(name = "resources")
   private File resourcesFile;
+  @Inject
   @Flag(name = "output")
   private File outputFile;
 
