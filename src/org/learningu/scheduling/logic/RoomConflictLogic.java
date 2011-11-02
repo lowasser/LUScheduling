@@ -2,13 +2,13 @@ package org.learningu.scheduling.logic;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.DiscreteDomains;
 import com.google.common.collect.Range;
 import com.google.common.collect.Ranges;
 
 import java.util.List;
 
+import org.learningu.scheduling.schedule.PresentAssignment;
 import org.learningu.scheduling.schedule.Schedule;
 import org.learningu.scheduling.schedule.StartAssignment;
 
@@ -20,17 +20,14 @@ import org.learningu.scheduling.schedule.StartAssignment;
 public final class RoomConflictLogic extends ScheduleLogic {
 
   @Override
-  public void validate(ScheduleValidator validator, Schedule schedule, StartAssignment assignment) {
+  public
+      void
+      validate(ScheduleValidator validator, Schedule schedule, PresentAssignment assignment) {
     super.validate(validator, schedule, assignment);
-    // The first thing to start before the *last* period of assignment should not overlap assignment.
-    Optional<StartAssignment> startingBefore = schedule.startingBefore(
-        assignment.getRoom(),
-        getLast(assignment.getPresentPeriods()));
     validator.validateGlobal(
-        !(startingBefore.isPresent() && overlaps(assignment, startingBefore.get())),
         assignment,
-        startingBefore.asSet(),
-        "classes may not use the same room at the same time");
+        schedule.occurringAt(assignment.getPeriod(), assignment.getRoom()).asSet(),
+        "Classes may not use the same room at the same time");
   }
 
   private boolean overlaps(StartAssignment assign1, StartAssignment assign2) {

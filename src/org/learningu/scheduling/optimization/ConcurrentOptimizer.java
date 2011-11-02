@@ -166,13 +166,15 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
         break;
       }
     }
-    logger.log(
-        Level.INFO,
-        "Average optimizer iteration took {0}",
-        Duration
-            .millis((long) (System.currentTimeMillis() - start) / step)
-            .toPeriod()
-            .toString(Converters.PERIOD_FORMATTER));
+    if (step != 0) {
+      logger.log(
+          Level.INFO,
+          "Average optimizer iteration took {0}",
+          Duration
+              .millis((long) (System.currentTimeMillis() - start) / step)
+              .toPeriod()
+              .toString(Converters.PERIOD_FORMATTER));
+    }
     try {
       Files.write(builder.build().toString(), new File("optimization-log.csv"), Charsets.UTF_8);
     } catch (IOException e) {

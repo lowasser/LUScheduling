@@ -41,7 +41,7 @@ final class ScheduleOutputCallback extends BasicFutureCallback<Schedule> {
 
   @Inject(optional = true)
   @Flag(name = "outputFormat", optional = true)
-  private MessageOutputFormat outputFormat = MessageOutputFormat.TEXT;
+  private MessageOutputFormat outputFormat = MessageOutputFormat.PROTO;
 
   @Inject
   ScheduleOutputCallback(Logger logger) {

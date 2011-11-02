@@ -1,6 +1,6 @@
 timeBlock {
   blockId: 0
-  description: "Program"
+  description: "Morning"
   period {
     periodId: 59
     description: "First Class Period: 10-10:50 AM"
@@ -19,6 +19,10 @@ timeBlock {
     shortDescription: "12-1 PM"
     attendanceLevel: 1.4
   }
+}
+timeBlock {
+  blockId: 1
+  description: "Afternoon"
   period {
     periodId: 62
     description: "Third Class Period/Second Lunch: Sat 1:30-2:20 PM"
@@ -1377,6 +1381,7 @@ section {
   periodLength: 2
   courseId: 770
   subjectId: 4
+  requiredProperty: 40
 }
 section {
   sectionId: 966
@@ -1387,6 +1392,7 @@ section {
   periodLength: 2
   courseId: 770
   subjectId: 4
+  requiredProperty: 40
 }
 section {
   sectionId: 967
@@ -1397,6 +1403,7 @@ section {
   periodLength: 2
   courseId: 771
   subjectId: 4
+  requiredProperty: 40
 }
 section {
   sectionId: 968
@@ -1937,6 +1944,7 @@ section {
   periodLength: 1
   courseId: 809
   subjectId: 4
+  requiredProperty: 42
 }
 section {
   sectionId: 1035
@@ -1947,6 +1955,7 @@ section {
   periodLength: 1
   courseId: 809
   subjectId: 4
+  requiredProperty: 42
 }
 section {
   sectionId: 1036
@@ -2189,6 +2198,7 @@ section {
   periodLength: 1
   courseId: 823
   subjectId: 0
+  requiredProperty: 42
 }
 section {
   sectionId: 1069
@@ -2579,6 +2589,7 @@ section {
   periodLength: 2
   courseId: 845
   subjectId: 4
+  requiredProperty: 40
 }
 section {
   sectionId: 1117
@@ -2589,6 +2600,7 @@ section {
   periodLength: 2
   courseId: 845
   subjectId: 4
+  requiredProperty: 40
 }
 section {
   sectionId: 1118
@@ -2672,6 +2684,7 @@ section {
   periodLength: 1
   courseId: 851
   subjectId: 2
+  requiredProperty: 40
 }
 section {
   sectionId: 1128
@@ -2682,6 +2695,7 @@ section {
   periodLength: 1
   courseId: 851
   subjectId: 2
+  requiredProperty: 40
 }
 section {
   sectionId: 1129
@@ -2875,6 +2889,7 @@ section {
   periodLength: 1
   courseId: 862
   subjectId: 5
+  requiredProperty: 43
 }
 section {
   sectionId: 1151
@@ -3255,24 +3270,6 @@ section {
   subjectId: 1
 }
 section {
-  sectionId: 1210
-  courseTitle: "L898s1: Lunch Period"
-  estimatedClassSize: 350
-  maxClassSize: 350
-  periodLength: 1
-  courseId: 898
-  subjectId: 6
-}
-section {
-  sectionId: 1211
-  courseTitle: "L898s2: Lunch Period"
-  estimatedClassSize: 350
-  maxClassSize: 350
-  periodLength: 1
-  courseId: 898
-  subjectId: 6
-}
-section {
   sectionId: 1213
   courseTitle: "L850s2: Basic Chinese"
   teacherIds: 4911
@@ -3280,25 +3277,6 @@ section {
   maxClassSize: 10
   periodLength: 1
   courseId: 850
-  subjectId: 3
-}
-section {
-  sectionId: 1214
-  courseTitle: "H900s1: Splash! 2011 Photo"
-  estimatedClassSize: 1000
-  maxClassSize: 1000
-  periodLength: 0
-  courseId: 900
-  subjectId: 2
-}
-section {
-  sectionId: 1215
-  courseTitle: "L901s1: Test class"
-  teacherIds: 448
-  estimatedClassSize: 2
-  maxClassSize: 2
-  periodLength: 1
-  courseId: 901
   subjectId: 3
 }
 room {
@@ -3341,6 +3319,7 @@ room {
   availablePeriod: 64
   availablePeriod: 62
   roomProperty: 36
+  roomProperty: 43
 }
 room {
   roomId: 3
@@ -3479,6 +3458,7 @@ room {
   availablePeriod: 61
   availablePeriod: 64
   availablePeriod: 62
+  roomProperty: 42
 }
 room {
   roomId: 13
@@ -3491,6 +3471,7 @@ room {
   availablePeriod: 61
   availablePeriod: 64
   availablePeriod: 62
+  roomProperty: 42
 }
 room {
   roomId: 14
@@ -3611,6 +3592,7 @@ room {
   availablePeriod: 61
   availablePeriod: 64
   availablePeriod: 62
+  roomProperty: 42
 }
 room {
   roomId: 23
@@ -3635,7 +3617,7 @@ room {
   availablePeriod: 61
   availablePeriod: 64
   availablePeriod: 62
-  roomProperty: 40
+  roomProperty: 42
 }
 room {
   roomId: 25
@@ -3895,6 +3877,7 @@ room {
   availablePeriod: 64
   availablePeriod: 62
   roomProperty: 36
+  roomProperty: 43
 }
 roomProperty {
   propertyId: 36
@@ -3915,10 +3898,21 @@ roomProperty {
 roomProperty {
   propertyId: 40
   description: "Dance Space"
+  isBinding: true
 }
 roomProperty {
   propertyId: 41
   description: "Hardwood Floors"
+}
+roomProperty {
+  propertyId: 42
+  description: "Meeting Point"
+  isBinding: true
+}
+roomProperty {
+  propertyId: 43
+  description: "Computer Lab"
+  isBinding: true
 }
 subject {
   subjectId: 4

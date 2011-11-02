@@ -76,6 +76,15 @@ public final class Schedule {
     this.assignments = checkNotNull(assignments);
   }
 
+  public boolean isCompletelyValid() {
+    Schedule base = factory.create();
+    for (StartAssignment assign : getStartAssignments()) {
+      ModifiedState<ScheduleValidator, Schedule> modifiedState = base.assignStart(assign);
+      assert modifiedState.getResult().isValid();
+    }
+    return true;
+  }
+
   public Program getProgram() {
     return factory.program;
   }

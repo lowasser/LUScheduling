@@ -27,6 +27,7 @@ public final class Perturbers {
         for (Perturber<Schedule> seq : sequence) {
           current = seq.perturb(current, temperature);
         }
+        // assert current.isCompletelyValid();
         return current;
       }
     };
