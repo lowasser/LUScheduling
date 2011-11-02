@@ -5,36 +5,43 @@ timeBlock {
     periodId: 59
     description: "First Class Period: 10-10:50 AM"
     shortDescription: "10-11 AM"
+    attendanceLevel: 1.5
   }
   period {
     periodId: 60
     description: "Second Class Period: 11:00-11:50 AM"
     shortDescription: "11-12 AM"
+    attendanceLevel: 1.4
   }
   period {
     periodId: 61
     description: "Third Class Period/First Lunch Period: Sat 12:00 PM - 12:50 PM"
-    shortDescription: "12 - 1 PM"
+    shortDescription: "12-1 PM"
+    attendanceLevel: 1.4
   }
   period {
     periodId: 62
     description: "Third Class Period/Second Lunch: Sat 1:30-2:20 PM"
-    shortDescription: "1:30 -2:30 PM"
+    shortDescription: "1:30-2:30 PM"
+    attendanceLevel: 1.4
   }
   period {
     periodId: 64
     description: "Fourth Class Period: Sat 2:30-3:20 PM"
     shortDescription: "2:30-3:30 PM"
+    attendanceLevel: 1.3
   }
   period {
     periodId: 65
     description: "Fifth Class Period: Sat 3:30-4:20"
-    shortDescription: "Sat 3:30-4:30 PM"
+    shortDescription: "3:30-4:30 PM"
+    attendanceLevel: 1.2
   }
   period {
     periodId: 66
     description: "Sixth Class Period: Sat 4:30-5:20 PM"
-    shortDescription: "Sat 4:30-5:30 PM"
+    shortDescription: "4:30-5:30 PM"
+    attendanceLevel: 1.0
   }
 }
 teacher {
