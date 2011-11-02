@@ -14,13 +14,13 @@ import org.learningu.scheduling.pretty.PrettySchedulePrinters;
 import org.learningu.scheduling.schedule.Schedule;
 
 final class RoomPrettyPrinter extends BasicFutureCallback<Schedule> {
+  @Inject
   @Flag(name = "roomScheduleOutput")
   private Optional<File> outputFile;
 
   @Inject
-  RoomPrettyPrinter(Logger logger, Optional<File> outputFile) {
+  RoomPrettyPrinter(Logger logger) {
     super(logger);
-    this.outputFile = outputFile;
   }
 
   @Override

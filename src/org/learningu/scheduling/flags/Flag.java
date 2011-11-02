@@ -14,4 +14,6 @@ public @interface Flag {
   String name();
 
   String description() default "";
+  
+  boolean optional() default false;
 }

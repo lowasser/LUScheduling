@@ -1,7 +1,5 @@
 package org.learningu.scheduling.flags;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 import com.google.common.base.Optional;
 import com.google.common.base.Splitter;
 import com.google.common.base.Throwables;
@@ -15,13 +13,14 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 
 import org.joda.time.Duration;
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
-final class Converters {
+public final class Converters {
   private Converters() {
   }
 
@@ -75,7 +74,7 @@ final class Converters {
     }
   };
 
-  private static final PeriodFormatter PERIOD_FORMATTER = new PeriodFormatterBuilder()
+  public static final PeriodFormatter PERIOD_FORMATTER = new PeriodFormatterBuilder()
       .appendDays()
       .appendSuffix("d")
       .printZeroRarelyLast()
@@ -104,6 +103,13 @@ final class Converters {
     }
   };
 
+  private static final Converter<Level> LEVEL_CONVERTER = new Converter<Level>() {
+    @Override
+    public Level parse(String string) {
+      return Level.parse(string);
+    }
+  };
+
   private static <T extends Enum<T>> Converter<T> enumConverter(final Class<T> clazz) {
     return new Converter<T>() {
       @Override
@@ -120,11 +126,7 @@ final class Converters {
         if (string == null || string.isEmpty()) {
           return Optional.absent();
         } else {
-          checkArgument(
-              string.charAt(0) == '+',
-              "Optional flag argument \"%s\" does not start with a + and is nonempty",
-              string);
-          return Optional.of(converter.parse(string.substring(1)));
+          return Optional.of(converter.parse(string));
         }
       }
     };
@@ -187,6 +189,13 @@ final class Converters {
       return (Converter<T>) PERIOD_CONVERTER;
     } else if (literal.getRawType().equals(Duration.class)) {
       return (Converter<T>) DURATION_CONVERTER;
+    } else if (literal.getRawType().equals(boolean.class)
+        || literal.getRawType().equals(Boolean.class)) {
+      return (Converter<T>) BOOLEAN_CONVERTER;
+    } else if(literal.getRawType().equals(double.class) || literal.getRawType().equals(Double.class)){
+      return (Converter<T>) DOUBLE_CONVERTER;
+    } else if(literal.getRawType().equals(Level.class)){
+      return (Converter<T>) LEVEL_CONVERTER;
     }
     throw new IllegalArgumentException("Don't know what to do with " + literal);
   }

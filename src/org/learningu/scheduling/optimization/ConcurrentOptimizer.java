@@ -1,9 +1,13 @@
 package org.learningu.scheduling.optimization;
 
+import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
+import com.google.common.io.Files;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -16,7 +20,9 @@ import java.util.logging.Logger;
 
 import org.joda.time.Duration;
 import org.learningu.scheduling.annotations.SingleThread;
+import org.learningu.scheduling.flags.Converters;
 import org.learningu.scheduling.flags.Flag;
+import org.learningu.scheduling.pretty.Csv;
 
 public final class ConcurrentOptimizer<T> implements Optimizer<T> {
   private final Scorer<T> scorer;
@@ -30,9 +36,14 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
   private final int subOptimizerSteps;
 
   @Inject(optional = true)
+  @Flag(name = "noProgressCancel", optional = true)
+  private double ratio = 0.1;
+
+  @Inject(optional = true)
   @Flag(
       name = "iterationTimeout",
-      description = "Maximum timeout for each concurrent optimizer iteration")
+      description = "Maximum timeout for each concurrent optimizer iteration",
+      optional = true)
   private Duration iterTimeout = Duration.standardSeconds(10);
 
   private final Logger logger;
@@ -108,9 +119,12 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
     long timeoutMillis = iterTimeout.getMillis();
     long start = System.currentTimeMillis();
     long dur = duration.getMillis();
+    long lastUpdate = start;
+    int step;
     T currentBest = initial;
     double currentBestScore = scorer.score(initial);
-    for (int step = 0; System.currentTimeMillis() - start < dur; step++) {
+    Csv.Builder builder = Csv.newBuilder();
+    for (step = 0; System.currentTimeMillis() - start < dur; step++) {
       logger.log(Level.INFO, "On iteration step {0}, current best has score {1}", new Object[] {
           step, currentBestScore });
       List<Callable<T>> independentThreads = Lists.newArrayListWithCapacity(nSubOptimizers);
@@ -130,6 +144,7 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
             if (betterScore > currentBestScore) {
               currentBest = better;
               currentBestScore = betterScore;
+              lastUpdate = System.currentTimeMillis();
             }
           } catch (TimeoutException e) {
             logger.log(Level.WARNING, "Sub-optimizer timed out.  Skipping.");
@@ -141,6 +156,27 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
         logger.log(Level.WARNING, "Thread interrupted, returning current best.");
         break;
       }
+      builder.add(Csv
+          .newRowBuilder()
+          .add("%d", System.currentTimeMillis() - start)
+          .add("%f", currentBestScore)
+          .build());
+      if ((System.currentTimeMillis() - lastUpdate) > dur * ratio) {
+        logger.log(Level.INFO, "Cutting off optimization for lack of progress");
+        break;
+      }
+    }
+    logger.log(
+        Level.INFO,
+        "Average optimizer iteration took {0}",
+        Duration
+            .millis((long) (System.currentTimeMillis() - start) / step)
+            .toPeriod()
+            .toString(Converters.PERIOD_FORMATTER));
+    try {
+      Files.write(builder.build().toString(), new File("optimization-log.csv"), Charsets.UTF_8);
+    } catch (IOException e) {
+      logger.throwing("ConcurrentOptimizer", "log", e);
     }
     return currentBest;
   }

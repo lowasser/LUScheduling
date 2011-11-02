@@ -5,6 +5,7 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
+import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Key;
@@ -15,6 +16,7 @@ import com.google.inject.TypeLiteral;
 import java.io.IOException;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
@@ -40,15 +42,22 @@ public final class Autoscheduling {
     Logger logger = Logger.getLogger("Autoscheduling");
     logger.fine("Initializing injector with flags");
     Injector injector = Flags.bootstrapFlagInjector(args, new AutoschedulingBaseModule());
+    Autoscheduling auto = injector.getInstance(Autoscheduling.class);
+    final ListeningExecutorService service = auto.getService();
     logger.fine("Initializing data source reader");
     AutoschedulerDataSource dataSource = injector.getInstance(AutoschedulerDataSource.class);
     logger.fine("Constructing data source module");
     Module dataModule = dataSource.buildModule();
     Injector dataInjector = injector.createChildInjector(
         dataModule,
-        new AutoschedulingConfigModule());
-    Autoscheduling auto = dataInjector.getInstance(Autoscheduling.class);
-    ListeningExecutorService service = auto.getService();
+        new AutoschedulingConfigModule(),
+        new AbstractModule() {
+          @Override
+          protected void configure() {
+            bind(ExecutorService.class).to(ListeningExecutorService.class);
+            bind(ListeningExecutorService.class).toInstance(service);
+          }
+        });
     ListenableFuture<Schedule> optimizedSchedule = service.submit(dataInjector
         .getInstance(Autoscheduler.class));
     Set<FutureCallback<Schedule>> callbacks = dataInjector.getInstance(Key

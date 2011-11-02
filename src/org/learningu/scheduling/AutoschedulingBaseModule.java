@@ -5,7 +5,6 @@ import com.google.inject.AbstractModule;
 import org.learningu.scheduling.flags.Flags;
 import org.learningu.scheduling.graph.ProgramCacheFlags;
 import org.learningu.scheduling.logic.LocalConflictLogic;
-import org.learningu.scheduling.logic.LogicProvider;
 import org.learningu.scheduling.logic.ScheduleValidator;
 import org.learningu.scheduling.optimization.ConcurrentOptimizer;
 
@@ -20,7 +19,6 @@ public final class AutoschedulingBaseModule extends AbstractModule {
   protected void configure() {
     install(Flags.flagBindings(
         ProgramCacheFlags.class,
-        LogicProvider.class,
         ConcurrentOptimizer.class,
         Autoscheduling.class,
         ScheduleValidator.class,

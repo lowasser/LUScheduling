@@ -90,7 +90,7 @@ public class OptimizerModule extends AbstractModule {
   @Provides
   @Named("nSubOptimizers")
   int nSubOptimizers(OptimizerSpec spec) {
-    return spec.getSubOptimizerSteps();
+    return spec.getNumberOfSubOptimizers();
   }
 
   @Provides

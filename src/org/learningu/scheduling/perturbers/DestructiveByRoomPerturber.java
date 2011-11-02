@@ -43,7 +43,9 @@ public class DestructiveByRoomPerturber implements Perturber<Schedule> {
         program.getSections(),
         current.getScheduledSections()));
     Collections.shuffle(unscheduledSections, rand);
-    int n = (int) (Math.min(unscheduledSections.size(), free.size()) * temperature);
+    int n = Math.min(
+        unscheduledSections.size(),
+        (int) (Math.min(unscheduledSections.size(), free.size()) * temperature));
     for (int i = 0; i < n; i++) {
       try {
         current = current.forceAssignStart(

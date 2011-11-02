@@ -11,7 +11,9 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.Weigher;
+import com.google.common.collect.BiMap;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableBiMap.Builder;
 import com.google.common.collect.ImmutableSet;
@@ -110,7 +112,7 @@ public final class Program {
         RoomProperty.programWrapper(this)));
 
     // initialize courseMap
-    ImmutableBiMap.Builder<Integer, Course> courseBuilder = ImmutableBiMap.builder();
+    BiMap<Integer, Course> courseBuilder = HashBiMap.create();
     ImmutableSetMultimap.Builder<Course, Section> courseMapBuilder = ImmutableSetMultimap
         .builder();
     for (Section section : getSections()) {
@@ -118,7 +120,7 @@ public final class Program {
       courseMapBuilder.put(course, section);
       courseBuilder.put(course.getId(), course);
     }
-    courses = courseBuilder.build();
+    courses = ImmutableBiMap.copyOf(courseBuilder);
     courseMap = courseMapBuilder.build();
 
     // initialize teachingMap

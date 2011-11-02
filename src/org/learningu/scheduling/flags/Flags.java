@@ -120,7 +120,6 @@ public final class Flags {
     Injector baseInjector = Guice.createInjector(Modules.combine(Iterables.concat(
         Arrays.asList(baseModules),
         ImmutableList.of(linkingModule))));
-    System.out.println(baseInjector.getAllBindings());
     return baseInjector.createChildInjector(baseInjector.getInstance(FlagBootstrapModule.class));
   }
 
@@ -141,13 +140,20 @@ public final class Flags {
     protected void configure() {
       for (Map.Entry<Flag, Type> entry : flagsMap.entrySet()) {
         Flag flagAnnotation = entry.getKey();
-        TypeLiteral literal = TypeLiteral.get(entry.getValue());
+        final TypeLiteral literal = TypeLiteral.get(entry.getValue());
 
         @Nullable
-        String value = commandLine.getOptionValue(flagAnnotation.name());
+        final String value = commandLine.getOptionValue(flagAnnotation.name());
 
-        bind(literal).annotatedWith(flagAnnotation).toInstance(
-            Converters.converterFor(literal).parse(value));
+        try {
+          Object result = Converters.converterFor(literal).parse(value);
+
+          bind(literal).annotatedWith(flagAnnotation).toInstance(result);
+        } catch (RuntimeException e) {
+          if (!flagAnnotation.optional()) {
+            throw new IllegalArgumentException(flagAnnotation.name(), e);
+          }
+        }
       }
     }
   }

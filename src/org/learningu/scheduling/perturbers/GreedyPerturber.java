@@ -43,7 +43,9 @@ final class GreedyPerturber implements Perturber<Schedule> {
     unscheduled.addAll(Sets.difference(program.getSections(), initial.getScheduledSections()));
     Collections.shuffle(unscheduled, rand);
 
-    int nAttempts = Math.max(1, (int) (unscheduled.size() * temperature));
+    int nAttempts = Math.min(
+        unscheduled.size(),
+        Math.max(1, (int) (unscheduled.size() * temperature)));
     unscheduled = unscheduled.subList(0, nAttempts);
 
     ImmutableList<Room> rooms = ImmutableList.copyOf(program.getRooms());

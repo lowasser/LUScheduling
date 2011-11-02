@@ -42,7 +42,7 @@ final class DestructivePerturber implements Perturber<Schedule> {
       return initial;
     }
     int nAttempts = Math.max(1, (int) (unscheduled.size() * temperature));
-    unscheduled = unscheduled.subList(0, nAttempts);
+    unscheduled = unscheduled.subList(0, Math.min(unscheduled.size(), nAttempts));
 
     ImmutableList<Room> rooms = ImmutableList.copyOf(program.getRooms());
     ImmutableList<ClassPeriod> periods = ImmutableList.copyOf(program.getPeriods());

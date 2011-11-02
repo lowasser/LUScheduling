@@ -2,11 +2,15 @@ package org.learningu.scheduling.optimization;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.common.base.Stopwatch;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.joda.time.Duration;
+import org.learningu.scheduling.flags.Converters;
 
 /**
  * An optimizer implementation based on simulated annealing techniques.
@@ -24,18 +28,22 @@ public final class Annealer<T> implements Optimizer<T> {
 
   private final Logger logger;
 
+  private final Stopwatch stopwatch;
+
   @Inject
   Annealer(
       Perturber<T> perturber,
       Scorer<T> scorer,
       @Assisted TemperatureFunction tempFun,
       AcceptanceFunction acceptFun,
-      Logger logger) {
+      Logger logger,
+      Stopwatch stopwatch) {
     this.perturber = checkNotNull(perturber);
     this.scorer = checkNotNull(scorer);
     this.tempFun = checkNotNull(tempFun);
     this.acceptFun = checkNotNull(acceptFun);
     this.logger = logger;
+    this.stopwatch = stopwatch;
   }
 
   @Override
@@ -45,6 +53,7 @@ public final class Annealer<T> implements Optimizer<T> {
 
   @Override
   public T iterate(int steps, T initial) {
+    stopwatch.start();
     T current = initial;
     double currentScore = scorer.score(current);
     T best = current;
@@ -72,6 +81,14 @@ public final class Annealer<T> implements Optimizer<T> {
         bestScore = nextScore;
       }
     }
+    stopwatch.stop();
+    logger.log(
+        Level.FINE,
+        "Single-threaded annealing step took {0}",
+        Duration
+            .millis(stopwatch.elapsedMillis())
+            .toPeriod()
+            .toString(Converters.PERIOD_FORMATTER));
     return best;
   }
 }

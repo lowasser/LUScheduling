@@ -31,10 +31,16 @@ public final class ScheduleValidator {
 
   private final Logger logger;
 
-  @Flag(name = "validateLogLevel", description = "Level at which to log each validation attempt")
+  @Flag(
+      name = "validateLogLevel",
+      description = "Level at which to log each validation attempt",
+      optional = true)
   private Level validateLogLevel = Level.FINEST;
 
-  @Flag(name = "validateFailureLogLevel", description = "Level at which to log failed validations")
+  @Flag(
+      name = "validateFailureLogLevel",
+      description = "Level at which to log failed validations",
+      optional = true)
   private Level failureLogLevel = Level.FINER;
 
   @Inject

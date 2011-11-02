@@ -19,14 +19,16 @@ public final class LocalConflictLogic extends ScheduleLogic {
       name = "maxClassCapRatio",
       description = "The maximum ratio of room capacity: class capacity.  "
           + "For example, if this was 1.25, the class would be forced to use a room at most 25% bigger than its cap. "
-          + "The default value is 4.0.")
+          + "The default value is 4.0.",
+      optional = true)
   private double maxClassCapRatio = 4.0;
 
   @Flag(
       name = "minClassCapRatio",
       description = "The min ratio of room capacity: class capacity.  "
           + "For example, if this was 0.5, the class would be forced to use a room at most 2 times bigger than its expected size. "
-          + "The default value is 1.0.")
+          + "The default value is 1.0.",
+      optional = true)
   private double minClassCapRatio = 1.0;
 
   @Override

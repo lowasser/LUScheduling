@@ -1,6 +1,7 @@
 package org.learningu.scheduling;
 
 import com.google.common.base.Optional;
+import com.google.inject.Inject;
 import com.google.protobuf.Message;
 import com.google.protobuf.TextFormat;
 
@@ -34,12 +35,15 @@ final class ScheduleOutputCallback extends BasicFutureCallback<Schedule> {
     public abstract void output(OutputStream stream, Message message) throws IOException;
   }
 
+  @Inject
   @Flag(name = "out")
   private Optional<File> outputFile;
 
-  @Flag(name = "outputFormat")
-  private MessageOutputFormat outputFormat;
+  @Inject(optional = true)
+  @Flag(name = "outputFormat", optional = true)
+  private MessageOutputFormat outputFormat = MessageOutputFormat.TEXT;
 
+  @Inject
   ScheduleOutputCallback(Logger logger) {
     super(logger);
   }

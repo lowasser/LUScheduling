@@ -37,7 +37,7 @@ scorer {
 		exponent: 2
 	}
 }
-subOptimizerSteps: 20
+subOptimizerSteps: 200
 numberOfSubOptimizers: 4
 primaryTempFun: QUADRATIC
 subTempFun: QUADRATIC
