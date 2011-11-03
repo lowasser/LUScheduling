@@ -6,7 +6,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 
-import org.learningu.scheduling.graph.SerialGraph.SerialRoomProperty;
+import org.learningu.scheduling.graph.SerialGraph.SerialResource;
 
 /**
  * A property of a room that some courses may require. If the property is <i>binding</i>, no course
@@ -14,21 +14,21 @@ import org.learningu.scheduling.graph.SerialGraph.SerialRoomProperty;
  * 
  * @author lowasser
  */
-public final class RoomProperty extends ProgramObject<SerialRoomProperty> {
-  public static final Predicate<RoomProperty> IS_BINDING = new Predicate<RoomProperty>() {
+public final class Resource extends ProgramObject<SerialResource> {
+  public static final Predicate<Resource> IS_BINDING = new Predicate<Resource>() {
     @Override
-    public boolean apply(RoomProperty input) {
+    public boolean apply(Resource input) {
       return input.isBinding();
     }
   };
 
-  private RoomProperty(Program program, SerialRoomProperty serial) {
+  private Resource(Program program, SerialResource serial) {
     super(program, serial);
   }
 
   @Override
   public int getId() {
-    return serial.getPropertyId();
+    return serial.getResourceId();
   }
 
   public String getDescription() {
@@ -44,12 +44,12 @@ public final class RoomProperty extends ProgramObject<SerialRoomProperty> {
     return Objects.toStringHelper(this).add("description", serial.getDescription()).toString();
   }
 
-  static Function<SerialRoomProperty, RoomProperty> programWrapper(final Program program) {
+  static Function<SerialResource, Resource> programWrapper(final Program program) {
     checkNotNull(program);
-    return new Function<SerialRoomProperty, RoomProperty>() {
+    return new Function<SerialResource, Resource>() {
       @Override
-      public RoomProperty apply(SerialRoomProperty input) {
-        return new RoomProperty(program, input);
+      public Resource apply(SerialResource input) {
+        return new Resource(program, input);
       }
     };
   }

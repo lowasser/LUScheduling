@@ -6,7 +6,7 @@ import java.util.Set;
 
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
-import org.learningu.scheduling.graph.RoomProperty;
+import org.learningu.scheduling.graph.Resource;
 import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.schedule.Schedule;
 import org.learningu.scheduling.schedule.StartAssignment;
@@ -17,14 +17,14 @@ public final class RoomPropertyLogic extends ScheduleLogic {
     super.validate(validator, schedule, assignment);
     Program program = schedule.getProgram();
     Room room = assignment.getRoom();
-    Set<RoomProperty> roomProperties = program.roomProperties(room);
+    Set<Resource> roomProperties = program.roomProperties(room);
     Section course = assignment.getSection();
-    Set<RoomProperty> roomRequirements = program.roomRequirements(course);
+    Set<Resource> roomRequirements = program.resourceRequirements(course);
     validator.validateLocal(
         roomProperties.containsAll(roomRequirements),
         assignment,
         "courses must be assigned to rooms with all the required properties");
-    Set<RoomProperty> bindingProperties = Sets.filter(roomProperties, RoomProperty.IS_BINDING);
+    Set<Resource> bindingProperties = Sets.filter(roomProperties, Resource.IS_BINDING);
     validator.validateLocal(
         roomRequirements.containsAll(bindingProperties),
         assignment,

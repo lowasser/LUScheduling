@@ -52,7 +52,7 @@ public final class Program {
 
   final ImmutableBiMap<Integer, ClassPeriod> periods;
 
-  final ImmutableBiMap<Integer, RoomProperty> roomProperties;
+  final ImmutableBiMap<Integer, Resource> resources;
 
   final ImmutableBiMap<Integer, Course> courses;
 
@@ -72,9 +72,9 @@ public final class Program {
 
   private final Cache<Section, Set<Teacher>> teachersForCourse;
 
-  private final Cache<Section, Set<RoomProperty>> requiredForCourse;
+  private final Cache<Section, Set<Resource>> requiredForCourse;
 
-  private final Cache<Room, Set<RoomProperty>> propertiesOfRoom;
+  private final Cache<Room, Set<Resource>> resourcesOfRoom;
 
   private final Cache<Section, Set<Course>> prerequisites;
 
@@ -114,9 +114,9 @@ public final class Program {
             return input.getPeriods();
           }
         })));
-    roomProperties = programObjectSet(Lists.transform(
-        serial.getRoomPropertyList(),
-        RoomProperty.programWrapper(this)));
+    resources = programObjectSet(Lists.transform(
+        serial.getResourceList(),
+        Resource.programWrapper(this)));
 
     // initialize courseMap
     BiMap<Integer, Course> courseBuilder = HashBiMap.create();
@@ -213,21 +213,21 @@ public final class Program {
         .initialCapacity(sections.size())
         .weigher(COLLECTION_WEIGHER)
         .maximumWeight(flags.reqPropsCacheSize)
-        .build(new CacheLoader<Section, Set<RoomProperty>>() {
+        .build(new CacheLoader<Section, Set<Resource>>() {
           @Override
-          public Set<RoomProperty> load(Section key) {
-            return key.getRequiredProperties();
+          public Set<Resource> load(Section key) {
+            return key.getRequiredResources();
           }
         });
-    this.propertiesOfRoom = CacheBuilder
+    this.resourcesOfRoom = CacheBuilder
         .newBuilder()
         .initialCapacity(rooms.size())
         .weigher(COLLECTION_WEIGHER)
         .maximumWeight(flags.reqPropsCacheSize)
-        .build(new CacheLoader<Room, Set<RoomProperty>>() {
+        .build(new CacheLoader<Room, Set<Resource>>() {
           @Override
-          public Set<RoomProperty> load(Room key) throws Exception {
-            return key.getRoomProperties();
+          public Set<Resource> load(Room key) throws Exception {
+            return key.getResources();
           }
         });
 
@@ -282,12 +282,12 @@ public final class Program {
     return roomAvailablePeriods.getUnchecked(r);
   }
 
-  public Set<RoomProperty> roomRequirements(Section c) {
+  public Set<Resource> resourceRequirements(Section c) {
     return requiredForCourse.getUnchecked(c);
   }
 
-  public Set<RoomProperty> roomProperties(Room r) {
-    return propertiesOfRoom.getUnchecked(r);
+  public Set<Resource> roomProperties(Room r) {
+    return resourcesOfRoom.getUnchecked(r);
   }
 
   public ClassPeriod getPeriod(int id) {
@@ -323,7 +323,7 @@ public final class Program {
           c.getEstimatedClassSize(),
           c.getMaxClassSize());
       c.getTeachers();
-      c.getRequiredProperties();
+      c.getRequiredResources();
       c.getSubject();
     }
   }
@@ -369,8 +369,8 @@ public final class Program {
     return periods.values();
   }
 
-  public Set<RoomProperty> getRoomProperties() {
-    return roomProperties.values();
+  public Set<Resource> getResources() {
+    return resources.values();
   }
 
   public Set<Subject> getSubjects() {

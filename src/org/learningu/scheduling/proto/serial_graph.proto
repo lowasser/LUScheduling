@@ -3,9 +3,10 @@ package org.learningu.scheduling.graph;
 /*
  * A property of a room at an LU program.
  */
-message SerialRoomProperty {
-	required int32 propertyId = 1;
+message SerialResource {
+	required int32 resourceId = 1;
 	optional string description = 2;
+	optional int32 floatingCount = 4 [default = 0]; // number of floating resources of this type in addition to any built into rooms
 	optional bool isBinding = 3 [default = false]; // if present, classes must require this property to get this room
 }
 
@@ -27,7 +28,7 @@ message SerialSection {
 	optional int32 maxClassSize = 6 [default = 20];
 	optional int32 periodLength = 8 [default = 1];
 	required int32 courseId = 10;
-	repeated int32 requiredProperty = 9 [packed = true];
+	repeated int32 requiredResource = 9 [packed = true];
 	repeated int32 prereqCourseId = 11 [packed = true];
 }
 
@@ -73,14 +74,14 @@ message SerialTimeBlock {
 }
 
 /*
- * A room at an LU program with possibly some associated properties.
+ * A room at an LU program with possibly some associated resources.
  */
 message SerialRoom {
 	required int32 roomId = 1;
 	optional string name = 3;
 	optional int32 capacity = 4 [default = 25];
 	repeated int32 availablePeriod = 5 [packed = true];
-	repeated int32 roomProperty = 6 [packed = true];
+	repeated int32 resource = 6 [packed = true];
 }
 
 /*
@@ -93,5 +94,5 @@ message SerialProgram {
 	repeated SerialTeacher teacher = 2;
 	repeated SerialSection section = 3;
 	repeated SerialRoom room = 4;
-	repeated SerialRoomProperty roomProperty = 6;
+	repeated SerialResource resource = 6;
 }

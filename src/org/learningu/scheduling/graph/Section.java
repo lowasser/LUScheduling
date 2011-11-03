@@ -54,10 +54,10 @@ public final class Section extends ProgramObject<SerialSection> implements Compa
         Functions.forMap(program.teachers)));
   }
 
-  Set<RoomProperty> getRequiredProperties() {
+  Set<Resource> getRequiredResources() {
     return ImmutableSet.copyOf(Lists.transform(
-        serial.getRequiredPropertyList(),
-        Functions.forMap(program.roomProperties)));
+        serial.getRequiredResourceList(),
+        Functions.forMap(program.resources)));
   }
 
   public int getEstimatedClassSize() {

@@ -16,17 +16,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.learningu.scheduling.graph.SerialGraph.SerialPeriod;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
+import org.learningu.scheduling.graph.SerialGraph.SerialResource;
 import org.learningu.scheduling.graph.SerialGraph.SerialRoom;
-import org.learningu.scheduling.graph.SerialGraph.SerialRoomProperty;
 import org.learningu.scheduling.graph.SerialGraph.SerialSection;
 import org.learningu.scheduling.graph.SerialGraph.SerialSubject;
 import org.learningu.scheduling.graph.SerialGraph.SerialTeacher;
 import org.learningu.scheduling.graph.SerialGraph.SerialTimeBlock;
 
 public class JsonProgramProvider implements Provider<SerialProgram> {
-  private SerialRoomProperty parseRoomProperty(JsonObject obj) {
-    SerialRoomProperty.Builder builder = SerialRoomProperty.newBuilder();
-    builder.setPropertyId(obj.get("uid").getAsInt());
+  private SerialResource parseResource(JsonObject obj) {
+    SerialResource.Builder builder = SerialResource.newBuilder();
+    builder.setResourceId(obj.get("uid").getAsInt());
     builder.setDescription(obj.get("name").getAsString());
     return builder.build();
   }
@@ -57,7 +57,7 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     builder.setRoomId(roomId.getAndIncrement());
     builder.setCapacity(obj.get("num_students").getAsInt());
     for (JsonElement res : obj.get("associated_resources").getAsJsonArray()) {
-      builder.addRoomProperty(res.getAsInt());
+      builder.addResource(res.getAsInt());
     }
     for (JsonElement pd : obj.get("availability").getAsJsonArray()) {
       builder.addAvailablePeriod(pd.getAsInt());
@@ -124,7 +124,7 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     }
     builder.addTimeBlock(timeBuilder);
     for (JsonElement resource : resources) {
-      builder.addRoomProperty(parseRoomProperty(resource.getAsJsonObject()));
+      builder.addResource(parseResource(resource.getAsJsonObject()));
     }
     for (JsonElement section : sections) {
       builder.addSection(parseSection(section.getAsJsonObject()));

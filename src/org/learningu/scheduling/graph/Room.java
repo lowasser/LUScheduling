@@ -43,10 +43,10 @@ public final class Room extends ProgramObject<SerialRoom> implements Comparable<
         Functions.forMap(program.periods)));
   }
 
-  Set<RoomProperty> getRoomProperties() {
+  Set<Resource> getResources() {
     return ImmutableSet.copyOf(Lists.transform(
-        serial.getRoomPropertyList(),
-        Functions.forMap(program.roomProperties)));
+        serial.getResourceList(),
+        Functions.forMap(program.resources)));
   }
 
   @Override
