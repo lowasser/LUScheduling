@@ -131,7 +131,7 @@ public class TestProgramModule extends AbstractModule {
         .setEstimatedClassSize(size)
         .setMaxClassSize(size);
     for (SerialTeacher t : teachers) {
-      builder.addTeacherIds(t.getTeacherId());
+      builder.addTeacherId(t.getTeacherId());
     }
     SerialSection course = builder.build();
     bind(SerialSection.class).annotatedWith(Names.named(name)).toInstance(course);

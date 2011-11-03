@@ -53,6 +53,8 @@ public final class Perturbers {
         return new GreedyPerturber(random);
       case DESTRUCTIVE_BY_ROOM:
         return new DestructiveByRoomPerturber(random);
+      case SWAPPING:
+        return new SwappingPerturber(random);
       default:
         throw new AssertionError();
     }

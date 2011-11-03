@@ -143,6 +143,17 @@ public final class ScorerModule extends AbstractModule {
           }
         }
       }
+    },
+    UNUSED_ROOMS {
+      @Override
+      void score(Schedule schedule, ScoreAccumulator accum) {
+        Program program = schedule.getProgram();
+        for (Room room : program.getRooms()) {
+          if (schedule.startingIn(room).isEmpty()) {
+            accum.add(1);
+          }
+        }
+      }
     };
     abstract void score(Schedule schedule, ScoreAccumulator accum);
   }
@@ -224,6 +235,8 @@ public final class ScorerModule extends AbstractModule {
         return ScorerImpl.GLOBAL_ATTENDANCE_LEVELS;
       case SUBJECT_ATTENDANCE_LEVELS:
         return ScorerImpl.SUBJECT_ATTENDANCE_LEVELS;
+      case UNUSED_ROOMS:
+        return ScorerImpl.UNUSED_ROOMS;
       default:
         throw new AssertionError();
     }

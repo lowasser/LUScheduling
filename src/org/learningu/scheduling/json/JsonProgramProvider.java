@@ -80,7 +80,7 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     int size = obj.get("class_size_max").getAsInt();
     builder.setEstimatedClassSize(size).setMaxClassSize(size);
     for (JsonElement t : obj.get("teachers").getAsJsonArray()) {
-      builder.addTeacherIds(t.getAsInt());
+      builder.addTeacherId(t.getAsInt());
     }
     builder.setCourseId(obj.get("class_id").getAsInt());
     builder.setPeriodLength(DoubleMath.roundToInt(

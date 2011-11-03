@@ -1,14 +1,9 @@
 perturber {
 	perturb {
-		impl: DESTRUCTIVE_BY_ROOM
-		temperatureScale: 0.5
-	}
-	perturb {
 		impl: DESTRUCTIVE
 	}
 	perturb {
 		impl: GREEDY
-		temperatureScale: 0.5
 	}
 }
 scorer {
@@ -46,8 +41,12 @@ scorer {
 		exponent: 2
 		multiplier: 2
 	}
+	component {
+		impl: UNUSED_ROOMS
+		multiplier: 10
+	}
 }
 subOptimizerSteps: 200
 numberOfSubOptimizers: 4
-primaryTempFun: QUADRATIC
+primaryTempFun: LINEAR
 subTempFun: QUADRATIC

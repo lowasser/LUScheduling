@@ -55,8 +55,8 @@ public class ProgramTest extends TestCase {
     SerialSection course0 = SerialSection
         .newBuilder()
         .setSectionId(0)
-        .addTeacherIds(0)
-        .addTeacherIds(2)
+        .addTeacherId(0)
+        .addTeacherId(2)
         .setEstimatedClassSize(8)
         .setMaxClassSize(10)
         .setCourseTitle("Maximum Science")
@@ -64,7 +64,7 @@ public class ProgramTest extends TestCase {
     SerialSection course1 = SerialSection
         .newBuilder()
         .setSectionId(1)
-        .addTeacherIds(1)
+        .addTeacherId(1)
         .setEstimatedClassSize(30)
         .setMaxClassSize(40)
         .setCourseTitle("Pirates")
@@ -72,7 +72,7 @@ public class ProgramTest extends TestCase {
     SerialSection course2 = SerialSection
         .newBuilder()
         .setSectionId(2)
-        .addTeacherIds(0)
+        .addTeacherId(0)
         .setEstimatedClassSize(15)
         .setMaxClassSize(20)
         .setCourseTitle("Pi-rates")
@@ -126,7 +126,7 @@ public class ProgramTest extends TestCase {
     builder.setEstimatedClassSize(course.getEstimatedClassSize());
     builder.setMaxClassSize(course.getMaxClassSize());
     for (Teacher teacher : course.getProgram().teachersForSection(course)) {
-      builder.addTeacherIds(teacher.getId());
+      builder.addTeacherId(teacher.getId());
     }
     return builder.build();
   }

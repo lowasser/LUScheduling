@@ -31,7 +31,7 @@ public class PrettySchedulePrinters {
       for (ClassPeriod period : Ordering.natural().sortedCopy(program.compatiblePeriods(room))) {
         Optional<PresentAssignment> occurring = schedule.occurringAt(period, room);
         Csv.RowBuilder rowBuilder = Csv.newRowBuilder();
-        rowBuilder.addBlank().add(period.getDescription());
+        rowBuilder.addBlank().add(period.getShortDescription());
         rowBuilder.add(occurring.isPresent() ? occurring.get().getSection().getTitle()
             : "UNASSIGNED");
         builder.add(rowBuilder.build());
@@ -63,7 +63,7 @@ public class PrettySchedulePrinters {
         Csv.RowBuilder rowBuilder = Csv.newRowBuilder();
         rowBuilder
             .addBlank()
-            .add(entry.getKey().getDescription())
+            .add(entry.getKey().getShortDescription())
             .add(entry.getValue().getRoom().getName())
             .add(entry.getValue().getSection().getTitle());
         builder.add(rowBuilder.build());

@@ -32,6 +32,10 @@ public final class ClassPeriod extends ProgramObject<SerialPeriod> implements
     return index;
   }
 
+  public String getShortDescription() {
+    return serial.getShortDescription();
+  }
+
   public String getDescription() {
     return serial.getDescription();
   }

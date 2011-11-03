@@ -22,13 +22,13 @@ message SerialSection {
 	required int32 sectionId = 1;
 	optional string courseTitle = 2;
 	optional int32 subjectId = 12 [default = -1];
-	repeated int32 teacherIds = 3 [packed = true];
+	repeated int32 teacherId = 3 [packed = true];
 	optional int32 estimatedClassSize = 5 [default = 15];
 	optional int32 maxClassSize = 6 [default = 20];
 	optional int32 periodLength = 8 [default = 1];
 	required int32 courseId = 10;
 	repeated int32 requiredProperty = 9 [packed = true];
-	repeated int32 prereqCourseIds = 11 [packed = true];
+	repeated int32 prereqCourseId = 11 [packed = true];
 }
 
 /*

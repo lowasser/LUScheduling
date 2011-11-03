@@ -1114,7 +1114,7 @@ teacher {
 section {
   sectionId: 925
   courseTitle: "C752s1: Introduction to Stuffed Animals"
-  teacherIds: 1500
+  teacherId: 1500
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -1124,7 +1124,7 @@ section {
 section {
   sectionId: 926
   courseTitle: "C753s1: The F-Word: Feminism in America"
-  teacherIds: 4296
+  teacherId: 4296
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 1
@@ -1134,7 +1134,7 @@ section {
 section {
   sectionId: 927
   courseTitle: "C753s2: The F-Word: Feminism in America"
-  teacherIds: 4296
+  teacherId: 4296
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 1
@@ -1144,7 +1144,7 @@ section {
 section {
   sectionId: 928
   courseTitle: "S754s1: Dinosaurs"
-  teacherIds: 4832
+  teacherId: 4832
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 1
@@ -1154,7 +1154,7 @@ section {
 section {
   sectionId: 929
   courseTitle: "S754s2: Dinosaurs"
-  teacherIds: 4832
+  teacherId: 4832
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 1
@@ -1164,7 +1164,7 @@ section {
 section {
   sectionId: 930
   courseTitle: "S755s1: Psychology & Emotion: How to avoid choking under pressure on exams. "
-  teacherIds: 4842
+  teacherId: 4842
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 1
@@ -1174,7 +1174,7 @@ section {
 section {
   sectionId: 931
   courseTitle: "S755s2: Psychology & Emotion: How to avoid choking under pressure on exams. "
-  teacherIds: 4842
+  teacherId: 4842
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 1
@@ -1184,7 +1184,7 @@ section {
 section {
   sectionId: 932
   courseTitle: "H756s1: History of Chicago Cubs Baseball"
-  teacherIds: 4849
+  teacherId: 4849
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
@@ -1194,7 +1194,7 @@ section {
 section {
   sectionId: 936
   courseTitle: "C758s1: How to be a good person"
-  teacherIds: 4856
+  teacherId: 4856
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
@@ -1204,7 +1204,7 @@ section {
 section {
   sectionId: 937
   courseTitle: "C758s2: How to be a good person"
-  teacherIds: 4856
+  teacherId: 4856
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
@@ -1214,7 +1214,7 @@ section {
 section {
   sectionId: 938
   courseTitle: "C758s3: How to be a good person"
-  teacherIds: 4856
+  teacherId: 4856
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
@@ -1224,7 +1224,7 @@ section {
 section {
   sectionId: 939
   courseTitle: "C758s4: How to be a good person"
-  teacherIds: 4856
+  teacherId: 4856
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
@@ -1234,7 +1234,7 @@ section {
 section {
   sectionId: 940
   courseTitle: "C758s5: How to be a good person"
-  teacherIds: 4856
+  teacherId: 4856
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
@@ -1244,7 +1244,7 @@ section {
 section {
   sectionId: 941
   courseTitle: "C758s6: How to be a good person"
-  teacherIds: 4856
+  teacherId: 4856
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
@@ -1254,7 +1254,7 @@ section {
 section {
   sectionId: 942
   courseTitle: "C759s1: Business 901: What Makes a Good Company? (Qualitative Analysis of Equities)"
-  teacherIds: 4857
+  teacherId: 4857
   estimatedClassSize: 50
   maxClassSize: 50
   periodLength: 1
@@ -1264,7 +1264,7 @@ section {
 section {
   sectionId: 946
   courseTitle: "L761s1: The High-School Resume: A How-To"
-  teacherIds: 4857
+  teacherId: 4857
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 1
@@ -1274,7 +1274,7 @@ section {
 section {
   sectionId: 947
   courseTitle: "C762s1: Everyone Can Meditate "
-  teacherIds: 4862
+  teacherId: 4862
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 1
@@ -1284,7 +1284,7 @@ section {
 section {
   sectionId: 948
   courseTitle: "C762s2: Everyone Can Meditate "
-  teacherIds: 4862
+  teacherId: 4862
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 1
@@ -1294,7 +1294,7 @@ section {
 section {
   sectionId: 949
   courseTitle: "C762s3: Everyone Can Meditate "
-  teacherIds: 4862
+  teacherId: 4862
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 1
@@ -1304,7 +1304,7 @@ section {
 section {
   sectionId: 950
   courseTitle: "C762s4: Everyone Can Meditate "
-  teacherIds: 4862
+  teacherId: 4862
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 1
@@ -1314,7 +1314,7 @@ section {
 section {
   sectionId: 951
   courseTitle: "C762s5: Everyone Can Meditate "
-  teacherIds: 4862
+  teacherId: 4862
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 1
@@ -1324,7 +1324,7 @@ section {
 section {
   sectionId: 952
   courseTitle: "C762s6: Everyone Can Meditate "
-  teacherIds: 4862
+  teacherId: 4862
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 1
@@ -1334,8 +1334,8 @@ section {
 section {
   sectionId: 958
   courseTitle: "S765s1: World of Illusions"
-  teacherIds: 4866
-  teacherIds: 4989
+  teacherId: 4866
+  teacherId: 4989
   estimatedClassSize: 23
   maxClassSize: 23
   periodLength: 1
@@ -1345,7 +1345,7 @@ section {
 section {
   sectionId: 959
   courseTitle: "C766s1: The Fall of the Roman Republic"
-  teacherIds: 3195
+  teacherId: 3195
   estimatedClassSize: 30
   maxClassSize: 30
   periodLength: 2
@@ -1355,7 +1355,7 @@ section {
 section {
   sectionId: 960
   courseTitle: "C767s1: Righteousness and Benevolence: An Introduction to Confucian Philosophy"
-  teacherIds: 3195
+  teacherId: 3195
   estimatedClassSize: 30
   maxClassSize: 30
   periodLength: 1
@@ -1365,7 +1365,7 @@ section {
 section {
   sectionId: 962
   courseTitle: "H769s1: Super Smash Bros. -- an Introduction to Competitive Play"
-  teacherIds: 4870
+  teacherId: 4870
   estimatedClassSize: 30
   maxClassSize: 30
   periodLength: 1
@@ -1375,7 +1375,7 @@ section {
 section {
   sectionId: 965
   courseTitle: "A770s1: Introduction to Dance"
-  teacherIds: 2830
+  teacherId: 2830
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 2
@@ -1386,7 +1386,7 @@ section {
 section {
   sectionId: 966
   courseTitle: "A770s2: Introduction to Dance"
-  teacherIds: 2830
+  teacherId: 2830
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 2
@@ -1397,7 +1397,7 @@ section {
 section {
   sectionId: 967
   courseTitle: "A771s1: Intermediate Dance"
-  teacherIds: 2830
+  teacherId: 2830
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -1408,7 +1408,7 @@ section {
 section {
   sectionId: 968
   courseTitle: "C772s1: Advertising 101."
-  teacherIds: 1612
+  teacherId: 1612
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 2
@@ -1418,7 +1418,7 @@ section {
 section {
   sectionId: 969
   courseTitle: "C772s2: Advertising 101."
-  teacherIds: 1612
+  teacherId: 1612
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 2
@@ -1428,7 +1428,7 @@ section {
 section {
   sectionId: 970
   courseTitle: "C773s1: Seja Bem-vindo to Black Brazil! A Course on People of African Descent in Brazil"
-  teacherIds: 3227
+  teacherId: 3227
   estimatedClassSize: 12
   maxClassSize: 12
   periodLength: 1
@@ -1438,7 +1438,7 @@ section {
 section {
   sectionId: 971
   courseTitle: "C773s2: Seja Bem-vindo to Black Brazil! A Course on People of African Descent in Brazil"
-  teacherIds: 3227
+  teacherId: 3227
   estimatedClassSize: 12
   maxClassSize: 12
   periodLength: 1
@@ -1448,8 +1448,8 @@ section {
 section {
   sectionId: 972
   courseTitle: "S774s1: The Science of Sleep"
-  teacherIds: 4879
-  teacherIds: 4871
+  teacherId: 4879
+  teacherId: 4871
   estimatedClassSize: 50
   maxClassSize: 50
   periodLength: 1
@@ -1459,8 +1459,8 @@ section {
 section {
   sectionId: 973
   courseTitle: "S774s2: The Science of Sleep"
-  teacherIds: 4879
-  teacherIds: 4871
+  teacherId: 4879
+  teacherId: 4871
   estimatedClassSize: 50
   maxClassSize: 50
   periodLength: 1
@@ -1470,7 +1470,7 @@ section {
 section {
   sectionId: 974
   courseTitle: "H775s1: Acing the art of tennis"
-  teacherIds: 4873
+  teacherId: 4873
   estimatedClassSize: 8
   maxClassSize: 8
   periodLength: 2
@@ -1480,7 +1480,7 @@ section {
 section {
   sectionId: 975
   courseTitle: "H775s2: Acing the art of tennis"
-  teacherIds: 4873
+  teacherId: 4873
   estimatedClassSize: 8
   maxClassSize: 8
   periodLength: 2
@@ -1490,7 +1490,7 @@ section {
 section {
   sectionId: 976
   courseTitle: "L776s1: The language of the Aztecs and the linguistic landscape of Mexico"
-  teacherIds: 1571
+  teacherId: 1571
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -1500,7 +1500,7 @@ section {
 section {
   sectionId: 977
   courseTitle: "C777s1: Ashurbanipal: the Last king of Assyria"
-  teacherIds: 1571
+  teacherId: 1571
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 1
@@ -1510,9 +1510,9 @@ section {
 section {
   sectionId: 978
   courseTitle: "C778s1: The Push for Global Health: Medicine, Politics, and Society"
-  teacherIds: 4847
-  teacherIds: 4981
-  teacherIds: 4980
+  teacherId: 4847
+  teacherId: 4981
+  teacherId: 4980
   estimatedClassSize: 21
   maxClassSize: 21
   periodLength: 2
@@ -1522,9 +1522,9 @@ section {
 section {
   sectionId: 979
   courseTitle: "C778s2: The Push for Global Health: Medicine, Politics, and Society"
-  teacherIds: 4847
-  teacherIds: 4981
-  teacherIds: 4980
+  teacherId: 4847
+  teacherId: 4981
+  teacherId: 4980
   estimatedClassSize: 21
   maxClassSize: 21
   periodLength: 2
@@ -1534,7 +1534,7 @@ section {
 section {
   sectionId: 980
   courseTitle: "C779s1: Foundations of Leadership"
-  teacherIds: 4869
+  teacherId: 4869
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -1544,7 +1544,7 @@ section {
 section {
   sectionId: 981
   courseTitle: "C779s2: Foundations of Leadership"
-  teacherIds: 4869
+  teacherId: 4869
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -1554,7 +1554,7 @@ section {
 section {
   sectionId: 982
   courseTitle: "C779s3: Foundations of Leadership"
-  teacherIds: 4869
+  teacherId: 4869
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -1564,7 +1564,7 @@ section {
 section {
   sectionId: 983
   courseTitle: "C780s1: Hybrids in Story"
-  teacherIds: 2909
+  teacherId: 2909
   estimatedClassSize: 10
   maxClassSize: 10
   periodLength: 2
@@ -1574,7 +1574,7 @@ section {
 section {
   sectionId: 984
   courseTitle: "C780s2: Hybrids in Story"
-  teacherIds: 2909
+  teacherId: 2909
   estimatedClassSize: 10
   maxClassSize: 10
   periodLength: 2
@@ -1584,7 +1584,7 @@ section {
 section {
   sectionId: 985
   courseTitle: "C780s3: Hybrids in Story"
-  teacherIds: 2909
+  teacherId: 2909
   estimatedClassSize: 10
   maxClassSize: 10
   periodLength: 2
@@ -1594,7 +1594,7 @@ section {
 section {
   sectionId: 986
   courseTitle: "C781s1: Taking Control: Girls in Charge"
-  teacherIds: 4834
+  teacherId: 4834
   estimatedClassSize: 10
   maxClassSize: 10
   periodLength: 1
@@ -1604,7 +1604,7 @@ section {
 section {
   sectionId: 987
   courseTitle: "C781s2: Taking Control: Girls in Charge"
-  teacherIds: 4834
+  teacherId: 4834
   estimatedClassSize: 10
   maxClassSize: 10
   periodLength: 1
@@ -1614,7 +1614,7 @@ section {
 section {
   sectionId: 988
   courseTitle: "C781s3: Taking Control: Girls in Charge"
-  teacherIds: 4834
+  teacherId: 4834
   estimatedClassSize: 10
   maxClassSize: 10
   periodLength: 1
@@ -1624,7 +1624,7 @@ section {
 section {
   sectionId: 989
   courseTitle: "A782s1: Italian Renaissance Art "
-  teacherIds: 3338
+  teacherId: 3338
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -1634,8 +1634,8 @@ section {
 section {
   sectionId: 992
   courseTitle: "A785s1: Nonsens Mooziik"
-  teacherIds: 4884
-  teacherIds: 4892
+  teacherId: 4884
+  teacherId: 4892
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -1645,7 +1645,7 @@ section {
 section {
   sectionId: 995
   courseTitle: "C787s1: An Introduction to the United Nations"
-  teacherIds: 4893
+  teacherId: 4893
   estimatedClassSize: 30
   maxClassSize: 30
   periodLength: 3
@@ -1655,8 +1655,8 @@ section {
 section {
   sectionId: 996
   courseTitle: "A788s1: Thought Collage: Comics, Graphic Storytelling and Experiment"
-  teacherIds: 4892
-  teacherIds: 4884
+  teacherId: 4892
+  teacherId: 4884
   estimatedClassSize: 45
   maxClassSize: 45
   periodLength: 1
@@ -1666,8 +1666,8 @@ section {
 section {
   sectionId: 997
   courseTitle: "S789s1: Our Earth"
-  teacherIds: 4892
-  teacherIds: 4884
+  teacherId: 4892
+  teacherId: 4884
   estimatedClassSize: 200
   maxClassSize: 200
   periodLength: 1
@@ -1677,8 +1677,8 @@ section {
 section {
   sectionId: 998
   courseTitle: "L790s1: Flash! Poetic."
-  teacherIds: 4892
-  teacherIds: 4884
+  teacherId: 4892
+  teacherId: 4884
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 1
@@ -1688,7 +1688,7 @@ section {
 section {
   sectionId: 1006
   courseTitle: "C796s1: How and Why Did the West Rise above the Rest? "
-  teacherIds: 4895
+  teacherId: 4895
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -1698,7 +1698,7 @@ section {
 section {
   sectionId: 1007
   courseTitle: "C796s2: How and Why Did the West Rise above the Rest? "
-  teacherIds: 4895
+  teacherId: 4895
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -1708,7 +1708,7 @@ section {
 section {
   sectionId: 1008
   courseTitle: "C797s1: Urban Design I: Thinking about Places"
-  teacherIds: 329
+  teacherId: 329
   estimatedClassSize: 12
   maxClassSize: 12
   periodLength: 3
@@ -1718,7 +1718,7 @@ section {
 section {
   sectionId: 1009
   courseTitle: "C798s1: Urban Design II: Reimagining the Midway"
-  teacherIds: 329
+  teacherId: 329
   estimatedClassSize: 12
   maxClassSize: 12
   periodLength: 3
@@ -1728,7 +1728,7 @@ section {
 section {
   sectionId: 1010
   courseTitle: "A799s1: Soyuzmultfilm: History of Soviet Animation"
-  teacherIds: 2933
+  teacherId: 2933
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -1738,7 +1738,7 @@ section {
 section {
   sectionId: 1011
   courseTitle: "A799s2: Soyuzmultfilm: History of Soviet Animation"
-  teacherIds: 2933
+  teacherId: 2933
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -1748,7 +1748,7 @@ section {
 section {
   sectionId: 1012
   courseTitle: "A799s3: Soyuzmultfilm: History of Soviet Animation"
-  teacherIds: 2933
+  teacherId: 2933
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -1758,7 +1758,7 @@ section {
 section {
   sectionId: 1013
   courseTitle: "C800s1: A Philosophical Introduction to the Philosophy of Philosophy"
-  teacherIds: 4851
+  teacherId: 4851
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -1768,7 +1768,7 @@ section {
 section {
   sectionId: 1014
   courseTitle: "C801s1: Kantian Ethics and the Moral Law"
-  teacherIds: 4851
+  teacherId: 4851
   estimatedClassSize: 30
   maxClassSize: 30
   periodLength: 2
@@ -1778,7 +1778,7 @@ section {
 section {
   sectionId: 1015
   courseTitle: "C802s1: Psychology and Decision Making"
-  teacherIds: 338
+  teacherId: 338
   estimatedClassSize: 50
   maxClassSize: 50
   periodLength: 1
@@ -1788,7 +1788,7 @@ section {
 section {
   sectionId: 1016
   courseTitle: "C802s2: Psychology and Decision Making"
-  teacherIds: 338
+  teacherId: 338
   estimatedClassSize: 50
   maxClassSize: 50
   periodLength: 1
@@ -1798,7 +1798,7 @@ section {
 section {
   sectionId: 1017
   courseTitle: "C802s3: Psychology and Decision Making"
-  teacherIds: 338
+  teacherId: 338
   estimatedClassSize: 50
   maxClassSize: 50
   periodLength: 1
@@ -1808,7 +1808,7 @@ section {
 section {
   sectionId: 1018
   courseTitle: "C802s4: Psychology and Decision Making"
-  teacherIds: 338
+  teacherId: 338
   estimatedClassSize: 50
   maxClassSize: 50
   periodLength: 1
@@ -1818,7 +1818,7 @@ section {
 section {
   sectionId: 1019
   courseTitle: "C802s5: Psychology and Decision Making"
-  teacherIds: 338
+  teacherId: 338
   estimatedClassSize: 50
   maxClassSize: 50
   periodLength: 1
@@ -1828,7 +1828,7 @@ section {
 section {
   sectionId: 1020
   courseTitle: "C802s6: Psychology and Decision Making"
-  teacherIds: 338
+  teacherId: 338
   estimatedClassSize: 50
   maxClassSize: 50
   periodLength: 1
@@ -1838,7 +1838,7 @@ section {
 section {
   sectionId: 1021
   courseTitle: "C803s1: Being your own boss for better or worse: Entrepreneurship "
-  teacherIds: 4831
+  teacherId: 4831
   estimatedClassSize: 12
   maxClassSize: 12
   periodLength: 1
@@ -1848,7 +1848,7 @@ section {
 section {
   sectionId: 1022
   courseTitle: "L804s1: Become an Instant Poet!"
-  teacherIds: 4837
+  teacherId: 4837
   estimatedClassSize: 30
   maxClassSize: 30
   periodLength: 1
@@ -1858,7 +1858,7 @@ section {
 section {
   sectionId: 1023
   courseTitle: "L804s2: Become an Instant Poet!"
-  teacherIds: 4837
+  teacherId: 4837
   estimatedClassSize: 30
   maxClassSize: 30
   periodLength: 1
@@ -1868,7 +1868,7 @@ section {
 section {
   sectionId: 1024
   courseTitle: "L804s3: Become an Instant Poet!"
-  teacherIds: 4837
+  teacherId: 4837
   estimatedClassSize: 30
   maxClassSize: 30
   periodLength: 1
@@ -1878,7 +1878,7 @@ section {
 section {
   sectionId: 1025
   courseTitle: "L804s4: Become an Instant Poet!"
-  teacherIds: 4837
+  teacherId: 4837
   estimatedClassSize: 30
   maxClassSize: 30
   periodLength: 1
@@ -1888,7 +1888,7 @@ section {
 section {
   sectionId: 1026
   courseTitle: "A805s1: Learn to Play the Carillon!"
-  teacherIds: 4897
+  teacherId: 4897
   estimatedClassSize: 6
   maxClassSize: 6
   periodLength: 2
@@ -1898,7 +1898,7 @@ section {
 section {
   sectionId: 1027
   courseTitle: "A805s2: Learn to Play the Carillon!"
-  teacherIds: 4897
+  teacherId: 4897
   estimatedClassSize: 6
   maxClassSize: 6
   periodLength: 2
@@ -1908,7 +1908,7 @@ section {
 section {
   sectionId: 1031
   courseTitle: "A807s1: Storytelling in Video Games"
-  teacherIds: 4839
+  teacherId: 4839
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -1918,7 +1918,7 @@ section {
 section {
   sectionId: 1032
   courseTitle: "C808s1: Loopy about Landmines! (Or: How to get fast tracked for war crimes)"
-  teacherIds: 3205
+  teacherId: 3205
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -1928,7 +1928,7 @@ section {
 section {
   sectionId: 1033
   courseTitle: "C808s2: Loopy about Landmines! (Or: How to get fast tracked for war crimes)"
-  teacherIds: 3205
+  teacherId: 3205
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -1938,7 +1938,7 @@ section {
 section {
   sectionId: 1034
   courseTitle: "A809s1: Boom Boom Pow: Introduction to Street Drumming"
-  teacherIds: 1704
+  teacherId: 1704
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 1
@@ -1949,7 +1949,7 @@ section {
 section {
   sectionId: 1035
   courseTitle: "A809s2: Boom Boom Pow: Introduction to Street Drumming"
-  teacherIds: 1704
+  teacherId: 1704
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 1
@@ -1960,7 +1960,7 @@ section {
 section {
   sectionId: 1036
   courseTitle: "S810s1: Bio-Hacking Nature: An Introduction to Synthetic Biology"
-  teacherIds: 4872
+  teacherId: 4872
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 2
@@ -1970,7 +1970,7 @@ section {
 section {
   sectionId: 1037
   courseTitle: "S810s2: Bio-Hacking Nature: An Introduction to Synthetic Biology"
-  teacherIds: 4872
+  teacherId: 4872
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 2
@@ -1980,8 +1980,8 @@ section {
 section {
   sectionId: 1038
   courseTitle: "M811s1: Constructing the Real Numbers"
-  teacherIds: 4890
-  teacherIds: 4891
+  teacherId: 4890
+  teacherId: 4891
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 3
@@ -1991,7 +1991,7 @@ section {
 section {
   sectionId: 1048
   courseTitle: "C815s1: Cartels, Control, and Corruption: A Look at the Ongoing Mexican Drug War"
-  teacherIds: 4900
+  teacherId: 4900
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 1
@@ -2001,7 +2001,7 @@ section {
 section {
   sectionId: 1049
   courseTitle: "C815s2: Cartels, Control, and Corruption: A Look at the Ongoing Mexican Drug War"
-  teacherIds: 4900
+  teacherId: 4900
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 1
@@ -2011,7 +2011,7 @@ section {
 section {
   sectionId: 1050
   courseTitle: "C815s3: Cartels, Control, and Corruption: A Look at the Ongoing Mexican Drug War"
-  teacherIds: 4900
+  teacherId: 4900
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 1
@@ -2021,8 +2021,8 @@ section {
 section {
   sectionId: 1051
   courseTitle: "S816s1: Astronomania!"
-  teacherIds: 3305
-  teacherIds: 1552
+  teacherId: 3305
+  teacherId: 1552
   estimatedClassSize: 200
   maxClassSize: 200
   periodLength: 2
@@ -2032,7 +2032,7 @@ section {
 section {
   sectionId: 1052
   courseTitle: "A817s1: Exploring the Circus Arts"
-  teacherIds: 4839
+  teacherId: 4839
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 1
@@ -2042,7 +2042,7 @@ section {
 section {
   sectionId: 1053
   courseTitle: "S818s1: Harry Potter 101: The Science Behind the Magic"
-  teacherIds: 4901
+  teacherId: 4901
   estimatedClassSize: 18
   maxClassSize: 18
   periodLength: 1
@@ -2052,7 +2052,7 @@ section {
 section {
   sectionId: 1054
   courseTitle: "S818s2: Harry Potter 101: The Science Behind the Magic"
-  teacherIds: 4901
+  teacherId: 4901
   estimatedClassSize: 18
   maxClassSize: 18
   periodLength: 1
@@ -2062,7 +2062,7 @@ section {
 section {
   sectionId: 1055
   courseTitle: "S818s3: Harry Potter 101: The Science Behind the Magic"
-  teacherIds: 4901
+  teacherId: 4901
   estimatedClassSize: 18
   maxClassSize: 18
   periodLength: 1
@@ -2072,7 +2072,7 @@ section {
 section {
   sectionId: 1056
   courseTitle: "S818s4: Harry Potter 101: The Science Behind the Magic"
-  teacherIds: 4901
+  teacherId: 4901
   estimatedClassSize: 18
   maxClassSize: 18
   periodLength: 1
@@ -2082,7 +2082,7 @@ section {
 section {
   sectionId: 1057
   courseTitle: "S819s1: Black Holes and Revelations"
-  teacherIds: 4902
+  teacherId: 4902
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 2
@@ -2092,7 +2092,7 @@ section {
 section {
   sectionId: 1058
   courseTitle: "S819s2: Black Holes and Revelations"
-  teacherIds: 4902
+  teacherId: 4902
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 2
@@ -2102,7 +2102,7 @@ section {
 section {
   sectionId: 1059
   courseTitle: "S819s3: Black Holes and Revelations"
-  teacherIds: 4902
+  teacherId: 4902
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 2
@@ -2112,7 +2112,7 @@ section {
 section {
   sectionId: 1060
   courseTitle: "C820s1: Dave Chappelle! George Lopez! Bruce Lee! Snookie!? Race in American Media"
-  teacherIds: 4838
+  teacherId: 4838
   estimatedClassSize: 10
   maxClassSize: 10
   periodLength: 1
@@ -2122,7 +2122,7 @@ section {
 section {
   sectionId: 1061
   courseTitle: "C820s2: Dave Chappelle! George Lopez! Bruce Lee! Snookie!? Race in American Media"
-  teacherIds: 4838
+  teacherId: 4838
   estimatedClassSize: 10
   maxClassSize: 10
   periodLength: 1
@@ -2132,7 +2132,7 @@ section {
 section {
   sectionId: 1062
   courseTitle: "C820s3: Dave Chappelle! George Lopez! Bruce Lee! Snookie!? Race in American Media"
-  teacherIds: 4838
+  teacherId: 4838
   estimatedClassSize: 10
   maxClassSize: 10
   periodLength: 1
@@ -2142,7 +2142,7 @@ section {
 section {
   sectionId: 1063
   courseTitle: "C821s1: Happiness"
-  teacherIds: 4905
+  teacherId: 4905
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -2152,7 +2152,7 @@ section {
 section {
   sectionId: 1064
   courseTitle: "C821s2: Happiness"
-  teacherIds: 4905
+  teacherId: 4905
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -2162,7 +2162,7 @@ section {
 section {
   sectionId: 1065
   courseTitle: "C822s1: Tea Time"
-  teacherIds: 4630
+  teacherId: 4630
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -2172,7 +2172,7 @@ section {
 section {
   sectionId: 1066
   courseTitle: "C822s2: Tea Time"
-  teacherIds: 4630
+  teacherId: 4630
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -2182,7 +2182,7 @@ section {
 section {
   sectionId: 1067
   courseTitle: "C822s3: Tea Time"
-  teacherIds: 4630
+  teacherId: 4630
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -2192,7 +2192,7 @@ section {
 section {
   sectionId: 1068
   courseTitle: "C823s1: UChicago Lore and Traditions"
-  teacherIds: 4886
+  teacherId: 4886
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 1
@@ -2203,7 +2203,7 @@ section {
 section {
   sectionId: 1069
   courseTitle: "M824s1: Sabermetrics: The Mathematics of Assembling a Winning Baseball Team"
-  teacherIds: 4906
+  teacherId: 4906
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -2213,7 +2213,7 @@ section {
 section {
   sectionId: 1070
   courseTitle: "H825s1: Introduction to Minecraft"
-  teacherIds: 4908
+  teacherId: 4908
   estimatedClassSize: 100
   maxClassSize: 100
   periodLength: 1
@@ -2223,7 +2223,7 @@ section {
 section {
   sectionId: 1071
   courseTitle: "C826s1: The European Theater of World War II: Battlefield Equipment and Tactics"
-  teacherIds: 4908
+  teacherId: 4908
   estimatedClassSize: 200
   maxClassSize: 200
   periodLength: 1
@@ -2233,7 +2233,7 @@ section {
 section {
   sectionId: 1072
   courseTitle: "S827s1: It Just Comes Naturally: The Intersection of the Math and the Natural World"
-  teacherIds: 4885
+  teacherId: 4885
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -2243,7 +2243,7 @@ section {
 section {
   sectionId: 1073
   courseTitle: "S827s2: It Just Comes Naturally: The Intersection of the Math and the Natural World"
-  teacherIds: 4885
+  teacherId: 4885
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -2253,7 +2253,7 @@ section {
 section {
   sectionId: 1074
   courseTitle: "S827s3: It Just Comes Naturally: The Intersection of the Math and the Natural World"
-  teacherIds: 4885
+  teacherId: 4885
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -2263,7 +2263,7 @@ section {
 section {
   sectionId: 1078
   courseTitle: "A828s1: (bEaUTiFuL) - The Role of Presentation in Art and Language"
-  teacherIds: 3134
+  teacherId: 3134
   estimatedClassSize: 16
   maxClassSize: 16
   periodLength: 2
@@ -2273,7 +2273,7 @@ section {
 section {
   sectionId: 1081
   courseTitle: "L830s1: Language and Thought"
-  teacherIds: 4836
+  teacherId: 4836
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 1
@@ -2283,7 +2283,7 @@ section {
 section {
   sectionId: 1082
   courseTitle: "C831s1: Deceit: The Art of Reading People"
-  teacherIds: 4907
+  teacherId: 4907
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -2293,7 +2293,7 @@ section {
 section {
   sectionId: 1083
   courseTitle: "S832s1: \"Fission\" for Answers: An Intro to Nuclear Chemistry"
-  teacherIds: 4909
+  teacherId: 4909
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 1
@@ -2303,7 +2303,7 @@ section {
 section {
   sectionId: 1084
   courseTitle: "A833s1: Introduction to Music Production"
-  teacherIds: 4914
+  teacherId: 4914
   estimatedClassSize: 50
   maxClassSize: 50
   periodLength: 1
@@ -2313,7 +2313,7 @@ section {
 section {
   sectionId: 1085
   courseTitle: "A833s2: Introduction to Music Production"
-  teacherIds: 4914
+  teacherId: 4914
   estimatedClassSize: 50
   maxClassSize: 50
   periodLength: 1
@@ -2323,7 +2323,7 @@ section {
 section {
   sectionId: 1086
   courseTitle: "C834s1: Atheism: History and Arguments"
-  teacherIds: 4913
+  teacherId: 4913
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
@@ -2333,7 +2333,7 @@ section {
 section {
   sectionId: 1087
   courseTitle: "C834s2: Atheism: History and Arguments"
-  teacherIds: 4913
+  teacherId: 4913
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
@@ -2343,7 +2343,7 @@ section {
 section {
   sectionId: 1088
   courseTitle: "C834s3: Atheism: History and Arguments"
-  teacherIds: 4913
+  teacherId: 4913
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
@@ -2353,7 +2353,7 @@ section {
 section {
   sectionId: 1089
   courseTitle: "C834s4: Atheism: History and Arguments"
-  teacherIds: 4913
+  teacherId: 4913
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
@@ -2363,7 +2363,7 @@ section {
 section {
   sectionId: 1090
   courseTitle: "C834s5: Atheism: History and Arguments"
-  teacherIds: 4913
+  teacherId: 4913
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
@@ -2373,7 +2373,7 @@ section {
 section {
   sectionId: 1091
   courseTitle: "C834s6: Atheism: History and Arguments"
-  teacherIds: 4913
+  teacherId: 4913
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
@@ -2383,7 +2383,7 @@ section {
 section {
   sectionId: 1092
   courseTitle: "M835s1: Trigonometry With Pictures"
-  teacherIds: 422
+  teacherId: 422
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -2393,7 +2393,7 @@ section {
 section {
   sectionId: 1093
   courseTitle: "M836s1: The Magic of Wedge Products"
-  teacherIds: 422
+  teacherId: 422
   estimatedClassSize: 30
   maxClassSize: 30
   periodLength: 1
@@ -2403,7 +2403,7 @@ section {
 section {
   sectionId: 1094
   courseTitle: "S837s1: Sharks: Monsters or Misunderstood"
-  teacherIds: 4921
+  teacherId: 4921
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 1
@@ -2413,7 +2413,7 @@ section {
 section {
   sectionId: 1095
   courseTitle: "S837s2: Sharks: Monsters or Misunderstood"
-  teacherIds: 4921
+  teacherId: 4921
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 1
@@ -2423,7 +2423,7 @@ section {
 section {
   sectionId: 1096
   courseTitle: "S837s3: Sharks: Monsters or Misunderstood"
-  teacherIds: 4921
+  teacherId: 4921
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 1
@@ -2433,7 +2433,7 @@ section {
 section {
   sectionId: 1097
   courseTitle: "S837s4: Sharks: Monsters or Misunderstood"
-  teacherIds: 4921
+  teacherId: 4921
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 1
@@ -2443,7 +2443,7 @@ section {
 section {
   sectionId: 1098
   courseTitle: "M838s1: Basketball Statistics"
-  teacherIds: 4922
+  teacherId: 4922
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -2453,7 +2453,7 @@ section {
 section {
   sectionId: 1099
   courseTitle: "M838s2: Basketball Statistics"
-  teacherIds: 4922
+  teacherId: 4922
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -2463,7 +2463,7 @@ section {
 section {
   sectionId: 1100
   courseTitle: "M838s3: Basketball Statistics"
-  teacherIds: 4922
+  teacherId: 4922
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -2473,7 +2473,7 @@ section {
 section {
   sectionId: 1101
   courseTitle: "M839s1: Zero Isn\'t Nothing!: Exploring the Mathematics of \'0\'"
-  teacherIds: 4924
+  teacherId: 4924
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -2483,7 +2483,7 @@ section {
 section {
   sectionId: 1102
   courseTitle: "M839s2: Zero Isn\'t Nothing!: Exploring the Mathematics of \'0\'"
-  teacherIds: 4924
+  teacherId: 4924
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -2493,7 +2493,7 @@ section {
 section {
   sectionId: 1103
   courseTitle: "M839s3: Zero Isn\'t Nothing!: Exploring the Mathematics of \'0\'"
-  teacherIds: 4924
+  teacherId: 4924
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -2503,7 +2503,7 @@ section {
 section {
   sectionId: 1104
   courseTitle: "H840s1: How to Fly an Airplane"
-  teacherIds: 4932
+  teacherId: 4932
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 1
@@ -2513,7 +2513,7 @@ section {
 section {
   sectionId: 1106
   courseTitle: "A841s1: So You Think You Can Jig? (Beginner Irish Dance)"
-  teacherIds: 4933
+  teacherId: 4933
   estimatedClassSize: 16
   maxClassSize: 16
   periodLength: 1
@@ -2523,7 +2523,7 @@ section {
 section {
   sectionId: 1107
   courseTitle: "A841s2: So You Think You Can Jig? (Beginner Irish Dance)"
-  teacherIds: 4933
+  teacherId: 4933
   estimatedClassSize: 16
   maxClassSize: 16
   periodLength: 1
@@ -2533,7 +2533,7 @@ section {
 section {
   sectionId: 1111
   courseTitle: "A843s1: What Film is trying to Tell You!"
-  teacherIds: 4931
+  teacherId: 4931
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -2543,7 +2543,7 @@ section {
 section {
   sectionId: 1112
   courseTitle: "C844s1: Instrumental Rationality: Beliefs to Actions"
-  teacherIds: 4920
+  teacherId: 4920
   estimatedClassSize: 24
   maxClassSize: 24
   periodLength: 1
@@ -2553,7 +2553,7 @@ section {
 section {
   sectionId: 1113
   courseTitle: "C844s2: Instrumental Rationality: Beliefs to Actions"
-  teacherIds: 4920
+  teacherId: 4920
   estimatedClassSize: 24
   maxClassSize: 24
   periodLength: 1
@@ -2563,7 +2563,7 @@ section {
 section {
   sectionId: 1114
   courseTitle: "C844s3: Instrumental Rationality: Beliefs to Actions"
-  teacherIds: 4920
+  teacherId: 4920
   estimatedClassSize: 24
   maxClassSize: 24
   periodLength: 1
@@ -2573,7 +2573,7 @@ section {
 section {
   sectionId: 1115
   courseTitle: "C844s4: Instrumental Rationality: Beliefs to Actions"
-  teacherIds: 4920
+  teacherId: 4920
   estimatedClassSize: 24
   maxClassSize: 24
   periodLength: 1
@@ -2583,7 +2583,7 @@ section {
 section {
   sectionId: 1116
   courseTitle: "A845s1: Flamenco Passion"
-  teacherIds: 4935
+  teacherId: 4935
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -2594,7 +2594,7 @@ section {
 section {
   sectionId: 1117
   courseTitle: "A845s2: Flamenco Passion"
-  teacherIds: 4935
+  teacherId: 4935
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -2605,8 +2605,8 @@ section {
 section {
   sectionId: 1118
   courseTitle: "H846s1: How Soccer Explains the World"
-  teacherIds: 4937
-  teacherIds: 3241
+  teacherId: 4937
+  teacherId: 3241
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 2
@@ -2616,8 +2616,8 @@ section {
 section {
   sectionId: 1119
   courseTitle: "H846s2: How Soccer Explains the World"
-  teacherIds: 4937
-  teacherIds: 3241
+  teacherId: 4937
+  teacherId: 3241
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 2
@@ -2627,8 +2627,8 @@ section {
 section {
   sectionId: 1120
   courseTitle: "H846s3: How Soccer Explains the World"
-  teacherIds: 4937
-  teacherIds: 3241
+  teacherId: 4937
+  teacherId: 3241
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 2
@@ -2638,7 +2638,7 @@ section {
 section {
   sectionId: 1121
   courseTitle: "A847s1: Spinning"
-  teacherIds: 4923
+  teacherId: 4923
   estimatedClassSize: 16
   maxClassSize: 16
   periodLength: 1
@@ -2648,7 +2648,7 @@ section {
 section {
   sectionId: 1123
   courseTitle: "C849s1: 99 Problems: Women & Hip-Hop"
-  teacherIds: 4934
+  teacherId: 4934
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 2
@@ -2658,7 +2658,7 @@ section {
 section {
   sectionId: 1124
   courseTitle: "C849s2: 99 Problems: Women & Hip-Hop"
-  teacherIds: 4934
+  teacherId: 4934
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 2
@@ -2668,7 +2668,7 @@ section {
 section {
   sectionId: 1126
   courseTitle: "L850s1: Basic Chinese"
-  teacherIds: 4911
+  teacherId: 4911
   estimatedClassSize: 10
   maxClassSize: 10
   periodLength: 1
@@ -2678,7 +2678,7 @@ section {
 section {
   sectionId: 1127
   courseTitle: "H851s1: Gymnastics: Because Football Wasn\'t Hard Enough"
-  teacherIds: 4939
+  teacherId: 4939
   estimatedClassSize: 8
   maxClassSize: 8
   periodLength: 1
@@ -2689,7 +2689,7 @@ section {
 section {
   sectionId: 1128
   courseTitle: "H851s2: Gymnastics: Because Football Wasn\'t Hard Enough"
-  teacherIds: 4939
+  teacherId: 4939
   estimatedClassSize: 8
   maxClassSize: 8
   periodLength: 1
@@ -2700,8 +2700,8 @@ section {
 section {
   sectionId: 1129
   courseTitle: "H852s1: Introduction to the Competitive Pok\303\251mon Metagame"
-  teacherIds: 4985
-  teacherIds: 4915
+  teacherId: 4985
+  teacherId: 4915
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
@@ -2711,8 +2711,8 @@ section {
 section {
   sectionId: 1130
   courseTitle: "H852s2: Introduction to the Competitive Pok\303\251mon Metagame"
-  teacherIds: 4985
-  teacherIds: 4915
+  teacherId: 4985
+  teacherId: 4915
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
@@ -2722,8 +2722,8 @@ section {
 section {
   sectionId: 1131
   courseTitle: "H852s3: Introduction to the Competitive Pok\303\251mon Metagame"
-  teacherIds: 4985
-  teacherIds: 4915
+  teacherId: 4985
+  teacherId: 4915
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
@@ -2733,7 +2733,7 @@ section {
 section {
   sectionId: 1132
   courseTitle: "M853s1: Visualizing Math: Familiar topics in a new light"
-  teacherIds: 4870
+  teacherId: 4870
   estimatedClassSize: 30
   maxClassSize: 30
   periodLength: 2
@@ -2743,7 +2743,7 @@ section {
 section {
   sectionId: 1133
   courseTitle: "C854s1: History is Made by Stupid People"
-  teacherIds: 4930
+  teacherId: 4930
   estimatedClassSize: 23
   maxClassSize: 23
   periodLength: 2
@@ -2753,7 +2753,7 @@ section {
 section {
   sectionId: 1134
   courseTitle: "C854s2: History is Made by Stupid People"
-  teacherIds: 4930
+  teacherId: 4930
   estimatedClassSize: 23
   maxClassSize: 23
   periodLength: 2
@@ -2763,7 +2763,7 @@ section {
 section {
   sectionId: 1135
   courseTitle: "C855s1: Final Death Knell of the Roman Empire: Ottoman Siege of Constantinople"
-  teacherIds: 4930
+  teacherId: 4930
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 1
@@ -2773,7 +2773,7 @@ section {
 section {
   sectionId: 1136
   courseTitle: "C855s2: Final Death Knell of the Roman Empire: Ottoman Siege of Constantinople"
-  teacherIds: 4930
+  teacherId: 4930
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 1
@@ -2783,7 +2783,7 @@ section {
 section {
   sectionId: 1138
   courseTitle: "C857s1: You, Accepted: An Individual\342\200\231s Guide for Applying to College"
-  teacherIds: 4943
+  teacherId: 4943
   estimatedClassSize: 35
   maxClassSize: 35
   periodLength: 1
@@ -2793,7 +2793,7 @@ section {
 section {
   sectionId: 1139
   courseTitle: "C857s2: You, Accepted: An Individual\342\200\231s Guide for Applying to College"
-  teacherIds: 4943
+  teacherId: 4943
   estimatedClassSize: 35
   maxClassSize: 35
   periodLength: 1
@@ -2803,7 +2803,7 @@ section {
 section {
   sectionId: 1140
   courseTitle: "C857s3: You, Accepted: An Individual\342\200\231s Guide for Applying to College"
-  teacherIds: 4943
+  teacherId: 4943
   estimatedClassSize: 35
   maxClassSize: 35
   periodLength: 1
@@ -2813,7 +2813,7 @@ section {
 section {
   sectionId: 1141
   courseTitle: "C857s4: You, Accepted: An Individual\342\200\231s Guide for Applying to College"
-  teacherIds: 4943
+  teacherId: 4943
   estimatedClassSize: 35
   maxClassSize: 35
   periodLength: 1
@@ -2823,7 +2823,7 @@ section {
 section {
   sectionId: 1142
   courseTitle: "C857s5: You, Accepted: An Individual\342\200\231s Guide for Applying to College"
-  teacherIds: 4943
+  teacherId: 4943
   estimatedClassSize: 35
   maxClassSize: 35
   periodLength: 1
@@ -2833,7 +2833,7 @@ section {
 section {
   sectionId: 1143
   courseTitle: "C857s6: You, Accepted: An Individual\342\200\231s Guide for Applying to College"
-  teacherIds: 4943
+  teacherId: 4943
   estimatedClassSize: 35
   maxClassSize: 35
   periodLength: 1
@@ -2843,7 +2843,7 @@ section {
 section {
   sectionId: 1144
   courseTitle: "A858s1: Nailing the Audition: Cold Reading"
-  teacherIds: 4945
+  teacherId: 4945
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -2853,7 +2853,7 @@ section {
 section {
   sectionId: 1147
   courseTitle: "S860s1: Dark Matter: An Invisible Part of our Universe We\'re Just Beginning to See "
-  teacherIds: 4880
+  teacherId: 4880
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
@@ -2863,7 +2863,7 @@ section {
 section {
   sectionId: 1148
   courseTitle: "S860s2: Dark Matter: An Invisible Part of our Universe We\'re Just Beginning to See "
-  teacherIds: 4880
+  teacherId: 4880
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
@@ -2873,7 +2873,7 @@ section {
 section {
   sectionId: 1149
   courseTitle: "C861s1: Behind the Mask: Halloween\'s Role in Society, Economics, and Religion"
-  teacherIds: 4945
+  teacherId: 4945
   estimatedClassSize: 50
   maxClassSize: 50
   periodLength: 1
@@ -2883,7 +2883,7 @@ section {
 section {
   sectionId: 1150
   courseTitle: "M862s1: How to master all things Mac"
-  teacherIds: 4947
+  teacherId: 4947
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -2894,7 +2894,7 @@ section {
 section {
   sectionId: 1151
   courseTitle: "S863s1: That\'s So Sick: Getting to Know Your Immune System"
-  teacherIds: 4910
+  teacherId: 4910
   estimatedClassSize: 12
   maxClassSize: 12
   periodLength: 1
@@ -2904,7 +2904,7 @@ section {
 section {
   sectionId: 1152
   courseTitle: "A864s1: JUGGLING"
-  teacherIds: 4952
+  teacherId: 4952
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 2
@@ -2914,9 +2914,9 @@ section {
 section {
   sectionId: 1153
   courseTitle: "C865s1: Zing! - A Crash Course in the Art of Indian Street Food"
-  teacherIds: 4953
-  teacherIds: 4912
-  teacherIds: 4956
+  teacherId: 4953
+  teacherId: 4912
+  teacherId: 4956
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 2
@@ -2926,9 +2926,9 @@ section {
 section {
   sectionId: 1154
   courseTitle: "C865s2: Zing! - A Crash Course in the Art of Indian Street Food"
-  teacherIds: 4953
-  teacherIds: 4912
-  teacherIds: 4956
+  teacherId: 4953
+  teacherId: 4912
+  teacherId: 4956
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 2
@@ -2938,7 +2938,7 @@ section {
 section {
   sectionId: 1156
   courseTitle: "C866s1: I think, therefore I am...confused."
-  teacherIds: 4954
+  teacherId: 4954
   estimatedClassSize: 12
   maxClassSize: 12
   periodLength: 2
@@ -2948,8 +2948,8 @@ section {
 section {
   sectionId: 1157
   courseTitle: "A867s1: The Art of Imitation"
-  teacherIds: 4954
-  teacherIds: 4948
+  teacherId: 4954
+  teacherId: 4948
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -2959,8 +2959,8 @@ section {
 section {
   sectionId: 1158
   courseTitle: "L868s1: Spanish Literature: Introduction to Don Quijote"
-  teacherIds: 4951
-  teacherIds: 4961
+  teacherId: 4951
+  teacherId: 4961
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -2970,7 +2970,7 @@ section {
 section {
   sectionId: 1163
   courseTitle: "C872s1: How Pok\303\251mon Changed the World"
-  teacherIds: 3212
+  teacherId: 3212
   estimatedClassSize: 10
   maxClassSize: 10
   periodLength: 1
@@ -2980,7 +2980,7 @@ section {
 section {
   sectionId: 1164
   courseTitle: "C872s2: How Pok\303\251mon Changed the World"
-  teacherIds: 3212
+  teacherId: 3212
   estimatedClassSize: 10
   maxClassSize: 10
   periodLength: 1
@@ -2990,7 +2990,7 @@ section {
 section {
   sectionId: 1167
   courseTitle: "C874s1: Gods of Yore: Greek and Roman Mythology"
-  teacherIds: 4893
+  teacherId: 4893
   estimatedClassSize: 30
   maxClassSize: 30
   periodLength: 1
@@ -3000,7 +3000,7 @@ section {
 section {
   sectionId: 1168
   courseTitle: "C874s2: Gods of Yore: Greek and Roman Mythology"
-  teacherIds: 4893
+  teacherId: 4893
   estimatedClassSize: 30
   maxClassSize: 30
   periodLength: 1
@@ -3010,7 +3010,7 @@ section {
 section {
   sectionId: 1169
   courseTitle: "C875s1: Food: An Investigation into Modern Agriculture"
-  teacherIds: 4893
+  teacherId: 4893
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -3020,8 +3020,8 @@ section {
 section {
   sectionId: 1176
   courseTitle: "C877s1: Ancient Egypt Unwrapped"
-  teacherIds: 4948
-  teacherIds: 4940
+  teacherId: 4948
+  teacherId: 4940
   estimatedClassSize: 200
   maxClassSize: 200
   periodLength: 1
@@ -3031,8 +3031,8 @@ section {
 section {
   sectionId: 1177
   courseTitle: "C877s2: Ancient Egypt Unwrapped"
-  teacherIds: 4948
-  teacherIds: 4940
+  teacherId: 4948
+  teacherId: 4940
   estimatedClassSize: 200
   maxClassSize: 200
   periodLength: 1
@@ -3042,7 +3042,7 @@ section {
 section {
   sectionId: 1178
   courseTitle: "M878s1: Not True, but Useful: Thinking About Everyday Statistics"
-  teacherIds: 4964
+  teacherId: 4964
   estimatedClassSize: 17
   maxClassSize: 17
   periodLength: 1
@@ -3052,7 +3052,7 @@ section {
 section {
   sectionId: 1179
   courseTitle: "M878s2: Not True, but Useful: Thinking About Everyday Statistics"
-  teacherIds: 4964
+  teacherId: 4964
   estimatedClassSize: 17
   maxClassSize: 17
   periodLength: 1
@@ -3062,7 +3062,7 @@ section {
 section {
   sectionId: 1180
   courseTitle: "L879s1: Aaah! College Essays!"
-  teacherIds: 4936
+  teacherId: 4936
   estimatedClassSize: 30
   maxClassSize: 30
   periodLength: 1
@@ -3081,7 +3081,7 @@ section {
 section {
   sectionId: 1183
   courseTitle: "M881s1: How the Splash Website Works and Doesn\'t Work"
-  teacherIds: 4936
+  teacherId: 4936
   estimatedClassSize: 30
   maxClassSize: 30
   periodLength: 1
@@ -3091,7 +3091,7 @@ section {
 section {
   sectionId: 1184
   courseTitle: "S882s1: Business 201: What is Economics Anyways?"
-  teacherIds: 4971
+  teacherId: 4971
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -3101,7 +3101,7 @@ section {
 section {
   sectionId: 1185
   courseTitle: "S882s2: Business 201: What is Economics Anyways?"
-  teacherIds: 4971
+  teacherId: 4971
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 2
@@ -3111,7 +3111,7 @@ section {
 section {
   sectionId: 1186
   courseTitle: "S883s1: Sensational Failures in Engineering"
-  teacherIds: 1560
+  teacherId: 1560
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 2
@@ -3121,7 +3121,7 @@ section {
 section {
   sectionId: 1187
   courseTitle: "C884s1: The Decline of the West and the Rise of China in the 21st Century"
-  teacherIds: 4968
+  teacherId: 4968
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -3131,7 +3131,7 @@ section {
 section {
   sectionId: 1188
   courseTitle: "C884s2: The Decline of the West and the Rise of China in the 21st Century"
-  teacherIds: 4968
+  teacherId: 4968
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -3141,7 +3141,7 @@ section {
 section {
   sectionId: 1189
   courseTitle: "C885s1: Work Ethic for Teens and Its Importance"
-  teacherIds: 4958
+  teacherId: 4958
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 1
@@ -3151,7 +3151,7 @@ section {
 section {
   sectionId: 1190
   courseTitle: "C885s2: Work Ethic for Teens and Its Importance"
-  teacherIds: 4958
+  teacherId: 4958
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 1
@@ -3161,7 +3161,7 @@ section {
 section {
   sectionId: 1191
   courseTitle: "C885s3: Work Ethic for Teens and Its Importance"
-  teacherIds: 4958
+  teacherId: 4958
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 1
@@ -3171,7 +3171,7 @@ section {
 section {
   sectionId: 1192
   courseTitle: "C886s1: Alleviating Poverty through Microfinance"
-  teacherIds: 4977
+  teacherId: 4977
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -3181,7 +3181,7 @@ section {
 section {
   sectionId: 1197
   courseTitle: "S888s1: Explosive Chemistry!"
-  teacherIds: 4987
+  teacherId: 4987
   estimatedClassSize: 200
   maxClassSize: 200
   periodLength: 1
@@ -3191,7 +3191,7 @@ section {
 section {
   sectionId: 1198
   courseTitle: "S889s1: Anthrax is Awesome: Administering Toxin Kills Cancer (Sometimes)"
-  teacherIds: 4987
+  teacherId: 4987
   estimatedClassSize: 60
   maxClassSize: 60
   periodLength: 1
@@ -3201,7 +3201,7 @@ section {
 section {
   sectionId: 1201
   courseTitle: "A891s1: Working Out the Kinks: Simple Origami Beyond the Crane"
-  teacherIds: 4894
+  teacherId: 4894
   estimatedClassSize: 10
   maxClassSize: 10
   periodLength: 2
@@ -3211,7 +3211,7 @@ section {
 section {
   sectionId: 1202
   courseTitle: "A891s2: Working Out the Kinks: Simple Origami Beyond the Crane"
-  teacherIds: 4894
+  teacherId: 4894
   estimatedClassSize: 10
   maxClassSize: 10
   periodLength: 2
@@ -3221,8 +3221,8 @@ section {
 section {
   sectionId: 1203
   courseTitle: "S765s2: World of Illusions"
-  teacherIds: 4866
-  teacherIds: 4989
+  teacherId: 4866
+  teacherId: 4989
   estimatedClassSize: 23
   maxClassSize: 23
   periodLength: 1
@@ -3232,7 +3232,7 @@ section {
 section {
   sectionId: 1204
   courseTitle: "S892s1: Neuroscience"
-  teacherIds: 4989
+  teacherId: 4989
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
@@ -3242,7 +3242,7 @@ section {
 section {
   sectionId: 1205
   courseTitle: "H893s1: Playing to Win - Why and How Games are Played Competitively "
-  teacherIds: 4870
+  teacherId: 4870
   estimatedClassSize: 30
   maxClassSize: 30
   periodLength: 1
@@ -3252,7 +3252,7 @@ section {
 section {
   sectionId: 1206
   courseTitle: "S894s1: Cancer Biology: Why the Monster Still Has No Cure"
-  teacherIds: 5057
+  teacherId: 5057
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 2
@@ -3262,7 +3262,7 @@ section {
 section {
   sectionId: 1207
   courseTitle: "S894s2: Cancer Biology: Why the Monster Still Has No Cure"
-  teacherIds: 5057
+  teacherId: 5057
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 2
@@ -3272,7 +3272,7 @@ section {
 section {
   sectionId: 1213
   courseTitle: "L850s2: Basic Chinese"
-  teacherIds: 4911
+  teacherId: 4911
   estimatedClassSize: 10
   maxClassSize: 10
   periodLength: 1

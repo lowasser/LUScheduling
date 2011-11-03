@@ -4,6 +4,7 @@ enum SerialPerturberImpl {
 	DESTRUCTIVE = 1;
 	GREEDY = 2;
 	DESTRUCTIVE_BY_ROOM = 3;
+	SWAPPING = 4;
 }
 
 message ScaledPerturber {

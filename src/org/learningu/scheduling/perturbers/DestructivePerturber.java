@@ -1,11 +1,8 @@
 package org.learningu.scheduling.perturbers;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -33,28 +30,23 @@ final class DestructivePerturber implements Perturber<Schedule> {
   @Override
   public Schedule perturb(Schedule initial, double temperature) {
     Program program = initial.getProgram();
-    int numberUnscheduled = program.getSections().size() - initial.getScheduledSections().size();
-    List<Section> unscheduled = Lists.newArrayListWithCapacity(numberUnscheduled);
-    unscheduled.addAll(Sets.difference(program.getSections(), initial.getScheduledSections()));
-    Collections.shuffle(unscheduled, rand);
+    List<Section> sections = ImmutableList.copyOf(program.getSections());
+    List<Room> rooms = ImmutableList.copyOf(program.getRooms());
+    List<ClassPeriod> periods = ImmutableList.copyOf(program.getPeriods());
 
-    if (unscheduled.isEmpty()) {
-      return initial;
-    }
-    int nAttempts = Math.max(1, (int) (unscheduled.size() * temperature));
-    unscheduled = unscheduled.subList(0, Math.min(unscheduled.size(), nAttempts));
+    int nAttempts = Math.max(1, (int) (sections.size() * temperature));
 
-    ImmutableList<Room> rooms = ImmutableList.copyOf(program.getRooms());
-    ImmutableList<ClassPeriod> periods = ImmutableList.copyOf(program.getPeriods());
     Schedule current = initial;
-    for (Section section : unscheduled) {
+    for (int i = 0; i < nAttempts; i++) {
+      Section section = getRandom(sections);
       Room room = getRandom(rooms);
-      ClassPeriod pd = getRandom(periods);
+      ClassPeriod period = getRandom(periods);
+
       try {
-        StartAssignment assign = StartAssignment.create(pd, room, section);
-        current = current.forceAssignStart(assign).getNewState();
+        current = current
+            .forceAssignStart(StartAssignment.create(period, room, section))
+            .getNewState();
       } catch (IllegalArgumentException e) {
-        // not enough periods left in the block
         continue;
       }
     }
