@@ -46,7 +46,7 @@ scorer {
 		multiplier: 10
 	}
 }
-subOptimizerSteps: 5
-numberOfSubOptimizers: 12
+subOptimizerSteps: 3
+numberOfSubOptimizers: 20
 primaryTempFun: LINEAR
 subTempFun: QUADRATIC
