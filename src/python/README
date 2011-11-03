@@ -30,7 +30,7 @@ information:
   - program name
   - target data directory
 
-For example:
+For example::
 
     $ python data_loader.py -l --host esp.mit.edu -axiak -p PASSWORD -r Splash/2010 -t ../../data/2010Splash
 
