@@ -3,6 +3,8 @@ package org.learningu.scheduling.graph;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.collect.ComparisonChain;
+import com.google.common.collect.Range;
+import com.google.common.collect.Ranges;
 
 import java.util.List;
 
@@ -53,6 +55,10 @@ public final class ClassPeriod extends ProgramObject<SerialPeriod> implements
    */
   public List<ClassPeriod> getTailPeriods(int count) {
     return getTimeBlock().getPeriods().subList(index, index + count);
+  }
+
+  public Range<Integer> getGradeRange() {
+    return Ranges.closed(serial.getMinGrade(), serial.getMaxGrade());
   }
 
   @Override

@@ -8,6 +8,7 @@ import com.google.common.base.Objects;
 import javax.annotation.Nullable;
 
 import org.learningu.scheduling.graph.ClassPeriod;
+import org.learningu.scheduling.graph.Course;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Section;
@@ -50,6 +51,10 @@ public final class PresentAssignment implements Assignment {
 
   public TimeBlock getTimeBlock() {
     return startAssignment.getTimeBlock();
+  }
+
+  public Course getCourse() {
+    return getSection().getCourse();
   }
 
   @Override

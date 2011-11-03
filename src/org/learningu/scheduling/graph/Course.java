@@ -1,6 +1,8 @@
 package org.learningu.scheduling.graph;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Range;
+import com.google.common.collect.Ranges;
 
 import java.util.Set;
 
@@ -41,10 +43,10 @@ public final class Course {
     return false;
   }
 
-  public Subject getSubject(){
+  public Subject getSubject() {
     return prototype.getSubject();
   }
-  
+
   @Override
   public String toString() {
     return Objects.toStringHelper(this).add("id", id).add("title", getTitle()).toString();
@@ -56,5 +58,9 @@ public final class Course {
 
   public Set<Resource> getRequiredResources() {
     return prototype.getRequiredResources();
+  }
+
+  public Range<Integer> getGradeRange() {
+    return Ranges.closed(prototype.serial.getMinGrade(), prototype.serial.getMaxGrade());
   }
 }

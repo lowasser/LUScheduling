@@ -21,15 +21,17 @@ message SerialSubject {
  */
 message SerialSection {
 	required int32 sectionId = 1;
-	optional string courseTitle = 2;
+	required int32 courseId = 10;
+	optional string courseTitle = 2 [default = "Untitled Class"];
 	optional int32 subjectId = 12 [default = -1];
 	repeated int32 teacherId = 3 [packed = true];
 	optional int32 estimatedClassSize = 5 [default = 15];
 	optional int32 maxClassSize = 6 [default = 20];
 	optional int32 periodLength = 8 [default = 1];
-	required int32 courseId = 10;
 	repeated int32 requiredResource = 9 [packed = true];
 	repeated int32 prereqCourseId = 11 [packed = true];
+	optional int32 minGrade = 13 [default = 9];
+	optional int32 maxGrade = 14 [default = 12];
 }
 
 /*
@@ -37,7 +39,7 @@ message SerialSection {
  */
 message SerialTeacher {
 	required int32 teacherId = 1; // teacher identifier number
-	optional string name = 2; // teacher name
+	optional string name = 2 [default = "Joe Teacher"]; // teacher name
 	repeated int32 availablePeriod = 3 [packed = true]; // teacher availability
 }
 
@@ -59,6 +61,8 @@ message SerialPeriod {
 	optional string description = 2;
 	optional SerialDateTime start = 3;
 	optional SerialDateTime end = 4;
+	optional int32 minGrade = 7 [default = 9];
+	optional int32 maxGrade = 8 [default = 12];
 	optional double attendanceLevel = 6 [default = 1.0];
 }
 
