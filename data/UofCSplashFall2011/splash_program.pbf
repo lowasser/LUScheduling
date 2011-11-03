@@ -1,6 +1,6 @@
 timeBlock {
   blockId: 0
-  description: "Morning"
+  description: "Program"
   period {
     periodId: 59
     description: "First Class Period: 10-10:50 AM"
@@ -16,17 +16,13 @@ timeBlock {
   period {
     periodId: 61
     description: "Third Class Period/First Lunch Period: Sat 12:00 PM - 12:50 PM"
-    shortDescription: "12-1 PM"
+    shortDescription: "12 - 1 PM"
     attendanceLevel: 1.4
   }
-}
-timeBlock {
-  blockId: 1
-  description: "Afternoon"
   period {
     periodId: 62
     description: "Third Class Period/Second Lunch: Sat 1:30-2:20 PM"
-    shortDescription: "1:30-2:30 PM"
+    shortDescription: "1:30 -2:30 PM"
     attendanceLevel: 1.4
   }
   period {
@@ -38,13 +34,13 @@ timeBlock {
   period {
     periodId: 65
     description: "Fifth Class Period: Sat 3:30-4:20"
-    shortDescription: "3:30-4:30 PM"
+    shortDescription: "Sat 3:30-4:30 PM"
     attendanceLevel: 1.2
   }
   period {
     periodId: 66
     description: "Sixth Class Period: Sat 4:30-5:20 PM"
-    shortDescription: "4:30-5:30 PM"
+    shortDescription: "Sat 4:30-5:30 PM"
     attendanceLevel: 1.0
   }
 }
@@ -53,16 +49,49 @@ teacher {
   name: "Liz Behrens"
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 59
+  availablePeriod: 60
 }
 teacher {
   teacherId: 4910
   name: "Felicity Deiss"
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 59
+  availablePeriod: 60
 }
 teacher {
   teacherId: 4856
   name: "David Bodow"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -81,15 +110,60 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4947
   name: "Henry Kimball"
   availablePeriod: 64
+  availablePeriod: 64
+  availablePeriod: 64
+  availablePeriod: 64
 }
 teacher {
   teacherId: 4892
   name: "Rahul Dev"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -108,10 +182,52 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 1612
   name: "Shinya Watanabe"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -130,10 +246,46 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4954
   name: "Margeaux Perkins"
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
   availablePeriod: 60
   availablePeriod: 61
   availablePeriod: 62
@@ -147,10 +299,28 @@ teacher {
   availablePeriod: 60
   availablePeriod: 61
   availablePeriod: 62
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
 }
 teacher {
   teacherId: 4931
   name: "Allyce Best"
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 62
   availablePeriod: 64
 }
@@ -162,10 +332,46 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4945
   name: "Colin Bresnahan"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -184,10 +390,43 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4961
   name: "Danielle Labotka"
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 62
   availablePeriod: 64
   availablePeriod: 65
@@ -201,10 +440,46 @@ teacher {
   availablePeriod: 62
   availablePeriod: 64
   availablePeriod: 65
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
 }
 teacher {
   teacherId: 4936
   name: "Jordan Moldow"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -222,10 +497,49 @@ teacher {
   availablePeriod: 62
   availablePeriod: 64
   availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
 }
 teacher {
   teacherId: 5057
   name: "Johansen Amin"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -244,10 +558,52 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4862
   name: "Amelia Glogowski"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -266,10 +622,52 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4851
   name: "Josh Fry"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -288,10 +686,52 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4943
   name: "Daniel Rivera"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -310,15 +750,57 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 1500
   name: "Evan Weingarten"
   availablePeriod: 59
+  availablePeriod: 59
+  availablePeriod: 59
+  availablePeriod: 59
 }
 teacher {
   teacherId: 4880
   name: "Christopher Natoli"
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 60
   availablePeriod: 61
   availablePeriod: 62
@@ -333,10 +815,28 @@ teacher {
   availablePeriod: 61
   availablePeriod: 62
   availablePeriod: 64
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
 }
 teacher {
   teacherId: 4964
   name: "Alexander Dunlap"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 59
+  availablePeriod: 60
   availablePeriod: 59
   availablePeriod: 60
 }
@@ -347,10 +847,43 @@ teacher {
   availablePeriod: 60
   availablePeriod: 61
   availablePeriod: 62
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
 }
 teacher {
   teacherId: 4912
   name: "Himabindu Poroori"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -367,6 +900,21 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4296
@@ -374,10 +922,40 @@ teacher {
   availablePeriod: 60
   availablePeriod: 61
   availablePeriod: 62
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
 }
 teacher {
   teacherId: 1508
   name: "Amy Woodruff"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -396,10 +974,52 @@ teacher {
   availablePeriod: 62
   availablePeriod: 64
   availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
 }
 teacher {
   teacherId: 4901
   name: "Elizabeth Denhup"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -418,6 +1038,27 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4866
@@ -425,10 +1066,40 @@ teacher {
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
 }
 teacher {
   teacherId: 4971
   name: "Urvashi Verma Bhushan"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -447,10 +1118,52 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4872
   name: "Alice  Ye"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -466,10 +1179,43 @@ teacher {
   availablePeriod: 62
   availablePeriod: 64
   availablePeriod: 65
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
 }
 teacher {
   teacherId: 4968
   name: "Vijay Vikram"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -488,6 +1234,27 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4886
@@ -497,10 +1264,46 @@ teacher {
   availablePeriod: 62
   availablePeriod: 64
   availablePeriod: 65
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
 }
 teacher {
   teacherId: 4857
   name: "Clay Nickens"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -519,6 +1322,27 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4908
@@ -529,10 +1353,49 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4934
   name: "Samantha Karas"
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
@@ -551,10 +1414,52 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4837
   name: "Benjamin Boyajian"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -572,16 +1477,61 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4939
   name: "Jessi LaChance"
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 59
+  availablePeriod: 60
 }
 teacher {
   teacherId: 4902
   name: "Athena Frost"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -600,10 +1550,52 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 3205
   name: "Hillel Wayne"
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 59
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 59
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 59
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 60
   availablePeriod: 61
   availablePeriod: 62
@@ -618,10 +1610,40 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4832
   name: "Nicole Ridgwell"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -640,10 +1662,52 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4956
   name: "Devansh Parasrampuria"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -660,6 +1724,21 @@ teacher {
   availablePeriod: 62
   availablePeriod: 64
   availablePeriod: 65
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
 }
 teacher {
   teacherId: 4879
@@ -670,10 +1749,49 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4898
   name: "Juan Guevara"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -692,10 +1810,52 @@ teacher {
   availablePeriod: 61
   availablePeriod: 62
   availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
 }
 teacher {
   teacherId: 4985
   name: "Nathaniel Rossum"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -714,10 +1874,52 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4890
   name: "Salman Siddiqi"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -736,10 +1938,52 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4895
   name: "Tom Bidwill"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -758,10 +2002,52 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4906
   name: "Chris Kennedy"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -780,10 +2066,52 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4952
   name: "John Xia"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -800,16 +2128,52 @@ teacher {
   availablePeriod: 62
   availablePeriod: 64
   availablePeriod: 65
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
 }
 teacher {
   teacherId: 4871
   name: "Pamela Shapiro"
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 59
+  availablePeriod: 60
 }
 teacher {
   teacherId: 3134
   name: "Seong-Ah Cho"
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 61
   availablePeriod: 62
   availablePeriod: 64
@@ -826,10 +2190,46 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4842
   name: "Gerardo Ramirez"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -843,10 +2243,43 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 2933
   name: "Sarah Fedner"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -865,6 +2298,27 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4948
@@ -874,10 +2328,40 @@ teacher {
   availablePeriod: 61
   availablePeriod: 62
   availablePeriod: 64
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
 }
 teacher {
   teacherId: 4924
   name: "Savannah Thais"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -894,6 +2378,27 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4933
@@ -903,10 +2408,46 @@ teacher {
   availablePeriod: 61
   availablePeriod: 62
   availablePeriod: 64
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
 }
 teacher {
   teacherId: 3195
   name: "Charles Yow"
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 59
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 59
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 59
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 60
   availablePeriod: 61
   availablePeriod: 62
@@ -925,10 +2466,52 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 422
   name: "Andrew Geng"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -947,10 +2530,43 @@ teacher {
   availablePeriod: 62
   availablePeriod: 64
   availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
 }
 teacher {
   teacherId: 4897
   name: "UChicago Guild of  Student Carillonneurs"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 65
@@ -967,10 +2583,43 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4989
   name: "Hane Ryu"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -989,10 +2638,52 @@ teacher {
   availablePeriod: 60
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4923
   name: "Rachel Markley"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -1005,10 +2696,28 @@ teacher {
   teacherId: 4907
   name: "Jacqueline Nesbitt"
   availablePeriod: 65
+  availablePeriod: 65
+  availablePeriod: 65
+  availablePeriod: 65
 }
 teacher {
   teacherId: 1704
   name: "Kirsten Madsen"
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 61
   availablePeriod: 62
   availablePeriod: 64
@@ -1025,6 +2734,27 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 448
@@ -1034,10 +2764,46 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
 }
 teacher {
   teacherId: 4869
   name: "Nathan Hauke"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -1055,10 +2821,49 @@ teacher {
   availablePeriod: 62
   availablePeriod: 64
   availablePeriod: 65
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
 }
 teacher {
   teacherId: 4849
   name: "Ryan Witzke"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -1077,10 +2882,52 @@ teacher {
   availablePeriod: 61
   availablePeriod: 62
   availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
 }
 teacher {
   teacherId: 4836
   name: "Chelsea Kendall"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -1099,10 +2946,52 @@ teacher {
   availablePeriod: 61
   availablePeriod: 62
   availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
 }
 teacher {
   teacherId: 4831
   name: "Natasha  Harnwell"
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
+  availablePeriod: 59
+  availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
+  availablePeriod: 65
+  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -1120,6 +3009,8 @@ section {
   periodLength: 1
   courseId: 752
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 926
@@ -1130,6 +3021,8 @@ section {
   periodLength: 1
   courseId: 753
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 927
@@ -1140,6 +3033,8 @@ section {
   periodLength: 1
   courseId: 753
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 928
@@ -1150,6 +3045,8 @@ section {
   periodLength: 1
   courseId: 754
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 929
@@ -1160,6 +3057,8 @@ section {
   periodLength: 1
   courseId: 754
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 930
@@ -1170,6 +3069,8 @@ section {
   periodLength: 1
   courseId: 755
   subjectId: 1
+  minGrade: 11
+  maxGrade: 12
 }
 section {
   sectionId: 931
@@ -1180,6 +3081,8 @@ section {
   periodLength: 1
   courseId: 755
   subjectId: 1
+  minGrade: 11
+  maxGrade: 12
 }
 section {
   sectionId: 932
@@ -1190,6 +3093,8 @@ section {
   periodLength: 1
   courseId: 756
   subjectId: 2
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 936
@@ -1200,6 +3105,8 @@ section {
   periodLength: 1
   courseId: 758
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 937
@@ -1210,6 +3117,8 @@ section {
   periodLength: 1
   courseId: 758
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 938
@@ -1220,6 +3129,8 @@ section {
   periodLength: 1
   courseId: 758
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 939
@@ -1230,6 +3141,8 @@ section {
   periodLength: 1
   courseId: 758
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 940
@@ -1240,6 +3153,8 @@ section {
   periodLength: 1
   courseId: 758
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 941
@@ -1250,6 +3165,8 @@ section {
   periodLength: 1
   courseId: 758
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 942
@@ -1260,6 +3177,8 @@ section {
   periodLength: 1
   courseId: 759
   subjectId: 0
+  minGrade: 10
+  maxGrade: 12
 }
 section {
   sectionId: 946
@@ -1270,6 +3189,8 @@ section {
   periodLength: 1
   courseId: 761
   subjectId: 3
+  minGrade: 11
+  maxGrade: 12
 }
 section {
   sectionId: 947
@@ -1280,6 +3201,8 @@ section {
   periodLength: 1
   courseId: 762
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 948
@@ -1290,6 +3213,8 @@ section {
   periodLength: 1
   courseId: 762
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 949
@@ -1300,6 +3225,8 @@ section {
   periodLength: 1
   courseId: 762
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 950
@@ -1310,6 +3237,8 @@ section {
   periodLength: 1
   courseId: 762
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 951
@@ -1320,6 +3249,8 @@ section {
   periodLength: 1
   courseId: 762
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 952
@@ -1330,6 +3261,8 @@ section {
   periodLength: 1
   courseId: 762
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 958
@@ -1341,6 +3274,8 @@ section {
   periodLength: 1
   courseId: 765
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 959
@@ -1351,6 +3286,8 @@ section {
   periodLength: 2
   courseId: 766
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 960
@@ -1361,6 +3298,8 @@ section {
   periodLength: 1
   courseId: 767
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 962
@@ -1371,6 +3310,8 @@ section {
   periodLength: 1
   courseId: 769
   subjectId: 2
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 965
@@ -1381,7 +3322,8 @@ section {
   periodLength: 2
   courseId: 770
   subjectId: 4
-  requiredProperty: 40
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 966
@@ -1392,7 +3334,8 @@ section {
   periodLength: 2
   courseId: 770
   subjectId: 4
-  requiredProperty: 40
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 967
@@ -1403,7 +3346,8 @@ section {
   periodLength: 2
   courseId: 771
   subjectId: 4
-  requiredProperty: 40
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 968
@@ -1414,6 +3358,8 @@ section {
   periodLength: 2
   courseId: 772
   subjectId: 0
+  minGrade: 10
+  maxGrade: 12
 }
 section {
   sectionId: 969
@@ -1424,6 +3370,8 @@ section {
   periodLength: 2
   courseId: 772
   subjectId: 0
+  minGrade: 10
+  maxGrade: 12
 }
 section {
   sectionId: 970
@@ -1434,6 +3382,8 @@ section {
   periodLength: 1
   courseId: 773
   subjectId: 0
+  minGrade: 10
+  maxGrade: 12
 }
 section {
   sectionId: 971
@@ -1444,28 +3394,34 @@ section {
   periodLength: 1
   courseId: 773
   subjectId: 0
+  minGrade: 10
+  maxGrade: 12
 }
 section {
   sectionId: 972
   courseTitle: "S774s1: The Science of Sleep"
-  teacherId: 4879
   teacherId: 4871
+  teacherId: 4879
   estimatedClassSize: 50
   maxClassSize: 50
   periodLength: 1
   courseId: 774
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 973
   courseTitle: "S774s2: The Science of Sleep"
-  teacherId: 4879
   teacherId: 4871
+  teacherId: 4879
   estimatedClassSize: 50
   maxClassSize: 50
   periodLength: 1
   courseId: 774
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 974
@@ -1476,6 +3432,8 @@ section {
   periodLength: 2
   courseId: 775
   subjectId: 2
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 975
@@ -1486,6 +3444,8 @@ section {
   periodLength: 2
   courseId: 775
   subjectId: 2
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 976
@@ -1496,6 +3456,8 @@ section {
   periodLength: 2
   courseId: 776
   subjectId: 3
+  minGrade: 10
+  maxGrade: 12
 }
 section {
   sectionId: 977
@@ -1506,30 +3468,36 @@ section {
   periodLength: 1
   courseId: 777
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 978
   courseTitle: "C778s1: The Push for Global Health: Medicine, Politics, and Society"
   teacherId: 4847
-  teacherId: 4981
   teacherId: 4980
+  teacherId: 4981
   estimatedClassSize: 21
   maxClassSize: 21
   periodLength: 2
   courseId: 778
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 979
   courseTitle: "C778s2: The Push for Global Health: Medicine, Politics, and Society"
   teacherId: 4847
-  teacherId: 4981
   teacherId: 4980
+  teacherId: 4981
   estimatedClassSize: 21
   maxClassSize: 21
   periodLength: 2
   courseId: 778
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 980
@@ -1540,6 +3508,8 @@ section {
   periodLength: 2
   courseId: 779
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 981
@@ -1550,6 +3520,8 @@ section {
   periodLength: 2
   courseId: 779
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 982
@@ -1560,6 +3532,8 @@ section {
   periodLength: 2
   courseId: 779
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 983
@@ -1570,6 +3544,8 @@ section {
   periodLength: 2
   courseId: 780
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 984
@@ -1580,6 +3556,8 @@ section {
   periodLength: 2
   courseId: 780
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 985
@@ -1590,6 +3568,8 @@ section {
   periodLength: 2
   courseId: 780
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 986
@@ -1600,6 +3580,8 @@ section {
   periodLength: 1
   courseId: 781
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 987
@@ -1610,6 +3592,8 @@ section {
   periodLength: 1
   courseId: 781
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 988
@@ -1620,6 +3604,8 @@ section {
   periodLength: 1
   courseId: 781
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 989
@@ -1630,6 +3616,8 @@ section {
   periodLength: 2
   courseId: 782
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 992
@@ -1641,6 +3629,8 @@ section {
   periodLength: 1
   courseId: 785
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 995
@@ -1651,39 +3641,47 @@ section {
   periodLength: 3
   courseId: 787
   subjectId: 0
+  minGrade: 10
+  maxGrade: 12
 }
 section {
   sectionId: 996
   courseTitle: "A788s1: Thought Collage: Comics, Graphic Storytelling and Experiment"
-  teacherId: 4892
   teacherId: 4884
+  teacherId: 4892
   estimatedClassSize: 45
   maxClassSize: 45
   periodLength: 1
   courseId: 788
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 997
   courseTitle: "S789s1: Our Earth"
-  teacherId: 4892
   teacherId: 4884
+  teacherId: 4892
   estimatedClassSize: 200
   maxClassSize: 200
   periodLength: 1
   courseId: 789
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 998
   courseTitle: "L790s1: Flash! Poetic."
-  teacherId: 4892
   teacherId: 4884
+  teacherId: 4892
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 1
   courseId: 790
   subjectId: 3
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1006
@@ -1694,6 +3692,8 @@ section {
   periodLength: 1
   courseId: 796
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1007
@@ -1704,6 +3704,8 @@ section {
   periodLength: 1
   courseId: 796
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1008
@@ -1714,6 +3716,8 @@ section {
   periodLength: 3
   courseId: 797
   subjectId: 0
+  minGrade: 10
+  maxGrade: 12
 }
 section {
   sectionId: 1009
@@ -1724,6 +3728,8 @@ section {
   periodLength: 3
   courseId: 798
   subjectId: 0
+  minGrade: 10
+  maxGrade: 12
 }
 section {
   sectionId: 1010
@@ -1734,6 +3740,8 @@ section {
   periodLength: 2
   courseId: 799
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1011
@@ -1744,6 +3752,8 @@ section {
   periodLength: 2
   courseId: 799
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1012
@@ -1754,6 +3764,8 @@ section {
   periodLength: 2
   courseId: 799
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1013
@@ -1764,6 +3776,8 @@ section {
   periodLength: 2
   courseId: 800
   subjectId: 0
+  minGrade: 10
+  maxGrade: 12
 }
 section {
   sectionId: 1014
@@ -1774,6 +3788,8 @@ section {
   periodLength: 2
   courseId: 801
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1015
@@ -1784,6 +3800,8 @@ section {
   periodLength: 1
   courseId: 802
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1016
@@ -1794,6 +3812,8 @@ section {
   periodLength: 1
   courseId: 802
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1017
@@ -1804,6 +3824,8 @@ section {
   periodLength: 1
   courseId: 802
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1018
@@ -1814,6 +3836,8 @@ section {
   periodLength: 1
   courseId: 802
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1019
@@ -1824,6 +3848,8 @@ section {
   periodLength: 1
   courseId: 802
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1020
@@ -1834,6 +3860,8 @@ section {
   periodLength: 1
   courseId: 802
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1021
@@ -1844,6 +3872,8 @@ section {
   periodLength: 1
   courseId: 803
   subjectId: 0
+  minGrade: 10
+  maxGrade: 12
 }
 section {
   sectionId: 1022
@@ -1854,6 +3884,8 @@ section {
   periodLength: 1
   courseId: 804
   subjectId: 3
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1023
@@ -1864,6 +3896,8 @@ section {
   periodLength: 1
   courseId: 804
   subjectId: 3
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1024
@@ -1874,6 +3908,8 @@ section {
   periodLength: 1
   courseId: 804
   subjectId: 3
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1025
@@ -1884,6 +3920,8 @@ section {
   periodLength: 1
   courseId: 804
   subjectId: 3
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1026
@@ -1894,6 +3932,8 @@ section {
   periodLength: 2
   courseId: 805
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1027
@@ -1904,6 +3944,8 @@ section {
   periodLength: 2
   courseId: 805
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1031
@@ -1914,6 +3956,8 @@ section {
   periodLength: 1
   courseId: 807
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1032
@@ -1924,6 +3968,8 @@ section {
   periodLength: 1
   courseId: 808
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1033
@@ -1934,6 +3980,8 @@ section {
   periodLength: 1
   courseId: 808
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1034
@@ -1944,7 +3992,8 @@ section {
   periodLength: 1
   courseId: 809
   subjectId: 4
-  requiredProperty: 42
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1035
@@ -1955,7 +4004,8 @@ section {
   periodLength: 1
   courseId: 809
   subjectId: 4
-  requiredProperty: 42
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1036
@@ -1966,6 +4016,8 @@ section {
   periodLength: 2
   courseId: 810
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1037
@@ -1976,6 +4028,8 @@ section {
   periodLength: 2
   courseId: 810
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1038
@@ -1987,6 +4041,8 @@ section {
   periodLength: 3
   courseId: 811
   subjectId: 5
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1048
@@ -1997,6 +4053,8 @@ section {
   periodLength: 1
   courseId: 815
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1049
@@ -2007,6 +4065,8 @@ section {
   periodLength: 1
   courseId: 815
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1050
@@ -2017,17 +4077,21 @@ section {
   periodLength: 1
   courseId: 815
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1051
   courseTitle: "S816s1: Astronomania!"
-  teacherId: 3305
   teacherId: 1552
+  teacherId: 3305
   estimatedClassSize: 200
   maxClassSize: 200
   periodLength: 2
   courseId: 816
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1052
@@ -2038,6 +4102,8 @@ section {
   periodLength: 1
   courseId: 817
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1053
@@ -2048,6 +4114,8 @@ section {
   periodLength: 1
   courseId: 818
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1054
@@ -2058,6 +4126,8 @@ section {
   periodLength: 1
   courseId: 818
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1055
@@ -2068,6 +4138,8 @@ section {
   periodLength: 1
   courseId: 818
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1056
@@ -2078,6 +4150,8 @@ section {
   periodLength: 1
   courseId: 818
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1057
@@ -2088,6 +4162,8 @@ section {
   periodLength: 2
   courseId: 819
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1058
@@ -2098,6 +4174,8 @@ section {
   periodLength: 2
   courseId: 819
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1059
@@ -2108,6 +4186,8 @@ section {
   periodLength: 2
   courseId: 819
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1060
@@ -2118,6 +4198,8 @@ section {
   periodLength: 1
   courseId: 820
   subjectId: 0
+  minGrade: 11
+  maxGrade: 12
 }
 section {
   sectionId: 1061
@@ -2128,6 +4210,8 @@ section {
   periodLength: 1
   courseId: 820
   subjectId: 0
+  minGrade: 11
+  maxGrade: 12
 }
 section {
   sectionId: 1062
@@ -2138,6 +4222,8 @@ section {
   periodLength: 1
   courseId: 820
   subjectId: 0
+  minGrade: 11
+  maxGrade: 12
 }
 section {
   sectionId: 1063
@@ -2148,6 +4234,8 @@ section {
   periodLength: 1
   courseId: 821
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1064
@@ -2158,6 +4246,8 @@ section {
   periodLength: 1
   courseId: 821
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1065
@@ -2168,6 +4258,8 @@ section {
   periodLength: 1
   courseId: 822
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1066
@@ -2178,6 +4270,8 @@ section {
   periodLength: 1
   courseId: 822
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1067
@@ -2188,6 +4282,8 @@ section {
   periodLength: 1
   courseId: 822
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1068
@@ -2198,7 +4294,8 @@ section {
   periodLength: 1
   courseId: 823
   subjectId: 0
-  requiredProperty: 42
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1069
@@ -2209,6 +4306,8 @@ section {
   periodLength: 2
   courseId: 824
   subjectId: 5
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1070
@@ -2219,6 +4318,8 @@ section {
   periodLength: 1
   courseId: 825
   subjectId: 2
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1071
@@ -2229,6 +4330,8 @@ section {
   periodLength: 1
   courseId: 826
   subjectId: 0
+  minGrade: 10
+  maxGrade: 12
 }
 section {
   sectionId: 1072
@@ -2239,6 +4342,8 @@ section {
   periodLength: 2
   courseId: 827
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1073
@@ -2249,6 +4354,8 @@ section {
   periodLength: 2
   courseId: 827
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1074
@@ -2259,6 +4366,8 @@ section {
   periodLength: 2
   courseId: 827
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1078
@@ -2269,6 +4378,8 @@ section {
   periodLength: 2
   courseId: 828
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1081
@@ -2279,6 +4390,8 @@ section {
   periodLength: 1
   courseId: 830
   subjectId: 3
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1082
@@ -2289,6 +4402,8 @@ section {
   periodLength: 1
   courseId: 831
   subjectId: 0
+  minGrade: 10
+  maxGrade: 12
 }
 section {
   sectionId: 1083
@@ -2299,6 +4414,8 @@ section {
   periodLength: 1
   courseId: 832
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1084
@@ -2309,6 +4426,8 @@ section {
   periodLength: 1
   courseId: 833
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1085
@@ -2319,6 +4438,8 @@ section {
   periodLength: 1
   courseId: 833
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1086
@@ -2329,6 +4450,8 @@ section {
   periodLength: 1
   courseId: 834
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1087
@@ -2339,6 +4462,8 @@ section {
   periodLength: 1
   courseId: 834
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1088
@@ -2349,6 +4474,8 @@ section {
   periodLength: 1
   courseId: 834
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1089
@@ -2359,6 +4486,8 @@ section {
   periodLength: 1
   courseId: 834
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1090
@@ -2369,6 +4498,8 @@ section {
   periodLength: 1
   courseId: 834
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1091
@@ -2379,6 +4510,8 @@ section {
   periodLength: 1
   courseId: 834
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1092
@@ -2389,6 +4522,8 @@ section {
   periodLength: 1
   courseId: 835
   subjectId: 5
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1093
@@ -2399,6 +4534,8 @@ section {
   periodLength: 1
   courseId: 836
   subjectId: 5
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1094
@@ -2409,6 +4546,8 @@ section {
   periodLength: 1
   courseId: 837
   subjectId: 1
+  minGrade: 9
+  maxGrade: 10
 }
 section {
   sectionId: 1095
@@ -2419,6 +4558,8 @@ section {
   periodLength: 1
   courseId: 837
   subjectId: 1
+  minGrade: 9
+  maxGrade: 10
 }
 section {
   sectionId: 1096
@@ -2429,6 +4570,8 @@ section {
   periodLength: 1
   courseId: 837
   subjectId: 1
+  minGrade: 9
+  maxGrade: 10
 }
 section {
   sectionId: 1097
@@ -2439,6 +4582,8 @@ section {
   periodLength: 1
   courseId: 837
   subjectId: 1
+  minGrade: 9
+  maxGrade: 10
 }
 section {
   sectionId: 1098
@@ -2449,6 +4594,8 @@ section {
   periodLength: 1
   courseId: 838
   subjectId: 5
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1099
@@ -2459,6 +4606,8 @@ section {
   periodLength: 1
   courseId: 838
   subjectId: 5
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1100
@@ -2469,6 +4618,8 @@ section {
   periodLength: 1
   courseId: 838
   subjectId: 5
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1101
@@ -2479,6 +4630,8 @@ section {
   periodLength: 1
   courseId: 839
   subjectId: 5
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1102
@@ -2489,6 +4642,8 @@ section {
   periodLength: 1
   courseId: 839
   subjectId: 5
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1103
@@ -2499,6 +4654,8 @@ section {
   periodLength: 1
   courseId: 839
   subjectId: 5
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1104
@@ -2509,6 +4666,8 @@ section {
   periodLength: 1
   courseId: 840
   subjectId: 2
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1106
@@ -2519,6 +4678,8 @@ section {
   periodLength: 1
   courseId: 841
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1107
@@ -2529,6 +4690,8 @@ section {
   periodLength: 1
   courseId: 841
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1111
@@ -2539,6 +4702,8 @@ section {
   periodLength: 2
   courseId: 843
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1112
@@ -2549,6 +4714,8 @@ section {
   periodLength: 1
   courseId: 844
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1113
@@ -2559,6 +4726,8 @@ section {
   periodLength: 1
   courseId: 844
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1114
@@ -2569,6 +4738,8 @@ section {
   periodLength: 1
   courseId: 844
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1115
@@ -2579,6 +4750,8 @@ section {
   periodLength: 1
   courseId: 844
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1116
@@ -2589,7 +4762,8 @@ section {
   periodLength: 2
   courseId: 845
   subjectId: 4
-  requiredProperty: 40
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1117
@@ -2600,40 +4774,47 @@ section {
   periodLength: 2
   courseId: 845
   subjectId: 4
-  requiredProperty: 40
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1118
   courseTitle: "H846s1: How Soccer Explains the World"
-  teacherId: 4937
   teacherId: 3241
+  teacherId: 4937
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 2
   courseId: 846
   subjectId: 2
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1119
   courseTitle: "H846s2: How Soccer Explains the World"
-  teacherId: 4937
   teacherId: 3241
+  teacherId: 4937
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 2
   courseId: 846
   subjectId: 2
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1120
   courseTitle: "H846s3: How Soccer Explains the World"
-  teacherId: 4937
   teacherId: 3241
+  teacherId: 4937
   estimatedClassSize: 15
   maxClassSize: 15
   periodLength: 2
   courseId: 846
   subjectId: 2
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1121
@@ -2644,6 +4825,8 @@ section {
   periodLength: 1
   courseId: 847
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1123
@@ -2654,6 +4837,8 @@ section {
   periodLength: 2
   courseId: 849
   subjectId: 0
+  minGrade: 10
+  maxGrade: 12
 }
 section {
   sectionId: 1124
@@ -2664,6 +4849,8 @@ section {
   periodLength: 2
   courseId: 849
   subjectId: 0
+  minGrade: 10
+  maxGrade: 12
 }
 section {
   sectionId: 1126
@@ -2674,6 +4861,8 @@ section {
   periodLength: 1
   courseId: 850
   subjectId: 3
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1127
@@ -2684,7 +4873,8 @@ section {
   periodLength: 1
   courseId: 851
   subjectId: 2
-  requiredProperty: 40
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1128
@@ -2695,40 +4885,47 @@ section {
   periodLength: 1
   courseId: 851
   subjectId: 2
-  requiredProperty: 40
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1129
   courseTitle: "H852s1: Introduction to the Competitive Pok\303\251mon Metagame"
-  teacherId: 4985
   teacherId: 4915
+  teacherId: 4985
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
   courseId: 852
   subjectId: 2
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1130
   courseTitle: "H852s2: Introduction to the Competitive Pok\303\251mon Metagame"
-  teacherId: 4985
   teacherId: 4915
+  teacherId: 4985
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
   courseId: 852
   subjectId: 2
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1131
   courseTitle: "H852s3: Introduction to the Competitive Pok\303\251mon Metagame"
-  teacherId: 4985
   teacherId: 4915
+  teacherId: 4985
   estimatedClassSize: 40
   maxClassSize: 40
   periodLength: 1
   courseId: 852
   subjectId: 2
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1132
@@ -2739,6 +4936,8 @@ section {
   periodLength: 2
   courseId: 853
   subjectId: 5
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1133
@@ -2749,6 +4948,8 @@ section {
   periodLength: 2
   courseId: 854
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1134
@@ -2759,6 +4960,8 @@ section {
   periodLength: 2
   courseId: 854
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1135
@@ -2769,6 +4972,8 @@ section {
   periodLength: 1
   courseId: 855
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1136
@@ -2779,6 +4984,8 @@ section {
   periodLength: 1
   courseId: 855
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1138
@@ -2789,6 +4996,8 @@ section {
   periodLength: 1
   courseId: 857
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1139
@@ -2799,6 +5008,8 @@ section {
   periodLength: 1
   courseId: 857
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1140
@@ -2809,6 +5020,8 @@ section {
   periodLength: 1
   courseId: 857
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1141
@@ -2819,6 +5032,8 @@ section {
   periodLength: 1
   courseId: 857
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1142
@@ -2829,6 +5044,8 @@ section {
   periodLength: 1
   courseId: 857
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1143
@@ -2839,6 +5056,8 @@ section {
   periodLength: 1
   courseId: 857
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1144
@@ -2849,6 +5068,8 @@ section {
   periodLength: 2
   courseId: 858
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1147
@@ -2859,6 +5080,8 @@ section {
   periodLength: 1
   courseId: 860
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1148
@@ -2869,6 +5092,8 @@ section {
   periodLength: 1
   courseId: 860
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1149
@@ -2879,6 +5104,8 @@ section {
   periodLength: 1
   courseId: 861
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1150
@@ -2889,7 +5116,8 @@ section {
   periodLength: 1
   courseId: 862
   subjectId: 5
-  requiredProperty: 43
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1151
@@ -2900,6 +5128,8 @@ section {
   periodLength: 1
   courseId: 863
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1152
@@ -2910,30 +5140,36 @@ section {
   periodLength: 2
   courseId: 864
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1153
   courseTitle: "C865s1: Zing! - A Crash Course in the Art of Indian Street Food"
-  teacherId: 4953
   teacherId: 4912
+  teacherId: 4953
   teacherId: 4956
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 2
   courseId: 865
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1154
   courseTitle: "C865s2: Zing! - A Crash Course in the Art of Indian Street Food"
-  teacherId: 4953
   teacherId: 4912
+  teacherId: 4953
   teacherId: 4956
   estimatedClassSize: 25
   maxClassSize: 25
   periodLength: 2
   courseId: 865
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1156
@@ -2944,17 +5180,21 @@ section {
   periodLength: 2
   courseId: 866
   subjectId: 0
+  minGrade: 11
+  maxGrade: 12
 }
 section {
   sectionId: 1157
   courseTitle: "A867s1: The Art of Imitation"
-  teacherId: 4954
   teacherId: 4948
+  teacherId: 4954
   estimatedClassSize: 20
   maxClassSize: 20
   periodLength: 1
   courseId: 867
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1158
@@ -2966,6 +5206,8 @@ section {
   periodLength: 1
   courseId: 868
   subjectId: 3
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1163
@@ -2976,6 +5218,8 @@ section {
   periodLength: 1
   courseId: 872
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1164
@@ -2986,6 +5230,8 @@ section {
   periodLength: 1
   courseId: 872
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1167
@@ -2996,6 +5242,8 @@ section {
   periodLength: 1
   courseId: 874
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1168
@@ -3006,6 +5254,8 @@ section {
   periodLength: 1
   courseId: 874
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1169
@@ -3016,28 +5266,34 @@ section {
   periodLength: 2
   courseId: 875
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1176
   courseTitle: "C877s1: Ancient Egypt Unwrapped"
-  teacherId: 4948
   teacherId: 4940
+  teacherId: 4948
   estimatedClassSize: 200
   maxClassSize: 200
   periodLength: 1
   courseId: 877
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1177
   courseTitle: "C877s2: Ancient Egypt Unwrapped"
-  teacherId: 4948
   teacherId: 4940
+  teacherId: 4948
   estimatedClassSize: 200
   maxClassSize: 200
   periodLength: 1
   courseId: 877
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1178
@@ -3048,6 +5304,8 @@ section {
   periodLength: 1
   courseId: 878
   subjectId: 5
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1179
@@ -3058,6 +5316,8 @@ section {
   periodLength: 1
   courseId: 878
   subjectId: 5
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1180
@@ -3068,6 +5328,8 @@ section {
   periodLength: 1
   courseId: 879
   subjectId: 3
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1181
@@ -3077,6 +5339,8 @@ section {
   periodLength: 1
   courseId: 880
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1183
@@ -3087,6 +5351,8 @@ section {
   periodLength: 1
   courseId: 881
   subjectId: 5
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1184
@@ -3097,6 +5363,8 @@ section {
   periodLength: 2
   courseId: 882
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1185
@@ -3107,6 +5375,8 @@ section {
   periodLength: 2
   courseId: 882
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1186
@@ -3117,6 +5387,8 @@ section {
   periodLength: 2
   courseId: 883
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1187
@@ -3127,6 +5399,8 @@ section {
   periodLength: 1
   courseId: 884
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1188
@@ -3137,6 +5411,8 @@ section {
   periodLength: 1
   courseId: 884
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1189
@@ -3147,6 +5423,8 @@ section {
   periodLength: 1
   courseId: 885
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1190
@@ -3157,6 +5435,8 @@ section {
   periodLength: 1
   courseId: 885
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1191
@@ -3167,6 +5447,8 @@ section {
   periodLength: 1
   courseId: 885
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1192
@@ -3177,6 +5459,8 @@ section {
   periodLength: 1
   courseId: 886
   subjectId: 0
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1197
@@ -3187,6 +5471,8 @@ section {
   periodLength: 1
   courseId: 888
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1198
@@ -3197,6 +5483,8 @@ section {
   periodLength: 1
   courseId: 889
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1201
@@ -3207,6 +5495,8 @@ section {
   periodLength: 2
   courseId: 891
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1202
@@ -3217,6 +5507,8 @@ section {
   periodLength: 2
   courseId: 891
   subjectId: 4
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1203
@@ -3228,6 +5520,8 @@ section {
   periodLength: 1
   courseId: 765
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1204
@@ -3238,6 +5532,8 @@ section {
   periodLength: 1
   courseId: 892
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1205
@@ -3248,6 +5544,8 @@ section {
   periodLength: 1
   courseId: 893
   subjectId: 2
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1206
@@ -3258,6 +5556,8 @@ section {
   periodLength: 2
   courseId: 894
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1207
@@ -3268,6 +5568,30 @@ section {
   periodLength: 2
   courseId: 894
   subjectId: 1
+  minGrade: 9
+  maxGrade: 12
+}
+section {
+  sectionId: 1210
+  courseTitle: "L898s1: Lunch Period"
+  estimatedClassSize: 350
+  maxClassSize: 350
+  periodLength: 1
+  courseId: 898
+  subjectId: 6
+  minGrade: 9
+  maxGrade: 12
+}
+section {
+  sectionId: 1211
+  courseTitle: "L898s2: Lunch Period"
+  estimatedClassSize: 350
+  maxClassSize: 350
+  periodLength: 1
+  courseId: 898
+  subjectId: 6
+  minGrade: 9
+  maxGrade: 12
 }
 section {
   sectionId: 1213
@@ -3278,6 +5602,31 @@ section {
   periodLength: 1
   courseId: 850
   subjectId: 3
+  minGrade: 9
+  maxGrade: 12
+}
+section {
+  sectionId: 1214
+  courseTitle: "H900s1: Splash! 2011 Photo"
+  estimatedClassSize: 1000
+  maxClassSize: 1000
+  periodLength: 0
+  courseId: 900
+  subjectId: 2
+  minGrade: 9
+  maxGrade: 12
+}
+section {
+  sectionId: 1215
+  courseTitle: "L901s1: Test class"
+  teacherId: 448
+  estimatedClassSize: 2
+  maxClassSize: 2
+  periodLength: 1
+  courseId: 901
+  subjectId: 3
+  minGrade: 10
+  maxGrade: 11
 }
 room {
   roomId: 0
@@ -3285,13 +5634,13 @@ room {
   capacity: 60
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 37
+  resource: 36
+  resource: 37
 }
 room {
   roomId: 1
@@ -3299,13 +5648,13 @@ room {
   capacity: 17
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 39
+  resource: 36
+  resource: 39
 }
 room {
   roomId: 2
@@ -3313,13 +5662,13 @@ room {
   capacity: 15
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 43
+  resource: 36
+  resource: 43
 }
 room {
   roomId: 3
@@ -3327,14 +5676,14 @@ room {
   capacity: 30
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 38
-  roomProperty: 39
+  resource: 36
+  resource: 38
+  resource: 39
 }
 room {
   roomId: 4
@@ -3342,14 +5691,14 @@ room {
   capacity: 30
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 38
-  roomProperty: 39
+  resource: 36
+  resource: 38
+  resource: 39
 }
 room {
   roomId: 5
@@ -3357,13 +5706,13 @@ room {
   capacity: 60
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 37
+  resource: 36
+  resource: 37
 }
 room {
   roomId: 6
@@ -3371,13 +5720,13 @@ room {
   capacity: 75
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 37
+  resource: 36
+  resource: 37
 }
 room {
   roomId: 7
@@ -3385,12 +5734,12 @@ room {
   capacity: 49
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 39
+  resource: 39
 }
 room {
   roomId: 8
@@ -3398,13 +5747,13 @@ room {
   capacity: 23
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 39
+  resource: 36
+  resource: 39
 }
 room {
   roomId: 9
@@ -3412,14 +5761,14 @@ room {
   capacity: 100
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 38
-  roomProperty: 40
-  roomProperty: 41
+  resource: 38
+  resource: 40
+  resource: 41
 }
 room {
   roomId: 10
@@ -3427,12 +5776,12 @@ room {
   capacity: 48
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
+  resource: 36
 }
 room {
   roomId: 11
@@ -3440,12 +5789,12 @@ room {
   capacity: 19
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
+  resource: 36
 }
 room {
   roomId: 12
@@ -3453,12 +5802,12 @@ room {
   capacity: 100
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 42
+  resource: 42
 }
 room {
   roomId: 13
@@ -3466,12 +5815,12 @@ room {
   capacity: 100
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 42
+  resource: 42
 }
 room {
   roomId: 14
@@ -3479,13 +5828,13 @@ room {
   capacity: 30
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 39
+  resource: 36
+  resource: 39
 }
 room {
   roomId: 15
@@ -3493,13 +5842,13 @@ room {
   capacity: 35
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 39
+  resource: 36
+  resource: 39
 }
 room {
   roomId: 16
@@ -3507,11 +5856,11 @@ room {
   capacity: 1000
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
 }
 room {
   roomId: 17
@@ -3519,13 +5868,13 @@ room {
   capacity: 22
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 39
+  resource: 36
+  resource: 39
 }
 room {
   roomId: 18
@@ -3533,14 +5882,14 @@ room {
   capacity: 30
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 38
-  roomProperty: 39
+  resource: 36
+  resource: 38
+  resource: 39
 }
 room {
   roomId: 19
@@ -3548,12 +5897,12 @@ room {
   capacity: 35
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 37
+  resource: 37
 }
 room {
   roomId: 20
@@ -3561,12 +5910,12 @@ room {
   capacity: 29
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 37
+  resource: 37
 }
 room {
   roomId: 21
@@ -3574,12 +5923,12 @@ room {
   capacity: 35
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 37
+  resource: 37
 }
 room {
   roomId: 22
@@ -3587,12 +5936,12 @@ room {
   capacity: 100
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 42
+  resource: 42
 }
 room {
   roomId: 23
@@ -3600,12 +5949,12 @@ room {
   capacity: 100
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 38
+  resource: 38
 }
 room {
   roomId: 24
@@ -3613,11 +5962,12 @@ room {
   capacity: 30
   availablePeriod: 59
   availablePeriod: 60
-  availablePeriod: 65
   availablePeriod: 61
-  availablePeriod: 64
   availablePeriod: 62
-  roomProperty: 42
+  availablePeriod: 64
+  availablePeriod: 65
+  resource: 40
+  resource: 42
 }
 room {
   roomId: 25
@@ -3625,12 +5975,12 @@ room {
   capacity: 46
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 39
+  resource: 39
 }
 room {
   roomId: 26
@@ -3638,14 +5988,14 @@ room {
   capacity: 30
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 38
-  roomProperty: 39
+  resource: 36
+  resource: 38
+  resource: 39
 }
 room {
   roomId: 27
@@ -3653,14 +6003,14 @@ room {
   capacity: 30
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 38
-  roomProperty: 39
+  resource: 36
+  resource: 38
+  resource: 39
 }
 room {
   roomId: 28
@@ -3668,14 +6018,14 @@ room {
   capacity: 30
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 38
-  roomProperty: 39
+  resource: 36
+  resource: 38
+  resource: 39
 }
 room {
   roomId: 29
@@ -3683,14 +6033,14 @@ room {
   capacity: 30
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 38
-  roomProperty: 39
+  resource: 36
+  resource: 38
+  resource: 39
 }
 room {
   roomId: 30
@@ -3698,11 +6048,11 @@ room {
   capacity: 50
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
 }
 room {
   roomId: 31
@@ -3710,12 +6060,12 @@ room {
   capacity: 22
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 39
+  resource: 39
 }
 room {
   roomId: 32
@@ -3723,14 +6073,14 @@ room {
   capacity: 30
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 38
-  roomProperty: 39
+  resource: 36
+  resource: 38
+  resource: 39
 }
 room {
   roomId: 33
@@ -3738,11 +6088,11 @@ room {
   capacity: 30
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
 }
 room {
   roomId: 34
@@ -3750,14 +6100,14 @@ room {
   capacity: 100
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 38
-  roomProperty: 40
-  roomProperty: 41
+  resource: 38
+  resource: 40
+  resource: 41
 }
 room {
   roomId: 35
@@ -3765,13 +6115,13 @@ room {
   capacity: 150
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 37
+  resource: 36
+  resource: 37
 }
 room {
   roomId: 36
@@ -3779,12 +6129,12 @@ room {
   capacity: 50
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 39
+  resource: 39
 }
 room {
   roomId: 37
@@ -3792,12 +6142,12 @@ room {
   capacity: 35
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 37
+  resource: 37
 }
 room {
   roomId: 38
@@ -3805,13 +6155,13 @@ room {
   capacity: 32
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 39
+  resource: 36
+  resource: 39
 }
 room {
   roomId: 39
@@ -3820,8 +6170,8 @@ room {
   availablePeriod: 59
   availablePeriod: 65
   availablePeriod: 66
-  roomProperty: 40
-  roomProperty: 41
+  resource: 40
+  resource: 41
 }
 room {
   roomId: 40
@@ -3829,13 +6179,13 @@ room {
   capacity: 19
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 39
+  resource: 36
+  resource: 39
 }
 room {
   roomId: 41
@@ -3843,13 +6193,13 @@ room {
   capacity: 40
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 40
-  roomProperty: 41
+  resource: 40
+  resource: 41
 }
 room {
   roomId: 42
@@ -3857,13 +6207,13 @@ room {
   capacity: 75
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 37
+  resource: 36
+  resource: 37
 }
 room {
   roomId: 43
@@ -3871,46 +6221,46 @@ room {
   capacity: 25
   availablePeriod: 59
   availablePeriod: 60
+  availablePeriod: 61
+  availablePeriod: 62
+  availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 64
-  availablePeriod: 62
-  roomProperty: 36
-  roomProperty: 43
+  resource: 36
+  resource: 43
 }
-roomProperty {
-  propertyId: 36
+resource {
+  resourceId: 36
   description: "A/V"
 }
-roomProperty {
-  propertyId: 37
+resource {
+  resourceId: 37
   description: "Lecture"
 }
-roomProperty {
-  propertyId: 38
+resource {
+  resourceId: 38
   description: "Moveable Furniture"
 }
-roomProperty {
-  propertyId: 39
+resource {
+  resourceId: 39
   description: "Seminar"
 }
-roomProperty {
-  propertyId: 40
+resource {
+  resourceId: 40
   description: "Dance Space"
   isBinding: true
 }
-roomProperty {
-  propertyId: 41
+resource {
+  resourceId: 41
   description: "Hardwood Floors"
 }
-roomProperty {
-  propertyId: 42
+resource {
+  resourceId: 42
   description: "Meeting Point"
   isBinding: true
 }
-roomProperty {
-  propertyId: 43
+resource {
+  resourceId: 43
   description: "Computer Lab"
   isBinding: true
 }

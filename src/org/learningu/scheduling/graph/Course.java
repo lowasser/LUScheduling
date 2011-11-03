@@ -63,4 +63,8 @@ public final class Course {
   public Range<Integer> getGradeRange() {
     return Ranges.closed(prototype.serial.getMinGrade(), prototype.serial.getMaxGrade());
   }
+
+  public int getPeriodLength() {
+    return prototype.getPeriodLength();
+  }
 }

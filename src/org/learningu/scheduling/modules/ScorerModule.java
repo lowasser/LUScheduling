@@ -1,18 +1,19 @@
 package org.learningu.scheduling.modules;
 
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Iterators;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multiset;
-import com.google.common.collect.SetMultimap;
+import com.google.common.collect.PeekingIterator;
 import com.google.common.collect.Sets;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
-import java.util.Collection;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Set;
 
 import org.learningu.scheduling.graph.ClassPeriod;
@@ -43,7 +44,7 @@ public final class ScorerModule extends AbstractModule {
         Program program = schedule.getProgram();
         Set<Teacher> teachers = Sets.newHashSetWithExpectedSize(program.getTeachers().size());
         for (Section s : schedule.getScheduledSections()) {
-          teachers.addAll(program.teachersForSection(s));
+          teachers.addAll(program.teachersFor(s));
         }
         accum.add(teachers.size());
       }
@@ -82,20 +83,44 @@ public final class ScorerModule extends AbstractModule {
         }
       }
     },
-    SPREAD_OUT_CLASSES {
+    BACK_TO_BACK_CLASSES {
       @Override
       void score(Schedule schedule, ScoreAccumulator accum) {
         Program program = schedule.getProgram();
-        SetMultimap<Course, Room> roomsForCourse = HashMultimap.create(
-            program.getCourses().size(),
-            4);
+        ImmutableMap.Builder<Teacher, NavigableMap<ClassPeriod, StartAssignment>> assignmentBuilder = ImmutableMap
+            .builder();
+        for (Teacher teacher : program.getTeachers()) {
+          assignmentBuilder.put(teacher, Maps.<ClassPeriod, StartAssignment> newTreeMap());
+        }
+        ImmutableMap<Teacher, NavigableMap<ClassPeriod, StartAssignment>> assignments = assignmentBuilder
+            .build();
         for (StartAssignment assign : schedule.getStartAssignments()) {
-          roomsForCourse.put(assign.getCourse(), assign.getRoom());
+          for (Teacher teacher : program.teachersFor(assign.getSection())) {
+            assignments.get(teacher).put(assign.getPeriod(), assign);
+          }
         }
+        for (NavigableMap<ClassPeriod, StartAssignment> teacherSchedule : assignments.values()) {
+          PeekingIterator<StartAssignment> assignmentIterator = Iterators
+              .peekingIterator(teacherSchedule.values().iterator());
+          while (assignmentIterator.hasNext()) {
+            StartAssignment prev = assignmentIterator.next();
+            if (!assignmentIterator.hasNext()) {
+              break;
+            }
+            StartAssignment next = assignmentIterator.peek();
+            if (backToBack(prev, next) && !prev.getRoom().equals(next.getRoom())) {
+              accum.subtract(1.0);
+            }
+          }
+        }
+      }
 
-        for (Collection<Room> roomsForOneCourse : roomsForCourse.asMap().values()) {
-          accum.subtract(roomsForOneCourse.size());
-        }
+      boolean backToBack(StartAssignment assign1, StartAssignment assign2) {
+        ClassPeriod start1 = assign1.getPeriod();
+        int length1 = assign1.getCourse().getPeriodLength();
+        ClassPeriod start2 = assign2.getPeriod();
+        return start2.getTimeBlock().equals(start1.getTimeBlock())
+            && start2.getIndex() == start1.getIndex() + length1;
       }
     },
     GLOBAL_ATTENDANCE_LEVELS {
@@ -225,8 +250,8 @@ public final class ScorerModule extends AbstractModule {
         return ScorerImpl.DISTINCT_COURSES_SCHEDULED;
       case SECTIONS_SCHEDULED:
         return ScorerImpl.SECTIONS_SCHEDULED;
-      case SPREAD_OUT_CLASSES:
-        return ScorerImpl.SPREAD_OUT_CLASSES;
+      case BACK_TO_BACK_CLASSES:
+        return ScorerImpl.BACK_TO_BACK_CLASSES;
       case STUDENT_CLASS_HOURS_SCHEDULED:
         return ScorerImpl.STUDENT_CLASS_HOURS_SCHEDULED;
       case TEACHERS_WITH_CLASSES_SCHEDULED:

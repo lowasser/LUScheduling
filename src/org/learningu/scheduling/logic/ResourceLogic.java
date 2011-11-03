@@ -6,7 +6,6 @@ import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -20,6 +19,7 @@ import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.schedule.PresentAssignment;
 import org.learningu.scheduling.schedule.Schedule;
 import org.learningu.scheduling.schedule.StartAssignment;
+import org.learningu.scheduling.util.Shuffle;
 
 public final class ResourceLogic extends ScheduleLogic {
   /*
@@ -58,6 +58,9 @@ public final class ResourceLogic extends ScheduleLogic {
     ClassPeriod period = assignment.getPeriod();
     Set<Resource> courseRequirements = Sets.newHashSet(program.resourceRequirements(course));
     courseRequirements.removeAll(program.roomResources(room));
+    if (courseRequirements.isEmpty()) {
+      return;
+    }
 
     ListMultimap<Resource, PresentAssignment> resourceDemands = ArrayListMultimap.create();
     for (PresentAssignment concurrent : schedule.occurringAt(period).values()) {
@@ -73,12 +76,11 @@ public final class ResourceLogic extends ScheduleLogic {
         .entrySet()) {
       Resource resource = resourceEntry.getKey();
       List<PresentAssignment> concurrent = (List<PresentAssignment>) resourceEntry.getValue();
-      Collections.shuffle(concurrent, rand);
       if (concurrent.size() >= resource.getFloatingCount()) {
-        validator.validateGlobal(
-            assignment,
-            concurrent.subList(0, concurrent.size() + 1 - resource.getFloatingCount()),
-            "Not enough of " + resource + " to go around");
+        int k = concurrent.size() + 1 - resource.getFloatingCount();
+        List<PresentAssignment> conflicts = Shuffle.shuffleK(concurrent, k, rand);
+        validator.validateGlobal(assignment, conflicts, "Not enough of " + resource
+            + " to go around");
       }
     }
   }

@@ -281,12 +281,20 @@ public final class Program {
     return prerequisites.getUnchecked(s);
   }
 
-  public Set<Teacher> teachersForSection(Section section) {
-    return teachersForCourse.getUnchecked(section.getCourse());
+  public Set<Teacher> teachersFor(Section section) {
+    return teachersFor(section.getCourse());
+  }
+
+  public Set<Teacher> teachersFor(Course course) {
+    return teachersForCourse.getUnchecked(course);
   }
 
   public Set<ClassPeriod> compatiblePeriods(Section section) {
-    return courseCompatiblePeriods.getUnchecked(section.getCourse());
+    return compatiblePeriods(section.getCourse());
+  }
+
+  public Set<ClassPeriod> compatiblePeriods(Course course) {
+    return courseCompatiblePeriods.getUnchecked(course);
   }
 
   public Set<ClassPeriod> compatiblePeriods(Teacher t) {

@@ -32,7 +32,7 @@ public final class TeacherConflictLogic extends ScheduleLogic {
      * Collecting the set of all courses taught by the same teachers is more efficient than going
      * through every teacher who is teaching a class this period.
      */
-    Set<Teacher> teachers = program.teachersForSection(assignment.getSection());
+    Set<Teacher> teachers = program.teachersFor(assignment.getSection());
     Set<Section> coursesTaughtBySame = coursesTaughtByTeachers(program, teachers);
     Set<PresentAssignment> conflicts = Sets.newLinkedHashSet();
     for (Entry<Room, PresentAssignment> entry : schedule

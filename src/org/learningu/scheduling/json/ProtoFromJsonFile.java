@@ -1,6 +1,7 @@
 package org.learningu.scheduling.json;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Optional;
 import com.google.common.io.Files;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
@@ -13,8 +14,11 @@ import com.google.inject.name.Names;
 import com.google.protobuf.TextFormat;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
+import org.learningu.scheduling.annotations.Initial;
 import org.learningu.scheduling.flags.Flag;
 import org.learningu.scheduling.flags.Flags;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
@@ -36,6 +40,9 @@ public final class ProtoFromJsonFile {
   @Flag(name = "resources")
   private File resourcesFile;
   @Inject
+  @Flag(name = "initial")
+  private Optional<File> initialFile;
+  @Inject
   @Flag(name = "output")
   private File outputFile;
 
@@ -52,9 +59,11 @@ public final class ProtoFromJsonFile {
     final JsonArray sections = io.getSections();
     final JsonArray resources = io.getResources();
     final JsonArray rooms = io.getRooms();
+    final SerialProgram initial = io.getInitial();
     Injector jsonInjector = configuredInjector.createChildInjector(new AbstractModule() {
       @Override
       protected void configure() {
+        bind(SerialProgram.class).annotatedWith(Initial.class).toInstance(initial);
         bind(JsonArray.class).annotatedWith(Names.named("json_teachers")).toInstance(teachers);
         bind(JsonArray.class).annotatedWith(Names.named("json_periods")).toInstance(periods);
         bind(JsonArray.class).annotatedWith(Names.named("json_sections")).toInstance(sections);
@@ -64,7 +73,25 @@ public final class ProtoFromJsonFile {
       }
     });
     SerialProgram program = jsonInjector.getInstance(SerialProgram.class);
-    Files.write(TextFormat.printToString(program), io.outputFile, Charsets.UTF_8);
+    FileWriter writer = new FileWriter(io.outputFile);
+    try {
+      TextFormat.print(program, writer);
+    } finally {
+      writer.close();
+    }
+  }
+
+  public SerialProgram getInitial() throws IOException {
+    SerialProgram.Builder builder = SerialProgram.newBuilder();
+    if (initialFile.isPresent()) {
+      FileReader reader = new FileReader(initialFile.get());
+      try {
+        TextFormat.merge(reader, builder);
+      } finally {
+        reader.close();
+      }
+    }
+    return builder.build();
   }
 
   public JsonArray getTeachers() throws JsonSyntaxException, IOException {

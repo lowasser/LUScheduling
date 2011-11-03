@@ -28,13 +28,13 @@ scorer {
 		multiplier: 0.05
 	}
 	component {
-		impl: SPREAD_OUT_CLASSES
-		exponent: 2
+		impl: BACK_TO_BACK_CLASSES
+		multiplier: 20
 	}
 	component {
 		impl: GLOBAL_ATTENDANCE_LEVELS
 		exponent: 3
-		multiplier: 10
+		multiplier: 20
 	}
 	component {
 		impl: SUBJECT_ATTENDANCE_LEVELS
@@ -46,7 +46,7 @@ scorer {
 		multiplier: 10
 	}
 }
-subOptimizerSteps: 200
-numberOfSubOptimizers: 4
+subOptimizerSteps: 5
+numberOfSubOptimizers: 12
 primaryTempFun: LINEAR
 subTempFun: QUADRATIC
