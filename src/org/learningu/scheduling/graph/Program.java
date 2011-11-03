@@ -64,19 +64,21 @@ public final class Program {
 
   private final SerialProgram serial;
 
-  private final Cache<Section, Set<ClassPeriod>> courseCompatiblePeriods;
+  private final Cache<Course, Set<ClassPeriod>> courseCompatiblePeriods;
 
   private final Cache<Room, Set<ClassPeriod>> roomAvailablePeriods;
 
   private final Cache<Teacher, Set<ClassPeriod>> teacherAvailablePeriods;
 
-  private final Cache<Section, Set<Teacher>> teachersForCourse;
+  private final Cache<Course, Set<Teacher>> teachersForCourse;
 
-  private final Cache<Section, Set<Resource>> requiredForCourse;
+  private final Cache<Course, Set<Resource>> requiredForCourse;
 
   private final Cache<Room, Set<Resource>> resourcesOfRoom;
 
   private final Cache<Section, Set<Course>> prerequisites;
+
+  private final Cache<Room, Set<Resource>> bindingResources;
 
   private final double totalAttendanceRatio;
 
@@ -186,9 +188,9 @@ public final class Program {
         .weigher(COLLECTION_WEIGHER)
         .concurrencyLevel(flags.cacheConcurrencyLevel)
         .maximumWeight(flags.courseTeachersCacheSize)
-        .build(new CacheLoader<Section, Set<Teacher>>() {
+        .build(new CacheLoader<Course, Set<Teacher>>() {
           @Override
-          public Set<Teacher> load(Section key) throws Exception {
+          public Set<Teacher> load(Course key) throws Exception {
             return key.getTeachers();
           }
         });
@@ -198,11 +200,11 @@ public final class Program {
         .weigher(COLLECTION_WEIGHER)
         .concurrencyLevel(flags.cacheConcurrencyLevel)
         .maximumWeight(flags.courseCompatibleCacheSize)
-        .build(new CacheLoader<Section, Set<ClassPeriod>>() {
+        .build(new CacheLoader<Course, Set<ClassPeriod>>() {
           @Override
-          public Set<ClassPeriod> load(Section key) {
+          public Set<ClassPeriod> load(Course key) {
             Set<ClassPeriod> blocks = Sets.newLinkedHashSet(getPeriods());
-            for (Teacher t : teachersForSection(key)) {
+            for (Teacher t : teachersForCourse.getUnchecked(key)) {
               blocks.retainAll(compatiblePeriods(t));
             }
             return ImmutableSet.copyOf(blocks);
@@ -212,10 +214,10 @@ public final class Program {
         .newBuilder()
         .initialCapacity(sections.size())
         .weigher(COLLECTION_WEIGHER)
-        .maximumWeight(flags.reqPropsCacheSize)
-        .build(new CacheLoader<Section, Set<Resource>>() {
+        .maximumWeight(flags.reqResCacheSize)
+        .build(new CacheLoader<Course, Set<Resource>>() {
           @Override
-          public Set<Resource> load(Section key) {
+          public Set<Resource> load(Course key) {
             return key.getRequiredResources();
           }
         });
@@ -223,11 +225,24 @@ public final class Program {
         .newBuilder()
         .initialCapacity(rooms.size())
         .weigher(COLLECTION_WEIGHER)
-        .maximumWeight(flags.reqPropsCacheSize)
+        .maximumWeight(flags.roomResCacheSize)
         .build(new CacheLoader<Room, Set<Resource>>() {
           @Override
           public Set<Resource> load(Room key) throws Exception {
             return key.getResources();
+          }
+        });
+    this.bindingResources = CacheBuilder
+        .newBuilder()
+        .initialCapacity(rooms.size())
+        .weigher(COLLECTION_WEIGHER)
+        .maximumWeight(flags.bindingResourceCacheSize)
+        .build(new CacheLoader<Room, Set<Resource>>() {
+          @Override
+          public Set<Resource> load(Room key) throws Exception {
+            return ImmutableSet.copyOf(Sets.filter(
+                resourcesOfRoom.getUnchecked(key),
+                Resource.IS_BINDING));
           }
         });
 
@@ -266,12 +281,12 @@ public final class Program {
     return prerequisites.getUnchecked(s);
   }
 
-  public Set<Teacher> teachersForSection(Section c) {
-    return teachersForCourse.getUnchecked(c);
+  public Set<Teacher> teachersForSection(Section section) {
+    return teachersForCourse.getUnchecked(section.getCourse());
   }
 
-  public Set<ClassPeriod> compatiblePeriods(Section c) {
-    return courseCompatiblePeriods.getUnchecked(c);
+  public Set<ClassPeriod> compatiblePeriods(Section section) {
+    return courseCompatiblePeriods.getUnchecked(section.getCourse());
   }
 
   public Set<ClassPeriod> compatiblePeriods(Teacher t) {
@@ -282,12 +297,16 @@ public final class Program {
     return roomAvailablePeriods.getUnchecked(r);
   }
 
-  public Set<Resource> resourceRequirements(Section c) {
-    return requiredForCourse.getUnchecked(c);
+  public Set<Resource> resourceRequirements(Section s) {
+    return requiredForCourse.getUnchecked(s.getCourse());
   }
 
-  public Set<Resource> roomProperties(Room r) {
+  public Set<Resource> roomResources(Room r) {
     return resourcesOfRoom.getUnchecked(r);
+  }
+
+  public Set<Resource> bindingResources(Room r) {
+    return bindingResources.getUnchecked(r);
   }
 
   public ClassPeriod getPeriod(int id) {

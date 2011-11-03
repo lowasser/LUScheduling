@@ -39,6 +39,10 @@ public final class Resource extends ProgramObject<SerialResource> {
     return serial.getIsBinding();
   }
 
+  public int getFloatingCount() {
+    return serial.getFloatingCount();
+  }
+
   @Override
   public String toString() {
     return Objects.toStringHelper(this).add("description", serial.getDescription()).toString();

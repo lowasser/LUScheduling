@@ -14,7 +14,7 @@ import org.learningu.scheduling.logic.DuplicateSectionLogic;
 import org.learningu.scheduling.logic.LocalConflictLogic;
 import org.learningu.scheduling.logic.PrerequisiteLogic;
 import org.learningu.scheduling.logic.RoomConflictLogic;
-import org.learningu.scheduling.logic.RoomPropertyLogic;
+import org.learningu.scheduling.logic.ResourceLogic;
 import org.learningu.scheduling.logic.ScheduleLogic;
 import org.learningu.scheduling.logic.SerialLogic.SerialLogicImpl;
 import org.learningu.scheduling.logic.SerialLogic.SerialLogics;
@@ -31,7 +31,7 @@ public class ScheduleLogicModule extends AbstractModule {
     logicBindings.addBinding(SerialLogicImpl.DUPLICATE_SECTION).to(DuplicateSectionLogic.class);
     logicBindings.addBinding(SerialLogicImpl.LOCAL_CONFLICT).to(LocalConflictLogic.class);
     logicBindings.addBinding(SerialLogicImpl.ROOM_CONFLICT).to(RoomConflictLogic.class);
-    logicBindings.addBinding(SerialLogicImpl.ROOM_PROPERTY).to(RoomPropertyLogic.class);
+    logicBindings.addBinding(SerialLogicImpl.ROOM_PROPERTY).to(ResourceLogic.class);
     logicBindings.addBinding(SerialLogicImpl.TEACHER_CONFLICT).to(TeacherConflictLogic.class);
     logicBindings.addBinding(SerialLogicImpl.PREREQUISITES).to(PrerequisiteLogic.class);
   }

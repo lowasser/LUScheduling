@@ -2,6 +2,8 @@ package org.learningu.scheduling.graph;
 
 import com.google.common.base.Objects;
 
+import java.util.Set;
+
 import javax.annotation.Nullable;
 
 public final class Course {
@@ -46,5 +48,13 @@ public final class Course {
   @Override
   public String toString() {
     return Objects.toStringHelper(this).add("id", id).add("title", getTitle()).toString();
+  }
+
+  public Set<Teacher> getTeachers() {
+    return prototype.getTeachers();
+  }
+
+  public Set<Resource> getRequiredResources() {
+    return prototype.getRequiredResources();
   }
 }

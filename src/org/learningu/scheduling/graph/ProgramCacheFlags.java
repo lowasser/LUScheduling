@@ -39,20 +39,23 @@ public final class ProgramCacheFlags {
   int courseTeachersCacheSize = 10000;
 
   @Flag(
-      name = "reqPropsCacheSize",
-      description = "Maximum cache size to use for required properties of rooms",
+      name = "reqResCacheSize",
+      description = "Maximum cache size to use for required resources",
       optional = true)
-  int reqPropsCacheSize = 10000;
+  int reqResCacheSize = 10000;
 
   @Flag(
-      name = "roomPropsCacheSize",
-      description = "Maximum cache size to use for properties of rooms",
+      name = "roomResourceCacheSize",
+      description = "Maximum cache size to use for resources of rooms",
       optional = true)
-  int roomPropsCacheSize = 10000;
+  int roomResCacheSize = 10000;
 
   @Flag(
       name = "programCacheConcurrencyLevel",
       description = "Number of concurrent updates allowed in caches for the Program",
       optional = true)
   int cacheConcurrencyLevel = 4;
+
+  @Flag(name = "bindingResourceCacheSize")
+  int bindingResourceCacheSize = 1000;
 }
