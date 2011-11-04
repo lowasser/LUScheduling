@@ -39,8 +39,8 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
   private SerialResource parseResource(JsonObject obj) {
     SerialResource.Builder builder = SerialResource.newBuilder();
     builder.setResourceId(obj.get("uid").getAsInt());
-    mergeBase(builder, builder.getResourceId(), baseResources);
     builder.setDescription(obj.get("name").getAsString());
+    mergeBase(builder, builder.getResourceId(), baseResources);
     return builder.build();
   }
 
@@ -56,20 +56,23 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
   public SerialPeriod parsePeriod(JsonObject obj) {
     SerialPeriod.Builder builder = SerialPeriod.newBuilder();
     builder.setPeriodId(obj.get("id").getAsInt());
-    mergeBase(builder, builder.getPeriodId(), basePeriods);
     builder.setDescription(obj.get("description").getAsString());
     builder.setShortDescription(obj.get("short_description").getAsString());
+    mergeBase(builder, builder.getPeriodId(), basePeriods);
     return builder.build();
   }
 
   private SerialTeacher parseTeacher(JsonObject obj) {
     SerialTeacher.Builder builder = SerialTeacher.newBuilder();
     builder.setTeacherId(obj.get("uid").getAsInt());
-    mergeBase(builder, builder.getTeacherId(), baseTeachers);
     builder.setName(obj.get("text").getAsString());
     for (JsonElement avail : obj.get("availability").getAsJsonArray()) {
       builder.addAvailablePeriod(avail.getAsInt());
     }
+    mergeBase(builder, builder.getTeacherId(), baseTeachers);
+    List<Integer> periodList = builder.getAvailablePeriodList();
+    builder.clearAvailablePeriod();
+    builder.addAllAvailablePeriod(ImmutableSortedSet.copyOf(periodList));
     return builder.build();
   }
 
@@ -79,7 +82,6 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     SerialRoom.Builder builder = SerialRoom.newBuilder();
     builder.setName(obj.get("text").getAsString());
     builder.setRoomId(roomId.getAndIncrement());
-    mergeBase(builder, builder.getRoomId(), baseRooms);
     builder.setCapacity(obj.get("num_students").getAsInt());
     for (JsonElement res : obj.get("associated_resources").getAsJsonArray()) {
       builder.addResource(res.getAsInt());
@@ -87,6 +89,7 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     for (JsonElement pd : obj.get("availability").getAsJsonArray()) {
       builder.addAvailablePeriod(pd.getAsInt());
     }
+    mergeBase(builder, builder.getRoomId(), baseRooms);
     List<Integer> availablePeriodList = builder.getAvailablePeriodList();
     builder.clearAvailablePeriod();
     builder.addAllAvailablePeriod(ImmutableSortedSet.copyOf(availablePeriodList));
@@ -99,7 +102,6 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
   private SerialSection parseSection(JsonObject obj) {
     SerialSection.Builder builder = SerialSection.newBuilder();
     builder.setSectionId(obj.get("id").getAsInt());
-    mergeBase(builder, builder.getCourseId(), baseSections);
 
     Integer subjId = subjects.get(obj.get("category").getAsString());
     if (subjId == null) {
@@ -122,6 +124,7 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     builder.setPeriodLength(DoubleMath.roundToInt(
         obj.get("length").getAsDouble(),
         RoundingMode.HALF_EVEN));
+    mergeBase(builder, builder.getCourseId(), baseSections);
     List<Integer> teacherIdList = builder.getTeacherIdList();
     builder.clearTeacherId();
     builder.addAllTeacherId(ImmutableSortedSet.copyOf(teacherIdList));

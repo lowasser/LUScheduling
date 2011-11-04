@@ -1,6 +1,6 @@
 timeBlock {
   blockId: 0
-  description: "Program"
+  description: "Morning"
   period {
     periodId: 59
     description: "First Class Period: 10-10:50 AM"
@@ -19,6 +19,10 @@ timeBlock {
     shortDescription: "12 - 1 PM"
     attendanceLevel: 1.4
   }
+}
+timeBlock {
+  blockId: 1
+  description: "Afternoon"
   period {
     periodId: 62
     description: "Third Class Period/Second Lunch: Sat 1:30-2:20 PM"
@@ -49,49 +53,16 @@ teacher {
   name: "Liz Behrens"
   availablePeriod: 59
   availablePeriod: 60
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 59
-  availablePeriod: 60
 }
 teacher {
   teacherId: 4910
   name: "Felicity Deiss"
   availablePeriod: 59
   availablePeriod: 60
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 59
-  availablePeriod: 60
 }
 teacher {
   teacherId: 4856
   name: "David Bodow"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -110,60 +81,15 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4947
   name: "Henry Kimball"
   availablePeriod: 64
-  availablePeriod: 64
-  availablePeriod: 64
-  availablePeriod: 64
 }
 teacher {
   teacherId: 4892
   name: "Rahul Dev"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -182,52 +108,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 1612
   name: "Shinya Watanabe"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -246,46 +130,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4954
   name: "Margeaux Perkins"
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
   availablePeriod: 60
   availablePeriod: 61
   availablePeriod: 62
@@ -299,28 +147,10 @@ teacher {
   availablePeriod: 60
   availablePeriod: 61
   availablePeriod: 62
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
 }
 teacher {
   teacherId: 4931
   name: "Allyce Best"
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 62
-  availablePeriod: 64
   availablePeriod: 62
   availablePeriod: 64
 }
@@ -332,46 +162,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4945
   name: "Colin Bresnahan"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -390,27 +184,6 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4961
@@ -419,37 +192,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4940
   name: "Nathan Haist"
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
   availablePeriod: 60
   availablePeriod: 61
   availablePeriod: 62
@@ -466,80 +212,20 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4915
   name: "David Mao"
-  availablePeriod: 66
   availablePeriod: 60
   availablePeriod: 61
   availablePeriod: 62
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
 }
 teacher {
   teacherId: 5057
   name: "Johansen Amin"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -558,52 +244,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4862
   name: "Amelia Glogowski"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -622,52 +266,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4851
   name: "Josh Fry"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -686,52 +288,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4943
   name: "Daniel Rivera"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -750,57 +310,15 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 1500
   name: "Evan Weingarten"
   availablePeriod: 59
-  availablePeriod: 59
-  availablePeriod: 59
-  availablePeriod: 59
 }
 teacher {
   teacherId: 4880
   name: "Christopher Natoli"
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 60
   availablePeriod: 61
   availablePeriod: 62
@@ -815,28 +333,10 @@ teacher {
   availablePeriod: 61
   availablePeriod: 62
   availablePeriod: 64
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
 }
 teacher {
   teacherId: 4964
   name: "Alexander Dunlap"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 59
-  availablePeriod: 60
   availablePeriod: 59
   availablePeriod: 60
 }
@@ -847,43 +347,10 @@ teacher {
   availablePeriod: 60
   availablePeriod: 61
   availablePeriod: 62
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
 }
 teacher {
   teacherId: 4912
   name: "Himabindu Poroori"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -900,34 +367,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4296
   name: "Laura McFadden"
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
   availablePeriod: 60
   availablePeriod: 61
   availablePeriod: 62
@@ -942,32 +385,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 2830
   name: "Shir Yehoshua"
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -975,51 +396,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
 }
 teacher {
   teacherId: 4901
   name: "Elizabeth Denhup"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -1038,27 +418,6 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4866
@@ -1066,40 +425,10 @@ teacher {
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
 }
 teacher {
   teacherId: 4971
   name: "Urvashi Verma Bhushan"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -1118,52 +447,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4872
   name: "Alice  Ye"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -1179,43 +466,10 @@ teacher {
   availablePeriod: 62
   availablePeriod: 64
   availablePeriod: 65
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
 }
 teacher {
   teacherId: 4968
   name: "Vijay Vikram"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -1234,27 +488,6 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4886
@@ -1264,46 +497,10 @@ teacher {
   availablePeriod: 62
   availablePeriod: 64
   availablePeriod: 65
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
 }
 teacher {
   teacherId: 4857
   name: "Clay Nickens"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -1322,27 +519,6 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4908
@@ -1353,31 +529,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4934
   name: "Samantha Karas"
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -1385,49 +540,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
 }
 teacher {
   teacherId: 3241
   name: "Anju Goyal"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -1446,49 +562,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4911
   name: "Rachel Kulikoff"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 62
@@ -1501,37 +578,10 @@ teacher {
   name: "Jessi LaChance"
   availablePeriod: 59
   availablePeriod: 60
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 59
-  availablePeriod: 60
 }
 teacher {
   teacherId: 4902
   name: "Athena Frost"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -1550,56 +600,14 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 3205
   name: "Hillel Wayne"
+  availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
   availablePeriod: 62
-  availablePeriod: 59
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 59
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 59
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 59
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
@@ -1610,40 +618,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4832
   name: "Nicole Ridgwell"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -1662,52 +640,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4956
   name: "Devansh Parasrampuria"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -1724,43 +660,10 @@ teacher {
   availablePeriod: 62
   availablePeriod: 64
   availablePeriod: 65
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
 }
 teacher {
   teacherId: 4879
   name: "Benjamin Trnka"
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 60
   availablePeriod: 61
   availablePeriod: 62
@@ -1778,33 +681,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4932
   name: "Rose Berman"
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -1812,50 +692,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
 }
 teacher {
   teacherId: 4985
   name: "Nathaniel Rossum"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -1874,52 +714,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4890
   name: "Salman Siddiqi"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -1938,52 +736,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4895
   name: "Tom Bidwill"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -2002,52 +758,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4906
   name: "Chris Kennedy"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -2066,52 +780,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4952
   name: "John Xia"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -2128,52 +800,16 @@ teacher {
   availablePeriod: 62
   availablePeriod: 64
   availablePeriod: 65
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
 }
 teacher {
   teacherId: 4871
   name: "Pamela Shapiro"
   availablePeriod: 59
   availablePeriod: 60
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 59
-  availablePeriod: 60
 }
 teacher {
   teacherId: 3134
   name: "Seong-Ah Cho"
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 61
   availablePeriod: 62
   availablePeriod: 64
@@ -2190,46 +826,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4842
   name: "Gerardo Ramirez"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -2243,43 +843,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 2933
   name: "Sarah Fedner"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -2298,27 +865,6 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4948
@@ -2328,40 +874,10 @@ teacher {
   availablePeriod: 61
   availablePeriod: 62
   availablePeriod: 64
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
 }
 teacher {
   teacherId: 4924
   name: "Savannah Thais"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -2378,27 +894,6 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4933
@@ -2408,78 +903,21 @@ teacher {
   availablePeriod: 61
   availablePeriod: 62
   availablePeriod: 64
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
 }
 teacher {
   teacherId: 3195
   name: "Charles Yow"
+  availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
   availablePeriod: 62
   availablePeriod: 64
-  availablePeriod: 59
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 59
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 59
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 59
   availablePeriod: 65
   availablePeriod: 66
 }
 teacher {
   teacherId: 4870
   name: "Eric Guan"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -2498,32 +936,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4922
   name: "Anthony Lashley"
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -2531,42 +947,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
 }
 teacher {
   teacherId: 4897
   name: "UChicago Guild of  Student Carillonneurs"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 65
@@ -2583,18 +967,6 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4989
@@ -2606,57 +978,15 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4893
   name: "Nikki Hafizi"
+  availablePeriod: 59
+  availablePeriod: 60
   availablePeriod: 61
   availablePeriod: 62
   availablePeriod: 64
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 59
-  availablePeriod: 60
   availablePeriod: 65
   availablePeriod: 66
 }
@@ -2670,54 +1000,15 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4907
   name: "Jacqueline Nesbitt"
   availablePeriod: 65
-  availablePeriod: 65
-  availablePeriod: 65
-  availablePeriod: 65
 }
 teacher {
   teacherId: 1704
   name: "Kirsten Madsen"
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 61
   availablePeriod: 62
   availablePeriod: 64
@@ -2734,27 +1025,6 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 448
@@ -2764,46 +1034,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4869
   name: "Nathan Hauke"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -2821,24 +1055,6 @@ teacher {
   availablePeriod: 62
   availablePeriod: 64
   availablePeriod: 65
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
 }
 teacher {
   teacherId: 4849
@@ -2850,33 +1066,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 4909
   name: "Edgar Gonzalez"
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -2884,25 +1077,6 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
 }
 teacher {
   teacherId: 4836
@@ -2914,33 +1088,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
 }
 teacher {
   teacherId: 329
   name: "Luke Joyner"
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
@@ -2948,50 +1099,10 @@ teacher {
   availablePeriod: 64
   availablePeriod: 65
   availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
 }
 teacher {
   teacherId: 4831
   name: "Natasha  Harnwell"
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
-  availablePeriod: 59
-  availablePeriod: 60
-  availablePeriod: 61
-  availablePeriod: 62
-  availablePeriod: 64
-  availablePeriod: 65
-  availablePeriod: 66
   availablePeriod: 59
   availablePeriod: 60
   availablePeriod: 61
