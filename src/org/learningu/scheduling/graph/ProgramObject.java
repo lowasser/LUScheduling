@@ -41,7 +41,7 @@ public abstract class ProgramObject<T extends Message & MessageOrBuilder> {
 
   @Override
   public int hashCode() {
-    return getId();
+    return getId() ^ getClass().hashCode();
   }
 
   public Program getProgram() {

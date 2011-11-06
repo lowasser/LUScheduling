@@ -8,6 +8,7 @@ import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.ProgramCacheFlags;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Section;
+import org.learningu.scheduling.graph.SerialGraph.SerialBuilding;
 import org.learningu.scheduling.graph.SerialGraph.SerialPeriod;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
 import org.learningu.scheduling.graph.SerialGraph.SerialRoom;
@@ -145,7 +146,7 @@ public class TestProgramModule extends AbstractModule {
         .newBuilder()
         .addAllTimeBlock(serialTimeBlocks)
         .addAllTeacher(serialTeachers)
-        .addAllRoom(serialRooms)
+        .addBuilding(SerialBuilding.newBuilder().addAllRoom(serialRooms))
         .addAllSection(serialCourses)
         .build();
   }

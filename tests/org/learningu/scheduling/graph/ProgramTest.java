@@ -1,19 +1,20 @@
 package org.learningu.scheduling.graph;
 
+import com.google.common.primitives.Ints;
+import com.google.protobuf.ByteString;
+import com.google.protobuf.InvalidProtocolBufferException;
+
 import java.util.Arrays;
 
 import junit.framework.TestCase;
 
+import org.learningu.scheduling.graph.SerialGraph.SerialBuilding;
 import org.learningu.scheduling.graph.SerialGraph.SerialPeriod;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
 import org.learningu.scheduling.graph.SerialGraph.SerialRoom;
 import org.learningu.scheduling.graph.SerialGraph.SerialSection;
 import org.learningu.scheduling.graph.SerialGraph.SerialTeacher;
 import org.learningu.scheduling.graph.SerialGraph.SerialTimeBlock;
-
-import com.google.common.primitives.Ints;
-import com.google.protobuf.ByteString;
-import com.google.protobuf.InvalidProtocolBufferException;
 
 public class ProgramTest extends TestCase {
   private SerialProgram serialProgram;
@@ -93,7 +94,8 @@ public class ProgramTest extends TestCase {
         .setName("Harper 135")
         .addAvailablePeriod(0)
         .build();
-    programBuilder.addAllRoom(Arrays.asList(harper130, harper135));
+    programBuilder.addBuilding(SerialBuilding.newBuilder().addAllRoom(
+        Arrays.asList(harper130, harper135)));
 
     serialProgram = programBuilder.build();
   }
@@ -159,6 +161,16 @@ public class ProgramTest extends TestCase {
     return builder.build();
   }
 
+  SerialBuilding serialize(Building building) {
+    SerialBuilding.Builder builder = SerialBuilding.newBuilder();
+    builder.setBuildingId(building.getId());
+    builder.setName(building.getName());
+    for (Room room : building.getRooms()) {
+      builder.addRoom(serialize(room));
+    }
+    return builder.build();
+  }
+
   SerialProgram serialize(Program program) {
     SerialProgram.Builder builder = SerialProgram.newBuilder();
     for (Teacher teacher : program.getTeachers()) {
@@ -170,8 +182,8 @@ public class ProgramTest extends TestCase {
     for (Section course : program.getSections()) {
       builder.addSection(serialize(course));
     }
-    for (Room room : program.getRooms()) {
-      builder.addRoom(serialize(room));
+    for (Building building : program.getBuildings()) {
+      builder.addBuilding(serialize(building));
     }
     if (program.getName().length() > 0) {
       builder.setName(program.getName());

@@ -25,11 +25,6 @@ public final class Course {
     return prototype.getTitle();
   }
 
-  @Override
-  public int hashCode() {
-    return id ^ System.identityHashCode(getProgram());
-  }
-
   public Program getProgram() {
     return prototype.getProgram();
   }

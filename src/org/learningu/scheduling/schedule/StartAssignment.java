@@ -12,6 +12,7 @@ import java.util.RandomAccess;
 
 import javax.annotation.Nullable;
 
+import org.learningu.scheduling.graph.Building;
 import org.learningu.scheduling.graph.ClassPeriod;
 import org.learningu.scheduling.graph.Course;
 import org.learningu.scheduling.graph.Program;
@@ -78,6 +79,10 @@ public final class StartAssignment implements Assignment {
 
   public Course getCourse() {
     return section.getCourse();
+  }
+
+  public Building getBuilding() {
+    return room.getBuilding();
   }
 
   @Override

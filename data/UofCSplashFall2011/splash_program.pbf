@@ -3739,6 +3739,9 @@ section {
   minGrade: 10
   maxGrade: 11
 }
+building {
+buildingId: 0
+name: "UChicago Campus"
 room {
   roomId: 0
   name: "Stuart 102"
@@ -4339,6 +4342,7 @@ room {
   availablePeriod: 66
   resource: 36
   resource: 43
+}
 }
 resource {
   resourceId: 36

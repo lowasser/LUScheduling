@@ -1,8 +1,5 @@
 package org.learningu.scheduling.graph;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
-import com.google.common.base.Function;
 import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
@@ -19,10 +16,17 @@ import org.learningu.scheduling.graph.SerialGraph.SerialRoom;
  */
 public final class Room extends ProgramObject<SerialRoom> implements Comparable<Room> {
 
-  public Room(Program program, SerialRoom serial) {
-    super(program, serial);
+  private final Building building;
+  
+  Room(Building building, SerialRoom serial) {
+    super(building.getProgram(), serial);
+    this.building = building;
   }
 
+  public Building getBuilding() {
+    return building;
+  }
+  
   @Override
   public int getId() {
     return serial.getRoomId();
@@ -52,16 +56,6 @@ public final class Room extends ProgramObject<SerialRoom> implements Comparable<
   @Override
   public String toString() {
     return serial.hasName() ? getName() : super.toString();
-  }
-
-  static Function<SerialRoom, Room> programWrapper(final Program program) {
-    checkNotNull(program);
-    return new Function<SerialRoom, Room>() {
-      @Override
-      public Room apply(SerialRoom input) {
-        return new Room(program, input);
-      }
-    };
   }
 
   @Override

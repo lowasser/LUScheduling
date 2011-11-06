@@ -7,9 +7,9 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
 import com.google.common.base.Objects;
-import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.common.cache.Weigher;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.Collections2;
@@ -48,6 +48,8 @@ public final class Program {
 
   final ImmutableBiMap<Integer, TimeBlock> timeBlocks;
 
+  final ImmutableBiMap<Integer, Building> buildings;
+
   final ImmutableBiMap<Integer, Room> rooms;
 
   final ImmutableBiMap<Integer, ClassPeriod> periods;
@@ -64,21 +66,21 @@ public final class Program {
 
   private final SerialProgram serial;
 
-  private final Cache<Course, Set<ClassPeriod>> courseCompatiblePeriods;
+  private final LoadingCache<Course, Set<ClassPeriod>> courseCompatiblePeriods;
 
-  private final Cache<Room, Set<ClassPeriod>> roomAvailablePeriods;
+  private final LoadingCache<Room, Set<ClassPeriod>> roomAvailablePeriods;
 
-  private final Cache<Teacher, Set<ClassPeriod>> teacherAvailablePeriods;
+  private final LoadingCache<Teacher, Set<ClassPeriod>> teacherAvailablePeriods;
 
-  private final Cache<Course, Set<Teacher>> teachersForCourse;
+  private final LoadingCache<Course, Set<Teacher>> teachersForCourse;
 
-  private final Cache<Course, Set<Resource>> requiredForCourse;
+  private final LoadingCache<Course, Set<Resource>> requiredForCourse;
 
-  private final Cache<Room, Set<Resource>> resourcesOfRoom;
+  private final LoadingCache<Room, Set<Resource>> resourcesOfRoom;
 
-  private final Cache<Section, Set<Course>> prerequisites;
+  private final LoadingCache<Section, Set<Course>> prerequisites;
 
-  private final Cache<Room, Set<Resource>> bindingResources;
+  private final LoadingCache<Room, Set<Resource>> bindingResources;
 
   private final double totalAttendanceRatio;
 
@@ -104,7 +106,17 @@ public final class Program {
     sections = programObjectSet(Lists.transform(
         serial.getSectionList(),
         Section.programWrapper(this)));
-    rooms = programObjectSet(Lists.transform(serial.getRoomList(), Room.programWrapper(this)));
+    buildings = programObjectSet(Lists.transform(
+        serial.getBuildingList(),
+        Building.programWrapper(this)));
+    rooms = programObjectSet(Iterables.concat(Collections2.transform(
+        getBuildings(),
+        new Function<Building, List<Room>>() {
+          @Override
+          public List<Room> apply(Building input) {
+            return input.getRooms();
+          }
+        })));
     timeBlocks = programObjectSet(Lists.transform(
         serial.getTimeBlockList(),
         TimeBlock.programWrapper(this)));
@@ -251,6 +263,10 @@ public final class Program {
       totAttendanceRatio += period.serial.getAttendanceLevel();
     }
     totalAttendanceRatio = totAttendanceRatio;
+  }
+
+  public Set<Building> getBuildings() {
+    return buildings.values();
   }
 
   private static <T extends ProgramObject<?>> ImmutableBiMap<Integer, T> programObjectSet(

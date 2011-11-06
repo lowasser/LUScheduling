@@ -1,5 +1,6 @@
 package org.learningu.scheduling.modules;
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -7,15 +8,18 @@ import com.google.common.collect.Iterators;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.PeekingIterator;
+import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.Set;
 
+import org.learningu.scheduling.graph.Building;
 import org.learningu.scheduling.graph.ClassPeriod;
 import org.learningu.scheduling.graph.Course;
 import org.learningu.scheduling.graph.Program;
@@ -179,7 +183,25 @@ public final class ScorerModule extends AbstractModule {
           }
         }
       }
+    },
+    TEACHER_DISTINCT_BUILDINGS {
+      @Override
+      void score(Schedule schedule, ScoreAccumulator accum) {
+        Program program = schedule.getProgram();
+        SetMultimap<Teacher, Building> teachingIn = HashMultimap.create(program
+            .getTeachers()
+            .size(), program.getBuildings().size());
+        for (StartAssignment assign : schedule.getStartAssignments()) {
+          for (Teacher t : program.teachersFor(assign.getCourse())) {
+            teachingIn.put(t, assign.getBuilding());
+          }
+        }
+        for (Collection<Building> buildings : teachingIn.asMap().values()) {
+          accum.subtract(buildings.size());
+        }
+      }
     };
+
     abstract void score(Schedule schedule, ScoreAccumulator accum);
   }
 
@@ -262,6 +284,8 @@ public final class ScorerModule extends AbstractModule {
         return ScorerImpl.SUBJECT_ATTENDANCE_LEVELS;
       case UNUSED_ROOMS:
         return ScorerImpl.UNUSED_ROOMS;
+      case TEACHER_DISTINCT_BUILDINGS:
+        return ScorerImpl.TEACHER_DISTINCT_BUILDINGS;
       default:
         throw new AssertionError();
     }

@@ -88,6 +88,12 @@ message SerialRoom {
 	repeated int32 resource = 6 [packed = true];
 }
 
+message SerialBuilding {
+	required int32 buildingId = 1;
+	optional string name = 2;
+	repeated SerialRoom room = 3;
+}
+
 /*
  * A specification for an entire LU program, from which a schedule must be constructed.
  */
@@ -97,6 +103,6 @@ message SerialProgram {
 	repeated SerialTimeBlock timeBlock = 1;
 	repeated SerialTeacher teacher = 2;
 	repeated SerialSection section = 3;
-	repeated SerialRoom room = 4;
+	repeated SerialBuilding building = 8;
 	repeated SerialResource resource = 6;
 }

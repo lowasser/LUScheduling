@@ -20,6 +20,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.learningu.scheduling.annotations.Initial;
+import org.learningu.scheduling.graph.SerialGraph.SerialBuilding;
 import org.learningu.scheduling.graph.SerialGraph.SerialPeriod;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
 import org.learningu.scheduling.graph.SerialGraph.SerialResource;
@@ -169,8 +170,10 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     }
     this.baseTeachers = Maps.newHashMap(teacherBuilder.build());
     ImmutableMap.Builder<Integer, SerialRoom> roomBuilder = ImmutableMap.builder();
-    for (SerialRoom r : initial.getRoomList()) {
-      roomBuilder.put(r.getRoomId(), r);
+    for (SerialBuilding b : initial.getBuildingList()) {
+      for (SerialRoom r : b.getRoomList()) {
+        roomBuilder.put(r.getRoomId(), r);
+      }
     }
     this.baseRooms = Maps.newHashMap(roomBuilder.build());
     ImmutableMap.Builder<Integer, SerialSection> sectionBuilder = ImmutableMap.builder();
@@ -199,9 +202,11 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     for (JsonElement section : sections) {
       builder.addSection(parseSection(section.getAsJsonObject()));
     }
+    SerialBuilding.Builder buildingBuilder = SerialBuilding.newBuilder();
     for (JsonElement room : rooms) {
-      builder.addRoom(parseRoom(room.getAsJsonObject()));
+      buildingBuilder.addRoom(parseRoom(room.getAsJsonObject()));
     }
+    builder.addBuilding(buildingBuilder);
     for (Entry<String, Integer> entry : subjects.entrySet()) {
       builder.addSubject(SerialSubject
           .newBuilder()
