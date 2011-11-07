@@ -5,6 +5,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.learningu.scheduling.schedule.PresentAssignment;
 import org.learningu.scheduling.schedule.Schedule;
@@ -45,6 +47,10 @@ public final class ChainedScheduleLogic extends ScheduleLogic {
     for (ScheduleLogic logic : logics) {
       logic.validate(validator, schedule, assignment);
     }
+    Logger.getLogger("org.learningu.scheduling.logic.ChainedScheduleLogic").log(
+        Level.FINEST,
+        "Chained schedule logic: {0}",
+        validator);
   }
 
   @Override

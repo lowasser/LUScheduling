@@ -93,6 +93,7 @@ public final class AutoschedulerDataSource {
       TextFormat.merge(fileReader, builder);
       return builder;
     } catch (IOException e) {
+      e.printStackTrace();
       // retry as a serialized protobuf
     } finally {
       fileReader.close();

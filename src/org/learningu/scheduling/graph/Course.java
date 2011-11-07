@@ -30,6 +30,11 @@ public final class Course {
   }
 
   @Override
+  public int hashCode() {
+    return id ^ Course.class.hashCode();
+  }
+
+  @Override
   public boolean equals(@Nullable Object obj) {
     if (obj instanceof Course) {
       Course c = (Course) obj;

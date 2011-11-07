@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 
 import org.learningu.scheduling.graph.Building;
 import org.learningu.scheduling.graph.ClassPeriod;
@@ -215,8 +216,13 @@ public final class ScorerModule extends AbstractModule {
           for (Course prereq : prerequisites) {
             int sectionsBefore = 0;
             for (Section prereqSection : program.getSectionsOfCourse(prereq)) {
-              assignmentsBySection.get(prereqSection);
+              StartAssignment prereqAssign = assignmentsBySection.get(prereqSection);
+              if (prereqAssign != null
+                  && prereqAssign.getLastPeriod().compareTo(assign.getPeriod()) < 0) {
+                sectionsBefore++;
+              }
             }
+            accum.add(sectionsBefore);
           }
         }
       }
@@ -251,7 +257,7 @@ public final class ScorerModule extends AbstractModule {
 
   @Provides
   @Singleton
-  Scorer<Schedule> deserialize(CompleteScorer serial) {
+  Scorer<Schedule> deserialize(CompleteScorer serial, final ExecutorService service) {
     ImmutableList.Builder<Scorer<Schedule>> componentsBuilder = ImmutableList.builder();
     for (ScaledScorer scaled : serial.getComponentList()) {
       componentsBuilder.add(deserialize(scaled));

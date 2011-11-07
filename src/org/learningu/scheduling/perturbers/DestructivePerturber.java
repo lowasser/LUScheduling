@@ -42,13 +42,13 @@ final class DestructivePerturber implements Perturber<Schedule> {
       Room room = getRandom(rooms);
       ClassPeriod period = getRandom(periods);
 
+      StartAssignment assign;
       try {
-        current = current
-            .forceAssignStart(StartAssignment.create(period, room, section))
-            .getNewState();
+        assign = StartAssignment.create(period, room, section);
       } catch (IllegalArgumentException e) {
         continue;
       }
+      current = current.forceAssignStart(assign).getNewState();
     }
 
     return current;

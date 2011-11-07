@@ -113,31 +113,37 @@ timeBlock {
     periodId: 567
     description: "Sun 1:05 - 1:55 PM"
     shortDescription: "Sun 1-2 PM"
+    minGrade: 6
   }
   period {
     periodId: 568
     description: "Sun 2:05-2:55 PM"
     shortDescription: "Sun 2-3 PM"
+    minGrade: 6
   }
   period {
     periodId: 569
     description: "Sun 3:05 - 3:55 PM"
     shortDescription: "Sun 3-4 PM"
+    minGrade: 6
   }
   period {
     periodId: 570
     description: "Sun 4:05 - 4:55 PM"
     shortDescription: "Sun 4-5 PM"
+    minGrade: 6
   }
   period {
     periodId: 571
     description: "Sun 5:05 - 5:55 PM"
     shortDescription: "Sun 5-6 PM"
+    minGrade: 6
   }
   period {
     periodId: 572
     description: "Sun 6:05 - 6:55 PM"
     shortDescription: "Sun 6-7 PM"
+    minGrade: 6
   }
 }
 teacher {
@@ -21327,10 +21333,6 @@ subject {
   title: "Computer Science"
 }
 subject {
-  subjectId: 8
-  title: "Lunch"
-}
-subject {
   subjectId: 7
   title: "Humanities"
 }
@@ -22156,6 +22158,249 @@ building {
   buildingId: 7
   name: "13"
   room {
+    roomId: 16
+    name: "Lobby 13 B"
+    capacity: 100
+    availablePeriod: 549
+    availablePeriod: 550
+    availablePeriod: 551
+    availablePeriod: 552
+    availablePeriod: 553
+    availablePeriod: 554
+    availablePeriod: 555
+    availablePeriod: 556
+    availablePeriod: 557
+    availablePeriod: 559
+    availablePeriod: 560
+    availablePeriod: 561
+    availablePeriod: 563
+    availablePeriod: 564
+    availablePeriod: 565
+    availablePeriod: 566
+    availablePeriod: 567
+    availablePeriod: 568
+    availablePeriod: 569
+    availablePeriod: 570
+    availablePeriod: 571
+    availablePeriod: 572
+  }
+  room {
+    roomId: 24
+    name: "Lobby 13 C"
+    capacity: 100
+    availablePeriod: 549
+    availablePeriod: 550
+    availablePeriod: 551
+    availablePeriod: 552
+    availablePeriod: 553
+    availablePeriod: 554
+    availablePeriod: 555
+    availablePeriod: 556
+    availablePeriod: 557
+    availablePeriod: 559
+    availablePeriod: 560
+    availablePeriod: 561
+    availablePeriod: 563
+    availablePeriod: 564
+    availablePeriod: 565
+    availablePeriod: 566
+    availablePeriod: 567
+    availablePeriod: 568
+    availablePeriod: 569
+    availablePeriod: 570
+    availablePeriod: 571
+    availablePeriod: 572
+  }
+  room {
+    roomId: 25
+    name: "Lobby 13 A"
+    capacity: 100
+    availablePeriod: 549
+    availablePeriod: 550
+    availablePeriod: 551
+    availablePeriod: 552
+    availablePeriod: 553
+    availablePeriod: 554
+    availablePeriod: 555
+    availablePeriod: 556
+    availablePeriod: 557
+    availablePeriod: 559
+    availablePeriod: 560
+    availablePeriod: 561
+    availablePeriod: 563
+    availablePeriod: 564
+    availablePeriod: 565
+    availablePeriod: 566
+    availablePeriod: 567
+    availablePeriod: 568
+    availablePeriod: 569
+    availablePeriod: 570
+    availablePeriod: 571
+    availablePeriod: 572
+  }
+  room {
+    roomId: 26
+    name: "Lobby 13 F"
+    capacity: 20
+    availablePeriod: 549
+    availablePeriod: 550
+    availablePeriod: 551
+    availablePeriod: 552
+    availablePeriod: 553
+    availablePeriod: 554
+    availablePeriod: 555
+    availablePeriod: 556
+    availablePeriod: 557
+    availablePeriod: 559
+    availablePeriod: 560
+    availablePeriod: 561
+    availablePeriod: 563
+    availablePeriod: 564
+    availablePeriod: 565
+    availablePeriod: 566
+    availablePeriod: 567
+    availablePeriod: 568
+    availablePeriod: 569
+    availablePeriod: 570
+    availablePeriod: 571
+    availablePeriod: 572
+  }
+  room {
+    roomId: 27
+    name: "Lobby 13 G"
+    capacity: 100
+    availablePeriod: 549
+    availablePeriod: 550
+    availablePeriod: 551
+    availablePeriod: 552
+    availablePeriod: 553
+    availablePeriod: 554
+    availablePeriod: 555
+    availablePeriod: 556
+    availablePeriod: 557
+    availablePeriod: 559
+    availablePeriod: 560
+    availablePeriod: 561
+    availablePeriod: 563
+    availablePeriod: 564
+    availablePeriod: 565
+    availablePeriod: 566
+    availablePeriod: 567
+    availablePeriod: 568
+    availablePeriod: 569
+    availablePeriod: 570
+    availablePeriod: 571
+    availablePeriod: 572
+  }
+  room {
+    roomId: 28
+    name: "Lobby 13 D"
+    capacity: 100
+    availablePeriod: 549
+    availablePeriod: 550
+    availablePeriod: 551
+    availablePeriod: 552
+    availablePeriod: 553
+    availablePeriod: 554
+    availablePeriod: 555
+    availablePeriod: 556
+    availablePeriod: 557
+    availablePeriod: 559
+    availablePeriod: 560
+    availablePeriod: 561
+    availablePeriod: 563
+    availablePeriod: 564
+    availablePeriod: 565
+    availablePeriod: 566
+    availablePeriod: 567
+    availablePeriod: 568
+    availablePeriod: 569
+    availablePeriod: 570
+    availablePeriod: 571
+    availablePeriod: 572
+  }
+  room {
+    roomId: 29
+    name: "Lobby 13 E"
+    capacity: 20
+    availablePeriod: 549
+    availablePeriod: 550
+    availablePeriod: 551
+    availablePeriod: 552
+    availablePeriod: 553
+    availablePeriod: 554
+    availablePeriod: 555
+    availablePeriod: 556
+    availablePeriod: 557
+    availablePeriod: 559
+    availablePeriod: 560
+    availablePeriod: 561
+    availablePeriod: 563
+    availablePeriod: 564
+    availablePeriod: 565
+    availablePeriod: 566
+    availablePeriod: 567
+    availablePeriod: 568
+    availablePeriod: 569
+    availablePeriod: 570
+    availablePeriod: 571
+    availablePeriod: 572
+  }
+  room {
+    roomId: 76
+    name: "Lobby 13 classroom"
+    capacity: 20
+    availablePeriod: 549
+    availablePeriod: 550
+    availablePeriod: 551
+    availablePeriod: 552
+    availablePeriod: 553
+    availablePeriod: 554
+    availablePeriod: 555
+    availablePeriod: 556
+    availablePeriod: 557
+    availablePeriod: 559
+    availablePeriod: 560
+    availablePeriod: 561
+    availablePeriod: 563
+    availablePeriod: 564
+    availablePeriod: 565
+    availablePeriod: 566
+    availablePeriod: 567
+    availablePeriod: 568
+    availablePeriod: 569
+    availablePeriod: 570
+    availablePeriod: 571
+    availablePeriod: 572
+  }
+  room {
+    roomId: 98
+    name: "Lobby 13 H/foodspace"
+    capacity: 100
+    availablePeriod: 549
+    availablePeriod: 550
+    availablePeriod: 551
+    availablePeriod: 552
+    availablePeriod: 553
+    availablePeriod: 554
+    availablePeriod: 555
+    availablePeriod: 556
+    availablePeriod: 557
+    availablePeriod: 559
+    availablePeriod: 560
+    availablePeriod: 561
+    availablePeriod: 563
+    availablePeriod: 564
+    availablePeriod: 565
+    availablePeriod: 566
+    availablePeriod: 567
+    availablePeriod: 568
+    availablePeriod: 569
+    availablePeriod: 570
+    availablePeriod: 571
+    availablePeriod: 572
+  }
+  room {
     roomId: 50
     name: "13-3101"
     capacity: 26
@@ -22240,6 +22485,33 @@ building {
 building {
   buildingId: 9
   name: "14"
+  room {
+    roomId: 103
+    name: "14E-304 Kitchen"
+    capacity: 15
+    availablePeriod: 549
+    availablePeriod: 550
+    availablePeriod: 551
+    availablePeriod: 552
+    availablePeriod: 553
+    availablePeriod: 554
+    availablePeriod: 555
+    availablePeriod: 556
+    availablePeriod: 557
+    availablePeriod: 559
+    availablePeriod: 560
+    availablePeriod: 561
+    availablePeriod: 563
+    availablePeriod: 564
+    availablePeriod: 565
+    availablePeriod: 566
+    availablePeriod: 567
+    availablePeriod: 568
+    availablePeriod: 569
+    availablePeriod: 570
+    availablePeriod: 571
+    availablePeriod: 572
+  }
   room {
     roomId: 54
     name: "14-0637"
@@ -23708,253 +23980,6 @@ building {
   }
 }
 building {
-  buildingId: 19
-  name: "Lobby"
-  room {
-    roomId: 16
-    name: "Lobby 13 B"
-    capacity: 100
-    availablePeriod: 549
-    availablePeriod: 550
-    availablePeriod: 551
-    availablePeriod: 552
-    availablePeriod: 553
-    availablePeriod: 554
-    availablePeriod: 555
-    availablePeriod: 556
-    availablePeriod: 557
-    availablePeriod: 559
-    availablePeriod: 560
-    availablePeriod: 561
-    availablePeriod: 563
-    availablePeriod: 564
-    availablePeriod: 565
-    availablePeriod: 566
-    availablePeriod: 567
-    availablePeriod: 568
-    availablePeriod: 569
-    availablePeriod: 570
-    availablePeriod: 571
-    availablePeriod: 572
-  }
-  room {
-    roomId: 24
-    name: "Lobby 13 C"
-    capacity: 100
-    availablePeriod: 549
-    availablePeriod: 550
-    availablePeriod: 551
-    availablePeriod: 552
-    availablePeriod: 553
-    availablePeriod: 554
-    availablePeriod: 555
-    availablePeriod: 556
-    availablePeriod: 557
-    availablePeriod: 559
-    availablePeriod: 560
-    availablePeriod: 561
-    availablePeriod: 563
-    availablePeriod: 564
-    availablePeriod: 565
-    availablePeriod: 566
-    availablePeriod: 567
-    availablePeriod: 568
-    availablePeriod: 569
-    availablePeriod: 570
-    availablePeriod: 571
-    availablePeriod: 572
-  }
-  room {
-    roomId: 25
-    name: "Lobby 13 A"
-    capacity: 100
-    availablePeriod: 549
-    availablePeriod: 550
-    availablePeriod: 551
-    availablePeriod: 552
-    availablePeriod: 553
-    availablePeriod: 554
-    availablePeriod: 555
-    availablePeriod: 556
-    availablePeriod: 557
-    availablePeriod: 559
-    availablePeriod: 560
-    availablePeriod: 561
-    availablePeriod: 563
-    availablePeriod: 564
-    availablePeriod: 565
-    availablePeriod: 566
-    availablePeriod: 567
-    availablePeriod: 568
-    availablePeriod: 569
-    availablePeriod: 570
-    availablePeriod: 571
-    availablePeriod: 572
-  }
-  room {
-    roomId: 26
-    name: "Lobby 13 F"
-    capacity: 20
-    availablePeriod: 549
-    availablePeriod: 550
-    availablePeriod: 551
-    availablePeriod: 552
-    availablePeriod: 553
-    availablePeriod: 554
-    availablePeriod: 555
-    availablePeriod: 556
-    availablePeriod: 557
-    availablePeriod: 559
-    availablePeriod: 560
-    availablePeriod: 561
-    availablePeriod: 563
-    availablePeriod: 564
-    availablePeriod: 565
-    availablePeriod: 566
-    availablePeriod: 567
-    availablePeriod: 568
-    availablePeriod: 569
-    availablePeriod: 570
-    availablePeriod: 571
-    availablePeriod: 572
-  }
-  room {
-    roomId: 27
-    name: "Lobby 13 G"
-    capacity: 100
-    availablePeriod: 549
-    availablePeriod: 550
-    availablePeriod: 551
-    availablePeriod: 552
-    availablePeriod: 553
-    availablePeriod: 554
-    availablePeriod: 555
-    availablePeriod: 556
-    availablePeriod: 557
-    availablePeriod: 559
-    availablePeriod: 560
-    availablePeriod: 561
-    availablePeriod: 563
-    availablePeriod: 564
-    availablePeriod: 565
-    availablePeriod: 566
-    availablePeriod: 567
-    availablePeriod: 568
-    availablePeriod: 569
-    availablePeriod: 570
-    availablePeriod: 571
-    availablePeriod: 572
-  }
-  room {
-    roomId: 28
-    name: "Lobby 13 D"
-    capacity: 100
-    availablePeriod: 549
-    availablePeriod: 550
-    availablePeriod: 551
-    availablePeriod: 552
-    availablePeriod: 553
-    availablePeriod: 554
-    availablePeriod: 555
-    availablePeriod: 556
-    availablePeriod: 557
-    availablePeriod: 559
-    availablePeriod: 560
-    availablePeriod: 561
-    availablePeriod: 563
-    availablePeriod: 564
-    availablePeriod: 565
-    availablePeriod: 566
-    availablePeriod: 567
-    availablePeriod: 568
-    availablePeriod: 569
-    availablePeriod: 570
-    availablePeriod: 571
-    availablePeriod: 572
-  }
-  room {
-    roomId: 29
-    name: "Lobby 13 E"
-    capacity: 20
-    availablePeriod: 549
-    availablePeriod: 550
-    availablePeriod: 551
-    availablePeriod: 552
-    availablePeriod: 553
-    availablePeriod: 554
-    availablePeriod: 555
-    availablePeriod: 556
-    availablePeriod: 557
-    availablePeriod: 559
-    availablePeriod: 560
-    availablePeriod: 561
-    availablePeriod: 563
-    availablePeriod: 564
-    availablePeriod: 565
-    availablePeriod: 566
-    availablePeriod: 567
-    availablePeriod: 568
-    availablePeriod: 569
-    availablePeriod: 570
-    availablePeriod: 571
-    availablePeriod: 572
-  }
-  room {
-    roomId: 76
-    name: "Lobby 13 classroom"
-    capacity: 20
-    availablePeriod: 549
-    availablePeriod: 550
-    availablePeriod: 551
-    availablePeriod: 552
-    availablePeriod: 553
-    availablePeriod: 554
-    availablePeriod: 555
-    availablePeriod: 556
-    availablePeriod: 557
-    availablePeriod: 559
-    availablePeriod: 560
-    availablePeriod: 561
-    availablePeriod: 563
-    availablePeriod: 564
-    availablePeriod: 565
-    availablePeriod: 566
-    availablePeriod: 567
-    availablePeriod: 568
-    availablePeriod: 569
-    availablePeriod: 570
-    availablePeriod: 571
-    availablePeriod: 572
-  }
-  room {
-    roomId: 98
-    name: "Lobby 13 H/foodspace"
-    capacity: 100
-    availablePeriod: 549
-    availablePeriod: 550
-    availablePeriod: 551
-    availablePeriod: 552
-    availablePeriod: 553
-    availablePeriod: 554
-    availablePeriod: 555
-    availablePeriod: 556
-    availablePeriod: 557
-    availablePeriod: 559
-    availablePeriod: 560
-    availablePeriod: 561
-    availablePeriod: 563
-    availablePeriod: 564
-    availablePeriod: 565
-    availablePeriod: 566
-    availablePeriod: 567
-    availablePeriod: 568
-    availablePeriod: 569
-    availablePeriod: 570
-    availablePeriod: 571
-    availablePeriod: 572
-  }
-}
-building {
   buildingId: 20
   name: "8"
   room {
@@ -24041,37 +24066,6 @@ building {
     roomId: 87
     name: "W16-109"
     capacity: 1132
-    availablePeriod: 563
-    availablePeriod: 564
-    availablePeriod: 565
-    availablePeriod: 566
-    availablePeriod: 567
-    availablePeriod: 568
-    availablePeriod: 569
-    availablePeriod: 570
-    availablePeriod: 571
-    availablePeriod: 572
-  }
-}
-building {
-  buildingId: 22
-  name: "14E"
-  room {
-    roomId: 103
-    name: "14E-304 Kitchen"
-    capacity: 15
-    availablePeriod: 549
-    availablePeriod: 550
-    availablePeriod: 551
-    availablePeriod: 552
-    availablePeriod: 553
-    availablePeriod: 554
-    availablePeriod: 555
-    availablePeriod: 556
-    availablePeriod: 557
-    availablePeriod: 559
-    availablePeriod: 560
-    availablePeriod: 561
     availablePeriod: 563
     availablePeriod: 564
     availablePeriod: 565

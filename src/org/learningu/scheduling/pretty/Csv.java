@@ -67,7 +67,7 @@ public final class Csv {
               .builder()
               .addEscape('\"', "\"\"")
               .build()
-              .escape(String.format(message, args)) + "\"");
+              .escape(args.length == 0 ? message : String.format(message, args)) + "\"");
       return this;
     }
 

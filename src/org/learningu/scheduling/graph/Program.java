@@ -14,12 +14,14 @@ import com.google.common.cache.Weigher;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.HashBiMap;
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableBiMap.Builder;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -134,15 +136,14 @@ public final class Program {
 
     // initialize courseMap
     BiMap<Integer, Course> courseBuilder = HashBiMap.create();
-    ImmutableSetMultimap.Builder<Course, Section> courseMapBuilder = ImmutableSetMultimap
-        .builder();
+    SetMultimap<Course, Section> courseMapBuilder = HashMultimap.create();
     for (Section section : getSections()) {
       Course course = section.getCourse();
       courseMapBuilder.put(course, section);
       courseBuilder.put(course.getId(), course);
     }
     courses = ImmutableBiMap.copyOf(courseBuilder);
-    courseMap = courseMapBuilder.build();
+    courseMap = ImmutableSetMultimap.copyOf(courseMapBuilder);
 
     // initialize teachingMap
     ImmutableSetMultimap.Builder<Teacher, Course> teachingMapBuilder = ImmutableSetMultimap

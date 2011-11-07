@@ -25,6 +25,7 @@ public final class AutoschedulingConfigModule extends AbstractModule {
     callbackBinder.addBinding().to(RoomPrettyPrinter.class).asEagerSingleton();
     callbackBinder.addBinding().to(ScheduleOutputCallback.class).asEagerSingleton();
     callbackBinder.addBinding().to(TeacherPrettyPrinter.class).asEagerSingleton();
+    callbackBinder.addBinding().to(ScheduleStatsCallback.class).asEagerSingleton();
   }
 
   @Provides

@@ -13,11 +13,11 @@ scorer {
 	}
 	component {
 		impl: DISTINCT_CLASSES_SCHEDULED
-		multiplier: 10
+		multiplier: 30
 	}
 	component {
 		impl: SECTIONS_SCHEDULED
-		multiplier: 3
+		multiplier: 5
 	}
 	component {
 		impl: CLASS_HOURS_SCHEDULED
@@ -43,10 +43,15 @@ scorer {
 	}
 	component {
 		impl: UNUSED_ROOMS
-		multiplier: 10
+		multiplier: 10.0
+	}
+	component {
+		impl: TEACHER_DISTINCT_BUILDINGS
+		exponent: 2.0
+		multiplier: 2.0
 	}
 }
 subOptimizerSteps: 3
-numberOfSubOptimizers: 20
+numberOfSubOptimizers: 30
 primaryTempFun: LINEAR
 subTempFun: QUADRATIC

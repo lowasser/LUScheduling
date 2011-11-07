@@ -108,6 +108,11 @@ public final class StartAssignment implements Assignment {
   public ClassPeriod getPeriod() {
     return period;
   }
+  
+  public ClassPeriod getLastPeriod() {
+    List<ClassPeriod> periods = period.getTailPeriods(getCourse().getPeriodLength());
+    return periods.get(periods.size() - 1);
+  }
 
   @Override
   public int hashCode() {
