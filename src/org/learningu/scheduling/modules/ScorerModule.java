@@ -200,6 +200,26 @@ public final class ScorerModule extends AbstractModule {
           accum.subtract(buildings.size());
         }
       }
+    },
+    /**
+     * For every section, add bonus points for each section of each prerequisite of this course
+     * that ends before this section starts.
+     */
+    PREREQUISITE_ORDERING {
+      @Override
+      void score(Schedule schedule, ScoreAccumulator accum) {
+        Program program = schedule.getProgram();
+        Map<Section, StartAssignment> assignmentsBySection = schedule.getAssignmentsBySection();
+        for (StartAssignment assign : schedule.getStartAssignments()) {
+          Set<Course> prerequisites = program.getPrerequisites(assign.getCourse());
+          for (Course prereq : prerequisites) {
+            int sectionsBefore = 0;
+            for (Section prereqSection : program.getSectionsOfCourse(prereq)) {
+              assignmentsBySection.get(prereqSection);
+            }
+          }
+        }
+      }
     };
 
     abstract void score(Schedule schedule, ScoreAccumulator accum);

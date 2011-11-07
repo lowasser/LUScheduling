@@ -78,7 +78,7 @@ public final class Program {
 
   private final LoadingCache<Room, Set<Resource>> resourcesOfRoom;
 
-  private final LoadingCache<Section, Set<Course>> prerequisites;
+  private final LoadingCache<Course, Set<Course>> prerequisites;
 
   private final LoadingCache<Room, Set<Resource>> bindingResources;
 
@@ -176,9 +176,9 @@ public final class Program {
         .concurrencyLevel(flags.cacheConcurrencyLevel)
         .weigher(COLLECTION_WEIGHER)
         .maximumWeight(flags.prerequisiteCacheSize)
-        .build(new CacheLoader<Section, Set<Course>>() {
+        .build(new CacheLoader<Course, Set<Course>>() {
           @Override
-          public Set<Course> load(Section key) throws Exception {
+          public Set<Course> load(Course key) throws Exception {
             return key.getPrerequisites();
           }
         });
@@ -294,7 +294,11 @@ public final class Program {
   }
 
   public Set<Course> getPrerequisites(Section s) {
-    return prerequisites.getUnchecked(s);
+    return getPrerequisites(s.getCourse());
+  }
+
+  public Set<Course> getPrerequisites(Course course) {
+    return prerequisites.getUnchecked(course);
   }
 
   public Set<Teacher> teachersFor(Section section) {

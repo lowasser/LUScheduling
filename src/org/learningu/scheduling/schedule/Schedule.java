@@ -5,7 +5,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.common.collect.AbstractIterator;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Maps;
@@ -22,6 +26,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.learningu.scheduling.graph.ClassPeriod;
+import org.learningu.scheduling.graph.Course;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Section;
@@ -107,6 +112,29 @@ public final class Schedule {
             return StartAssignment.create(period, room, section);
           }
         });
+  }
+
+  private final LoadingCache<Course, Set<StartAssignment>> courseSectionAssignments = CacheBuilder
+      .newBuilder()
+      .concurrencyLevel(3)
+      .softValues()
+      .build(new CacheLoader<Course, Set<StartAssignment>>() {
+        @Override
+        public Set<StartAssignment> load(Course course) {
+          ImmutableSet.Builder<StartAssignment> builder = ImmutableSet.builder();
+          Set<Section> sections = getProgram().getSectionsOfCourse(course);
+          for (Section s : sections) {
+            StartAssignment assign = assignments.get(s);
+            if (assign != null) {
+              builder.add(assign);
+            }
+          }
+          return builder.build();
+        }
+      });
+
+  public final Set<StartAssignment> courseSectionAssignments(Course course) {
+    return courseSectionAssignments.getUnchecked(course);
   }
 
   public final Map<Room, PresentAssignment> occurringAt(final ClassPeriod period) {

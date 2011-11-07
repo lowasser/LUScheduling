@@ -1,7 +1,11 @@
 package org.learningu.scheduling.json;
 
+import com.google.common.base.CharMatcher;
+import com.google.common.base.Splitter;
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.math.DoubleMath;
 import com.google.gson.JsonArray;
@@ -14,6 +18,7 @@ import com.google.protobuf.GeneratedMessage;
 import com.google.protobuf.Message;
 
 import java.math.RoundingMode;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -202,11 +207,24 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     for (JsonElement section : sections) {
       builder.addSection(parseSection(section.getAsJsonObject()));
     }
-    SerialBuilding.Builder buildingBuilder = SerialBuilding.newBuilder();
-    for (JsonElement room : rooms) {
-      buildingBuilder.addRoom(parseRoom(room.getAsJsonObject()));
+    ListMultimap<String, SerialRoom> buildings = ArrayListMultimap.create();
+    for (JsonElement elem : rooms) {
+      SerialRoom room = parseRoom(elem.getAsJsonObject());
+      String buildingName = Splitter
+          .on(CharMatcher.anyOf(" -"))
+          .split(room.getName())
+          .iterator()
+          .next();
+      buildings.put(buildingName, room);
     }
-    builder.addBuilding(buildingBuilder);
+    int buildingId = 0;
+    for (Map.Entry<String, Collection<SerialRoom>> building : buildings.asMap().entrySet()) {
+      SerialBuilding.Builder bBuilder = SerialBuilding.newBuilder();
+      bBuilder.setBuildingId(buildingId++);
+      bBuilder.setName(building.getKey());
+      bBuilder.addAllRoom(building.getValue());
+      builder.addBuilding(bBuilder);
+    }
     for (Entry<String, Integer> entry : subjects.entrySet()) {
       builder.addSubject(SerialSubject
           .newBuilder()

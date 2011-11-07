@@ -62,4 +62,8 @@ public final class Course {
   public int getPeriodLength() {
     return prototype.getPeriodLength();
   }
+
+  public Set<Course> getPrerequisites() {
+    return prototype.getPrerequisites();
+  }
 }
