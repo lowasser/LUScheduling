@@ -1,0 +1,40 @@
+Data loader for AJAX data from the ESP Web site
+
+INSTALL
+=======
+
+The data_loader.py requires python version 2.6 or 2.7, along
+with a couple dependencies defined in requirements.txt. If you
+have pip installed, you can type the following at the terminal
+to install the dependencies::
+
+    $ sudo pip install -r requirements.txt
+
+LIST AVAILABLE PROGRAMS
+=======================
+
+To list the available programs, pass the -l flag to the program
+along with the host, username, and password. For example::
+
+    $ python data_loader.py -l --host esp.mit.edu -u axiak -p PASSWORD
+
+EXAMPLE RUN
+===========
+
+Once you choose an appropriate program, to run the script needs the following
+information:
+
+  - hostname
+  - username
+  - password
+  - program name
+  - target data directory
+
+For example::
+
+    $ python data_loader.py -l --host esp.mit.edu -axiak -p PASSWORD -r Splash/2010 -t ../../data/2010Splash
+
+Will generate the data files in the directory specified. Those files can then be turned into protobuf files
+with the java already written.
+
+
