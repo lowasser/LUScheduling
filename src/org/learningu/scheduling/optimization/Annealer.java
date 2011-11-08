@@ -9,9 +9,6 @@ import com.google.inject.assistedinject.Assisted;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.joda.time.Duration;
-import org.learningu.scheduling.flags.Converters;
-
 /**
  * An optimizer implementation based on simulated annealing techniques.
  * 
@@ -82,13 +79,14 @@ public final class Annealer<T> implements Optimizer<T> {
       }
     }
     stopwatch.stop();
+    /*
     logger.log(
         Level.FINE,
         "Single-threaded annealing step took {0}",
         Duration
             .millis(stopwatch.elapsedMillis())
             .toPeriod()
-            .toString(Converters.PERIOD_FORMATTER));
+            .toString(Converters.PERIOD_FORMATTER));*/
     return best;
   }
 }

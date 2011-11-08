@@ -13,6 +13,7 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
+import com.google.inject.name.Named;
 import com.google.inject.util.Modules;
 
 import java.lang.annotation.Annotation;
@@ -26,6 +27,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
@@ -99,8 +101,9 @@ public final class Flags {
         Options options = new Options();
         for (Flag flag : flagsMap.keySet()) {
           OptionBuilder.hasArgs();
-          OptionBuilder.withArgName(flag.name());
           OptionBuilder.withLongOpt(flag.name());
+          OptionBuilder.withDescription(flag.description());
+          OptionBuilder.withArgName(flagsMap.get(flag).toString());
           options.addOption(OptionBuilder.create());
         }
         return options;
@@ -127,13 +130,21 @@ public final class Flags {
   private static final class FlagBootstrapModule extends AbstractModule {
     private final CommandLine commandLine;
     private final Map<Flag, Type> flagsMap;
+    private final Options options;
+    private final String main;
 
     @SuppressWarnings("unused")
     // injected
     @Inject
-    FlagBootstrapModule(CommandLine commandLine, Map<Flag, Type> flagsMap) {
+    FlagBootstrapModule(
+        CommandLine commandLine,
+        Map<Flag, Type> flagsMap,
+        Options options,
+        @Named("main") String main) {
       this.commandLine = commandLine;
       this.flagsMap = flagsMap;
+      this.options = options;
+      this.main = main;
     }
 
     @Override
@@ -144,6 +155,10 @@ public final class Flags {
 
         @Nullable
         final String value = commandLine.getOptionValue(flagAnnotation.name());
+        if (!flagAnnotation.optional() && value == null) {
+          new HelpFormatter().printHelp(130, main, "", options, "");
+          throw Throwables.propagate(new ParseException("Missing flag: " + flagAnnotation));
+        }
 
         try {
           Object result = Converters.converterFor(literal).parse(value);

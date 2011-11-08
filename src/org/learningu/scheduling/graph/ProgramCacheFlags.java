@@ -69,4 +69,8 @@ public final class ProgramCacheFlags {
   @Inject(optional = true)
   @Flag(name = "bindingResourceCacheSize", optional = true)
   int bindingResourceCacheSize = 1000;
+  
+  @Inject(optional = true)
+  @Flag(name = "teacherGroupCacheSize", optional = true)
+  int teacherGroupCacheSize = 1000;
 }

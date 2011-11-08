@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Range;
 import com.google.common.collect.Ranges;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nullable;
@@ -31,7 +32,7 @@ public final class Course {
 
   @Override
   public int hashCode() {
-    return id ^ Course.class.hashCode();
+    return id;
   }
 
   @Override
@@ -52,7 +53,7 @@ public final class Course {
     return Objects.toStringHelper(this).add("id", id).add("title", getTitle()).toString();
   }
 
-  public Set<Teacher> getTeachers() {
+  public List<Teacher> getTeachers() {
     return prototype.getTeachers();
   }
 
@@ -68,7 +69,7 @@ public final class Course {
     return prototype.getPeriodLength();
   }
 
-  public Set<Course> getPrerequisites() {
+  public List<Course> getPrerequisites() {
     return prototype.getPrerequisites();
   }
 }

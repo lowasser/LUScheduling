@@ -3,6 +3,7 @@ package org.learningu.scheduling.logic;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -32,7 +33,7 @@ public final class TeacherConflictLogic extends ScheduleLogic {
      * Collecting the set of all courses taught by the same teachers is more efficient than going
      * through every teacher who is teaching a class this period.
      */
-    Set<Teacher> teachers = program.teachersFor(assignment.getSection());
+    List<Teacher> teachers = program.teachersFor(assignment.getSection());
     Set<Section> coursesTaughtBySame = coursesTaughtByTeachers(program, teachers);
     Set<PresentAssignment> conflicts = Sets.newLinkedHashSet();
     for (Entry<Room, PresentAssignment> entry : schedule

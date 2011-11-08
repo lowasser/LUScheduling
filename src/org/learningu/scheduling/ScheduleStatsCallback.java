@@ -14,13 +14,17 @@ import org.learningu.scheduling.graph.Course;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Teacher;
+import org.learningu.scheduling.modules.ScorerModule.CompositeScorer;
 import org.learningu.scheduling.schedule.Schedule;
 import org.learningu.scheduling.schedule.StartAssignment;
 
 public class ScheduleStatsCallback extends BasicFutureCallback<Schedule> {
+  private final CompositeScorer scorer;
+
   @Inject
-  ScheduleStatsCallback(Logger logger) {
+  ScheduleStatsCallback(Logger logger, CompositeScorer scorer) {
     super(logger);
+    this.scorer = scorer;
   }
 
   @Override
@@ -29,6 +33,8 @@ public class ScheduleStatsCallback extends BasicFutureCallback<Schedule> {
     teachers(schedule);
     courses(schedule);
     rooms(schedule);
+    schedule.getProgram().logCacheStats(logger);
+    scorer.logCacheStats();
   }
 
   private void sections(Schedule schedule) {

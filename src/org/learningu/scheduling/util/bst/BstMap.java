@@ -351,11 +351,7 @@ public final class BstMap<K, V> extends AbstractMap<K, V> implements SortedMap<K
   private transient final BstAggregate<TreapNode<K, V>> countAggregate = new BstAggregate<TreapNode<K, V>>() {
     @Override
     public long treeValue(@Nullable TreapNode<K, V> tree) {
-      if (tree == null) {
-        return 0;
-      } else {
-        return 1 + treeValue(tree.childOrNull(LEFT)) + treeValue(tree.childOrNull(RIGHT));
-      }
+      return (tree == null) ? 0 : tree.size;
     }
 
     @Override

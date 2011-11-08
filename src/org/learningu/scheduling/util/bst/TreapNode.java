@@ -10,6 +10,8 @@ public final class TreapNode<K, V> extends BstNode<K, TreapNode<K, V>> {
 
   final int heapKey;
 
+  final int size;
+
   TreapNode(
       K key,
       V value,
@@ -19,6 +21,7 @@ public final class TreapNode<K, V> extends BstNode<K, TreapNode<K, V>> {
     super(key, left, right);
     this.value = value;
     this.heapKey = heapKey;
+    this.size = 1 + ((left == null) ? 0 : left.size) + ((right == null) ? 0 : right.size);
   }
 
   public V getValue() {

@@ -5,13 +5,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
 import com.google.common.collect.AbstractIterator;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Maps.EntryTransformer;
 import com.google.inject.Inject;
@@ -19,6 +16,7 @@ import com.google.inject.Provider;
 
 import java.util.AbstractMap;
 import java.util.AbstractSet;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -114,27 +112,16 @@ public final class Schedule {
         });
   }
 
-  private final LoadingCache<Course, Set<StartAssignment>> courseSectionAssignments = CacheBuilder
-      .newBuilder()
-      .concurrencyLevel(3)
-      .softValues()
-      .build(new CacheLoader<Course, Set<StartAssignment>>() {
-        @Override
-        public Set<StartAssignment> load(Course course) {
-          ImmutableSet.Builder<StartAssignment> builder = ImmutableSet.builder();
-          Set<Section> sections = getProgram().getSectionsOfCourse(course);
-          for (Section s : sections) {
-            StartAssignment assign = assignments.get(s);
-            if (assign != null) {
-              builder.add(assign);
-            }
-          }
-          return builder.build();
-        }
-      });
-
-  public final Set<StartAssignment> courseSectionAssignments(Course course) {
-    return courseSectionAssignments.getUnchecked(course);
+  public final List<StartAssignment> courseSectionAssignments(Course course) {
+    Set<Section> sections = getProgram().getSectionsOfCourse(course);
+    List<StartAssignment> assigns = Lists.newArrayListWithCapacity(sections.size());
+    for (Section s : sections) {
+      StartAssignment assign = assignments.get(s);
+      if (assign != null) {
+        assigns.add(assign);
+      }
+    }
+    return Collections.unmodifiableList(assigns);
   }
 
   public final Map<Room, PresentAssignment> occurringAt(final ClassPeriod period) {

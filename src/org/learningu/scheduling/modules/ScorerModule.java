@@ -1,26 +1,27 @@
 package org.learningu.scheduling.modules;
 
-import com.google.common.collect.HashMultimap;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.PeekingIterator;
-import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.google.inject.TypeLiteral;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import org.learningu.scheduling.graph.Building;
 import org.learningu.scheduling.graph.ClassPeriod;
 import org.learningu.scheduling.graph.Course;
 import org.learningu.scheduling.graph.Program;
@@ -28,6 +29,7 @@ import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Subject;
 import org.learningu.scheduling.graph.Teacher;
+import org.learningu.scheduling.graph.TeacherGroup;
 import org.learningu.scheduling.optimization.Scorer;
 import org.learningu.scheduling.schedule.PresentAssignment;
 import org.learningu.scheduling.schedule.Schedule;
@@ -40,6 +42,7 @@ public final class ScorerModule extends AbstractModule {
 
   @Override
   protected void configure() {
+    bind(new TypeLiteral<Scorer<Schedule>>() {}).to(CompositeScorer.class);
   }
 
   enum ScorerImpl {
@@ -66,7 +69,6 @@ public final class ScorerModule extends AbstractModule {
       }
     },
     SECTIONS_SCHEDULED {
-
       @Override
       void score(Schedule schedule, ScoreAccumulator accum) {
         accum.add(schedule.getScheduledSections().size());
@@ -92,19 +94,17 @@ public final class ScorerModule extends AbstractModule {
       @Override
       void score(Schedule schedule, ScoreAccumulator accum) {
         Program program = schedule.getProgram();
-        ImmutableMap.Builder<Teacher, NavigableMap<ClassPeriod, StartAssignment>> assignmentBuilder = ImmutableMap
-            .builder();
+        Map<Teacher, NavigableMap<ClassPeriod, StartAssignment>> assignments = Maps.newHashMap();
         for (Teacher teacher : program.getTeachers()) {
-          assignmentBuilder.put(teacher, Maps.<ClassPeriod, StartAssignment> newTreeMap());
+          assignments.put(teacher, Maps.<ClassPeriod, StartAssignment> newTreeMap());
         }
-        ImmutableMap<Teacher, NavigableMap<ClassPeriod, StartAssignment>> assignments = assignmentBuilder
-            .build();
         for (StartAssignment assign : schedule.getStartAssignments()) {
-          for (Teacher teacher : program.teachersFor(assign.getSection())) {
+          for (Teacher teacher : program.teachersFor(assign.getCourse())) {
             assignments.get(teacher).put(assign.getPeriod(), assign);
           }
         }
         for (NavigableMap<ClassPeriod, StartAssignment> teacherSchedule : assignments.values()) {
+          int transitions = 0;
           PeekingIterator<StartAssignment> assignmentIterator = Iterators
               .peekingIterator(teacherSchedule.values().iterator());
           while (assignmentIterator.hasNext()) {
@@ -113,10 +113,11 @@ public final class ScorerModule extends AbstractModule {
               break;
             }
             StartAssignment next = assignmentIterator.peek();
-            if (backToBack(prev, next) && !prev.getRoom().equals(next.getRoom())) {
-              accum.subtract(1.0);
+            if (backToBack(prev, next) && !prev.getBuilding().equals(next.getBuilding())) {
+              transitions++;
             }
           }
+          accum.subtract(transitions);
         }
       }
 
@@ -174,6 +175,37 @@ public final class ScorerModule extends AbstractModule {
         }
       }
     },
+    TEACHER_GROUPS_EVEN {
+      @Override
+      void score(Schedule schedule, ScoreAccumulator accum) {
+        // TODO: penalize for variance
+        Program program = schedule.getProgram();
+        Map<TeacherGroup, Multiset<ClassPeriod>> periodLevels = Maps
+            .newHashMapWithExpectedSize(program.getTeacherGroups().size());
+        for (TeacherGroup g : program.getTeacherGroups()) {
+          periodLevels.put(g, HashMultiset.<ClassPeriod> create());
+        }
+        for (StartAssignment assign : schedule.getStartAssignments()) {
+          for (Teacher t : program.teachersFor(assign.getCourse())) {
+            for (TeacherGroup g : program.getGroups(t)) {
+              for (PresentAssignment pAssign : assign.getPresentAssignments()) {
+                periodLevels.get(g).add(pAssign.getPeriod());
+              }
+            }
+          }
+        }
+        for (Multiset<ClassPeriod> groupDensity : periodLevels.values()) {
+          double mean = ((double) groupDensity.size()) / program.getPeriods().size();
+          int sumSquares = 0;
+          for (Multiset.Entry<ClassPeriod> periodDensity : groupDensity.entrySet()) {
+            int count = periodDensity.getCount();
+            sumSquares += count * count;
+          }
+          double variance = ((double) sumSquares / program.getPeriods().size()) - mean * mean;
+          accum.subtract(variance);
+        }
+      }
+    },
     UNUSED_ROOMS {
       @Override
       void score(Schedule schedule, ScoreAccumulator accum) {
@@ -182,23 +214,6 @@ public final class ScorerModule extends AbstractModule {
           if (schedule.startingIn(room).isEmpty()) {
             accum.add(1);
           }
-        }
-      }
-    },
-    TEACHER_DISTINCT_BUILDINGS {
-      @Override
-      void score(Schedule schedule, ScoreAccumulator accum) {
-        Program program = schedule.getProgram();
-        SetMultimap<Teacher, Building> teachingIn = HashMultimap.create(program
-            .getTeachers()
-            .size(), program.getBuildings().size());
-        for (StartAssignment assign : schedule.getStartAssignments()) {
-          for (Teacher t : program.teachersFor(assign.getCourse())) {
-            teachingIn.put(t, assign.getBuilding());
-          }
-        }
-        for (Collection<Building> buildings : teachingIn.asMap().values()) {
-          accum.subtract(buildings.size());
         }
       }
     },
@@ -212,7 +227,7 @@ public final class ScorerModule extends AbstractModule {
         Program program = schedule.getProgram();
         Map<Section, StartAssignment> assignmentsBySection = schedule.getAssignmentsBySection();
         for (StartAssignment assign : schedule.getStartAssignments()) {
-          Set<Course> prerequisites = program.getPrerequisites(assign.getCourse());
+          List<Course> prerequisites = program.getPrerequisites(assign.getCourse());
           for (Course prereq : prerequisites) {
             int sectionsBefore = 0;
             for (Section prereqSection : program.getSectionsOfCourse(prereq)) {
@@ -255,42 +270,79 @@ public final class ScorerModule extends AbstractModule {
     }
   }
 
-  @Provides
   @Singleton
-  Scorer<Schedule> deserialize(CompleteScorer serial, final ExecutorService service) {
-    ImmutableList.Builder<Scorer<Schedule>> componentsBuilder = ImmutableList.builder();
-    for (ScaledScorer scaled : serial.getComponentList()) {
-      componentsBuilder.add(deserialize(scaled));
-    }
-    final ImmutableList<Scorer<Schedule>> components = componentsBuilder.build();
-    return new Scorer<Schedule>() {
-      @Override
-      public double score(Schedule input) {
-        double total = 0;
-        for (Scorer<Schedule> scorer : components) {
-          total += scorer.score(input);
-        }
-        return total;
+  public static final class CompositeScorer implements Scorer<Schedule> {
+    private final Logger logger;
+    private final List<LoadingCache<Schedule, Double>> scoreCaches;
+    private final List<Scorer<Schedule>> components;
+
+    @Inject
+    CompositeScorer(Logger logger, CompleteScorer serial) {
+      this.logger = logger;
+      ImmutableList.Builder<Scorer<Schedule>> componentsBuilder = ImmutableList.builder();
+      ImmutableList.Builder<LoadingCache<Schedule, Double>> scoreCachesBuilder = ImmutableList
+          .builder();
+      for (ScaledScorer scaled : serial.getComponentList()) {
+        final Scorer<Schedule> scorer = deserialize(scaled);
+        componentsBuilder.add(scorer);
+        scoreCachesBuilder.add(CacheBuilder
+            .newBuilder()
+            .weakKeys()
+            .concurrencyLevel(4)
+            .build(new CacheLoader<Schedule, Double>() {
+
+              @Override
+              public Double load(Schedule key) {
+                return scorer.score(key);
+              }
+            }));
       }
-    };
+      components = componentsBuilder.build();
+      this.scoreCaches = scoreCachesBuilder.build();
+    }
+
+    @Override
+    public double score(Schedule input) {
+      double total = 0;
+      for (LoadingCache<Schedule, Double> scorer : scoreCaches) {
+        total += scorer.getUnchecked(input);
+      }
+      return total;
+    }
+
+    public void logCacheStats() {
+      for (int i = 0; i < components.size(); i++) {
+        logger.log(Level.INFO, "Stats for {0}: {1}", new Object[] { components.get(i),
+            scoreCaches.get(i).stats() });
+        logger.log(
+            Level.INFO,
+            "Average time spent on {0}: {1}us",
+            new Object[] { components.get(i),
+                (long) (scoreCaches.get(i).stats().averageLoadPenalty() / 1000) });
+      }
+    }
   }
 
-  private Scorer<Schedule> deserialize(ScaledScorer scorer) {
+  private static Scorer<Schedule> deserialize(ScaledScorer scorer) {
     final double multiplier = scorer.getMultiplier();
     final double exponent = scorer.getExponent();
     final ScorerImpl impl = deserialize(scorer.getImpl());
     return new Scorer<Schedule>() {
-
       @Override
       public double score(Schedule input) {
         ScoreAccumulator accum = new ScoreAccumulator(exponent, multiplier);
         impl.score(input, accum);
         return accum.getTotal();
       }
+
+      @Override
+      public String toString() {
+        return impl.toString();
+      }
     };
   }
 
-  private ScorerImpl deserialize(SerialScorerImpl impl) {
+  private static ScorerImpl deserialize(SerialScorerImpl impl) {
     switch (impl) {
       case CLASS_HOURS_SCHEDULED:
         return ScorerImpl.CLASS_HOURS_SCHEDULED;
@@ -310,8 +362,8 @@ public final class ScorerModule extends AbstractModule {
         return ScorerImpl.SUBJECT_ATTENDANCE_LEVELS;
       case UNUSED_ROOMS:
         return ScorerImpl.UNUSED_ROOMS;
-      case TEACHER_DISTINCT_BUILDINGS:
-        return ScorerImpl.TEACHER_DISTINCT_BUILDINGS;
+      case TEACHER_GROUPS_EVEN:
+        return ScorerImpl.TEACHER_GROUPS_EVEN;
       default:
         throw new AssertionError();
     }

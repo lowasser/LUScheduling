@@ -2,9 +2,6 @@ perturber {
 	perturb {
 		impl: DESTRUCTIVE
 	}
-	perturb {
-		impl: GREEDY
-	}
 }
 scorer {
 	component {
@@ -20,14 +17,6 @@ scorer {
 		multiplier: 5
 	}
 	component {
-		impl: CLASS_HOURS_SCHEDULED
-		multiplier: 0.5
-	}
-	component {
-		impl: STUDENT_CLASS_HOURS_SCHEDULED
-		multiplier: 0.05
-	}
-	component {
 		impl: BACK_TO_BACK_CLASSES
 		multiplier: 20
 	}
@@ -41,17 +30,8 @@ scorer {
 		exponent: 2
 		multiplier: 2
 	}
-	component {
-		impl: UNUSED_ROOMS
-		multiplier: 10.0
-	}
-	component {
-		impl: TEACHER_DISTINCT_BUILDINGS
-		exponent: 2.0
-		multiplier: 2.0
-	}
 }
-subOptimizerSteps: 3
-numberOfSubOptimizers: 30
-primaryTempFun: LINEAR
-subTempFun: QUADRATIC
+subOptimizerSteps: 2
+numberOfSubOptimizers: 10
+primaryTempFun: QUADRATIC
+subTempFun: LINEAR

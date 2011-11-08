@@ -1,7 +1,6 @@
 package org.learningu.scheduling.logic;
 
 import java.util.List;
-import java.util.Set;
 
 import org.learningu.scheduling.graph.Course;
 import org.learningu.scheduling.graph.Program;
@@ -17,7 +16,7 @@ public final class PrerequisiteLogic extends ScheduleLogic {
     super.validate(validator, schedule, assignment);
     // We mark this as a local conflict, since it can't be solved with deletions.
     Program program = schedule.getProgram();
-    Set<Course> prereqs = program.getPrerequisites(assignment.getSection());
+    List<Course> prereqs = program.getPrerequisites(assignment.getSection());
     for (Course prereq : prereqs) {
       boolean valid = false;
       for (Section s : program.getSectionsOfCourse(prereq)) {

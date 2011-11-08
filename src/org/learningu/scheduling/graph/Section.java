@@ -5,10 +5,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Ints;
 
+import java.util.List;
 import java.util.Set;
 
 import org.learningu.scheduling.graph.SerialGraph.SerialSection;
@@ -41,15 +43,15 @@ public final class Section extends ProgramObject<SerialSection> implements Compa
     return serial.getCourseTitle();
   }
 
-  Set<Course> getPrerequisites() {
-    return ImmutableSet.copyOf(Lists.transform(
+  List<Course> getPrerequisites() {
+    return ImmutableList.copyOf(Lists.transform(
         serial.getPrereqCourseIdList(),
         Functions.forMap(program.courses)));
   }
 
   // Does not cache!
-  Set<Teacher> getTeachers() {
-    return ImmutableSet.copyOf(Lists.transform(
+  List<Teacher> getTeachers() {
+    return ImmutableList.copyOf(Lists.transform(
         serial.getTeacherIdList(),
         Functions.forMap(program.teachers)));
   }

@@ -7,6 +7,7 @@ import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 
+import java.util.List;
 import java.util.Set;
 
 import org.learningu.scheduling.graph.SerialGraph.SerialTeacher;
@@ -41,6 +42,15 @@ public final class Teacher extends ProgramObject<SerialTeacher> {
   @Override
   public String toString() {
     return serial.hasName() ? serial.getName() : super.toString();
+  }
+
+  public List<TeacherGroup> getTeacherGroups() {
+    return Lists.transform(serial.getGroupIdList(), new Function<Integer, TeacherGroup>() {
+      @Override
+      public TeacherGroup apply(Integer input) {
+        return new TeacherGroup(input, getProgram());
+      }
+    });
   }
 
   static Function<SerialTeacher, Teacher> programWrapper(final Program program) {

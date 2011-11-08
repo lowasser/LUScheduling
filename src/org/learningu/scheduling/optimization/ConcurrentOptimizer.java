@@ -156,11 +156,13 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
         logger.log(Level.WARNING, "Thread interrupted, returning current best.");
         break;
       }
-      builder.add(Csv
-          .newRowBuilder()
-          .add("%d", System.currentTimeMillis() - start)
-          .add("%f", currentBestScore)
-          .build());
+      if (step % 20 == 0) {
+        builder.add(Csv
+            .newRowBuilder()
+            .add("%d", System.currentTimeMillis() - start)
+            .add("%8.3f", currentBestScore)
+            .build());
+      }
       if ((System.currentTimeMillis() - lastUpdate) > dur * ratio) {
         logger.log(Level.INFO, "Cutting off optimization for lack of progress");
         break;

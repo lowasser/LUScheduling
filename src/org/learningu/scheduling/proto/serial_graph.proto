@@ -41,6 +41,7 @@ message SerialTeacher {
 	required int32 teacherId = 1; // teacher identifier number
 	optional string name = 2 [default = "Joe Teacher"]; // teacher name
 	repeated int32 availablePeriod = 3 [packed = true]; // teacher availability
+	repeated int32 groupId = 4 [packed = true]; // groups to even out
 }
 
 message SerialDateTime {

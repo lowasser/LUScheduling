@@ -17,6 +17,8 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableBiMap.Builder;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Iterables;
@@ -28,8 +30,11 @@ import com.google.inject.Singleton;
 import com.google.protobuf.TextFormat;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
 
@@ -62,6 +67,8 @@ public final class Program {
 
   final ImmutableBiMap<Integer, Subject> subjects;
 
+  private final ImmutableListMultimap<TeacherGroup, Teacher> teacherGroupMembers;
+
   private final ImmutableSetMultimap<Course, Section> courseMap;
 
   private final ImmutableSetMultimap<Teacher, Course> teachingMap;
@@ -74,15 +81,17 @@ public final class Program {
 
   private final LoadingCache<Teacher, Set<ClassPeriod>> teacherAvailablePeriods;
 
-  private final LoadingCache<Course, Set<Teacher>> teachersForCourse;
+  private final LoadingCache<Course, List<Teacher>> teachersForCourse;
 
   private final LoadingCache<Course, Set<Resource>> requiredForCourse;
 
   private final LoadingCache<Room, Set<Resource>> resourcesOfRoom;
 
-  private final LoadingCache<Course, Set<Course>> prerequisites;
+  private final LoadingCache<Course, List<Course>> prerequisites;
 
   private final LoadingCache<Room, Set<Resource>> bindingResources;
+
+  private final LoadingCache<Teacher, List<TeacherGroup>> teacherGroups;
 
   private final double totalAttendanceRatio;
 
@@ -155,6 +164,15 @@ public final class Program {
     }
     teachingMap = teachingMapBuilder.build();
 
+    ImmutableListMultimap.Builder<TeacherGroup, Teacher> teacherGroupMembersBuilder = ImmutableListMultimap
+        .builder();
+    for (Teacher t : getTeachers()) {
+      for (TeacherGroup g : t.getTeacherGroups()) {
+        teacherGroupMembersBuilder.put(g, t);
+      }
+    }
+    teacherGroupMembers = teacherGroupMembersBuilder.build();
+
     checkTeachersValid();
     checkCoursesValid();
     checkRoomsValid();
@@ -171,15 +189,26 @@ public final class Program {
             return key.getCompatiblePeriods();
           }
         });
+    this.teacherGroups = CacheBuilder
+        .newBuilder()
+        .concurrencyLevel(flags.cacheConcurrencyLevel)
+        .weigher(COLLECTION_WEIGHER)
+        .maximumWeight(flags.teacherGroupCacheSize)
+        .build(new CacheLoader<Teacher, List<TeacherGroup>>() {
+          @Override
+          public List<TeacherGroup> load(Teacher key) {
+            return ImmutableList.copyOf(key.getTeacherGroups());
+          }
+        });
     this.prerequisites = CacheBuilder
         .newBuilder()
         .initialCapacity(sections.size())
         .concurrencyLevel(flags.cacheConcurrencyLevel)
         .weigher(COLLECTION_WEIGHER)
         .maximumWeight(flags.prerequisiteCacheSize)
-        .build(new CacheLoader<Course, Set<Course>>() {
+        .build(new CacheLoader<Course, List<Course>>() {
           @Override
-          public Set<Course> load(Course key) throws Exception {
+          public List<Course> load(Course key) throws Exception {
             return key.getPrerequisites();
           }
         });
@@ -201,9 +230,9 @@ public final class Program {
         .weigher(COLLECTION_WEIGHER)
         .concurrencyLevel(flags.cacheConcurrencyLevel)
         .maximumWeight(flags.courseTeachersCacheSize)
-        .build(new CacheLoader<Course, Set<Teacher>>() {
+        .build(new CacheLoader<Course, List<Teacher>>() {
           @Override
-          public Set<Teacher> load(Course key) throws Exception {
+          public List<Teacher> load(Course key) throws Exception {
             return key.getTeachers();
           }
         });
@@ -216,9 +245,14 @@ public final class Program {
         .build(new CacheLoader<Course, Set<ClassPeriod>>() {
           @Override
           public Set<ClassPeriod> load(Course key) {
-            Set<ClassPeriod> blocks = Sets.newLinkedHashSet(getPeriods());
-            for (Teacher t : teachersForCourse.getUnchecked(key)) {
-              blocks.retainAll(compatiblePeriods(t));
+            List<Teacher> theTeachers = teachersForCourse.getUnchecked(key);
+            Iterator<Teacher> teachersIterator = theTeachers.iterator();
+            if (!teachersIterator.hasNext()) {
+              return getPeriods();
+            }
+            Set<ClassPeriod> blocks = Sets.newHashSet(compatiblePeriods(teachersIterator.next()));
+            while (teachersIterator.hasNext()) {
+              blocks.retainAll(compatiblePeriods(teachersIterator.next()));
             }
             return ImmutableSet.copyOf(blocks);
           }
@@ -294,19 +328,19 @@ public final class Program {
     return courses.get(id);
   }
 
-  public Set<Course> getPrerequisites(Section s) {
+  public List<Course> getPrerequisites(Section s) {
     return getPrerequisites(s.getCourse());
   }
 
-  public Set<Course> getPrerequisites(Course course) {
+  public List<Course> getPrerequisites(Course course) {
     return prerequisites.getUnchecked(course);
   }
 
-  public Set<Teacher> teachersFor(Section section) {
+  public List<Teacher> teachersFor(Section section) {
     return teachersFor(section.getCourse());
   }
 
-  public Set<Teacher> teachersFor(Course course) {
+  public List<Teacher> teachersFor(Course course) {
     return teachersForCourse.getUnchecked(course);
   }
 
@@ -354,6 +388,18 @@ public final class Program {
     Section section = sections.get(id);
     checkArgument(section != null, "No such section with id %s", id);
     return section;
+  }
+
+  public List<TeacherGroup> getGroups(Teacher t) {
+    return teacherGroups.getUnchecked(t);
+  }
+
+  public List<Teacher> getGroupMembers(TeacherGroup g) {
+    return teacherGroupMembers.get(g);
+  }
+
+  public Set<TeacherGroup> getTeacherGroups() {
+    return teacherGroupMembers.keySet();
   }
 
   private void checkTeachersValid() {
@@ -447,5 +493,22 @@ public final class Program {
   @Override
   public String toString() {
     return TextFormat.printToString(serial);
+  }
+
+  public void logCacheStats(Logger logger) {
+    logForCache(logger, "courseCompatiblePeriods", courseCompatiblePeriods);
+    logForCache(logger, "roomAvailablePeriods", roomAvailablePeriods);
+    logForCache(logger, "teacherAvailablePeriods", teacherAvailablePeriods);
+    logForCache(logger, "teachersForCourse", teachersForCourse);
+    logForCache(logger, "requiredForCourse", requiredForCourse);
+    logForCache(logger, "resourcesOfRoom", resourcesOfRoom);
+    logForCache(logger, "prerequisites", prerequisites);
+    logForCache(logger, "bindingResources", bindingResources);
+  }
+
+  private void logForCache(Logger logger, String name, LoadingCache<?, ?> cache) {
+    logger.log(Level.INFO, "Cache stats for {0}: {1}", new Object[] { name, cache.stats() });
+    logger.log(Level.INFO, "Average loading time for {0}: {1}ns", new Object[] { name,
+        cache.stats().averageLoadPenalty() });
   }
 }
