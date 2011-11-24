@@ -71,6 +71,10 @@ public final class Csv {
       return this;
     }
 
+    public RowBuilder add(Object obj) {
+      return add(obj.toString(), new Object[0]);
+    }
+
     public RowBuilder addBlank() {
       contents.add("");
       return this;

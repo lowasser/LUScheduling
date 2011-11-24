@@ -29,7 +29,8 @@ public final class AutoschedulingBaseModule extends AbstractModule {
         AutoschedulerDataSource.class,
         RoomPrettyPrinter.class,
         TeacherPrettyPrinter.class,
-        ScheduleOutputCallback.class));
+        ScheduleOutputCallback.class,
+        CsvOutputCallback.class));
   }
 
   @Provides
