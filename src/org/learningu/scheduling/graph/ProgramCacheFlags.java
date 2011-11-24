@@ -67,10 +67,16 @@ public final class ProgramCacheFlags {
   int cacheConcurrencyLevel = 4;
 
   @Inject(optional = true)
-  @Flag(name = "bindingResourceCacheSize", optional = true)
+  @Flag(
+      name = "bindingResourceCacheSize",
+      optional = true,
+      description = "Maximum cache size to use for binding resources.")
   int bindingResourceCacheSize = 1000;
-  
+
   @Inject(optional = true)
-  @Flag(name = "teacherGroupCacheSize", optional = true)
+  @Flag(
+      name = "teacherGroupCacheSize",
+      optional = true,
+      description = "Maximum cache size to use for teacher groups.")
   int teacherGroupCacheSize = 1000;
 }

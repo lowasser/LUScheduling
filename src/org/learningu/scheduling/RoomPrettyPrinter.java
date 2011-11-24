@@ -15,7 +15,9 @@ import org.learningu.scheduling.schedule.Schedule;
 
 final class RoomPrettyPrinter extends BasicFutureCallback<Schedule> {
   @Inject
-  @Flag(name = "roomScheduleOutput")
+  @Flag(
+      name = "roomScheduleOutput",
+      description = "Output file for a pretty formatted CSV containing room schedules.  Optional.")
   private Optional<File> outputFile;
 
   @Inject

@@ -19,7 +19,7 @@ final class Autoscheduler implements Callable<Schedule> {
   private final ConcurrentOptimizer<Schedule> optimizer;
 
   @Inject(optional = true)
-  @Flag(name = "optimizeTime", optional = true)
+  @Flag(name = "optimizeTime", optional = true, description = "Length of time to run the optimizer.")
   private Duration optimizerTime = Duration.standardMinutes(1);
 
   @Inject

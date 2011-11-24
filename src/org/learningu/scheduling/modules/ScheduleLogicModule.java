@@ -32,7 +32,7 @@ public class ScheduleLogicModule extends AbstractModule {
     logicBindings.addBinding(SerialLogicImpl.DUPLICATE_SECTION).to(DuplicateSectionLogic.class);
     logicBindings.addBinding(SerialLogicImpl.LOCAL_CONFLICT).to(LocalConflictLogic.class);
     logicBindings.addBinding(SerialLogicImpl.ROOM_CONFLICT).to(RoomConflictLogic.class);
-    logicBindings.addBinding(SerialLogicImpl.ROOM_PROPERTY).to(ResourceLogic.class);
+    logicBindings.addBinding(SerialLogicImpl.RESOURCE).to(ResourceLogic.class);
     logicBindings.addBinding(SerialLogicImpl.TEACHER_CONFLICT).to(TeacherConflictLogic.class);
     logicBindings.addBinding(SerialLogicImpl.PREREQUISITES).to(PrerequisiteLogic.class);
     logicBindings.addBinding(SerialLogicImpl.GRADE_RANGES).to(GradeRangeLogic.class);

@@ -15,7 +15,9 @@ import org.learningu.scheduling.schedule.Schedule;
 
 final class TeacherPrettyPrinter extends BasicFutureCallback<Schedule> {
   @Inject
-  @Flag(name = "teacherScheduleOutput")
+  @Flag(
+      name = "teacherScheduleOutput",
+      description = "Output file for a pretty formatted CSV containing teacher schedules.  Optional.")
   private Optional<File> outputFile;
 
   @Inject

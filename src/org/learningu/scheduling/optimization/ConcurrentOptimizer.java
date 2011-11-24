@@ -36,8 +36,11 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
   private final int subOptimizerSteps;
 
   @Inject(optional = true)
-  @Flag(name = "noProgressCancel", optional = true)
-  private double ratio = 0.1;
+  @Flag(
+      name = "noProgressCancel",
+      optional = true,
+      description = "If no additional progress is made in the specified time, stops optimizing.")
+  private Duration noProgressCancel = Duration.standardSeconds(20);
 
   @Inject(optional = true)
   @Flag(
@@ -163,7 +166,7 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
             .add("%8.3f", currentBestScore)
             .build());
       }
-      if ((System.currentTimeMillis() - lastUpdate) > dur * ratio) {
+      if ((System.currentTimeMillis() - lastUpdate) > noProgressCancel.getMillis()) {
         logger.log(Level.INFO, "Cutting off optimization for lack of progress");
         break;
       }

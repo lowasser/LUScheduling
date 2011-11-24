@@ -155,10 +155,6 @@ public final class Flags {
 
         @Nullable
         final String value = commandLine.getOptionValue(flagAnnotation.name());
-        if (!flagAnnotation.optional() && value == null) {
-          new HelpFormatter().printHelp(130, main, "", options, "");
-          throw Throwables.propagate(new ParseException("Missing flag: " + flagAnnotation));
-        }
 
         try {
           Object result = Converters.converterFor(literal).parse(value);
@@ -166,7 +162,8 @@ public final class Flags {
           bind(literal).annotatedWith(flagAnnotation).toInstance(result);
         } catch (RuntimeException e) {
           if (!flagAnnotation.optional()) {
-            throw new IllegalArgumentException(flagAnnotation.name(), e);
+            new HelpFormatter().printHelp(130, main, "", options, "");
+            throw Throwables.propagate(new ParseException("Missing flag: " + flagAnnotation));
           }
         }
       }

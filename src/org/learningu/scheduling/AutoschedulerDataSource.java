@@ -21,19 +21,19 @@ import org.learningu.scheduling.schedule.SerialSchedules.SerialSchedule;
 
 public final class AutoschedulerDataSource {
   @Inject
-  @Flag(name = "programFile")
+  @Flag(name = "programFile", description = "File specifying the details of the LU program.")
   private File programFile;
 
   @Inject
-  @Flag(name = "optimizationSpecFile")
+  @Flag(name = "optimizationSpecFile", description = "File specifying the configuration of the optimizer.")
   private File optimizationSpecFile;
 
   @Inject
-  @Flag(name = "initialScheduleFile")
+  @Flag(name = "initialScheduleFile", description = "File containing an initial schedule to start from.  Optional.")
   private Optional<File> initialScheduleFile;
 
   @Inject
-  @Flag(name = "logicFile")
+  @Flag(name = "logicFile", description = "File specifying what schedule logic to use in validation")
   private File logicFile;
 
   private final Logger logger;

@@ -29,7 +29,9 @@ public final class Autoscheduling {
   private final ListeningExecutorService service;
 
   @Inject
-  Autoscheduling(@Flag(name = "nThreads") int nThreads) {
+  Autoscheduling(@Flag(
+      name = "nThreads",
+      description = "Number of OS threads to use in the thread pool.") int nThreads) {
     this.service = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(nThreads));
   }
 

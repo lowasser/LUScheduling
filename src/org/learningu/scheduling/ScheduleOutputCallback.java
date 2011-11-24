@@ -36,11 +36,14 @@ final class ScheduleOutputCallback extends BasicFutureCallback<Schedule> {
   }
 
   @Inject
-  @Flag(name = "out")
+  @Flag(name = "out", description = "File to write the output schedule to.  If unspecified, goes to stdout.")
   private Optional<File> outputFile;
 
   @Inject(optional = true)
-  @Flag(name = "outputFormat", optional = true)
+  @Flag(
+      name = "outputFormat",
+      optional = true,
+      description = "Format to use in the output file, either PROTO or TEXT.")
   private MessageOutputFormat outputFormat = MessageOutputFormat.PROTO;
 
   @Inject
