@@ -1,17 +1,11 @@
 package org.learningu.scheduling.logic;
 
-import com.google.inject.Inject;
-
 import org.learningu.scheduling.graph.ClassPeriod;
 import org.learningu.scheduling.graph.Course;
 import org.learningu.scheduling.schedule.PresentAssignment;
 import org.learningu.scheduling.schedule.Schedule;
 
 public final class GradeRangeLogic extends ScheduleLogic {
-  @Inject
-  GradeRangeLogic() {
-  }
-
   @Override
   public
       void
@@ -24,5 +18,4 @@ public final class GradeRangeLogic extends ScheduleLogic {
         assignment,
         "Classes must be scheduled during periods that allow each of the appropriate grades");
   }
-
 }

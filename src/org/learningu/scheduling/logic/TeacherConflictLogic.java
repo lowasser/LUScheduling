@@ -1,14 +1,14 @@
 package org.learningu.scheduling.logic;
 
+import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import org.learningu.scheduling.graph.Program;
-import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Teacher;
 import org.learningu.scheduling.schedule.PresentAssignment;
@@ -34,18 +34,16 @@ public final class TeacherConflictLogic extends ScheduleLogic {
      * through every teacher who is teaching a class this period.
      */
     List<Teacher> teachers = program.teachersFor(assignment.getSection());
-    Set<Section> coursesTaughtBySame = coursesTaughtByTeachers(program, teachers);
-    Set<PresentAssignment> conflicts = Sets.newLinkedHashSet();
-    for (Entry<Room, PresentAssignment> entry : schedule
-        .occurringAt(assignment.getPeriod())
-        .entrySet()) {
-      PresentAssignment assign = entry.getValue();
-      Section course = assign.getSection();
-      if (coursesTaughtBySame.contains(course)) {
-        conflicts.add(assign);
+    final Set<Section> coursesTaughtBySame = coursesTaughtByTeachers(program, teachers);
+    Predicate<PresentAssignment> hasConflict = new Predicate<PresentAssignment>() {
+      @Override
+      public boolean apply(PresentAssignment input) {
+        return coursesTaughtBySame.contains(input.getSection());
       }
-    }
-
+    };
+    List<PresentAssignment> conflicts = Lists.newArrayList(Iterables.filter(
+        schedule.occurringAt(assignment.getPeriod()).values(),
+        hasConflict));
     validator.validateGlobal(
         assignment,
         conflicts,
