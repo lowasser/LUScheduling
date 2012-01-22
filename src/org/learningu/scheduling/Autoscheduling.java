@@ -69,7 +69,7 @@ public final class Autoscheduling {
      * submitted to an executor service for execution.
      * 
      * 8. The callbacks are retrieved from the injector and added to the future result of the
-     * optimization.  This does any specified output with the finished schedule.
+     * optimization. This does any specified output with the finished schedule.
      * 
      * 9. The executor service is shut down gently, waiting for the callbacks to finish.
      */
@@ -77,13 +77,15 @@ public final class Autoscheduling {
     Logger logger = Logger.getLogger("Autoscheduling");
     logger.fine("Initializing injector with flags");
     Injector injector = Flags.bootstrapFlagInjector(args, new AutoschedulingBaseModule());
+    logger.fine("Starting executor service");
     Autoscheduling auto = injector.getInstance(Autoscheduling.class);
     try {
       final ListeningExecutorService service = auto.getService();
-      logger.fine("Initializing data source reader");
+      logger.fine("Injecting data source provider");
       AutoschedulerDataSource dataSource = injector.getInstance(AutoschedulerDataSource.class);
-      logger.fine("Constructing data source module");
+      logger.fine("Reading input files");
       Module dataModule = dataSource.buildModule();
+      logger.fine("Bootstrapping into completely initialized injector");
       Injector dataInjector = injector.createChildInjector(
           dataModule,
           new AutoschedulingConfigModule(),
@@ -94,8 +96,10 @@ public final class Autoscheduling {
               bind(ListeningExecutorService.class).toInstance(service);
             }
           });
+      logger.fine("Initiating schedule optimization");
       ListenableFuture<Schedule> optimizedSchedule = service.submit(dataInjector
           .getInstance(Autoscheduler.class));
+      logger.fine("Registering callbacks on result future");
       Set<FutureCallback<Schedule>> callbacks = dataInjector.getInstance(Key
           .get(new TypeLiteral<Set<FutureCallback<Schedule>>>() {}));
       for (FutureCallback<Schedule> callback : callbacks) {
@@ -103,6 +107,7 @@ public final class Autoscheduling {
       }
       optimizedSchedule.get();
     } finally {
+      logger.fine("Waiting for registered tasks to complete");
       auto.getService().shutdown();
     }
   }

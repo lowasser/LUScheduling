@@ -11,6 +11,11 @@ import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.optimization.ConcurrentOptimizer;
 import org.learningu.scheduling.schedule.Schedule;
 
+/**
+ * A {@code Callable} which can be queried to perform the schedule optimization.
+ * 
+ * @author lowasser
+ */
 final class Autoscheduler implements Callable<Schedule> {
   private final Program program;
 

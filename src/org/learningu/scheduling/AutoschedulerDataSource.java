@@ -19,21 +19,33 @@ import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
 import org.learningu.scheduling.logic.SerialLogic.SerialLogics;
 import org.learningu.scheduling.schedule.SerialSchedules.SerialSchedule;
 
+/**
+ * Object responsible for managing and performing all required file I/O. {@link #buildModule()}
+ * performs file I/O and returns a Guice module to provide its results.
+ * 
+ * @author lowasser
+ */
 public final class AutoschedulerDataSource {
   @Inject
   @Flag(name = "programFile", description = "File specifying the details of the LU program.")
   private File programFile;
 
   @Inject
-  @Flag(name = "optimizationSpecFile", description = "File specifying the configuration of the optimizer.")
+  @Flag(
+      name = "optimizationSpecFile",
+      description = "File specifying the configuration of the optimizer.")
   private File optimizationSpecFile;
 
   @Inject
-  @Flag(name = "initialScheduleFile", description = "File containing an initial schedule to start from.  Optional.")
+  @Flag(
+      name = "initialScheduleFile",
+      description = "File containing an initial schedule to start from.  Optional.")
   private Optional<File> initialScheduleFile;
 
   @Inject
-  @Flag(name = "logicFile", description = "File specifying what schedule logic to use in validation")
+  @Flag(
+      name = "logicFile",
+      description = "File specifying what schedule logic to use in validation")
   private File logicFile;
 
   private final Logger logger;

@@ -13,6 +13,13 @@ import org.learningu.scheduling.schedule.Schedule;
 import org.learningu.scheduling.schedule.Schedules;
 import org.learningu.scheduling.schedule.SerialSchedules.SerialSchedule;
 
+/**
+ * Guice module responsible for providing translation between all the program's inputs --
+ * command-line arguments, schedule specifications, optimizer specifications, output callback
+ * requests, and so on -- into the objects that are manipulated at runtime.
+ * 
+ * @author lowasser
+ */
 public final class AutoschedulingConfigModule extends AbstractModule {
 
   @Override

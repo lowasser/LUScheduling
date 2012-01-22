@@ -23,6 +23,7 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
 
@@ -97,6 +98,7 @@ public final class Flags {
   }
 
   public static Injector bootstrapFlagInjector(final String[] args, Module... baseModules) {
+    Logger logger = Logger.getLogger("org.learningu.scheduling.flags.Flags");
     AbstractModule linkingModule = new AbstractModule() {
 
       @Override
@@ -136,9 +138,11 @@ public final class Flags {
         }
       }
     };
+    logger.fine("Built Options module");
     Injector baseInjector = Guice.createInjector(Modules.combine(Iterables.concat(
         Arrays.asList(baseModules),
         ImmutableList.of(linkingModule))));
+    logger.fine("Bootstrapping flag injector with command line arguments");
     return baseInjector.createChildInjector(baseInjector.getInstance(FlagBootstrapModule.class));
   }
 

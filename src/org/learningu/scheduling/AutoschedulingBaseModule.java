@@ -11,7 +11,8 @@ import org.learningu.scheduling.logic.ScheduleValidator;
 import org.learningu.scheduling.optimization.ConcurrentOptimizer;
 
 /**
- * The first module for autoscheduling, including bindings common to all runs.
+ * The first module for autoscheduling, including bindings common to all runs. Specifically
+ * includes bindings for all the classes with flagged fields or method arguments.
  * 
  * @author lowasser
  */

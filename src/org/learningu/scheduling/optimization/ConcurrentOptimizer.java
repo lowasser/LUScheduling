@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -24,6 +25,12 @@ import org.learningu.scheduling.flags.Converters;
 import org.learningu.scheduling.flags.Flag;
 import org.learningu.scheduling.pretty.Csv;
 
+/**
+ * A simulated annealing optimizer that operates by attempting several small optimizations in
+ * parallel.
+ * 
+ * @author lowasser
+ */
 public final class ConcurrentOptimizer<T> implements Optimizer<T> {
   private final Scorer<T> scorer;
 
@@ -88,24 +95,24 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
     for (int step = 0; step < steps; step++) {
       logger.log(Level.INFO, "On iteration step {0}, current best has score {1}", new Object[] {
           step, currentBestScore });
-      List<Callable<T>> independentThreads = Lists.newArrayListWithCapacity(nSubOptimizers);
+      List<Future<T>> futures = Lists.newArrayListWithCapacity(nSubOptimizers);
+      ExecutorCompletionService<T> completionService = new ExecutorCompletionService<T>(service);
       double temp = primaryTempFun.temperature(step, steps);
       for (int i = 0; i < nSubOptimizers; i++) {
-        independentThreads.add(runSingleThreadPass(currentBest, temp));
+        futures.add(completionService.submit(runSingleThreadPass(currentBest, temp)));
       }
       try {
-        List<Future<T>> futures = service.invokeAll(independentThreads);
-
-        for (Future<T> future : futures) {
+        for (int i = 0; i < nSubOptimizers; i++) {
           try {
-            T better = future.get(timeoutMillis, TimeUnit.MILLISECONDS);
+            T better = completionService.poll(timeoutMillis, TimeUnit.MILLISECONDS).get();
+            if (better == null) {
+              continue;
+            }
             double betterScore = scorer.score(better);
             if (betterScore > currentBestScore) {
               currentBest = better;
               currentBestScore = betterScore;
             }
-          } catch (TimeoutException e) {
-            logger.log(Level.WARNING, "Sub-optimizer timed out.  Skipping.");
           } catch (ExecutionException e) {
             logger.log(Level.SEVERE, "Sub-optimizer threw an exception.  Skipping.", e.getCause());
           }
@@ -113,6 +120,10 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
       } catch (InterruptedException e) {
         logger.log(Level.WARNING, "Thread interrupted, returning current best.");
         break;
+      } finally {
+        for (Future<T> future : futures) {
+          future.cancel(true); // if it didn't finish in time, cancel
+        }
       }
     }
     return currentBest;

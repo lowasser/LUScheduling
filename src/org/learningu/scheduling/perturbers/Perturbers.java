@@ -10,6 +10,12 @@ import org.learningu.scheduling.perturbers.SerialPerturbers.SequencedPerturber;
 import org.learningu.scheduling.perturbers.SerialPerturbers.SerialPerturberImpl;
 import org.learningu.scheduling.schedule.Schedule;
 
+/**
+ * Utilities for converting between the protobuf-based {@link SequencedPerturber} values and
+ * {@code Perturber<Schedule>} objects for use at runtime.
+ * 
+ * @author lowasser
+ */
 public final class Perturbers {
   private Perturbers() {
   }

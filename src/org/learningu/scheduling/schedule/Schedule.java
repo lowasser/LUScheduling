@@ -34,6 +34,15 @@ import org.learningu.scheduling.logic.ScheduleValidator;
 import org.learningu.scheduling.util.ModifiedState;
 import org.learningu.scheduling.util.bst.BstMap;
 
+/**
+ * An immutable representation of a schedule, with an associated LU {@link Program} and
+ * {@link ScheduleLogic} instance for schedule validity checking. Although this object is
+ * immutable, it supports efficient updates and a variety of queries, including map views of parts
+ * of the schedule in various rooms or at certain times. Attempts to add schedule assignments that
+ * result in conflict, according to this schedule's {@code ScheduleLogic}, will fail.
+ * 
+ * @author lowasser
+ */
 public final class Schedule {
   public static final class Factory {
     private final Program program;
@@ -348,15 +357,27 @@ public final class Schedule {
     return revised.assignStart(assign);
   }
 
+  private transient int hashCode = -1;
+
   @Override
   public int hashCode() {
-    return Objects.hashCode(getStartAssignments(), getProgram());
+    int result = hashCode;
+    if (result == -1) {
+      return hashCode = Objects.hashCode(getStartAssignments(), getProgram());
+    } else {
+      return result;
+    }
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (obj instanceof Schedule) {
+    if (this == obj) {
+      return true;
+    } else if (obj instanceof Schedule) {
       Schedule other = (Schedule) obj;
+      if (hashCode != -1 && other.hashCode != -1 && hashCode != other.hashCode) {
+        return false;
+      }
       return Objects.equal(getStartAssignments(), other.getStartAssignments())
           && getProgram().equals(other.getProgram());
     }

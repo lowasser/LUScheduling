@@ -21,6 +21,12 @@ import org.learningu.scheduling.logic.SerialLogic.SerialLogicImpl;
 import org.learningu.scheduling.logic.SerialLogic.SerialLogics;
 import org.learningu.scheduling.logic.TeacherConflictLogic;
 
+/**
+ * Module responsible for the translation of a {@link SerialLogics} object parsed from a file, into
+ * a {@code ScheduleLogic} object for use at runtime.
+ * 
+ * @author lowasser
+ */
 public class ScheduleLogicModule extends AbstractModule {
 
   @Override

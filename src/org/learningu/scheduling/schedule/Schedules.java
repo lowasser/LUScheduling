@@ -8,6 +8,12 @@ import org.learningu.scheduling.schedule.SerialSchedules.SerialSchedule;
 import org.learningu.scheduling.schedule.SerialSchedules.SerialStartAssignment;
 import org.learningu.scheduling.util.ModifiedState;
 
+/**
+ * Utilities for converting between the protobuf-based {@link SerialSchedule} objects and the
+ * {@code Schedule} objects for use at runtime.
+ * 
+ * @author lowasser
+ */
 public final class Schedules {
   private Schedules() {
   }
