@@ -1,21 +1,22 @@
 package org.learningu.scheduling.optimization;
 
 import com.google.common.base.Charsets;
-import com.google.common.collect.Lists;
 import com.google.common.io.Files;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayDeque;
+import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,7 +39,7 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
 
   private final int nSubOptimizers;
 
-  private final ExecutorService service;
+  private final ExecutorCompletionService<T> service;
 
   private final int subOptimizerSteps;
 
@@ -75,7 +76,8 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
     this.scorer = scorer;
     this.optimizerFactory = optimizerProvider;
     this.nSubOptimizers = nSubOptimizers;
-    this.service = service;
+    BlockingQueue<Future<T>> completionQueue = new ArrayBlockingQueue<>(nSubOptimizers);
+    this.service = new ExecutorCompletionService<>(service, completionQueue);
     this.subOptimizerSteps = subOptimizerSteps;
     this.logger = logger;
     this.primaryTempFun = primaryTempFun;
@@ -92,19 +94,18 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
     long timeoutMillis = iterTimeout.getMillis();
     T currentBest = initial;
     double currentBestScore = scorer.score(initial);
+    Queue<Future<T>> futures = new ArrayDeque<>(nSubOptimizers);
     for (int step = 0; step < steps; step++) {
       logger.log(Level.INFO, "On iteration step {0}, current best has score {1}", new Object[] {
           step, currentBestScore });
-      List<Future<T>> futures = Lists.newArrayListWithCapacity(nSubOptimizers);
-      ExecutorCompletionService<T> completionService = new ExecutorCompletionService<T>(service);
       double temp = primaryTempFun.temperature(step, steps);
       for (int i = 0; i < nSubOptimizers; i++) {
-        futures.add(completionService.submit(runSingleThreadPass(currentBest, temp)));
+        futures.offer(service.submit(runSingleThreadPass(currentBest, temp)));
       }
       try {
         for (int i = 0; i < nSubOptimizers; i++) {
           try {
-            T better = completionService.poll(timeoutMillis, TimeUnit.MILLISECONDS).get();
+            T better = service.poll(timeoutMillis, TimeUnit.MILLISECONDS).get();
             if (better == null) {
               continue;
             }
@@ -121,8 +122,8 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
         logger.log(Level.WARNING, "Thread interrupted, returning current best.");
         break;
       } finally {
-        for (Future<T> future : futures) {
-          future.cancel(true); // if it didn't finish in time, cancel
+        while (!futures.isEmpty()) {
+          futures.poll().cancel(true); // if it didn't finish in time, cancel
         }
       }
     }
@@ -138,30 +139,29 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
     T currentBest = initial;
     double currentBestScore = scorer.score(initial);
     Csv.Builder builder = Csv.newBuilder();
+    Queue<Future<T>> futures = new ArrayDeque<>(nSubOptimizers);
     for (step = 0; System.currentTimeMillis() - start < dur; step++) {
       logger.log(Level.INFO, "On iteration step {0}, current best has score {1}", new Object[] {
           step, currentBestScore });
-      List<Callable<T>> independentThreads = Lists.newArrayListWithCapacity(nSubOptimizers);
       double temp = primaryTempFun.temperature(
           (int) (System.currentTimeMillis() - start),
           (int) dur);
       for (int i = 0; i < nSubOptimizers; i++) {
-        independentThreads.add(runSingleThreadPass(currentBest, temp));
+        futures.offer(service.submit(runSingleThreadPass(currentBest, temp)));
       }
       try {
-        List<Future<T>> futures = service.invokeAll(independentThreads);
-
-        for (Future<T> future : futures) {
+        for (int i = 0; i < nSubOptimizers; i++) {
           try {
-            T better = future.get(timeoutMillis, TimeUnit.MILLISECONDS);
+            T better = service.poll(timeoutMillis, TimeUnit.MILLISECONDS).get();
+            if (better == null) {
+              continue;
+            }
             double betterScore = scorer.score(better);
             if (betterScore > currentBestScore) {
               currentBest = better;
               currentBestScore = betterScore;
               lastUpdate = System.currentTimeMillis();
             }
-          } catch (TimeoutException e) {
-            logger.log(Level.WARNING, "Sub-optimizer timed out.  Skipping.");
           } catch (ExecutionException e) {
             logger.log(Level.SEVERE, "Sub-optimizer threw an exception.  Skipping.", e.getCause());
           }
@@ -169,6 +169,11 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
       } catch (InterruptedException e) {
         logger.log(Level.WARNING, "Thread interrupted, returning current best.");
         break;
+      } finally {
+        // cancel any futures which weren't finished
+        while (!futures.isEmpty()) {
+          futures.poll().cancel(true);
+        }
       }
       if (step % 20 == 0) {
         builder.add(Csv
