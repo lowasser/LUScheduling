@@ -33,6 +33,22 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 
+/**
+ * Framework for pulling together the fields annotated with @Flag from a collection of classes, and
+ * bootstrapping a Guice module that will provide the flag values at runtime.
+ * 
+ * <p>
+ * The bootstrapping process for flags works like this: you construct modules using
+ * {@link #flagBindings} that announce to Guice all of the @Flag-annotated fields in the specified
+ * classes. Calling {@link #bootstrapFlagInjector(String[], Module...)} with these modules and
+ * possibly others, Guice first creates an injector capable of generating the {@link Options}
+ * object that encapsulates all the flags requested. This base injector, in combination with the
+ * specified command line arguments, is used to construct (via injection!) a module that binds all
+ * the desired flags to their values. This module is used to create a bootstrapped injector that
+ * properly injects flag values to the desired locations.
+ * 
+ * @author lowasser
+ */
 public final class Flags {
   private Flags() {
   }

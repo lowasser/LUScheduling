@@ -2,7 +2,6 @@ package org.learningu.scheduling.pretty;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
-import com.google.common.escape.Escapers;
 
 public final class Csv {
   private final ImmutableList<Row> contents;
@@ -63,11 +62,7 @@ public final class Csv {
 
     public RowBuilder add(String message, Object... args) {
       contents.add("\""
-          + Escapers
-              .builder()
-              .addEscape('\"', "\"\"")
-              .build()
-              .escape(args.length == 0 ? message : String.format(message, args)) + "\"");
+          + ((args.length == 0 ? message : String.format(message, args))) + "\"");
       return this;
     }
 
