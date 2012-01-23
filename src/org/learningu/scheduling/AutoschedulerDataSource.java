@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.learningu.scheduling.Pass.OptimizerSpec;
@@ -31,20 +32,17 @@ public final class AutoschedulerDataSource {
   private File programFile;
 
   @Inject
-  @Flag(
-      name = "optimizationSpecFile",
+  @Flag(name = "optimizationSpecFile",
       description = "File specifying the configuration of the optimizer.")
   private File optimizationSpecFile;
 
   @Inject
-  @Flag(
-      name = "initialScheduleFile",
+  @Flag(name = "initialScheduleFile",
       description = "File containing an initial schedule to start from.  Optional.")
   private Optional<File> initialScheduleFile;
 
   @Inject
-  @Flag(
-      name = "logicFile",
+  @Flag(name = "logicFile",
       description = "File specifying what schedule logic to use in validation")
   private File logicFile;
 
@@ -55,9 +53,17 @@ public final class AutoschedulerDataSource {
     this.logger = logger;
   }
 
+  private void logReading(String readTarget, File file) {
+    logger.log(Level.FINE, "Reading in {0} from {1}", new Object[] { readTarget, file });
+  }
+
+  private void logReadComponents(String type, int count) {
+    logger.log(Level.FINE, "Read {0} {1} components", new Object[] { count, type });
+  }
+
   public SerialSchedule getSerialSchedule() throws IOException {
     if (initialScheduleFile.isPresent()) {
-      logger.fine("Reading in initial schedule.");
+      logReading("schedule", initialScheduleFile.get());
       return readMessage(SerialSchedule.newBuilder(), initialScheduleFile.get()).build();
     } else {
       logger.fine("No initial schedule specified; starting with an empty schedule.");
@@ -66,27 +72,28 @@ public final class AutoschedulerDataSource {
   }
 
   public SerialLogics getSerialLogics() throws IOException {
-    logger.fine("Reading in schedule validity logic specification");
+    logReading("schedule logic", logicFile);
     SerialLogics logics = readMessage(SerialLogics.newBuilder(), logicFile).build();
-    logger.fine("Read " + logics.getLogicCount() + " logic components");
+    logReadComponents("logic", logics.getLogicCount());
     return logics;
   }
 
   public SerialProgram getSerialProgram() throws IOException {
-    logger.fine("Reading in serialized program specification");
+    logReading("program specification", programFile);
     SerialProgram program = readMessage(SerialProgram.newBuilder(), programFile).build();
-    logger.fine("Read " + program.getBuildingCount() + " building components");
-    logger.fine("Read " + program.getResourceCount() + " resource components");
-    logger.fine("Read " + program.getSubjectCount() + " subject components");
-    logger.fine("Read " + program.getTeacherCount() + " teacher components");
-    logger.fine("Read " + program.getTimeBlockCount() + " time block components");
+    logReadComponents("building", program.getBuildingCount());
+    logReadComponents("resource", program.getResourceCount());
+    logReadComponents("subject", program.getSubjectCount());
+    logReadComponents("section", program.getSectionCount());
+    logReadComponents("teacher", program.getTeacherCount());
+    logReadComponents("time block", program.getTimeBlockCount());
     return program;
   }
 
   public OptimizerSpec getOptimizerSpec() throws IOException {
-    logger.fine("Reading in serialized optimizer specification");
+    logReading("optimizer spec", optimizationSpecFile);
     OptimizerSpec spec = readMessage(OptimizerSpec.newBuilder(), optimizationSpecFile).build();
-    logger.fine("Read " + spec.getScorer().getComponentCount() + " score components");
+    logReadComponents("scorer", spec.getScorer().getComponentCount());
     return spec;
   }
 
@@ -108,8 +115,7 @@ public final class AutoschedulerDataSource {
     };
   }
 
-  static <T extends Message.Builder> T readMessage(T builder, File file)
-      throws IOException {
+  static <T extends Message.Builder> T readMessage(T builder, File file) throws IOException {
     FileReader fileReader = new FileReader(file);
     try {
       TextFormat.merge(fileReader, builder);
