@@ -20,6 +20,7 @@ import org.learningu.scheduling.logic.ScheduleLogic;
 import org.learningu.scheduling.logic.SerialLogic.SerialLogicImpl;
 import org.learningu.scheduling.logic.SerialLogic.SerialLogics;
 import org.learningu.scheduling.logic.TeacherConflictLogic;
+import org.learningu.scheduling.logic.TeacherGroupCapLogic;
 
 /**
  * Module responsible for the translation of a {@link SerialLogics} object parsed from a file, into
@@ -42,6 +43,7 @@ public class ScheduleLogicModule extends AbstractModule {
     logicBindings.addBinding(SerialLogicImpl.TEACHER_CONFLICT).to(TeacherConflictLogic.class);
     logicBindings.addBinding(SerialLogicImpl.PREREQUISITES).to(PrerequisiteLogic.class);
     logicBindings.addBinding(SerialLogicImpl.GRADE_RANGES).to(GradeRangeLogic.class);
+    logicBindings.addBinding(SerialLogicImpl.TEACHER_GROUP_CAP).to(TeacherGroupCapLogic.class);
   }
 
   @Provides

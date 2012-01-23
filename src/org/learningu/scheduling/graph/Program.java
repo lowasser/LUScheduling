@@ -67,6 +67,8 @@ public final class Program {
 
   final ImmutableBiMap<Integer, Subject> subjects;
 
+  final ImmutableBiMap<Integer, TeacherGroup> teacherGroups;
+
   private final ImmutableListMultimap<TeacherGroup, Teacher> teacherGroupMembers;
 
   private final ImmutableSetMultimap<Course, Section> courseMap;
@@ -91,7 +93,7 @@ public final class Program {
 
   private final LoadingCache<Room, Set<Resource>> bindingResources;
 
-  private final LoadingCache<Teacher, List<TeacherGroup>> teacherGroups;
+  private final LoadingCache<Teacher, List<TeacherGroup>> teacherMembership;
 
   private final double totalAttendanceRatio;
 
@@ -108,40 +110,41 @@ public final class Program {
   Program(SerialProgram serial, ProgramCacheFlags flags) {
     checkNotNull(flags);
     this.serial = checkNotNull(serial);
-    subjects = programObjectSet(Lists.transform(
-        serial.getSubjectList(),
-        Subject.programWrapper(this)));
-    teachers = programObjectSet(Lists.transform(
-        serial.getTeacherList(),
-        Teacher.programWrapper(this)));
-    sections = programObjectSet(Lists.transform(
-        serial.getSectionList(),
-        Section.programWrapper(this)));
-    buildings = programObjectSet(Lists.transform(
-        serial.getBuildingList(),
-        Building.programWrapper(this)));
-    rooms = programObjectSet(Iterables.concat(Collections2.transform(
-        getBuildings(),
-        new Function<Building, List<Room>>() {
-          @Override
-          public List<Room> apply(Building input) {
-            return input.getRooms();
-          }
-        })));
-    timeBlocks = programObjectSet(Lists.transform(
-        serial.getTimeBlockList(),
-        TimeBlock.programWrapper(this)));
-    periods = programObjectSet(Iterables.concat(Collections2.transform(
-        getTimeBlocks(),
-        new Function<TimeBlock, List<ClassPeriod>>() {
-          @Override
-          public List<ClassPeriod> apply(TimeBlock input) {
-            return input.getPeriods();
-          }
-        })));
-    resources = programObjectSet(Lists.transform(
-        serial.getResourceList(),
-        Resource.programWrapper(this)));
+    subjects =
+        programObjectSet(Lists.transform(serial.getSubjectList(), Subject.programWrapper(this)));
+    teachers =
+        programObjectSet(Lists.transform(serial.getTeacherList(), Teacher.programWrapper(this)));
+    sections =
+        programObjectSet(Lists.transform(serial.getSectionList(), Section.programWrapper(this)));
+    buildings =
+        programObjectSet(Lists.transform(serial.getBuildingList(), Building.programWrapper(this)));
+    rooms =
+        programObjectSet(Iterables.concat(Collections2.transform(
+            getBuildings(),
+            new Function<Building, List<Room>>() {
+              @Override
+              public List<Room> apply(Building input) {
+                return input.getRooms();
+              }
+            })));
+    timeBlocks =
+        programObjectSet(Lists
+            .transform(serial.getTimeBlockList(), TimeBlock.programWrapper(this)));
+    periods =
+        programObjectSet(Iterables.concat(Collections2.transform(
+            getTimeBlocks(),
+            new Function<TimeBlock, List<ClassPeriod>>() {
+              @Override
+              public List<ClassPeriod> apply(TimeBlock input) {
+                return input.getPeriods();
+              }
+            })));
+    resources =
+        programObjectSet(Lists.transform(serial.getResourceList(), Resource.programWrapper(this)));
+    teacherGroups =
+        programObjectSet(Lists.transform(
+            serial.getTeacherGroupList(),
+            TeacherGroup.programWrapper(this)));
 
     // initialize courseMap
     BiMap<Integer, Course> courseBuilder = HashBiMap.create();
@@ -155,8 +158,8 @@ public final class Program {
     courseMap = ImmutableSetMultimap.copyOf(courseMapBuilder);
 
     // initialize teachingMap
-    ImmutableSetMultimap.Builder<Teacher, Course> teachingMapBuilder = ImmutableSetMultimap
-        .builder();
+    ImmutableSetMultimap.Builder<Teacher, Course> teachingMapBuilder =
+        ImmutableSetMultimap.builder();
     for (Section s : getSections()) {
       for (Teacher t : s.getTeachers()) {
         teachingMapBuilder.put(t, s.getCourse());
@@ -164,8 +167,8 @@ public final class Program {
     }
     teachingMap = teachingMapBuilder.build();
 
-    ImmutableListMultimap.Builder<TeacherGroup, Teacher> teacherGroupMembersBuilder = ImmutableListMultimap
-        .builder();
+    ImmutableListMultimap.Builder<TeacherGroup, Teacher> teacherGroupMembersBuilder =
+        ImmutableListMultimap.builder();
     for (Teacher t : getTeachers()) {
       for (TeacherGroup g : t.getTeacherGroups()) {
         teacherGroupMembersBuilder.put(g, t);
@@ -177,121 +180,132 @@ public final class Program {
     checkCoursesValid();
     checkRoomsValid();
 
-    this.teacherAvailablePeriods = CacheBuilder
-        .newBuilder()
-        .initialCapacity(teachers.size())
-        .concurrencyLevel(flags.cacheConcurrencyLevel)
-        .weigher(COLLECTION_WEIGHER)
-        .maximumWeight(flags.teacherAvailableCacheSize)
-        .build(new CacheLoader<Teacher, Set<ClassPeriod>>() {
-          @Override
-          public Set<ClassPeriod> load(Teacher key) {
-            return key.getCompatiblePeriods();
-          }
-        });
-    this.teacherGroups = CacheBuilder
-        .newBuilder()
-        .concurrencyLevel(flags.cacheConcurrencyLevel)
-        .weigher(COLLECTION_WEIGHER)
-        .maximumWeight(flags.teacherGroupCacheSize)
-        .build(new CacheLoader<Teacher, List<TeacherGroup>>() {
-          @Override
-          public List<TeacherGroup> load(Teacher key) {
-            return ImmutableList.copyOf(key.getTeacherGroups());
-          }
-        });
-    this.prerequisites = CacheBuilder
-        .newBuilder()
-        .initialCapacity(sections.size())
-        .concurrencyLevel(flags.cacheConcurrencyLevel)
-        .weigher(COLLECTION_WEIGHER)
-        .maximumWeight(flags.prerequisiteCacheSize)
-        .build(new CacheLoader<Course, List<Course>>() {
-          @Override
-          public List<Course> load(Course key) throws Exception {
-            return key.getPrerequisites();
-          }
-        });
-    this.roomAvailablePeriods = CacheBuilder
-        .newBuilder()
-        .initialCapacity(rooms.size())
-        .concurrencyLevel(flags.cacheConcurrencyLevel)
-        .weigher(COLLECTION_WEIGHER)
-        .maximumWeight(flags.roomAvailableCacheSize)
-        .build(new CacheLoader<Room, Set<ClassPeriod>>() {
-          @Override
-          public Set<ClassPeriod> load(Room key) {
-            return key.getCompatiblePeriods();
-          }
-        });
-    this.teachersForCourse = CacheBuilder
-        .newBuilder()
-        .initialCapacity(sections.size())
-        .weigher(COLLECTION_WEIGHER)
-        .concurrencyLevel(flags.cacheConcurrencyLevel)
-        .maximumWeight(flags.courseTeachersCacheSize)
-        .build(new CacheLoader<Course, List<Teacher>>() {
-          @Override
-          public List<Teacher> load(Course key) throws Exception {
-            return key.getTeachers();
-          }
-        });
-    this.courseCompatiblePeriods = CacheBuilder
-        .newBuilder()
-        .initialCapacity(sections.size())
-        .weigher(COLLECTION_WEIGHER)
-        .concurrencyLevel(flags.cacheConcurrencyLevel)
-        .maximumWeight(flags.courseCompatibleCacheSize)
-        .build(new CacheLoader<Course, Set<ClassPeriod>>() {
-          @Override
-          public Set<ClassPeriod> load(Course key) {
-            List<Teacher> theTeachers = teachersForCourse.getUnchecked(key);
-            Iterator<Teacher> teachersIterator = theTeachers.iterator();
-            if (!teachersIterator.hasNext()) {
-              return getPeriods();
-            }
-            Set<ClassPeriod> blocks = Sets.newHashSet(compatiblePeriods(teachersIterator.next()));
-            while (teachersIterator.hasNext()) {
-              blocks.retainAll(compatiblePeriods(teachersIterator.next()));
-            }
-            return ImmutableSet.copyOf(blocks);
-          }
-        });
-    this.requiredForCourse = CacheBuilder
-        .newBuilder()
-        .initialCapacity(sections.size())
-        .weigher(COLLECTION_WEIGHER)
-        .maximumWeight(flags.reqResCacheSize)
-        .build(new CacheLoader<Course, Set<Resource>>() {
-          @Override
-          public Set<Resource> load(Course key) {
-            return key.getRequiredResources();
-          }
-        });
-    this.resourcesOfRoom = CacheBuilder
-        .newBuilder()
-        .initialCapacity(rooms.size())
-        .weigher(COLLECTION_WEIGHER)
-        .maximumWeight(flags.roomResCacheSize)
-        .build(new CacheLoader<Room, Set<Resource>>() {
-          @Override
-          public Set<Resource> load(Room key) throws Exception {
-            return key.getResources();
-          }
-        });
-    this.bindingResources = CacheBuilder
-        .newBuilder()
-        .initialCapacity(rooms.size())
-        .weigher(COLLECTION_WEIGHER)
-        .maximumWeight(flags.bindingResourceCacheSize)
-        .build(new CacheLoader<Room, Set<Resource>>() {
-          @Override
-          public Set<Resource> load(Room key) throws Exception {
-            return ImmutableSet.copyOf(Sets.filter(
-                resourcesOfRoom.getUnchecked(key),
-                Resource.IS_BINDING));
-          }
-        });
+    this.teacherAvailablePeriods =
+        CacheBuilder
+            .newBuilder()
+            .initialCapacity(teachers.size())
+            .concurrencyLevel(flags.cacheConcurrencyLevel)
+            .weigher(COLLECTION_WEIGHER)
+            .maximumWeight(flags.teacherAvailableCacheSize)
+            .build(new CacheLoader<Teacher, Set<ClassPeriod>>() {
+              @Override
+              public Set<ClassPeriod> load(Teacher key) {
+                return key.getCompatiblePeriods();
+              }
+            });
+    this.teacherMembership =
+        CacheBuilder
+            .newBuilder()
+            .initialCapacity(teachers.size())
+            .concurrencyLevel(flags.cacheConcurrencyLevel)
+            .weigher(COLLECTION_WEIGHER)
+            .maximumWeight(flags.teacherAvailableCacheSize)
+            .build(new CacheLoader<Teacher, List<TeacherGroup>>() {
+              @Override
+              public List<TeacherGroup> load(Teacher key) {
+                return ImmutableList.copyOf(key.getTeacherGroups());
+              }
+            });
+    this.prerequisites =
+        CacheBuilder
+            .newBuilder()
+            .initialCapacity(sections.size())
+            .concurrencyLevel(flags.cacheConcurrencyLevel)
+            .weigher(COLLECTION_WEIGHER)
+            .maximumWeight(flags.prerequisiteCacheSize)
+            .build(new CacheLoader<Course, List<Course>>() {
+              @Override
+              public List<Course> load(Course key) throws Exception {
+                return key.getPrerequisites();
+              }
+            });
+    this.roomAvailablePeriods =
+        CacheBuilder
+            .newBuilder()
+            .initialCapacity(rooms.size())
+            .concurrencyLevel(flags.cacheConcurrencyLevel)
+            .weigher(COLLECTION_WEIGHER)
+            .maximumWeight(flags.roomAvailableCacheSize)
+            .build(new CacheLoader<Room, Set<ClassPeriod>>() {
+              @Override
+              public Set<ClassPeriod> load(Room key) {
+                return key.getCompatiblePeriods();
+              }
+            });
+    this.teachersForCourse =
+        CacheBuilder
+            .newBuilder()
+            .initialCapacity(sections.size())
+            .weigher(COLLECTION_WEIGHER)
+            .concurrencyLevel(flags.cacheConcurrencyLevel)
+            .maximumWeight(flags.courseTeachersCacheSize)
+            .build(new CacheLoader<Course, List<Teacher>>() {
+              @Override
+              public List<Teacher> load(Course key) throws Exception {
+                return key.getTeachers();
+              }
+            });
+    this.courseCompatiblePeriods =
+        CacheBuilder
+            .newBuilder()
+            .initialCapacity(sections.size())
+            .weigher(COLLECTION_WEIGHER)
+            .concurrencyLevel(flags.cacheConcurrencyLevel)
+            .maximumWeight(flags.courseCompatibleCacheSize)
+            .build(new CacheLoader<Course, Set<ClassPeriod>>() {
+              @Override
+              public Set<ClassPeriod> load(Course key) {
+                List<Teacher> theTeachers = teachersForCourse.getUnchecked(key);
+                Iterator<Teacher> teachersIterator = theTeachers.iterator();
+                if (!teachersIterator.hasNext()) {
+                  return getPeriods();
+                }
+                Set<ClassPeriod> blocks =
+                    Sets.newHashSet(compatiblePeriods(teachersIterator.next()));
+                while (teachersIterator.hasNext()) {
+                  blocks.retainAll(compatiblePeriods(teachersIterator.next()));
+                }
+                return ImmutableSet.copyOf(blocks);
+              }
+            });
+    this.requiredForCourse =
+        CacheBuilder
+            .newBuilder()
+            .initialCapacity(sections.size())
+            .weigher(COLLECTION_WEIGHER)
+            .maximumWeight(flags.reqResCacheSize)
+            .build(new CacheLoader<Course, Set<Resource>>() {
+              @Override
+              public Set<Resource> load(Course key) {
+                return key.getRequiredResources();
+              }
+            });
+    this.resourcesOfRoom =
+        CacheBuilder
+            .newBuilder()
+            .initialCapacity(rooms.size())
+            .weigher(COLLECTION_WEIGHER)
+            .maximumWeight(flags.roomResCacheSize)
+            .build(new CacheLoader<Room, Set<Resource>>() {
+              @Override
+              public Set<Resource> load(Room key) throws Exception {
+                return key.getResources();
+              }
+            });
+    this.bindingResources =
+        CacheBuilder
+            .newBuilder()
+            .initialCapacity(rooms.size())
+            .weigher(COLLECTION_WEIGHER)
+            .maximumWeight(flags.bindingResourceCacheSize)
+            .build(new CacheLoader<Room, Set<Resource>>() {
+              @Override
+              public Set<Resource> load(Room key) throws Exception {
+                return ImmutableSet.copyOf(Sets.filter(
+                    resourcesOfRoom.getUnchecked(key),
+                    Resource.IS_BINDING));
+              }
+            });
 
     double totAttendanceRatio = 0;
     for (ClassPeriod period : getPeriods()) {
@@ -313,12 +327,13 @@ public final class Program {
     return builder.build();
   }
 
-  private static final Weigher<Object, Collection<?>> COLLECTION_WEIGHER = new Weigher<Object, Collection<?>>() {
-    @Override
-    public int weigh(Object key, Collection<?> value) {
-      return value.size();
-    }
-  };
+  private static final Weigher<Object, Collection<?>> COLLECTION_WEIGHER =
+      new Weigher<Object, Collection<?>>() {
+        @Override
+        public int weigh(Object key, Collection<?> value) {
+          return value.size();
+        }
+      };
 
   public double getAttendanceRatio(ClassPeriod period) {
     return period.serial.getAttendanceLevel() / totalAttendanceRatio;
@@ -391,7 +406,7 @@ public final class Program {
   }
 
   public List<TeacherGroup> getGroups(Teacher t) {
-    return teacherGroups.getUnchecked(t);
+    return teacherMembership.getUnchecked(t);
   }
 
   public List<Teacher> getGroupMembers(TeacherGroup g) {

@@ -41,7 +41,7 @@ message SerialTeacher {
 	required int32 teacherId = 1; // teacher identifier number
 	optional string name = 2 [default = "Joe Teacher"]; // teacher name
 	repeated int32 availablePeriod = 3 [packed = true]; // teacher availability
-	repeated int32 groupId = 4 [packed = true]; // groups to even out
+	repeated int32 groupId = 4 [packed = true]; // groups to cap
 }
 
 message SerialDateTime {
@@ -50,6 +50,12 @@ message SerialDateTime {
 	required int32 day = 3;
 	required int32 hour = 4;
 	required int32 minute = 5;
+}
+
+message SerialTeacherGroup {
+  required int32 groupId = 1;
+  optional string name = 3 [default = "Teacher Group"];
+  required int32 cap = 2;
 }
 
 /*
@@ -105,4 +111,5 @@ message SerialProgram {
 	repeated SerialSection section = 3;
 	repeated SerialBuilding building = 8;
 	repeated SerialResource resource = 6;
+	repeated SerialTeacherGroup teacherGroup = 9;
 }

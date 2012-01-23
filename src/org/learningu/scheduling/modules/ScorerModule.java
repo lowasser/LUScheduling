@@ -175,37 +175,6 @@ public final class ScorerModule extends AbstractModule {
         }
       }
     },
-    TEACHER_GROUPS_EVEN {
-      @Override
-      void score(Schedule schedule, ScoreAccumulator accum) {
-        // TODO: penalize for variance
-        Program program = schedule.getProgram();
-        Map<TeacherGroup, Multiset<ClassPeriod>> periodLevels = Maps
-            .newHashMapWithExpectedSize(program.getTeacherGroups().size());
-        for (TeacherGroup g : program.getTeacherGroups()) {
-          periodLevels.put(g, HashMultiset.<ClassPeriod> create());
-        }
-        for (StartAssignment assign : schedule.getStartAssignments()) {
-          for (Teacher t : program.teachersFor(assign.getCourse())) {
-            for (TeacherGroup g : program.getGroups(t)) {
-              for (PresentAssignment pAssign : assign.getPresentAssignments()) {
-                periodLevels.get(g).add(pAssign.getPeriod());
-              }
-            }
-          }
-        }
-        for (Multiset<ClassPeriod> groupDensity : periodLevels.values()) {
-          double mean = ((double) groupDensity.size()) / program.getPeriods().size();
-          int sumSquares = 0;
-          for (Multiset.Entry<ClassPeriod> periodDensity : groupDensity.entrySet()) {
-            int count = periodDensity.getCount();
-            sumSquares += count * count;
-          }
-          double variance = ((double) sumSquares / program.getPeriods().size()) - mean * mean;
-          accum.subtract(variance);
-        }
-      }
-    },
     UNUSED_ROOMS {
       @Override
       void score(Schedule schedule, ScoreAccumulator accum) {
@@ -362,8 +331,6 @@ public final class ScorerModule extends AbstractModule {
         return ScorerImpl.SUBJECT_ATTENDANCE_LEVELS;
       case UNUSED_ROOMS:
         return ScorerImpl.UNUSED_ROOMS;
-      case TEACHER_GROUPS_EVEN:
-        return ScorerImpl.TEACHER_GROUPS_EVEN;
       default:
         throw new AssertionError();
     }

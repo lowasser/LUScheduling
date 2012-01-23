@@ -8,6 +8,7 @@ enum SerialLogicImpl {
 	TEACHER_CONFLICT = 5;
 	PREREQUISITES = 6;
 	GRADE_RANGES = 7;
+	TEACHER_GROUP_CAP = 8;
 }
 
 message SerialLogics {

@@ -45,12 +45,7 @@ public final class Teacher extends ProgramObject<SerialTeacher> {
   }
 
   public List<TeacherGroup> getTeacherGroups() {
-    return Lists.transform(serial.getGroupIdList(), new Function<Integer, TeacherGroup>() {
-      @Override
-      public TeacherGroup apply(Integer input) {
-        return new TeacherGroup(input, getProgram());
-      }
-    });
+    return Lists.transform(serial.getGroupIdList(), Functions.forMap(program.teacherGroups));
   }
 
   static Function<SerialTeacher, Teacher> programWrapper(final Program program) {
