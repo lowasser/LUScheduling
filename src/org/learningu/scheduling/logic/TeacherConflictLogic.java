@@ -3,8 +3,8 @@ package org.learningu.scheduling.logic;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -41,9 +41,9 @@ public final class TeacherConflictLogic extends ScheduleLogic {
         return coursesTaughtBySame.contains(input.getSection());
       }
     };
-    List<PresentAssignment> conflicts = Lists.newArrayList(Iterables.filter(
-        schedule.occurringAt(assignment.getPeriod()).values(),
-        hasConflict));
+    Collection<PresentAssignment> concurrentAssignments = schedule.occurringAt(
+        assignment.getPeriod()).values();
+    Iterable<PresentAssignment> conflicts = Iterables.filter(concurrentAssignments, hasConflict);
     validator.validateGlobal(
         assignment,
         conflicts,

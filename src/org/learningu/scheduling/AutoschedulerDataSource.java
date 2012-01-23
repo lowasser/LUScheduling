@@ -67,24 +67,34 @@ public final class AutoschedulerDataSource {
 
   public SerialLogics getSerialLogics() throws IOException {
     logger.fine("Reading in schedule validity logic specification");
-    return readMessage(SerialLogics.newBuilder(), logicFile).build();
+    SerialLogics logics = readMessage(SerialLogics.newBuilder(), logicFile).build();
+    logger.fine("Read " + logics.getLogicCount() + " logic components");
+    return logics;
   }
 
   public SerialProgram getSerialProgram() throws IOException {
     logger.fine("Reading in serialized program specification");
-    return readMessage(SerialProgram.newBuilder(), programFile).build();
+    SerialProgram program = readMessage(SerialProgram.newBuilder(), programFile).build();
+    logger.fine("Read " + program.getBuildingCount() + " building components");
+    logger.fine("Read " + program.getResourceCount() + " resource components");
+    logger.fine("Read " + program.getSubjectCount() + " subject components");
+    logger.fine("Read " + program.getTeacherCount() + " teacher components");
+    logger.fine("Read " + program.getTimeBlockCount() + " time block components");
+    return program;
   }
 
   public OptimizerSpec getOptimizerSpec() throws IOException {
     logger.fine("Reading in serialized optimizer specification");
-    return readMessage(OptimizerSpec.newBuilder(), optimizationSpecFile).build();
+    OptimizerSpec spec = readMessage(OptimizerSpec.newBuilder(), optimizationSpecFile).build();
+    logger.fine("Read " + spec.getScorer().getComponentCount() + " score components");
+    return spec;
   }
 
   public Module buildModule() throws IOException {
     logger.info("Building data source module");
-    final SerialSchedule schedule = getSerialSchedule();
     final SerialLogics logics = getSerialLogics();
     final SerialProgram program = getSerialProgram();
+    final SerialSchedule schedule = getSerialSchedule();
     final OptimizerSpec optSpec = getOptimizerSpec();
     logger.fine("Reading of data complete.");
     return new AbstractModule() {
@@ -98,7 +108,7 @@ public final class AutoschedulerDataSource {
     };
   }
 
-  private static <T extends Message.Builder> T readMessage(T builder, File file)
+  static <T extends Message.Builder> T readMessage(T builder, File file)
       throws IOException {
     FileReader fileReader = new FileReader(file);
     try {
