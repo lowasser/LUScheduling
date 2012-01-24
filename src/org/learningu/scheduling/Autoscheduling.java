@@ -5,6 +5,7 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
+import com.google.common.util.concurrent.Uninterruptibles;
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -15,12 +16,14 @@ import com.google.inject.TypeLiteral;
 
 import java.io.IOException;
 import java.util.Set;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
-import org.learningu.scheduling.flags.Flag;
 import org.learningu.scheduling.flags.Flags;
 import org.learningu.scheduling.schedule.Schedule;
 
@@ -29,10 +32,8 @@ public final class Autoscheduling {
   private final ListeningExecutorService service;
 
   @Inject
-  Autoscheduling(@Flag(
-      name = "nThreads",
-      description = "Number of OS threads to use in the thread pool.") int nThreads) {
-    this.service = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(nThreads));
+  Autoscheduling() {
+    this.service = MoreExecutors.listeningDecorator(Executors.newCachedThreadPool());
   }
 
   public ListeningExecutorService getService() {
@@ -86,28 +87,42 @@ public final class Autoscheduling {
       logger.fine("Reading input files");
       Module dataModule = dataSource.buildModule();
       logger.fine("Bootstrapping into completely initialized injector");
-      Injector dataInjector = injector.createChildInjector(
-          dataModule,
-          new AutoschedulingConfigModule(),
-          new AbstractModule() {
-            @Override
-            protected void configure() {
-              bind(ExecutorService.class).to(ListeningExecutorService.class);
-              bind(ListeningExecutorService.class).toInstance(service);
-            }
-          });
+      Injector dataInjector =
+          injector.createChildInjector(
+              dataModule,
+              new AutoschedulingConfigModule(),
+              new AbstractModule() {
+                @Override
+                protected void configure() {
+                  bind(ExecutorService.class).to(ListeningExecutorService.class);
+                  bind(ListeningExecutorService.class).toInstance(service);
+                }
+              });
       logger.fine("Initiating schedule optimization");
-      ListenableFuture<Schedule> optimizedSchedule = service.submit(dataInjector
-          .getInstance(Autoscheduler.class));
+      ListenableFuture<Schedule> optimizedSchedule =
+          service.submit(dataInjector.getInstance(Autoscheduler.class));
       logger.fine("Registering callbacks on result future");
-      Set<FutureCallback<Schedule>> callbacks = dataInjector.getInstance(Key
-          .get(new TypeLiteral<Set<FutureCallback<Schedule>>>() {}));
-      for (FutureCallback<Schedule> callback : callbacks) {
-        Futures.addCallback(optimizedSchedule, callback, auto.getService());
+      Set<FutureCallback<Schedule>> callbacks =
+          dataInjector.getInstance(Key.get(new TypeLiteral<Set<FutureCallback<Schedule>>>() {}));
+      final CountDownLatch latch = new CountDownLatch(callbacks.size());
+      for (final FutureCallback<Schedule> callback : callbacks) {
+        Futures.addCallback(optimizedSchedule, new FutureCallback<Schedule>() {
+          @Override
+          public void onSuccess(Schedule result) {
+            callback.onSuccess(result);
+            latch.countDown();
+          }
+
+          @Override
+          public void onFailure(Throwable t) {
+            callback.onFailure(t);
+            latch.countDown();
+          }
+        }, service);
       }
-      optimizedSchedule.get();
-    } finally {
       logger.fine("Waiting for registered tasks to complete");
+      latch.await();
+    } finally {
       auto.getService().shutdown();
     }
   }

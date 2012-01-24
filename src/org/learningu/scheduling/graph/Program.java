@@ -38,6 +38,8 @@ import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
 
+import org.joda.time.Period;
+import org.learningu.scheduling.flags.Converters;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
 
 /**
@@ -523,7 +525,7 @@ public final class Program {
 
   private void logForCache(Logger logger, String name, LoadingCache<?, ?> cache) {
     logger.log(Level.INFO, "Cache stats for {0}: {1}", new Object[] { name, cache.stats() });
-    logger.log(Level.INFO, "Average loading time for {0}: {1}ns", new Object[] { name,
-        cache.stats().averageLoadPenalty() });
+    logger.log(Level.INFO, "Average loading time for {0}: {1}", new Object[] { name,
+        Converters.PERIOD_FORMATTER.print(Period.millis((int) (cache.stats().averageLoadPenalty() / 1e6))) });
   }
 }

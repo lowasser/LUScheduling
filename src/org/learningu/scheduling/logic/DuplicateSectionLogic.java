@@ -1,8 +1,10 @@
 package org.learningu.scheduling.logic;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
+import com.google.common.base.Optional;
 
+import java.util.Map;
+
+import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.schedule.Schedule;
 import org.learningu.scheduling.schedule.StartAssignment;
 
@@ -14,23 +16,16 @@ import org.learningu.scheduling.schedule.StartAssignment;
 public final class DuplicateSectionLogic extends ScheduleLogic {
 
   @Override
-  public void validate(
-      ScheduleValidator validator,
-      Schedule schedule,
+  public void validate(ScheduleValidator validator, Schedule schedule,
       final StartAssignment assignment) {
     super.validate(validator, schedule, assignment);
-    Iterable<StartAssignment> duplicates = Iterables.filter(
-        schedule.getStartAssignments(),
-        new Predicate<StartAssignment>() {
-          @Override
-          public boolean apply(StartAssignment input) {
-            return input.getSection().equals(assignment.getSection());
-          }
-        });
+    Map<Section, StartAssignment> assignmentsBySection = schedule.getAssignmentsBySection();
+    StartAssignment sectionAssignment = assignmentsBySection.get(assignment.getSection());
+    // sectionAssignment is null iff this section has not been scheduled
+
     validator.validateGlobal(
         assignment,
-        duplicates,
+        Optional.fromNullable(sectionAssignment).asSet(),
         "sections must not already be scheduled in the schedule");
   }
-
 }

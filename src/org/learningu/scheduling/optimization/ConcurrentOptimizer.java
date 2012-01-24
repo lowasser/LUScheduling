@@ -1,6 +1,7 @@
 package org.learningu.scheduling.optimization;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Stopwatch;
 import com.google.common.io.Files;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
@@ -21,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.joda.time.Duration;
+import org.joda.time.Period;
 import org.learningu.scheduling.annotations.SingleThread;
 import org.learningu.scheduling.flags.Converters;
 import org.learningu.scheduling.flags.Flag;
@@ -44,17 +46,13 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
   private final int subOptimizerSteps;
 
   @Inject(optional = true)
-  @Flag(
-      name = "noProgressCancel",
-      optional = true,
+  @Flag(name = "noProgressCancel", optional = true,
       description = "If no additional progress is made in the specified time, stops optimizing.")
   private Duration noProgressCancel = Duration.standardSeconds(20);
 
   @Inject(optional = true)
-  @Flag(
-      name = "iterationTimeout",
-      description = "Maximum timeout for each concurrent optimizer iteration",
-      optional = true)
+  @Flag(name = "iterationTimeout",
+      description = "Maximum timeout for each concurrent optimizer iteration", optional = true)
   private Duration iterTimeout = Duration.standardSeconds(10);
 
   private final Logger logger;
@@ -62,6 +60,8 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
   private final TemperatureFunction primaryTempFun;
 
   private final TemperatureFunction subTempFun;
+
+  private final Stopwatch stopwatch;
 
   @Inject
   ConcurrentOptimizer(
@@ -72,12 +72,13 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
       @Named("nSubOptimizers") int nSubOptimizers,
       ExecutorService service,
       @Named("subOptimizerSteps") int subOptimizerSteps,
-      Logger logger) {
+      Logger logger,
+      Stopwatch stopwatch) {
     this.scorer = scorer;
     this.optimizerFactory = optimizerProvider;
     this.nSubOptimizers = nSubOptimizers;
-    BlockingQueue<Future<T>> completionQueue = new ArrayBlockingQueue<>(nSubOptimizers);
-    this.service = new ExecutorCompletionService<>(service, completionQueue);
+    this.stopwatch = stopwatch;
+    this.service = new ExecutorCompletionService<>(service);
     this.subOptimizerSteps = subOptimizerSteps;
     this.logger = logger;
     this.primaryTempFun = primaryTempFun;
@@ -90,7 +91,7 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
   }
 
   @Override
-  public T iterate(int steps, T initial) {
+  public synchronized T iterate(int steps, T initial) {
     long timeoutMillis = iterTimeout.getMillis();
     T currentBest = initial;
     double currentBestScore = scorer.score(initial);
@@ -98,6 +99,7 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
     for (int step = 0; step < steps; step++) {
       logger.log(Level.INFO, "On iteration step {0}, current best has score {1}", new Object[] {
           step, currentBestScore });
+      stopwatch.start();
       double temp = primaryTempFun.temperature(step, steps);
       for (int i = 0; i < nSubOptimizers; i++) {
         futures.offer(service.submit(runSingleThreadPass(currentBest, temp)));
@@ -126,6 +128,10 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
           futures.poll().cancel(true); // if it didn't finish in time, cancel
         }
       }
+
+      stopwatch.stop();
+      logger.log(Level.INFO, "Iteration step {0} took {1}ms wall clock time", new Object[] { step,
+          stopwatch.elapsedMillis() });
     }
     return currentBest;
   }
@@ -140,12 +146,13 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
     double currentBestScore = scorer.score(initial);
     Csv.Builder builder = Csv.newBuilder();
     Queue<Future<T>> futures = new ArrayDeque<>(nSubOptimizers);
+    long totalTime = 0;
     for (step = 0; System.currentTimeMillis() - start < dur; step++) {
       logger.log(Level.INFO, "On iteration step {0}, current best has score {1}", new Object[] {
           step, currentBestScore });
-      double temp = primaryTempFun.temperature(
-          (int) (System.currentTimeMillis() - start),
-          (int) dur);
+      stopwatch.start();
+      double temp =
+          primaryTempFun.temperature((int) (System.currentTimeMillis() - start), (int) dur);
       for (int i = 0; i < nSubOptimizers; i++) {
         futures.offer(service.submit(runSingleThreadPass(currentBest, temp)));
       }
@@ -182,6 +189,13 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
             .add("%8.3f", currentBestScore)
             .build());
       }
+      stopwatch.stop();
+      logger.log(Level.INFO, "Iteration {0} took {1} of wall clock time", new Object[] { step,
+          Converters.PERIOD_FORMATTER.print(Period.millis((int) stopwatch.elapsedMillis())) });
+      totalTime += stopwatch.elapsedMillis();
+      logger.log(Level.INFO, "Average step time: {0}", new Object[] { Converters.PERIOD_FORMATTER
+          .print(Period.millis((int) (totalTime / (step + 1)))) });
+      stopwatch.reset();
       if ((System.currentTimeMillis() - lastUpdate) > noProgressCancel.getMillis()) {
         logger.log(Level.INFO, "Cutting off optimization for lack of progress");
         break;
