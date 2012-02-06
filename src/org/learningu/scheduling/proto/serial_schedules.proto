@@ -4,6 +4,7 @@ message SerialStartAssignment {
 	required int32 periodId = 1;
 	required int32 roomId = 2;
 	required int32 sectionId = 3;
+	optional bool locked = 4 [default = false];
 }
 
 message SerialSchedule {

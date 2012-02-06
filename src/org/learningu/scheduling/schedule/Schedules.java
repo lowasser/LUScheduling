@@ -26,7 +26,8 @@ public final class Schedules {
       StartAssignment assign = StartAssignment.create(
           program.getPeriod(serialAssign.getPeriodId()),
           program.getRoom(serialAssign.getRoomId()),
-          program.getSection(serialAssign.getSectionId()));
+          program.getSection(serialAssign.getSectionId()),
+          serialAssign.getLocked());
       ModifiedState<ScheduleValidator, Schedule> modified = current.assignStart(assign);
       checkState(
           modified.getResult().isValid(),
