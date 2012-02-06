@@ -29,7 +29,6 @@ import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.Subject;
 import org.learningu.scheduling.graph.Teacher;
-import org.learningu.scheduling.graph.TeacherGroup;
 import org.learningu.scheduling.optimization.Scorer;
 import org.learningu.scheduling.schedule.PresentAssignment;
 import org.learningu.scheduling.schedule.Schedule;

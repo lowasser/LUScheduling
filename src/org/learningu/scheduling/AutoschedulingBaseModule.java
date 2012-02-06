@@ -4,6 +4,8 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 
+import java.util.concurrent.ForkJoinPool;
+
 import org.learningu.scheduling.flags.Flags;
 import org.learningu.scheduling.graph.ProgramCacheFlags;
 import org.learningu.scheduling.logic.LocalConflictLogic;
@@ -32,6 +34,7 @@ public final class AutoschedulingBaseModule extends AbstractModule {
         TeacherPrettyPrinter.class,
         ScheduleOutputCallback.class,
         CsvOutputCallback.class));
+    bind(ForkJoinPool.class).asEagerSingleton();
   }
 
   @Provides

@@ -2,22 +2,17 @@ package org.learningu.scheduling.optimization;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Stopwatch;
+import com.google.common.collect.Lists;
 import com.google.common.io.Files;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayDeque;
-import java.util.Queue;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorCompletionService;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinTask;
+import java.util.concurrent.RecursiveTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,7 +36,7 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
 
   private final int nSubOptimizers;
 
-  private final ExecutorCompletionService<T> service;
+  private final ForkJoinPool pool;
 
   private final int subOptimizerSteps;
 
@@ -70,15 +65,15 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
       @Named("primaryTempFun") TemperatureFunction primaryTempFun,
       @Named("subTempFun") TemperatureFunction subTempFun,
       @Named("nSubOptimizers") int nSubOptimizers,
-      ExecutorService service,
+      ForkJoinPool pool,
       @Named("subOptimizerSteps") int subOptimizerSteps,
       Logger logger,
       Stopwatch stopwatch) {
     this.scorer = scorer;
     this.optimizerFactory = optimizerProvider;
     this.nSubOptimizers = nSubOptimizers;
+    this.pool = pool;
     this.stopwatch = stopwatch;
-    this.service = new ExecutorCompletionService<>(service);
     this.subOptimizerSteps = subOptimizerSteps;
     this.logger = logger;
     this.primaryTempFun = primaryTempFun;
@@ -90,147 +85,161 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
     return scorer;
   }
 
-  @Override
-  public synchronized T iterate(int steps, T initial) {
-    long timeoutMillis = iterTimeout.getMillis();
-    T currentBest = initial;
-    double currentBestScore = scorer.score(initial);
-    Queue<Future<T>> futures = new ArrayDeque<>(nSubOptimizers);
-    for (int step = 0; step < steps; step++) {
-      logger.log(Level.INFO, "On iteration step {0}, current best has score {1}", new Object[] {
-          step, currentBestScore });
-      stopwatch.start();
-      double temp = primaryTempFun.temperature(step, steps);
+  @SuppressWarnings("serial")
+  final class SingleOptimizationStep extends RecursiveTask<T> {
+    final T initial;
+    final double tempScale;
+
+    private SingleOptimizationStep(T initial, double tempScale) {
+      this.initial = initial;
+      this.tempScale = tempScale;
+    }
+
+    @Override
+    protected T compute() {
+      Optimizer<T> optimizer = optimizerFactory.create(new TemperatureFunction() {
+
+        @Override
+        public double temperature(int currentStep, int nSteps) {
+          return tempScale * subTempFun.temperature(currentStep, nSteps);
+        }
+      });
+      return optimizer.iterate(subOptimizerSteps, initial);
+    }
+  }
+
+  final class ParallelOptimizationStep extends RecursiveTask<T> {
+    private final T initial;
+    private final double temp;
+
+    private ParallelOptimizationStep(T initial, double temp) {
+      this.initial = initial;
+      this.temp = temp;
+    }
+
+    @Override
+    protected T compute() {
+      List<ForkJoinTask<T>> passes = Lists.newArrayListWithCapacity(nSubOptimizers);
       for (int i = 0; i < nSubOptimizers; i++) {
-        futures.offer(service.submit(runSingleThreadPass(currentBest, temp)));
+        passes.add(new SingleOptimizationStep(initial, temp).fork());
+      }
+      T currentBest = initial;
+      double currentBestScore = scorer.score(initial);
+      for (ForkJoinTask<T> pass : passes) {
+        T better = pass.join();
+        double betterScore = scorer.score(better);
+        if (betterScore > currentBestScore) {
+          currentBest = better;
+          currentBestScore = betterScore;
+        }
+      }
+      return currentBest;
+    }
+
+  }
+
+  @SuppressWarnings("serial")
+  final class IterateStepsTask extends RecursiveTask<T> {
+    private final T initial;
+    private final int steps;
+
+    private IterateStepsTask(T initial, int steps) {
+      this.initial = initial;
+      this.steps = steps;
+    }
+
+    @Override
+    protected T compute() {
+      T currentBest = initial;
+      for (int step = 0; step < steps; step++) {
+        logger.log(Level.INFO, "On iteration step {0}, current best has score {1}", new Object[] {
+            step, scorer.score(currentBest) });
+        double temp = primaryTempFun.temperature(step, steps);
+        ForkJoinTask<T> task = new ParallelOptimizationStep(currentBest, temp);
+        stopwatch.start();
+        currentBest = task.invoke();
+        stopwatch.stop();
+        logger.log(Level.INFO, "Iteration step {0} took {1}ms wall clock time", new Object[] {
+            step, stopwatch.elapsedMillis() });
+      }
+      return currentBest;
+    }
+  }
+
+  @SuppressWarnings("serial")
+  final class IterateTimeTask extends RecursiveTask<T> {
+    private final T initial;
+    private final Duration duration;
+
+    private IterateTimeTask(T initial, Duration duration) {
+      this.initial = initial;
+      this.duration = duration;
+    }
+
+    @Override
+    protected T compute() {
+      long start = System.currentTimeMillis();
+      long dur = duration.getMillis();
+      long lastUpdate = start;
+      int step;
+      T currentBest = initial;
+      Csv.Builder builder = Csv.newBuilder();
+      long totalTime = 0;
+      for (step = 0; System.currentTimeMillis() - start < dur; step++) {
+        logger.log(Level.INFO, "On iteration step {0}, current best has score {1}", new Object[] {
+            step, scorer.score(currentBest) });
+        double temp =
+            primaryTempFun.temperature((int) (System.currentTimeMillis() - start), (int) dur);
+        ForkJoinTask<T> task = new ParallelOptimizationStep(currentBest, temp);
+        stopwatch.start();
+        currentBest = task.invoke();
+        stopwatch.stop();
+        if (step % 20 == 0) {
+          builder.add(Csv
+              .newRowBuilder()
+              .add("%d", System.currentTimeMillis() - start)
+              .add("%8.3f", scorer.score(currentBest))
+              .build());
+        }
+        logger.log(Level.FINE, "Iteration {0} took {1} of wall clock time", new Object[] { step,
+            Converters.PERIOD_FORMATTER.print(Period.millis((int) stopwatch.elapsedMillis())) });
+        totalTime += stopwatch.elapsedMillis();
+        logger.log(
+            Level.FINER,
+            "Average step time: {0}",
+            new Object[] { Converters.PERIOD_FORMATTER.print(Period
+                .millis((int) (totalTime / (step + 1)))) });
+        stopwatch.reset();
+        if ((System.currentTimeMillis() - lastUpdate) > noProgressCancel.getMillis()) {
+          logger.log(Level.INFO, "Cutting off optimization for lack of progress");
+          break;
+        }
+      }
+      if (step != 0) {
+        logger.log(
+            Level.INFO,
+            "Average optimizer iteration took {0}",
+            Duration
+                .millis((long) (System.currentTimeMillis() - start) / step)
+                .toPeriod()
+                .toString(Converters.PERIOD_FORMATTER));
       }
       try {
-        for (int i = 0; i < nSubOptimizers; i++) {
-          try {
-            T better = service.poll(timeoutMillis, TimeUnit.MILLISECONDS).get();
-            if (better == null) {
-              continue;
-            }
-            double betterScore = scorer.score(better);
-            if (betterScore > currentBestScore) {
-              currentBest = better;
-              currentBestScore = betterScore;
-            }
-          } catch (ExecutionException e) {
-            logger.log(Level.SEVERE, "Sub-optimizer threw an exception.  Skipping.", e.getCause());
-          }
-        }
-      } catch (InterruptedException e) {
-        logger.log(Level.WARNING, "Thread interrupted, returning current best.");
-        break;
-      } finally {
-        while (!futures.isEmpty()) {
-          futures.poll().cancel(true); // if it didn't finish in time, cancel
-        }
+        Files.write(builder.build().toString(), new File("optimization-log.csv"), Charsets.UTF_8);
+      } catch (IOException e) {
+        logger.throwing("ConcurrentOptimizer", "log", e);
       }
-
-      stopwatch.stop();
-      logger.log(Level.INFO, "Iteration step {0} took {1}ms wall clock time", new Object[] { step,
-          stopwatch.elapsedMillis() });
+      return currentBest;
     }
-    return currentBest;
+
+  }
+
+  @Override
+  public synchronized T iterate(int steps, T initial) {
+    return pool.invoke(new IterateStepsTask(initial, steps));
   }
 
   public T iterate(Duration duration, T initial) {
-    long timeoutMillis = iterTimeout.getMillis();
-    long start = System.currentTimeMillis();
-    long dur = duration.getMillis();
-    long lastUpdate = start;
-    int step;
-    T currentBest = initial;
-    double currentBestScore = scorer.score(initial);
-    Csv.Builder builder = Csv.newBuilder();
-    Queue<Future<T>> futures = new ArrayDeque<>(nSubOptimizers);
-    long totalTime = 0;
-    for (step = 0; System.currentTimeMillis() - start < dur; step++) {
-      logger.log(Level.INFO, "On iteration step {0}, current best has score {1}", new Object[] {
-          step, currentBestScore });
-      stopwatch.start();
-      double temp =
-          primaryTempFun.temperature((int) (System.currentTimeMillis() - start), (int) dur);
-      for (int i = 0; i < nSubOptimizers; i++) {
-        futures.offer(service.submit(runSingleThreadPass(currentBest, temp)));
-      }
-      try {
-        for (int i = 0; i < nSubOptimizers; i++) {
-          try {
-            T better = service.poll(timeoutMillis, TimeUnit.MILLISECONDS).get();
-            if (better == null) {
-              continue;
-            }
-            double betterScore = scorer.score(better);
-            if (betterScore > currentBestScore) {
-              currentBest = better;
-              currentBestScore = betterScore;
-              lastUpdate = System.currentTimeMillis();
-            }
-          } catch (ExecutionException e) {
-            logger.log(Level.SEVERE, "Sub-optimizer threw an exception.  Skipping.", e.getCause());
-          }
-        }
-      } catch (InterruptedException e) {
-        logger.log(Level.WARNING, "Thread interrupted, returning current best.");
-        break;
-      } finally {
-        // cancel any futures which weren't finished
-        while (!futures.isEmpty()) {
-          futures.poll().cancel(true);
-        }
-      }
-      if (step % 20 == 0) {
-        builder.add(Csv
-            .newRowBuilder()
-            .add("%d", System.currentTimeMillis() - start)
-            .add("%8.3f", currentBestScore)
-            .build());
-      }
-      stopwatch.stop();
-      logger.log(Level.FINE, "Iteration {0} took {1} of wall clock time", new Object[] { step,
-          Converters.PERIOD_FORMATTER.print(Period.millis((int) stopwatch.elapsedMillis())) });
-      totalTime += stopwatch.elapsedMillis();
-      logger.log(Level.FINER, "Average step time: {0}", new Object[] { Converters.PERIOD_FORMATTER
-          .print(Period.millis((int) (totalTime / (step + 1)))) });
-      stopwatch.reset();
-      if ((System.currentTimeMillis() - lastUpdate) > noProgressCancel.getMillis()) {
-        logger.log(Level.INFO, "Cutting off optimization for lack of progress");
-        break;
-      }
-    }
-    if (step != 0) {
-      logger.log(
-          Level.INFO,
-          "Average optimizer iteration took {0}",
-          Duration
-              .millis((long) (System.currentTimeMillis() - start) / step)
-              .toPeriod()
-              .toString(Converters.PERIOD_FORMATTER));
-    }
-    try {
-      Files.write(builder.build().toString(), new File("optimization-log.csv"), Charsets.UTF_8);
-    } catch (IOException e) {
-      logger.throwing("ConcurrentOptimizer", "log", e);
-    }
-    return currentBest;
-  }
-
-  private Callable<T> runSingleThreadPass(final T initial, final double tempScale) {
-    return new Callable<T>() {
-      @Override
-      public T call() {
-        Optimizer<T> optimizer = optimizerFactory.create(new TemperatureFunction() {
-
-          @Override
-          public double temperature(int currentStep, int nSteps) {
-            return tempScale * subTempFun.temperature(currentStep, nSteps);
-          }
-        });
-        return optimizer.iterate(subOptimizerSteps, initial);
-      }
-    };
+    return pool.invoke(new IterateTimeTask(initial, duration));
   }
 }
