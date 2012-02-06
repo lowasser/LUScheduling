@@ -25,6 +25,24 @@ public class RoomConflictLogicTest extends BaseLogicTest {
     }));
   }
 
+  public void testLocking() {
+    Schedule.Factory factory = injector.getInstance(Schedule.Factory.class);
+    Schedule schedule = factory.create();
+    Section origami = getCourse("OrigamiCourse");
+    Section math = getCourse("MathCourse");
+    ClassPeriod tenAM = getPeriod("10AM");
+    ClassPeriod elevenAM = getPeriod("11AM");
+    Room harper142 = getRoom("Harper142");
+    // Origami is two hours.
+    ModifiedState<ScheduleValidator, Schedule> assign1 =
+        schedule.assignStart(StartAssignment.create(tenAM, harper142, origami, true));
+    assertTrue(assign1.getResult().toString(), assign1.getResult().isValid());
+    schedule = assign1.getNewState();
+    ModifiedState<ScheduleValidator, Schedule> assign2 =
+        schedule.forceAssignStart(StartAssignment.create(elevenAM, harper142, math));
+    assertFalse(assign2.getNewState() == schedule);
+  }
+
   public void testOverlappingRoomConflict() {
     Schedule.Factory factory = injector.getInstance(Schedule.Factory.class);
     Schedule schedule = factory.create();
@@ -34,12 +52,12 @@ public class RoomConflictLogicTest extends BaseLogicTest {
     ClassPeriod elevenAM = getPeriod("11AM");
     Room harper142 = getRoom("Harper142");
     // Origami is two hours.
-    ModifiedState<ScheduleValidator, Schedule> assign1 = schedule.assignStart(StartAssignment
-        .create(tenAM, harper142, origami));
+    ModifiedState<ScheduleValidator, Schedule> assign1 =
+        schedule.assignStart(StartAssignment.create(tenAM, harper142, origami));
     assertTrue(assign1.getResult().toString(), assign1.getResult().isValid());
     schedule = assign1.getNewState();
-    ModifiedState<ScheduleValidator, Schedule> assign2 = schedule.assignStart(StartAssignment
-        .create(elevenAM, harper142, math));
+    ModifiedState<ScheduleValidator, Schedule> assign2 =
+        schedule.assignStart(StartAssignment.create(elevenAM, harper142, math));
     assertFalse(assign2.getResult().isValid());
   }
 
@@ -52,12 +70,12 @@ public class RoomConflictLogicTest extends BaseLogicTest {
     ClassPeriod elevenAM = getPeriod("11AM");
     Room harper142 = getRoom("Harper142");
     // Origami is two hours.
-    ModifiedState<ScheduleValidator, Schedule> assign1 = schedule.assignStart(StartAssignment
-        .create(tenAM, harper142, origami));
+    ModifiedState<ScheduleValidator, Schedule> assign1 =
+        schedule.assignStart(StartAssignment.create(tenAM, harper142, origami));
     assertTrue(assign1.getResult().toString(), assign1.getResult().isValid());
     schedule = assign1.getNewState();
-    ModifiedState<ScheduleValidator, Schedule> assign2 = schedule.forceAssignStart(StartAssignment
-        .create(elevenAM, harper142, math));
+    ModifiedState<ScheduleValidator, Schedule> assign2 =
+        schedule.forceAssignStart(StartAssignment.create(elevenAM, harper142, math));
     assertTrue(assign2.getResult().isValid());
     assertEquals(Optional.absent(), assign2.getNewState().startingAt(tenAM, harper142));
     assertEquals(Optional.of(StartAssignment.create(elevenAM, harper142, math)), assign2
@@ -75,12 +93,12 @@ public class RoomConflictLogicTest extends BaseLogicTest {
     ClassPeriod elevenAM = getPeriod("11AM");
     Room harper142 = getRoom("Harper142");
     // Origami is two hours.
-    ModifiedState<ScheduleValidator, Schedule> assign1 = schedule.assignStart(StartAssignment
-        .create(elevenAM, harper142, math));
+    ModifiedState<ScheduleValidator, Schedule> assign1 =
+        schedule.assignStart(StartAssignment.create(elevenAM, harper142, math));
     assertTrue(assign1.getResult().toString(), assign1.getResult().isValid());
     schedule = assign1.getNewState();
-    ModifiedState<ScheduleValidator, Schedule> assign2 = schedule.assignStart(StartAssignment
-        .create(tenAM, harper142, origami));
+    ModifiedState<ScheduleValidator, Schedule> assign2 =
+        schedule.assignStart(StartAssignment.create(tenAM, harper142, origami));
     assertFalse(assign2.getResult().isValid());
   }
 }

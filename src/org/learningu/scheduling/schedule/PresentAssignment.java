@@ -72,6 +72,11 @@ public final class PresentAssignment implements Assignment {
   }
 
   @Override
+  public boolean isLocked() {
+    return startAssignment.isLocked();
+  }
+
+  @Override
   public int hashCode() {
     return Objects.hashCode(startAssignment, index);
   }

@@ -28,14 +28,21 @@ import org.learningu.scheduling.graph.TimeBlock;
  */
 public final class StartAssignment implements Assignment {
   public static StartAssignment create(ClassPeriod period, Room room, Section section) {
-    return new StartAssignment(period, room, section);
+    return new StartAssignment(period, room, section, false);
+  }
+
+  public static StartAssignment create(ClassPeriod period, Room room, Section section,
+      boolean isLocked) {
+    return new StartAssignment(period, room, section, isLocked);
   }
 
   private final ClassPeriod period;
   private final Room room;
   private final Section section;
+  private final boolean isLocked;
 
-  private StartAssignment(ClassPeriod period, Room room, Section section) {
+  private StartAssignment(ClassPeriod period, Room room, Section section, boolean isLocked) {
+    this.isLocked = isLocked;
     this.period = checkNotNull(period);
     this.room = checkNotNull(room);
     this.section = checkNotNull(section);
@@ -100,6 +107,11 @@ public final class StartAssignment implements Assignment {
   }
 
   @Override
+  public boolean isLocked() {
+    return isLocked;
+  }
+
+  @Override
   public StartAssignment getStartAssignment() {
     return this;
   }
@@ -108,7 +120,7 @@ public final class StartAssignment implements Assignment {
   public ClassPeriod getPeriod() {
     return period;
   }
-  
+
   public ClassPeriod getLastPeriod() {
     List<ClassPeriod> periods = period.getTailPeriods(getCourse().getPeriodLength());
     return periods.get(periods.size() - 1);

@@ -1,6 +1,13 @@
 package org.learningu.scheduling.logic;
 
-import java.util.logging.Level;
+import com.google.common.collect.ImmutableList;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Key;
+import com.google.inject.Module;
+import com.google.inject.Provides;
+import com.google.inject.name.Names;
+
 import java.util.logging.Logger;
 
 import junit.framework.TestCase;
@@ -11,14 +18,6 @@ import org.learningu.scheduling.graph.Room;
 import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.SerialGraph.SerialPeriod;
 import org.learningu.scheduling.graph.SerialGraph.SerialTeacher;
-
-import com.google.common.collect.ImmutableList;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Key;
-import com.google.inject.Module;
-import com.google.inject.Provides;
-import com.google.inject.name.Names;
 
 public abstract class BaseLogicTest extends TestCase {
   protected Injector injector;

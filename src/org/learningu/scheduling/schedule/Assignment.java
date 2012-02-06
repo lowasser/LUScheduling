@@ -20,4 +20,6 @@ public interface Assignment {
   ClassPeriod getPeriod();
 
   Program getProgram();
+  
+  boolean isLocked();
 }

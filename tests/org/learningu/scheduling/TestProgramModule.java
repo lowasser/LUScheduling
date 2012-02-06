@@ -1,5 +1,13 @@
 package org.learningu.scheduling;
 
+import com.google.common.collect.Lists;
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Module;
+import com.google.inject.Provides;
+import com.google.inject.name.Names;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,18 +21,11 @@ import org.learningu.scheduling.graph.SerialGraph.SerialPeriod;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
 import org.learningu.scheduling.graph.SerialGraph.SerialRoom;
 import org.learningu.scheduling.graph.SerialGraph.SerialSection;
+import org.learningu.scheduling.graph.SerialGraph.SerialSubject;
 import org.learningu.scheduling.graph.SerialGraph.SerialTeacher;
 import org.learningu.scheduling.graph.SerialGraph.SerialTimeBlock;
 import org.learningu.scheduling.graph.Teacher;
 import org.learningu.scheduling.graph.TimeBlock;
-
-import com.google.common.collect.Lists;
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Module;
-import com.google.inject.Provides;
-import com.google.inject.name.Names;
 
 public class TestProgramModule extends AbstractModule {
 
@@ -126,7 +127,8 @@ public class TestProgramModule extends AbstractModule {
   protected SerialSection bindCourse(String name, int periods, int size, SerialTeacher... teachers) {
     SerialSection.Builder builder = SerialSection
         .newBuilder()
-        .setSectionId(uid++)
+        .setCourseId(uid)
+        .setSectionId(uid++).setSubjectId(0)
         .setPeriodLength(periods)
         .setCourseTitle(name)
         .setEstimatedClassSize(size)
@@ -146,7 +148,8 @@ public class TestProgramModule extends AbstractModule {
         .newBuilder()
         .addAllTimeBlock(serialTimeBlocks)
         .addAllTeacher(serialTeachers)
-        .addBuilding(SerialBuilding.newBuilder().addAllRoom(serialRooms))
+        .addSubject(SerialSubject.newBuilder().setSubjectId(0).setTitle("Subject"))
+        .addBuilding(SerialBuilding.newBuilder().setBuildingId(0).addAllRoom(serialRooms))
         .addAllSection(serialCourses)
         .build();
   }

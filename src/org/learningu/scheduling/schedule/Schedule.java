@@ -58,8 +58,7 @@ public final class Schedule {
       this.validatorProvider = validatorProvider;
     }
 
-    private Schedule create(
-        BstMap<Room, BstMap<ClassPeriod, Section>> startingTimeTable,
+    private Schedule create(BstMap<Room, BstMap<ClassPeriod, Section>> startingTimeTable,
         BstMap<Section, StartAssignment> assignments) {
       return new Schedule(this, startingTimeTable, assignments);
     }
@@ -319,16 +318,16 @@ public final class Schedule {
     }
   }
 
-  public ModifiedState<Optional<StartAssignment>, Schedule> removeStartingAt(
-      ClassPeriod period,
+  public ModifiedState<Optional<StartAssignment>, Schedule> removeStartingAt(ClassPeriod period,
       Room room) {
     Optional<StartAssignment> startingAt = startingAt(period, room);
     Schedule revised = this;
-    if (startingAt.isPresent()) {
+    if (startingAt.isPresent() && !startingAt.get().isLocked()) {
       BstMap<ClassPeriod, Section> roomMap = startingTimeTable.get(room);
-      revised = factory.create(
-          startingTimeTable.insert(room, roomMap.delete(period)),
-          assignments.delete(startingAt.get().getSection()));
+      revised =
+          factory.create(
+              startingTimeTable.insert(room, roomMap.delete(period)),
+              assignments.delete(startingAt.get().getSection()));
     }
     return ModifiedState.of(startingAt, revised);
   }
@@ -339,22 +338,44 @@ public final class Schedule {
     for (PresentAssignment pAssign : assign.getPresentAssignments()) {
       factory.logic.validate(validator, this, pAssign);
     }
-    if (!validator.isLocallyValid()) {
+    boolean doable = validator.isLocallyValid();
+    Schedule revised = this;
+    if (doable) {
+      for (GlobalConflict<PresentAssignment> conflict : validator.getGlobalPresentConflicts()) {
+        for (PresentAssignment conflicting : conflict.getConflictingAssignments()) {
+          if (conflicting.isLocked()) {
+            doable = false;
+            break;
+          }
+        }
+      }
+    }
+    if (doable) {
+      for (GlobalConflict<StartAssignment> conflict : validator.getGlobalStartConflicts()) {
+        for (StartAssignment conflicting : conflict.getConflictingAssignments()) {
+          if (conflicting.isLocked()) {
+            doable = false;
+            break;
+          }
+        }
+      }
+    }
+    if (doable) {
+      for (GlobalConflict<PresentAssignment> conflict : validator.getGlobalPresentConflicts()) {
+        for (PresentAssignment conflicting : conflict.getConflictingAssignments()) {
+          StartAssignment toRemove = conflicting.getStartAssignment();
+          revised = removeStartingAt(toRemove.getPeriod(), toRemove.getRoom()).getNewState();
+        }
+      }
+      for (GlobalConflict<StartAssignment> conflict : validator.getGlobalStartConflicts()) {
+        for (StartAssignment conflicting : conflict.getConflictingAssignments()) {
+          revised = removeStartingAt(conflicting.getPeriod(), conflicting.getRoom()).getNewState();
+        }
+      }
+      return revised.assignStart(assign);
+    } else {
       return ModifiedState.of(validator, this);
     }
-    Schedule revised = this;
-    for (GlobalConflict<PresentAssignment> conflict : validator.getGlobalPresentConflicts()) {
-      for (PresentAssignment conflicting : conflict.getConflictingAssignments()) {
-        StartAssignment toRemove = conflicting.getStartAssignment();
-        revised = removeStartingAt(toRemove.getPeriod(), toRemove.getRoom()).getNewState();
-      }
-    }
-    for (GlobalConflict<StartAssignment> conflict : validator.getGlobalStartConflicts()) {
-      for (StartAssignment conflicting : conflict.getConflictingAssignments()) {
-        revised = removeStartingAt(conflicting.getPeriod(), conflicting.getRoom()).getNewState();
-      }
-    }
-    return revised.assignStart(assign);
   }
 
   private transient int hashCode = -1;
