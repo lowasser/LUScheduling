@@ -41,8 +41,9 @@ public class OptimizerModule extends AbstractModule {
         binder(),
         SerialTemperatureFunction.class,
         TemperatureFunction.class);
-    tempBinder.addBinding(SerialTemperatureFunction.LINEAR).toInstance(LINEAR_FUNCTION);
-    tempBinder.addBinding(SerialTemperatureFunction.QUADRATIC).toInstance(QUADRATIC_FUNCTION);
+    tempBinder.addBinding(SerialTemperatureFunction.LINEAR).toInstance(PredefinedTemperatureFunctions.LINEAR_FUNCTION);
+    tempBinder.addBinding(SerialTemperatureFunction.QUADRATIC).toInstance(PredefinedTemperatureFunctions.QUADRATIC_FUNCTION);
+    tempBinder.addBinding(SerialTemperatureFunction.FLAT).toInstance(PredefinedTemperatureFunctions.FLAT);
     install(new FactoryModuleBuilder().implement(
         new TypeLiteral<Optimizer<Schedule>>() {},
         new TypeLiteral<Annealer<Schedule>>() {}).build(
@@ -67,16 +68,14 @@ public class OptimizerModule extends AbstractModule {
 
   @Provides
   @Named("primaryTempFun")
-  TemperatureFunction primaryTemperatureFunction(
-      OptimizerSpec spec,
+  TemperatureFunction primaryTemperatureFunction(OptimizerSpec spec,
       Map<SerialTemperatureFunction, Provider<TemperatureFunction>> bindings) {
     return bindings.get(spec.getPrimaryTempFun()).get();
   }
 
   @Provides
   @Named("subTempFun")
-  TemperatureFunction subTemperatureFunction(
-      OptimizerSpec spec,
+  TemperatureFunction subTemperatureFunction(OptimizerSpec spec,
       Map<SerialTemperatureFunction, Provider<TemperatureFunction>> bindings) {
     return bindings.get(spec.getSubTempFun()).get();
   }
@@ -94,26 +93,31 @@ public class OptimizerModule extends AbstractModule {
   }
 
   @Provides
-  AcceptanceFunction acceptFun(
-      OptimizerSpec spec,
+  AcceptanceFunction acceptFun(OptimizerSpec spec,
       Map<SerialAcceptanceFunction, Provider<AcceptanceFunction>> map) {
     return map.get(spec.getSubAcceptFun()).get();
   }
 
-  public static final TemperatureFunction LINEAR_FUNCTION = new TemperatureFunction() {
-    @Override
-    public double temperature(int currentStep, int nSteps) {
-      return ((double) (nSteps - 1 - currentStep)) / nSteps;
-    }
-  };
-
-  public static final TemperatureFunction QUADRATIC_FUNCTION = new TemperatureFunction() {
-
-    @Override
-    public double temperature(int currentStep, int nSteps) {
-      int numerator = nSteps - 1 - currentStep;
-      numerator *= numerator;
-      return ((double) numerator) / (nSteps * nSteps);
-    }
-  };
+  public enum PredefinedTemperatureFunctions implements TemperatureFunction {
+    LINEAR_FUNCTION {
+      @Override
+      public double temperature(int currentStep, int nSteps) {
+        return ((double) (nSteps - 1 - currentStep)) / nSteps;
+      }
+    },
+    QUADRATIC_FUNCTION {
+      @Override
+      public double temperature(int currentStep, int nSteps) {
+        int numerator = nSteps - 1 - currentStep;
+        numerator *= numerator;
+        return ((double) numerator) / (nSteps * nSteps);
+      }
+    },
+    FLAT {
+      @Override
+      public double temperature(int currentStep, int nSteps) {
+        return 0.5;
+      }
+    };
+  }
 }

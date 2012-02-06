@@ -190,10 +190,10 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
             .build());
       }
       stopwatch.stop();
-      logger.log(Level.INFO, "Iteration {0} took {1} of wall clock time", new Object[] { step,
+      logger.log(Level.FINE, "Iteration {0} took {1} of wall clock time", new Object[] { step,
           Converters.PERIOD_FORMATTER.print(Period.millis((int) stopwatch.elapsedMillis())) });
       totalTime += stopwatch.elapsedMillis();
-      logger.log(Level.INFO, "Average step time: {0}", new Object[] { Converters.PERIOD_FORMATTER
+      logger.log(Level.FINER, "Average step time: {0}", new Object[] { Converters.PERIOD_FORMATTER
           .print(Period.millis((int) (totalTime / (step + 1)))) });
       stopwatch.reset();
       if ((System.currentTimeMillis() - lastUpdate) > noProgressCancel.getMillis()) {

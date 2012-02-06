@@ -19,6 +19,7 @@ import junit.framework.TestCase;
 
 import org.joda.time.Period;
 import org.learningu.scheduling.modules.OptimizerModule;
+import org.learningu.scheduling.modules.OptimizerModule.PredefinedTemperatureFunctions;
 
 /**
  * Tests that annealing gets the correct answer on a simple use case. This test case may fail
@@ -42,9 +43,9 @@ public class AnnealerTest extends TestCase {
             new TypeLiteral<Annealer<Double>>() {}).build(
             new TypeLiteral<OptimizerFactory<Double>>() {}));
         bind(TemperatureFunction.class).annotatedWith(Names.named("primaryTempFun")).toInstance(
-            OptimizerModule.LINEAR_FUNCTION);
+            OptimizerModule.PredefinedTemperatureFunctions.LINEAR_FUNCTION);
         bind(TemperatureFunction.class).annotatedWith(Names.named("subTempFun")).toInstance(
-            OptimizerModule.LINEAR_FUNCTION);
+            OptimizerModule.PredefinedTemperatureFunctions.LINEAR_FUNCTION);
         bind(AcceptanceFunction.class).to(StandardAcceptanceFunction.class).asEagerSingleton();
         bindConstant().annotatedWith(Names.named("stepsPerOptimizerIteration")).to(10);
         bindConstant().annotatedWith(Names.named("nThreads")).to(4);
