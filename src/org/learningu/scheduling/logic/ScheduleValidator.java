@@ -10,9 +10,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.learningu.scheduling.flags.Flag;
 import org.learningu.scheduling.schedule.PresentAssignment;
 import org.learningu.scheduling.schedule.StartAssignment;
+
+import edu.uchicago.lowasser.flaginjection.Flag;
 
 /**
  * A cumulative validator for schedules, accumulating any conflicts found for later analysis or

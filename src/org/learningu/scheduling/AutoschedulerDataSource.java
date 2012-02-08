@@ -15,10 +15,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.learningu.scheduling.Pass.OptimizerSpec;
-import org.learningu.scheduling.flags.Flag;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
 import org.learningu.scheduling.logic.SerialLogic.SerialLogics;
 import org.learningu.scheduling.schedule.SerialSchedules.SerialSchedule;
+
+import edu.uchicago.lowasser.flaginjection.Flag;
 
 /**
  * Object responsible for managing and performing all required file I/O. {@link #buildModule()}

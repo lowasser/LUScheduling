@@ -39,8 +39,9 @@ import java.util.logging.Logger;
 import javax.annotation.Nullable;
 
 import org.joda.time.Period;
-import org.learningu.scheduling.flags.Converters;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
+
+import edu.uchicago.lowasser.flaginjection.Converters;
 
 /**
  * A specification for a LU Splash-type program: all the ``inputs.'' The {@code Program} object is

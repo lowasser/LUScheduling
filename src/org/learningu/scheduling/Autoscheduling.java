@@ -21,8 +21,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
-import org.learningu.scheduling.flags.Flags;
 import org.learningu.scheduling.schedule.Schedule;
+
+import edu.uchicago.lowasser.flaginjection.Flags;
 
 @Singleton
 public final class Autoscheduling {

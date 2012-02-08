@@ -6,10 +6,11 @@ import java.util.concurrent.Callable;
 
 import org.joda.time.Duration;
 import org.learningu.scheduling.annotations.Initial;
-import org.learningu.scheduling.flags.Flag;
 import org.learningu.scheduling.graph.Program;
 import org.learningu.scheduling.optimization.ConcurrentOptimizer;
 import org.learningu.scheduling.schedule.Schedule;
+
+import edu.uchicago.lowasser.flaginjection.Flag;
 
 /**
  * A {@code Callable} which can be queried to perform the schedule optimization.

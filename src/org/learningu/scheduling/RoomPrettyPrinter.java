@@ -8,10 +8,11 @@ import com.google.inject.Inject;
 import java.io.File;
 import java.util.logging.Logger;
 
-import org.learningu.scheduling.flags.Flag;
 import org.learningu.scheduling.pretty.Csv;
 import org.learningu.scheduling.pretty.PrettySchedulePrinters;
 import org.learningu.scheduling.schedule.Schedule;
+
+import edu.uchicago.lowasser.flaginjection.Flag;
 
 final class RoomPrettyPrinter extends BasicFutureCallback<Schedule> {
   @Inject

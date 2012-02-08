@@ -6,11 +6,12 @@ import com.google.inject.name.Named;
 
 import java.util.concurrent.ForkJoinPool;
 
-import org.learningu.scheduling.flags.Flags;
 import org.learningu.scheduling.graph.ProgramCacheFlags;
 import org.learningu.scheduling.logic.LocalConflictLogic;
 import org.learningu.scheduling.logic.ScheduleValidator;
 import org.learningu.scheduling.optimization.ConcurrentOptimizer;
+
+import edu.uchicago.lowasser.flaginjection.Flags;
 
 /**
  * The first module for autoscheduling, including bindings common to all runs. Specifically

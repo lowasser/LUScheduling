@@ -65,6 +65,11 @@
   		<artifactId>guava</artifactId>
   		<version>11.0.1</version>
   	</dependency>
+  	<dependency>
+  		<groupId>edu.uchicago.lowasser.flaginjection</groupId>
+  		<artifactId>flaginjection</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
   </dependencies>
   <organization>
   	<name>Learning Unlimited</name>

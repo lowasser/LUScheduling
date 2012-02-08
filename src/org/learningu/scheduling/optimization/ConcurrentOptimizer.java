@@ -19,9 +19,10 @@ import java.util.logging.Logger;
 import org.joda.time.Duration;
 import org.joda.time.Period;
 import org.learningu.scheduling.annotations.SingleThread;
-import org.learningu.scheduling.flags.Converters;
-import org.learningu.scheduling.flags.Flag;
 import org.learningu.scheduling.pretty.Csv;
+
+import edu.uchicago.lowasser.flaginjection.Converters;
+import edu.uchicago.lowasser.flaginjection.Flag;
 
 /**
  * A simulated annealing optimizer that operates by attempting several small optimizations in

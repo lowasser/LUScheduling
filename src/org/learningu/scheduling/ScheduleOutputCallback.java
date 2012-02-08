@@ -12,10 +12,11 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.logging.Logger;
 
-import org.learningu.scheduling.flags.Flag;
 import org.learningu.scheduling.schedule.Schedule;
 import org.learningu.scheduling.schedule.Schedules;
 import org.learningu.scheduling.schedule.SerialSchedules.SerialSchedule;
+
+import edu.uchicago.lowasser.flaginjection.Flag;
 
 final class ScheduleOutputCallback extends BasicFutureCallback<Schedule> {
   enum MessageOutputFormat {

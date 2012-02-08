@@ -19,9 +19,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import org.learningu.scheduling.annotations.Initial;
-import org.learningu.scheduling.flags.Flag;
-import org.learningu.scheduling.flags.Flags;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
+
+import edu.uchicago.lowasser.flaginjection.Flag;
+import edu.uchicago.lowasser.flaginjection.Flags;
 
 public final class ProtoFromJsonFile {
   @Inject

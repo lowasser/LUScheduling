@@ -20,13 +20,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import org.learningu.scheduling.flags.Flag;
-import org.learningu.scheduling.flags.Flags;
 import org.learningu.scheduling.graph.SerialGraph.SerialBuilding;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
 import org.learningu.scheduling.graph.SerialGraph.SerialRoom;
 import org.learningu.scheduling.schedule.SerialSchedules.SerialSchedule;
 import org.learningu.scheduling.schedule.SerialSchedules.SerialStartAssignment;
+
+import edu.uchicago.lowasser.flaginjection.Flag;
+import edu.uchicago.lowasser.flaginjection.Flags;
 
 /**
  * Converts a schedule in the CSV format used for exchanging data with the LU website, to the

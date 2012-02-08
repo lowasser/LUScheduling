@@ -2,7 +2,7 @@ package org.learningu.scheduling.graph;
 
 import com.google.inject.Inject;
 
-import org.learningu.scheduling.flags.Flag;
+import edu.uchicago.lowasser.flaginjection.Flag;
 
 /**
  * Flags for configuring the caches in a {@code Program}.
