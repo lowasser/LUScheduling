@@ -63,8 +63,8 @@ def upload_assignments(host, username, password, program_string, source_csv):
             })
 
         # TEST THIS!
-        browser.open(url, post_data)
-        print ' -- Scheduled section %s' % section_id
+        response = browser.open(url, post_data)
+        print ' -- Scheduled section %s.  Response: %s' % (section_id, response.read())
         num_scheduled += 1
         if (num_scheduled % 100 == 0):
             print 'Scheduled %d sections so far.' % num_scheduled
