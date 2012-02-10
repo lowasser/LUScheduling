@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
 import com.google.common.base.Objects;
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
@@ -60,6 +61,14 @@ public final class Section extends ProgramObject<SerialSection> implements Compa
     return ImmutableSet.copyOf(Lists.transform(
         serial.getRequiredResourceList(),
         Functions.forMap(program.resources)));
+  }
+
+  public Optional<Room> getPreferredRoom() {
+    if (serial.hasPreferredRoom() && serial.getPreferredRoom() != -1) {
+      return Optional.of(program.getRoom(serial.getPreferredRoom()));
+    } else {
+      return Optional.absent();
+    }
   }
 
   public int getEstimatedClassSize() {

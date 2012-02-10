@@ -30,6 +30,11 @@ scorer {
 		exponent: 2
 		multiplier: 2
 	}
+	component {
+	  impl: PREFERRED_ROOMS
+	  exponent: 1
+	  multiplier: 10
+	}
 }
 subOptimizerSteps: 2
 numberOfSubOptimizers: 10

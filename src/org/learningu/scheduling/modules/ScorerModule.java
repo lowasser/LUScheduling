@@ -1,5 +1,6 @@
 package org.learningu.scheduling.modules;
 
+import com.google.common.base.Optional;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -206,6 +207,18 @@ public final class ScorerModule extends AbstractModule {
               }
             }
             accum.add(sectionsBefore);
+          }
+        }
+      }
+    },
+    PREFERRED_ROOMS {
+      @Override
+      void score(Schedule schedule, ScoreAccumulator accum) {
+        for (StartAssignment assign : schedule.getStartAssignments()) {
+          Section sec = assign.getSection();
+          Optional<Room> preferred = sec.getPreferredRoom();
+          if (preferred.isPresent() && preferred.get().equals(assign.getRoom())) {
+            accum.add(1);
           }
         }
       }

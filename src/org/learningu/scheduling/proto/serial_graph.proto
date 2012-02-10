@@ -32,6 +32,7 @@ message SerialSection {
 	repeated int32 prereqCourseId = 11 [packed = true];
 	optional int32 minGrade = 13 [default = 9];
 	optional int32 maxGrade = 14 [default = 12];
+	optional int32 preferredRoom = 15 [default = -1];
 }
 
 /*
