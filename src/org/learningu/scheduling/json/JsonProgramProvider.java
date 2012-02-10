@@ -3,10 +3,13 @@ package org.learningu.scheduling.json;
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.ListMultimap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Table;
 import com.google.common.math.DoubleMath;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -42,17 +45,27 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
   private final Map<Integer, SerialSection> baseSections;
   private final Map<Integer, SerialPeriod> basePeriods;
 
-  private SerialResource parseResource(JsonObject obj) {
-    SerialResource.Builder builder = SerialResource.newBuilder();
-    builder.setResourceId(obj.get("uid").getAsInt());
-    builder.setDescription(obj.get("name").getAsString());
-    mergeBase(builder, builder.getResourceId(), baseResources);
-    return builder.build();
+  private final Table<Integer, String, Integer> resourceTable = HashBasedTable.create();
+  private int resourceUid;
+
+  private List<SerialResource> parseResource(JsonObject obj) {
+    // TODO figure out how this really ought to work in the general case
+    JsonArray attrs = obj.getAsJsonArray("attributes");
+    int len = attrs.size();
+    List<SerialResource> result = Lists.newArrayList();
+    for (int i = 0; i < len; i++) {
+      String attr = attrs.get(i).getAsString();
+      SerialResource.Builder builder = SerialResource.newBuilder();
+      int id = resourceUid++;
+      builder.setResourceId(resourceUid);
+      builder.setDescription(obj.get("name").getAsString() + "_" + attr);
+      resourceTable.put(obj.get("uid").getAsInt(), attr, id);
+      result.add(builder.build());
+    }
+    return result;
   }
 
-  public <T extends GeneratedMessage.Builder<T>> void mergeBase(
-      T builder,
-      int id,
+  public <T extends GeneratedMessage.Builder<T>> void mergeBase(T builder, int id,
       Map<Integer, ? extends Message> base) {
     if (base.containsKey(id)) {
       builder.mergeFrom(base.remove(id));
@@ -130,6 +143,15 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     builder.setPeriodLength(DoubleMath.roundToInt(
         obj.get("length").getAsDouble(),
         RoundingMode.HALF_EVEN));
+
+    JsonArray resourceArray = obj.get("resource_requests").getAsJsonArray();
+    for (int i = 0; i < resourceArray.size(); i++) {
+      JsonArray res = resourceArray.get(i).getAsJsonArray();
+      builder.addRequiredResource(resourceTable.get(res.get(0).getAsInt(), res
+          .get(1)
+          .getAsString()));
+    }
+
     mergeBase(builder, builder.getCourseId(), baseSections);
     List<Integer> teacherIdList = builder.getTeacherIdList();
     builder.clearTeacherId();
@@ -202,7 +224,7 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     }
     builder.addTimeBlock(timeBuilder);
     for (JsonElement resource : resources) {
-      builder.addResource(parseResource(resource.getAsJsonObject()));
+      builder.addAllResource(parseResource(resource.getAsJsonObject()));
     }
     for (JsonElement section : sections) {
       builder.addSection(parseSection(section.getAsJsonObject()));
@@ -210,11 +232,8 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     ListMultimap<String, SerialRoom> buildings = ArrayListMultimap.create();
     for (JsonElement elem : rooms) {
       SerialRoom room = parseRoom(elem.getAsJsonObject());
-      String buildingName = Splitter
-          .on(CharMatcher.anyOf(" -"))
-          .split(room.getName())
-          .iterator()
-          .next();
+      String buildingName =
+          Splitter.on(CharMatcher.anyOf(" -")).split(room.getName()).iterator().next();
       buildings.put(buildingName, room);
     }
     int buildingId = 0;
