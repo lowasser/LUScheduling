@@ -29,7 +29,7 @@ def main():
 def upload_assignments(host, username, password, program_string, source_csv):
     (browser, cookie_jar) = login(host, username, password)
 
-    url = 'https://%s/manage/%s/%s' % (
+    url = 'http://%s/manage/%s/%s' % (
         host,
         program_string,
         'ajax_schedule_class',

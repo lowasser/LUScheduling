@@ -44,7 +44,7 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
   @Inject(optional = true)
   @Flag(name = "noProgressCancel", optional = true,
       description = "If no additional progress is made in the specified time, stops optimizing.")
-  private Duration noProgressCancel = Duration.standardSeconds(20);
+  private Duration noProgressCancel = Duration.standardMinutes(20);
 
   @Inject(optional = true)
   @Flag(name = "iterationTimeout",

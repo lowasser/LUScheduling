@@ -6,11 +6,11 @@ perturber {
 scorer {
 	component {
 		impl: TEACHERS_WITH_CLASSES_SCHEDULED
-		multiplier: 50
+		multiplier: 80
 	}
 	component {
 		impl: DISTINCT_CLASSES_SCHEDULED
-		multiplier: 30
+		multiplier: 60
 	}
 	component {
 		impl: SECTIONS_SCHEDULED
@@ -23,7 +23,7 @@ scorer {
 	component {
 		impl: GLOBAL_ATTENDANCE_LEVELS
 		exponent: 3
-		multiplier: 20
+		multiplier: 5
 	}
 	component {
 		impl: SUBJECT_ATTENDANCE_LEVELS
