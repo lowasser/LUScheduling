@@ -53,6 +53,7 @@ def upload_assignments(host, username, password, program_string, source_csv):
     num_scheduled = 0
     for section_id, data in section_assignments.items():
         data.sort()
+        print  cookie_jar._cookies.values()[0]['/']['csrftoken'].value
         post_data = urllib.urlencode({
                 'csrfmiddlewaretoken': cookie_jar._cookies.values()[0]['/']['csrftoken'].value,
                 'cls': section_id,

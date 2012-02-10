@@ -343,6 +343,8 @@ public final class ScorerModule extends AbstractModule {
         return ScorerImpl.SUBJECT_ATTENDANCE_LEVELS;
       case UNUSED_ROOMS:
         return ScorerImpl.UNUSED_ROOMS;
+      case PREFERRED_ROOMS:
+        return ScorerImpl.PREFERRED_ROOMS;
       default:
         throw new AssertionError();
     }

@@ -77,7 +77,7 @@ public final class ResourceLogic extends ScheduleLogic {
       Resource resource = resourceEntry.getKey();
       List<PresentAssignment> concurrent = (List<PresentAssignment>) resourceEntry.getValue();
       if (concurrent.size() >= resource.getFloatingCount()) {
-        int k = concurrent.size() + 1 - resource.getFloatingCount();
+        int k = Math.min(concurrent.size() - 1, concurrent.size() + 1 - resource.getFloatingCount());
         List<PresentAssignment> conflicts = Shuffle.shuffleK(concurrent, k, rand);
         validator.validateGlobal(assignment, conflicts, "Not enough of " + resource
             + " to go around");

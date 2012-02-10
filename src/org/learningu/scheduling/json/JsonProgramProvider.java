@@ -3,13 +3,13 @@ package org.learningu.scheduling.json;
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Table;
+import com.google.common.collect.TreeBasedTable;
 import com.google.common.math.DoubleMath;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Logger;
 
 import org.learningu.scheduling.annotations.Initial;
 import org.learningu.scheduling.graph.SerialGraph.SerialBuilding;
@@ -45,8 +46,9 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
   private final Map<Integer, SerialSection> baseSections;
   private final Map<Integer, SerialPeriod> basePeriods;
 
-  private final Table<Integer, String, Integer> resourceTable = HashBasedTable.create();
+  private final Table<Integer, String, Integer> resourceTable = TreeBasedTable.create();
   private int resourceUid;
+  private final Logger logger;
 
   private List<SerialResource> parseResource(JsonObject obj) {
     // TODO figure out how this really ought to work in the general case
@@ -57,7 +59,7 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
       String attr = attrs.get(i).getAsString();
       SerialResource.Builder builder = SerialResource.newBuilder();
       int id = resourceUid++;
-      builder.setResourceId(resourceUid);
+      builder.setResourceId(id);
       builder.setDescription(obj.get("name").getAsString() + "_" + attr);
       resourceTable.put(obj.get("uid").getAsInt(), attr, id);
       result.add(builder.build());
@@ -103,7 +105,8 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     builder.setRoomId(roomId.getAndIncrement());
     builder.setCapacity(obj.get("num_students").getAsInt());
     for (JsonElement res : obj.get("associated_resources").getAsJsonArray()) {
-      builder.addResource(res.getAsInt());
+      Map<String, Integer> row = resourceTable.row(res.getAsInt());
+      builder.addResource(row.values().iterator().next());
     }
     for (JsonElement pd : obj.get("availability").getAsJsonArray()) {
       builder.addAvailablePeriod(pd.getAsInt());
@@ -147,9 +150,17 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     JsonArray resourceArray = obj.get("resource_requests").getAsJsonArray();
     for (int i = 0; i < resourceArray.size(); i++) {
       JsonArray res = resourceArray.get(i).getAsJsonArray();
-      builder.addRequiredResource(resourceTable.get(res.get(0).getAsInt(), res
-          .get(1)
-          .getAsString()));
+      int resId = res.get(0).getAsInt();
+      String resValue = res.get(1).getAsString();
+      if (resValue.isEmpty()) {
+        continue;
+      }
+      Integer uid = resourceTable.get(resId, resValue);
+      if (uid == null) {
+        logger.warning("No resource with resId " + resId + " and detail " + resValue);
+        continue;
+      }
+      builder.addRequiredResource(uid);
     }
 
     mergeBase(builder, builder.getCourseId(), baseSections);
@@ -173,12 +184,14 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
       @Named("json_teachers") JsonArray teachers,
       @Named("json_periods") JsonArray periods,
       @Named("json_resources") JsonArray resources,
-      @Named("json_sections") JsonArray sections) {
+      @Named("json_sections") JsonArray sections,
+      Logger logger) {
     this.teachers = teachers;
     this.periods = periods;
     this.resources = resources;
     this.sections = sections;
     this.rooms = rooms;
+    this.logger = logger;
     ImmutableMap.Builder<Integer, SerialResource> resourceBuilder = ImmutableMap.builder();
     for (SerialResource r : initial.getResourceList()) {
       resourceBuilder.put(r.getResourceId(), r);
