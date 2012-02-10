@@ -27,7 +27,7 @@ def main():
         upload_assignments(options.host, options.username, options.password, options.program, options.source_csv)
 
 def upload_assignments(host, username, password, program_string, source_csv):
-    browser = login(host, username, password)
+    (browser, cookie_jar) = login(host, username, password)
 
     url = 'https://%s/manage/%s/%s' % (
         host,
@@ -50,9 +50,11 @@ def upload_assignments(host, username, password, program_string, source_csv):
         print "You told me to stop."
         return
 
+    num_scheduled = 0
     for section_id, data in section_assignments.items():
         data.sort()
         post_data = urllib.urlencode({
+                'csrfmiddlewaretoken': cookie_jar._cookies.values()[0]['/']['csrftoken'].value,
                 'cls': section_id,
                 'action': 'assignreg',
                 'block_room_assignments': '\n'.join('%s,%s' % block_room
@@ -61,8 +63,13 @@ def upload_assignments(host, username, password, program_string, source_csv):
 
         # TEST THIS!
         browser.open(url, post_data)
+        print ' -- Scheduled section %s' % section_id
+        num_scheduled += 1
+        if (num_scheduled % 100 == 0):
+            print 'Scheduled %d sections so far.' % num_scheduled
+        
         #print post_data
-
+    print 'Scheduled %d sections successfully.' % num_scheduled
 
 if __name__ == '__main__':
     main()

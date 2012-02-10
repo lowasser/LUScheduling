@@ -31,16 +31,20 @@ def main():
 
 def login(host, username, password):
     br = mechanize.Browser()
+    br.open('https://%s/set_csrf_token' % host)
     br.open('https://%s/' % host)
     br.select_form(name=br.forms().next().name)
+    control = br.form.new_control('text', 'csrfmiddlewaretoken', {})
     br['username'] = username
     br['password'] = password
+    cj = br._ua_handlers['_cookies'].cookiejar
+    br['csrfmiddlewaretoken'] = cj._cookies.values()[0]['/']['csrftoken'].value
     response = br.submit()
-    return br
+    return (br, cj)
 
 def list_programs(host, username, password):
     ''' Obtain a list of programs and print them to the user. '''
-    browser = login(host, username, password)
+    (browser, cookie_jar) = login(host, username, password)
     result = browser.open('https://%s/manage/programs/' % host)
     document = BeautifulSoup.BeautifulSoup(result.read())
     hrefs = ['/'.join(a['href'].split('/')[2:-1]) for a in document.findAll('a')
@@ -51,7 +55,7 @@ def list_programs(host, username, password):
 
 
 def load_data(host, username, password, program_string, target_dir):
-    browser = login(host, username, password)
+    (browser, cookie_jar) = login(host, username, password)
 
     for data_url in DATA_URLS:
         url = 'https://%s/manage/%s/%s' % (
