@@ -5,9 +5,7 @@ import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
@@ -39,7 +37,6 @@ public final class ResourceLogic extends ScheduleLogic {
     Room room = assignment.getRoom();
     Section course = assignment.getSection();
     Set<Resource> courseRequirements = program.resourceRequirements(course);
-
     Set<Resource> bindingResources = program.bindingResources(room);
     validator.validateLocal(
         courseRequirements.containsAll(bindingResources),
@@ -71,13 +68,14 @@ public final class ResourceLogic extends ScheduleLogic {
       }
     }
 
-    for (Entry<Resource, Collection<PresentAssignment>> resourceEntry : resourceDemands
-        .asMap()
-        .entrySet()) {
-      Resource resource = resourceEntry.getKey();
-      List<PresentAssignment> concurrent = (List<PresentAssignment>) resourceEntry.getValue();
+    for (Resource resource : courseRequirements) {
+      List<PresentAssignment> concurrent = resourceDemands.get(resource);
+      validator.validateLocal(
+          concurrent.size() < resource.getFloatingCount(),
+          assignment,
+          "Not enough available resources");
       if (concurrent.size() >= resource.getFloatingCount()) {
-        int k = Math.min(concurrent.size() - 1, concurrent.size() + 1 - resource.getFloatingCount());
+        int k = Math.min(concurrent.size(), concurrent.size() + 1 - resource.getFloatingCount());
         List<PresentAssignment> conflicts = Shuffle.shuffleK(concurrent, k, rand);
         validator.validateGlobal(assignment, conflicts, "Not enough of " + resource
             + " to go around");

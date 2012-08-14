@@ -22,7 +22,7 @@ public final class LocalConflictLogic extends ScheduleLogic {
           + "For example, if this was 1.25, the class would be forced to use a room at most 25% bigger than its cap. "
           + "The default value is 2.0.",
       optional = true)
-  private double maxClassCapRatio = 2.0;
+  private double maxClassCapRatio = 1.5;
 
   @Flag(
       name = "minClassCapRatio",

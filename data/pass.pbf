@@ -6,19 +6,19 @@ perturber {
 scorer {
 	component {
 		impl: TEACHERS_WITH_CLASSES_SCHEDULED
-		multiplier: 80
+		multiplier: 50
 	}
 	component {
 		impl: DISTINCT_CLASSES_SCHEDULED
-		multiplier: 60
+		multiplier: 30
 	}
 	component {
 		impl: SECTIONS_SCHEDULED
-		multiplier: 5
+		multiplier: 10
 	}
 	component {
 		impl: BACK_TO_BACK_CLASSES
-		multiplier: 20
+		multiplier: 5
 	}
 	component {
 		impl: GLOBAL_ATTENDANCE_LEVELS
@@ -37,6 +37,6 @@ scorer {
 	}
 }
 subOptimizerSteps: 2
-numberOfSubOptimizers: 10
+numberOfSubOptimizers: 20
 primaryTempFun: QUADRATIC
 subTempFun: LINEAR

@@ -113,7 +113,7 @@ public final class ScorerModule extends AbstractModule {
               break;
             }
             StartAssignment next = assignmentIterator.peek();
-            if (backToBack(prev, next) && !prev.getBuilding().equals(next.getBuilding())) {
+            if (!prev.getBuilding().equals(next.getBuilding())) {
               transitions++;
             }
           }
