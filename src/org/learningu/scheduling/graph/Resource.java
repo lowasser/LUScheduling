@@ -58,4 +58,9 @@ public final class Resource extends ProgramObject<SerialResource> {
     };
   }
 
+  @Override
+  public String getShortDescription() {
+    return getDescription();
+  }
+
 }

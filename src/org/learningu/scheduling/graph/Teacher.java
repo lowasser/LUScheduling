@@ -57,4 +57,9 @@ public final class Teacher extends ProgramObject<SerialTeacher> {
       }
     };
   }
+
+  @Override
+  public String getShortDescription() {
+    return getName();
+  }
 }

@@ -48,4 +48,9 @@ public final class TeacherGroup extends ProgramObject<SerialTeacherGroup> {
       }
     };
   }
+
+  @Override
+  public String getShortDescription() {
+    return getName();
+  }
 }

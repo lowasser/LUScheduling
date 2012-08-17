@@ -45,4 +45,9 @@ public final class Building extends ProgramObject<SerialBuilding> {
   public String toString() {
     return Objects.toStringHelper(this).add("name", getName()).toString();
   }
+
+  @Override
+  public String getShortDescription() {
+    return getName();
+  }
 }

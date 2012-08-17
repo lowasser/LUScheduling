@@ -31,6 +31,8 @@ public abstract class ProgramObject<T extends Message & MessageOrBuilder> {
     this.program = checkNotNull(program);
     this.serial = checkNotNull(serial);
   }
+  
+  public abstract String getShortDescription();
 
   public abstract int getId();
 

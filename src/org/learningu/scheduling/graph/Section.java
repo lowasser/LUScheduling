@@ -102,4 +102,9 @@ public final class Section extends ProgramObject<SerialSection> implements Compa
   public int compareTo(Section o) {
     return Ints.compare(getId(), o.getId());
   }
+
+  @Override
+  public String getShortDescription() {
+    return String.format("%s (section %d)", getTitle(), getId());
+  }
 }

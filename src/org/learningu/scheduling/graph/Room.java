@@ -62,4 +62,9 @@ public final class Room extends ProgramObject<SerialRoom> implements Comparable<
   public int compareTo(Room o) {
     return Ints.compare(getId(), o.getId());
   }
+
+  @Override
+  public String getShortDescription() {
+    return getName();
+  }
 }

@@ -38,7 +38,7 @@
   	<dependency>
   		<groupId>com.google.guava</groupId>
   		<artifactId>guava-testlib</artifactId>
-  		<version>latest</version>
+  		<version>13.0</version>
   	</dependency>
   	<dependency>
   		<groupId>com.google.inject.extensions</groupId>
@@ -63,7 +63,7 @@
   	<dependency>
   		<groupId>com.google.guava</groupId>
   		<artifactId>guava</artifactId>
-  		<version>11.0.1</version>
+  		<version>13.0</version>
   	</dependency>
   	<dependency>
   		<groupId>edu.uchicago.lowasser.flaginjection</groupId>

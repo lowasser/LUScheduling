@@ -34,6 +34,7 @@ public final class ClassPeriod extends ProgramObject<SerialPeriod> implements
     return index;
   }
 
+  @Override
   public String getShortDescription() {
     return serial.getShortDescription();
   }

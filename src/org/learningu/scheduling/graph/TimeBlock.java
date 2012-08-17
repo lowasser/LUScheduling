@@ -41,15 +41,6 @@ public final class TimeBlock extends ProgramObject<SerialTimeBlock> implements
     return serial.getDescription();
   }
 
-  @Override
-  public String toString() {
-    if (serial.hasDescription()) {
-      return getDescription();
-    } else {
-      return super.toString();
-    }
-  }
-
   public List<ClassPeriod> getPeriods() {
     return periods;
   }
@@ -72,6 +63,11 @@ public final class TimeBlock extends ProgramObject<SerialTimeBlock> implements
   public int compareTo(TimeBlock o) {
     checkArgument(getProgram() == o.getProgram());
     return getId() - o.getId();
+  }
+
+  @Override
+  public String getShortDescription() {
+    return getDescription();
   }
 
 }

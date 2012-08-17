@@ -52,4 +52,9 @@ public final class Subject extends ProgramObject<SerialSubject> {
     };
   }
 
+  @Override
+  public String getShortDescription() {
+    return getTitle();
+  }
+
 }
