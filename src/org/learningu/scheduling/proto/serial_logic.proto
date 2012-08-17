@@ -9,6 +9,7 @@ enum SerialLogicImpl {
 	PREREQUISITES = 6;
 	GRADE_RANGES = 7;
 	TEACHER_GROUP_CAP = 8;
+	LUNCH = 9;
 }
 
 message SerialLogics {

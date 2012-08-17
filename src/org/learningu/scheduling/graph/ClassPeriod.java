@@ -46,6 +46,10 @@ public final class ClassPeriod extends ProgramObject<SerialPeriod> implements
   public String toString() {
     return serial.getShortDescription();
   }
+  
+  public boolean isLunch() {
+    return serial.getIsLunch();
+  }
 
   /**
    * Returns a list containing {@code count} periods starting with this one.

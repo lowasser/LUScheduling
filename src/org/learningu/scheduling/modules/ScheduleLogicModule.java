@@ -13,6 +13,7 @@ import org.learningu.scheduling.logic.ChainedScheduleLogic;
 import org.learningu.scheduling.logic.DuplicateSectionLogic;
 import org.learningu.scheduling.logic.GradeRangeLogic;
 import org.learningu.scheduling.logic.LocalConflictLogic;
+import org.learningu.scheduling.logic.LunchLogic;
 import org.learningu.scheduling.logic.PrerequisiteLogic;
 import org.learningu.scheduling.logic.ResourceLogic;
 import org.learningu.scheduling.logic.RoomConflictLogic;
@@ -44,6 +45,7 @@ public class ScheduleLogicModule extends AbstractModule {
     logicBindings.addBinding(SerialLogicImpl.PREREQUISITES).to(PrerequisiteLogic.class);
     logicBindings.addBinding(SerialLogicImpl.GRADE_RANGES).to(GradeRangeLogic.class);
     logicBindings.addBinding(SerialLogicImpl.TEACHER_GROUP_CAP).to(TeacherGroupCapLogic.class);
+    logicBindings.addBinding(SerialLogicImpl.LUNCH).to(LunchLogic.class);
   }
 
   @Provides
