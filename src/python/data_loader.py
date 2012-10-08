@@ -21,19 +21,25 @@ def main():
     parser.add_option("-p", "--password", dest="password")
     parser.add_option("-r", "--program", dest="program")
     parser.add_option("-t", "--target-dir", dest="target_dir")
+    #   note: login form name is typically 'loginform' or 'login_form';
+    #   just check the HTML on your target site in order to determine it
+    parser.add_option("-f", "--loginform-name", dest="form_name", default=None)
 
     (options, args) = parser.parse_args()
 
     if options.list_programs:
-        list_programs(options.host, options.username, options.password)
+        list_programs(options.host, options.username, options.password, options.form_name)
     else:
-        load_data(options.host, options.username, options.password, options.program, options.target_dir)
+        load_data(options.host, options.username, options.password, options.program, options.target_dir, options.form_name)
 
-def login(host, username, password):
+def login(host, username, password, form_name):
     br = mechanize.Browser()
     br.open('https://%s/set_csrf_token' % host)
     br.open('https://%s/' % host)
-    br.select_form(name=br.forms().next().name)
+    if form_name is None:
+        br.select_form(name=br.forms().next().name)
+    else:
+        br.select_form(name=form_name)
     control = br.form.new_control('text', 'csrfmiddlewaretoken', {})
     br['username'] = username
     br['password'] = password
@@ -42,9 +48,9 @@ def login(host, username, password):
     response = br.submit()
     return (br, cj)
 
-def list_programs(host, username, password):
+def list_programs(host, username, password, form_name):
     ''' Obtain a list of programs and print them to the user. '''
-    (browser, cookie_jar) = login(host, username, password)
+    (browser, cookie_jar) = login(host, username, password, form_name)
     result = browser.open('https://%s/manage/programs/' % host)
     document = BeautifulSoup.BeautifulSoup(result.read())
     hrefs = ['/'.join(a['href'].split('/')[2:-1]) for a in document.findAll('a')
@@ -54,8 +60,8 @@ def list_programs(host, username, password):
     print os.linesep.join(' - ' + href for href in hrefs[::-1])
 
 
-def load_data(host, username, password, program_string, target_dir):
-    (browser, cookie_jar) = login(host, username, password)
+def load_data(host, username, password, program_string, target_dir, form_name):
+    (browser, cookie_jar) = login(host, username, password, form_name)
 
     for data_url in DATA_URLS:
         url = 'https://%s/manage/%s/%s' % (
