@@ -18,16 +18,17 @@ def main():
     parser.add_option("-p", "--password", dest="password")
     parser.add_option("-r", "--program", dest="program")
     parser.add_option("-s", "--source-csv", dest="source_csv")
+    parser.add_option("-f", "--loginform-name", dest="form_name", default=None)
 
     (options, args) = parser.parse_args()
 
     if options.list_programs:
-        list_programs(options.host, options.username, options.password)
+        list_programs(options.host, options.username, options.password, options.form_name)
     else:
-        upload_assignments(options.host, options.username, options.password, options.program, options.source_csv)
+        upload_assignments(options.host, options.username, options.password, options.program, options.source_csv, options.form_name)
 
-def upload_assignments(host, username, password, program_string, source_csv):
-    (browser, cookie_jar) = login(host, username, password)
+def upload_assignments(host, username, password, program_string, source_csv, form_name):
+    (browser, cookie_jar) = login(host, username, password, form_name)
 
     url = 'http://%s/manage/%s/%s' % (
         host,
