@@ -1,5 +1,6 @@
 package org.learningu.scheduling.schedule;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.base.Function;
@@ -280,7 +281,7 @@ public final class Schedule {
     assert scheduleForRoom != null;
     Entry<ClassPeriod, Section> floorEntry = scheduleForRoom.floorEntry(period);
     if (floorEntry != null && floorEntry.getKey().getTimeBlock().equals(period.getTimeBlock())) {
-      return Optional.of(StartAssignment.create(floorEntry.getKey(), room, floorEntry.getValue()));
+      return Optional.of(getAssignmentsBySection().get(floorEntry.getValue()));
     } else {
       return Optional.absent();
     }
@@ -322,7 +323,8 @@ public final class Schedule {
       Room room) {
     Optional<StartAssignment> startingAt = startingAt(period, room);
     Schedule revised = this;
-    if (startingAt.isPresent() && !startingAt.get().isLocked()) {
+    if (startingAt.isPresent()) {
+      checkArgument(!startingAt.get().isLocked());
       BstMap<ClassPeriod, Section> roomMap = startingTimeTable.get(room);
       revised =
           factory.create(
@@ -333,7 +335,12 @@ public final class Schedule {
   }
 
   public ModifiedState<ScheduleValidator, Schedule> forceAssignStart(StartAssignment assign) {
+    StartAssignment old = getAssignmentsBySection().get(assign.getSection());
+    
     ScheduleValidator validator = factory.validatorProvider.get();
+    if (old != null && old.isLocked()) {
+      return ModifiedState.of(validator, this);
+    }
     factory.logic.validate(validator, this, assign);
     for (PresentAssignment pAssign : assign.getPresentAssignments()) {
       factory.logic.validate(validator, this, pAssign);

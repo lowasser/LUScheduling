@@ -13,6 +13,7 @@ import org.learningu.scheduling.logic.ChainedScheduleLogic;
 import org.learningu.scheduling.logic.DuplicateSectionLogic;
 import org.learningu.scheduling.logic.GradeRangeLogic;
 import org.learningu.scheduling.logic.LocalConflictLogic;
+import org.learningu.scheduling.logic.LockedScheduleLogic;
 import org.learningu.scheduling.logic.LunchLogic;
 import org.learningu.scheduling.logic.PrerequisiteLogic;
 import org.learningu.scheduling.logic.ResourceLogic;
@@ -49,11 +50,12 @@ public class ScheduleLogicModule extends AbstractModule {
   }
 
   @Provides
-  ScheduleLogic logic(SerialLogics logics, Map<SerialLogicImpl, Provider<ScheduleLogic>> bindings) {
+  ScheduleLogic logic(SerialLogics logics, Map<SerialLogicImpl, Provider<ScheduleLogic>> bindings, LockedScheduleLogic locked) {
     List<ScheduleLogic> theLogics = Lists.newArrayList();
     for (SerialLogicImpl subLogic : logics.getLogicList()) {
       theLogics.add(bindings.get(subLogic).get());
     }
+    
     return ChainedScheduleLogic.create(theLogics);
   }
 }

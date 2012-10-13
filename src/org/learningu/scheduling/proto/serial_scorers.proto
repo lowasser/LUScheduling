@@ -12,6 +12,7 @@ enum SerialScorerImpl {
 	UNUSED_ROOMS = 9;
 	TEACHER_DISTINCT_BUILDINGS = 10;
 	PREFERRED_ROOMS = 11;
+	GRADE_ATTENDANCE_LEVELS = 12;
 }
 
 message ScaledScorer {

@@ -158,9 +158,15 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
       Integer uid = resourceTable.get(resId, resValue);
       if (uid == null) {
         logger.warning("No resource with resId " + resId + " and detail " + resValue);
-        continue;
+        Collection<Integer> uids = resourceTable.row(resId).values();
+        if (!uids.isEmpty()) {
+          uid = uids.iterator().next();
+          logger.warning("Defaulting to " + uid);
+        }
       }
-      builder.addRequiredResource(uid);
+      if (uid != null) {
+        builder.addRequiredResource(uid);
+      }
     }
 
     mergeBase(builder, builder.getCourseId(), baseSections);

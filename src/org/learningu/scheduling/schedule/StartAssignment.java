@@ -50,7 +50,7 @@ public final class StartAssignment implements Assignment {
         && period.getProgram() == section.getProgram());
     checkArgument(period.getIndex() + getSection().getPeriodLength() <= getTimeBlock()
         .getPeriods()
-        .size());
+        .size(), "Section %s cannot be scheduled in period %s; that runs over the end of a time block", section, period);
   }
 
   public List<ClassPeriod> getPresentPeriods() {
@@ -151,6 +151,7 @@ public final class StartAssignment implements Assignment {
         .add("period", period)
         .add("room", room)
         .add("section", section)
+        .add("locked", isLocked)
         .toString();
   }
 }

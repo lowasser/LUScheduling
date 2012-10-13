@@ -30,7 +30,7 @@ public final class Schedules {
           serialAssign.getLocked());
       ModifiedState<ScheduleValidator, Schedule> modified = current.assignStart(assign);
       checkState(
-          modified.getResult().isValid(),
+          modified.getResult().isValid() && modified.getNewState() != current,
           "Schedule conflict when adding assignment: %s",
           modified.getResult());
       current = modified.getNewState();

@@ -1,23 +1,37 @@
 package org.learningu.scheduling;
 
+import com.google.common.base.CharMatcher;
 import com.google.common.base.Optional;
+import com.google.common.base.Splitter;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Module;
+import com.google.inject.Provides;
+import com.google.inject.Singleton;
 import com.google.protobuf.Message;
 import com.google.protobuf.TextFormat;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.learningu.scheduling.Pass.OptimizerSpec;
+import org.learningu.scheduling.graph.ClassPeriod;
+import org.learningu.scheduling.graph.Program;
+import org.learningu.scheduling.graph.Room;
+import org.learningu.scheduling.graph.Section;
 import org.learningu.scheduling.graph.SerialGraph.SerialProgram;
 import org.learningu.scheduling.logic.SerialLogic.SerialLogics;
 import org.learningu.scheduling.schedule.SerialSchedules.SerialSchedule;
+import org.learningu.scheduling.schedule.SerialSchedules.SerialStartAssignment;
 
 import edu.uchicago.lowasser.flaginjection.Flag;
 
@@ -61,14 +75,53 @@ public final class AutoschedulerDataSource {
   private void logReadComponents(String type, int count) {
     logger.log(Level.FINE, "Read {0} {1} components", new Object[] { count, type });
   }
+  
+  private static final Splitter SPLITTER = Splitter.on(',').trimResults(
+      CharMatcher.WHITESPACE.or(CharMatcher.is('"')));
+  
+  private static class CsvAssignment {
+    private final int sectionId;
+    private final String roomName;
+    private final int timeSlot;
+    
+    CsvAssignment(int sectionId, String roomName, int timeSlot) {
+      this.sectionId = sectionId;
+      this.roomName = roomName;
+      this.timeSlot = timeSlot;
+    }
+    
+    SerialStartAssignment toAssignment(Program program) {
+      Section section = program.getSection(sectionId);
+      Room room = program.getRoom(roomName);
+      ClassPeriod period = program.getPeriod(timeSlot);
+      return SerialStartAssignment.newBuilder()
+          .setLocked(true)
+          .setPeriodId(period.getId())
+          .setRoomId(room.getId())
+          .setSectionId(section.getId())
+          .build();
+    }
+  }
 
-  public SerialSchedule getSerialSchedule() throws IOException {
+  public List<CsvAssignment> getSerialSchedule(SerialProgram program) throws IOException {
     if (initialScheduleFile.isPresent()) {
       logReading("schedule", initialScheduleFile.get());
-      return readMessage(SerialSchedule.newBuilder(), initialScheduleFile.get()).build();
+      List<CsvAssignment> assignments = Lists.newArrayList();
+      BufferedReader reader = new BufferedReader(new FileReader(initialScheduleFile.get()));
+      while (reader.ready()) {
+        Iterator<String> line = SPLITTER.split(reader.readLine()).iterator();
+        if (!line.hasNext()) {
+          continue;
+        }
+        int sectionId = Integer.parseInt(line.next());
+        String roomName = line.next();
+        int timeId = Integer.parseInt(line.next());
+        assignments.add(new CsvAssignment(sectionId, roomName, timeId));
+      }
+      return ImmutableList.copyOf(assignments);
     } else {
       logger.fine("No initial schedule specified; starting with an empty schedule.");
-      return SerialSchedule.newBuilder().build();
+      return ImmutableList.of();
     }
   }
 
@@ -102,16 +155,25 @@ public final class AutoschedulerDataSource {
     logger.info("Building data source module");
     final SerialLogics logics = getSerialLogics();
     final SerialProgram program = getSerialProgram();
-    final SerialSchedule schedule = getSerialSchedule();
+    final List<CsvAssignment> schedule = getSerialSchedule(program);
     final OptimizerSpec optSpec = getOptimizerSpec();
     logger.fine("Reading of data complete.");
     return new AbstractModule() {
       @Override
       protected void configure() {
-        bind(SerialSchedule.class).toInstance(schedule);
-        bind(SerialLogics.class).toInstance(logics);
         bind(SerialProgram.class).toInstance(program);
+        bind(SerialLogics.class).toInstance(logics);
         bind(OptimizerSpec.class).toInstance(optSpec);
+      }
+      
+      @Singleton
+      @Provides
+      SerialSchedule schedule(Program program) {
+        SerialSchedule.Builder builder = SerialSchedule.newBuilder();
+        for (CsvAssignment assign : schedule) {
+          builder.addAssignment(assign.toAssignment(program));
+        }
+        return builder.build();
       }
     };
   }

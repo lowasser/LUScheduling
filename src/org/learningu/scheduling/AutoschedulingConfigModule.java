@@ -39,6 +39,10 @@ public final class AutoschedulingConfigModule extends AbstractModule {
   @Provides
   @Initial
   Schedule initialSchedule(Schedule.Factory factory, SerialSchedule serial) {
-    return Schedules.deserialize(factory, serial);
+    Schedule schedule = Schedules.deserialize(factory, serial);
+    if (!schedule.isCompletelyValid()) {
+      throw new AssertionError();
+    }
+    return schedule;
   }
 }

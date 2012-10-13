@@ -79,6 +79,8 @@ public final class Program {
   private final ImmutableSetMultimap<Teacher, Course> teachingMap;
 
   private final SerialProgram serial;
+  
+  private final ImmutableBiMap<String, Room> roomsByName;
 
   private final LoadingCache<Course, Set<ClassPeriod>> courseCompatiblePeriods;
 
@@ -149,6 +151,12 @@ public final class Program {
             serial.getTeacherGroupList(),
             TeacherGroup.programWrapper(this)));
 
+    BiMap<String, Room> roomBuilder = HashBiMap.create();
+    for (Room room : getRooms()) {
+      roomBuilder.put(room.getShortDescription(), room);
+    }
+    this.roomsByName = ImmutableBiMap.copyOf(roomBuilder);
+    
     // initialize courseMap
     BiMap<Integer, Course> courseBuilder = HashBiMap.create();
     SetMultimap<Course, Section> courseMapBuilder = HashMultimap.create();
@@ -448,6 +456,10 @@ public final class Program {
 
   public Set<Course> getCourses() {
     return courseMap.keySet();
+  }
+  
+  public Room getRoom(String name) {
+    return roomsByName.get(name);
   }
 
   public Set<Section> getSectionsOfCourse(Course c) {

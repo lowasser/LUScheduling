@@ -68,7 +68,7 @@ message SerialPeriod {
 	optional string description = 2;
 	optional SerialDateTime start = 3;
 	optional SerialDateTime end = 4;
-	optional int32 minGrade = 7 [default = 9];
+	optional int32 minGrade = 7 [default = 6];
 	optional int32 maxGrade = 8 [default = 12];
 	optional double attendanceLevel = 6 [default = 1.0];
 	optional bool isLunch = 9 [default = false];

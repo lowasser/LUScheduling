@@ -35,6 +35,9 @@ public final class ChainedScheduleLogic extends ScheduleLogic {
 
   @Override
   public void validate(ScheduleValidator validator, Schedule schedule, StartAssignment assignment) {
+    if (assignment.isLocked()) {
+      return;
+    }
     for (ScheduleLogic logic : logics) {
       logic.validate(validator, schedule, assignment);
     }

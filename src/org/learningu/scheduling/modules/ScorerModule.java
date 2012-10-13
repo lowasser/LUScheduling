@@ -1,21 +1,26 @@
 package org.learningu.scheduling.modules;
 
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.google.common.collect.DiscreteDomains;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.PeekingIterator;
+import com.google.common.collect.Range;
 import com.google.common.collect.Sets;
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
@@ -105,8 +110,8 @@ public final class ScorerModule extends AbstractModule {
         }
         for (NavigableMap<ClassPeriod, StartAssignment> teacherSchedule : assignments.values()) {
           int transitions = 0;
-          PeekingIterator<StartAssignment> assignmentIterator = Iterators
-              .peekingIterator(teacherSchedule.values().iterator());
+          PeekingIterator<StartAssignment> assignmentIterator =
+              Iterators.peekingIterator(teacherSchedule.values().iterator());
           while (assignmentIterator.hasNext()) {
             StartAssignment prev = assignmentIterator.next();
             if (!assignmentIterator.hasNext()) {
@@ -144,6 +149,47 @@ public final class ScorerModule extends AbstractModule {
           if (expectedAttendance != 0.0) {
             double ratio = actualAttendance / expectedAttendance;
             accum.subtract(Math.abs(ratio - 1.0));
+          }
+        }
+      }
+    },
+    GRADE_ATTENDANCE_LEVELS {
+      @Override
+      void score(Schedule schedule, ScoreAccumulator accum) {
+        Program program = schedule.getProgram();
+
+        Map<Integer, Multiset<ClassPeriod>> attendanceLevels = Maps.newHashMap();
+
+        Iterator<Range<Integer>> gradeRanges =
+            Iterables.transform(program.getCourses(), new Function<Course, Range<Integer>>() {
+              @Override
+              public Range<Integer> apply(Course input) {
+                return input.getGradeRange();
+              }
+            }).iterator();
+        Range<Integer> gradeRange = gradeRanges.next();
+        while (gradeRanges.hasNext()) {
+          gradeRange = gradeRange.span(gradeRanges.next());
+        }
+
+        for (Integer grade : gradeRange.asSet(DiscreteDomains.integers())) {
+          attendanceLevels.put(grade, HashMultiset.<ClassPeriod> create());
+        }
+        for (PresentAssignment assign : schedule.getPresentAssignments()) {
+          for (Integer grade : assign.getCourse().getGradeRange().asSet(DiscreteDomains.integers())) {
+            attendanceLevels.get(grade).add(assign.getPeriod(), assign.getSection().getMaxClassSize());
+          }
+        }
+        
+        for (Map.Entry<Integer, Multiset<ClassPeriod>> subjectEntry : attendanceLevels.entrySet()) {
+          int totalAttendance = subjectEntry.getValue().size();
+          for (ClassPeriod period : program.getPeriods()) {
+            int actualAttendance = subjectEntry.getValue().count(period);
+            double expectedAttendance = program.getAttendanceRatio(period) * totalAttendance;
+            if (expectedAttendance != 0.0) {
+              double ratio = actualAttendance / expectedAttendance;
+              accum.subtract(Math.abs(ratio - 1.0));
+            }
           }
         }
       }
@@ -261,8 +307,8 @@ public final class ScorerModule extends AbstractModule {
     CompositeScorer(Logger logger, CompleteScorer serial) {
       this.logger = logger;
       ImmutableList.Builder<Scorer<Schedule>> componentsBuilder = ImmutableList.builder();
-      ImmutableList.Builder<LoadingCache<Schedule, Double>> scoreCachesBuilder = ImmutableList
-          .builder();
+      ImmutableList.Builder<LoadingCache<Schedule, Double>> scoreCachesBuilder =
+          ImmutableList.builder();
       for (ScaledScorer scaled : serial.getComponentList()) {
         final Scorer<Schedule> scorer = deserialize(scaled);
         componentsBuilder.add(scorer);
@@ -345,6 +391,8 @@ public final class ScorerModule extends AbstractModule {
         return ScorerImpl.UNUSED_ROOMS;
       case PREFERRED_ROOMS:
         return ScorerImpl.PREFERRED_ROOMS;
+      case GRADE_ATTENDANCE_LEVELS:
+        return ScorerImpl.GRADE_ATTENDANCE_LEVELS;
       default:
         throw new AssertionError();
     }

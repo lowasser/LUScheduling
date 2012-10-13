@@ -41,6 +41,11 @@ final class DestructivePerturber implements Perturber<Schedule> {
       Section section = getRandom(sections);
       Room room = getRandom(rooms);
       ClassPeriod period = getRandom(periods);
+      
+      StartAssignment old = initial.getAssignmentsBySection().get(section);
+      if (old != null && old.isLocked()) {
+        continue;
+      }
 
       StartAssignment assign;
       try {
