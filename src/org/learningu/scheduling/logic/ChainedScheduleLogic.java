@@ -47,6 +47,9 @@ public final class ChainedScheduleLogic extends ScheduleLogic {
   public
       void
       validate(ScheduleValidator validator, Schedule schedule, PresentAssignment assignment) {
+    if (assignment.isLocked()) {
+      return;
+    }
     for (ScheduleLogic logic : logics) {
       logic.validate(validator, schedule, assignment);
     }

@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.joda.time.Duration;
+import org.joda.time.Instant;
 import org.joda.time.Period;
 import org.learningu.scheduling.annotations.SingleThread;
 import org.learningu.scheduling.pretty.Csv;
@@ -180,17 +181,25 @@ public final class ConcurrentOptimizer<T> implements Optimizer<T> {
     @Override
     protected T compute() {
       long start = System.currentTimeMillis();
-      long dur = duration.getMillis();
+      Instant startInstant = Instant.now();
       long lastUpdate = start;
       int step;
       T currentBest = initial;
       Csv.Builder builder = Csv.newBuilder();
       long totalTime = 0;
-      for (step = 0; System.currentTimeMillis() - start < dur; step++) {
-        logger.log(Level.INFO, "On iteration step {0}, current best has score {1}", new Object[] {
-            step, scorer.score(currentBest) });
+      for (step = 0; new Duration(startInstant, Instant.now()).compareTo(duration) < 0; step++) {
+        logger.log(
+            Level.INFO,
+            "On iteration step {0}, current best has score {1}; {2} has elapsed",
+            new Object[] {
+                step,
+                scorer.score(currentBest),
+                Converters.PERIOD_FORMATTER.print(new Duration(startInstant, Instant.now())
+                    .toPeriod()) });
         double temp =
-            primaryTempFun.temperature((int) (System.currentTimeMillis() - start), (int) dur);
+            primaryTempFun.temperature(
+                (int) new Duration(startInstant, Instant.now()).getMillis(),
+                (int) duration.getMillis());
         ForkJoinTask<T> task = new ParallelOptimizationStep(currentBest, temp);
         stopwatch.start();
         currentBest = task.invoke();

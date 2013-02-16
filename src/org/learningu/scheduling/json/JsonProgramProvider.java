@@ -1,13 +1,16 @@
 package org.learningu.scheduling.json;
 
 import com.google.common.base.CharMatcher;
+import com.google.common.base.Function;
 import com.google.common.base.Splitter;
-import com.google.common.collect.ArrayListMultimap;
+import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Multimaps;
+import com.google.common.collect.Ordering;
 import com.google.common.collect.Table;
 import com.google.common.collect.TreeBasedTable;
 import com.google.common.math.DoubleMath;
@@ -25,7 +28,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.learningu.scheduling.annotations.Initial;
@@ -46,7 +51,7 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
   private final Map<Integer, SerialSection> baseSections;
   private final Map<Integer, SerialPeriod> basePeriods;
 
-  private final Table<Integer, String, Integer> resourceTable = TreeBasedTable.create();
+  private final Table<Integer, String, SerialResource> resourceTable = TreeBasedTable.create();
   private int resourceUid;
   private final Logger logger;
 
@@ -61,8 +66,9 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
       int id = resourceUid++;
       builder.setResourceId(id);
       builder.setDescription(obj.get("name").getAsString() + "_" + attr);
-      resourceTable.put(obj.get("uid").getAsInt(), attr, id);
-      result.add(builder.build());
+      SerialResource res = builder.build();
+      resourceTable.put(obj.get("uid").getAsInt(), attr, res);
+      result.add(res);
     }
     return result;
   }
@@ -105,8 +111,8 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     builder.setRoomId(roomId.getAndIncrement());
     builder.setCapacity(obj.get("num_students").getAsInt());
     for (JsonElement res : obj.get("associated_resources").getAsJsonArray()) {
-      Map<String, Integer> row = resourceTable.row(res.getAsInt());
-      builder.addResource(row.values().iterator().next());
+      Map<String, SerialResource> row = resourceTable.row(res.getAsInt());
+      builder.addResource(row.values().iterator().next().getResourceId());
     }
     for (JsonElement pd : obj.get("availability").getAsJsonArray()) {
       builder.addAvailablePeriod(pd.getAsInt());
@@ -151,21 +157,30 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     for (int i = 0; i < resourceArray.size(); i++) {
       JsonArray res = resourceArray.get(i).getAsJsonArray();
       int resId = res.get(0).getAsInt();
-      String resValue = res.get(1).getAsString();
+      final String resValue = res.get(1).getAsString();
       if (resValue.isEmpty()) {
         continue;
       }
-      Integer uid = resourceTable.get(resId, resValue);
-      if (uid == null) {
-        logger.warning("No resource with resId " + resId + " and detail " + resValue);
-        Collection<Integer> uids = resourceTable.row(resId).values();
-        if (!uids.isEmpty()) {
-          uid = uids.iterator().next();
-          logger.warning("Defaulting to " + uid);
+      SerialResource theRes = resourceTable.get(resId, resValue);
+      if (theRes == null) {
+        logger.log(
+            Level.WARNING,
+            "Reading section {0} of class {1}: No resource with resId {2} and description {3}",
+            new Object[] { builder.getSectionId(), builder.getCourseId(), resId, resValue });
+        Collection<SerialResource> resources = resourceTable.row(resId).values();
+        if (!resources.isEmpty()) {
+          theRes = Ordering.natural().onResultOf(new Function<SerialResource, Integer>() {
+            @Override
+            public Integer apply(SerialResource input) {
+              int delta = levenshtein(input.getDescription(), resValue);
+              return delta;
+            }
+          }).min(resources);
+          logger.warning("Defaulting to " + theRes);
         }
       }
-      if (uid != null) {
-        builder.addRequiredResource(uid);
+      if (theRes != null) {
+        builder.addRequiredResource(theRes.getResourceId());
       }
     }
 
@@ -174,6 +189,28 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     builder.clearTeacherId();
     builder.addAllTeacherId(ImmutableSortedSet.copyOf(teacherIdList));
     return builder.build();
+  }
+
+  static int levenshtein(String a, String b) {
+    int[][] arr = new int[a.length() + 1][b.length() + 1];
+    for (int i = 0; i <= a.length(); i++) {
+      arr[i][0] = i;
+    }
+    for (int i = 0; i <= b.length(); i++) {
+      arr[0][i] = i;
+    }
+    for (int i = 1; i <= a.length(); i++) {
+      for (int j = 1; j <= b.length(); j++) {
+        arr[i][j] =
+            Math.min(
+                arr[i - 1][j],
+                Math.min(
+                    arr[i][j - 1] + 1,
+                    arr[i - 1][j - 1] + ((a.charAt(i - 1) == b.charAt(j - 1)) ? 0 : 5)));
+      }
+    }
+    return arr[a.length()][b.length()];
+
   }
 
   private final JsonArray teachers;
@@ -248,7 +285,16 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
     for (JsonElement section : sections) {
       builder.addSection(parseSection(section.getAsJsonObject()));
     }
-    ListMultimap<String, SerialRoom> buildings = ArrayListMultimap.create();
+    ListMultimap<String, SerialRoom> buildings =
+        Multimaps.newListMultimap(
+            new TreeMap<String, Collection<SerialRoom>>(),
+            new Supplier<List<SerialRoom>>() {
+
+              @Override
+              public List<SerialRoom> get() {
+                return Lists.newArrayList();
+              }
+            });
     for (JsonElement elem : rooms) {
       SerialRoom room = parseRoom(elem.getAsJsonObject());
       String buildingName =

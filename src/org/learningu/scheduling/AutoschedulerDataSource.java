@@ -1,5 +1,8 @@
 package org.learningu.scheduling;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Optional;
 import com.google.common.base.Splitter;
@@ -75,26 +78,30 @@ public final class AutoschedulerDataSource {
   private void logReadComponents(String type, int count) {
     logger.log(Level.FINE, "Read {0} {1} components", new Object[] { count, type });
   }
-  
+
   private static final Splitter SPLITTER = Splitter.on(',').trimResults(
       CharMatcher.WHITESPACE.or(CharMatcher.is('"')));
-  
+
   private static class CsvAssignment {
     private final int sectionId;
     private final String roomName;
     private final int timeSlot;
-    
+
     CsvAssignment(int sectionId, String roomName, int timeSlot) {
       this.sectionId = sectionId;
       this.roomName = roomName;
       this.timeSlot = timeSlot;
     }
-    
+
     SerialStartAssignment toAssignment(Program program) {
       Section section = program.getSection(sectionId);
+      checkNotNull(section, "Could not find section with id %s", sectionId);
       Room room = program.getRoom(roomName);
+      checkNotNull(room, "Could not find room with name %s", roomName);
       ClassPeriod period = program.getPeriod(timeSlot);
-      return SerialStartAssignment.newBuilder()
+      checkNotNull(period, "Could not find time period with id %s", timeSlot);
+      return SerialStartAssignment
+          .newBuilder()
           .setLocked(true)
           .setPeriodId(period.getId())
           .setRoomId(room.getId())
@@ -165,13 +172,17 @@ public final class AutoschedulerDataSource {
         bind(SerialLogics.class).toInstance(logics);
         bind(OptimizerSpec.class).toInstance(optSpec);
       }
-      
+
       @Singleton
       @Provides
       SerialSchedule schedule(Program program) {
         SerialSchedule.Builder builder = SerialSchedule.newBuilder();
         for (CsvAssignment assign : schedule) {
-          builder.addAssignment(assign.toAssignment(program));
+          try {
+            builder.addAssignment(assign.toAssignment(program));
+          } catch (RuntimeException e) {
+            logger.log(Level.WARNING, "Skipping " + assign + " due to " + e.getMessage());
+          }
         }
         return builder.build();
       }

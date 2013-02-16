@@ -21,6 +21,9 @@ public final class PrerequisiteLogic extends ScheduleLogic {
       boolean valid = false;
       for (Section s : program.getSectionsOfCourse(prereq)) {
         StartAssignment sAssign = schedule.getAssignmentsBySection().get(s);
+        if (sAssign == null) {
+          continue;
+        }
         List<PresentAssignment> sPAssigns = sAssign.getPresentAssignments();
         PresentAssignment lastAssign = sPAssigns.get(sPAssigns.size() - 1);
         if (lastAssign.getPeriod().compareTo(assignment.getPeriod()) < 0) {

@@ -20,6 +20,11 @@ scorer {
 		impl: BACK_TO_BACK_CLASSES
 		multiplier: 5
 	}
+  component {
+    impl: GRADE_ATTENDANCE_LEVELS
+    exponent: 3
+    multiplier: 5
+  }
 	component {
 		impl: GLOBAL_ATTENDANCE_LEVELS
 		exponent: 3

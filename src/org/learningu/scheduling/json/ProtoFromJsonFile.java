@@ -28,21 +28,27 @@ public final class ProtoFromJsonFile {
   @Inject
   @Flag(name = "teachers")
   private File teachersFile;
+
   @Inject
   @Flag(name = "periods")
   private File periodsFile;
+
   @Inject
   @Flag(name = "rooms")
   private File roomsFile;
+
   @Inject
   @Flag(name = "sections")
   private File sectionsFile;
+
   @Inject
   @Flag(name = "resources")
   private File resourcesFile;
+
   @Inject
   @Flag(name = "initial")
   private Optional<File> initialFile;
+
   @Inject
   @Flag(name = "output")
   private File outputFile;

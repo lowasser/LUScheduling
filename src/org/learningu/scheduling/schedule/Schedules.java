@@ -22,20 +22,31 @@ public final class Schedules {
     Schedule current = factory.create();
     Program program = current.getProgram();
 
+    boolean good = true;
     for (SerialStartAssignment serialAssign : serial.getAssignmentList()) {
+      try {
       StartAssignment assign = StartAssignment.create(
           program.getPeriod(serialAssign.getPeriodId()),
           program.getRoom(serialAssign.getRoomId()),
           program.getSection(serialAssign.getSectionId()),
           serialAssign.getLocked());
       ModifiedState<ScheduleValidator, Schedule> modified = current.assignStart(assign);
-      checkState(
-          modified.getResult().isValid() && modified.getNewState() != current,
-          "Schedule conflict when adding assignment: %s",
-          modified.getResult());
+      if (!(modified.getResult().isValid() && modified.getNewState() != current)) {
+        System.out.printf(
+            "Schedule conflict when adding assignment: %s%n",
+            modified.getResult());
+        good = false;
+      }
       current = modified.getNewState();
+      } catch (IllegalStateException | IllegalArgumentException e) {
+        System.out.printf("Ignoring %s, continuing%n", e.getMessage());
+      }
     }
 
+    if (!good) {
+      throw new AssertionError();
+    }
+    
     return current;
   }
 

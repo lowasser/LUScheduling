@@ -81,7 +81,7 @@ public final class Section extends ProgramObject<SerialSection> implements Compa
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this).add("id", getId()).toString();
+    return Objects.toStringHelper(this).add("id", getId()).add("courseId", getCourse().getId()).toString();
   }
 
   public Subject getSubject() {
