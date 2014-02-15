@@ -44,7 +44,7 @@ def login(host, username, password, form_name):
     br['username'] = username
     br['password'] = password
     cj = br._ua_handlers['_cookies'].cookiejar
-    br['csrfmiddlewaretoken'] = cj._cookies.values()[0]['/']['csrftoken'].value
+    br['csrfmiddlewaretoken'] = cj._cookies.values()[0]['/']['esp_csrftoken'].value
     response = br.submit()
     return (br, cj)
 

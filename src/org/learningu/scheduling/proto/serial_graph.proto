@@ -72,6 +72,7 @@ message SerialPeriod {
 	optional int32 maxGrade = 8 [default = 12];
 	optional double attendanceLevel = 6 [default = 1.0];
 	optional bool isLunch = 9 [default = false];
+	optional int32 lunchGroup = 10; // teachers can only be scheduled during one lunchGroup, so they can get lunch
 }
 
 /*

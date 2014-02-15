@@ -30,7 +30,7 @@ def main():
 def upload_assignments(host, username, password, program_string, source_csv, form_name):
     (browser, cookie_jar) = login(host, username, password, form_name)
 
-    url = 'http://%s/manage/%s/%s' % (
+    url = 'https://%s/manage/%s/%s' % (
         host,
         program_string,
         'ajax_schedule_class',
@@ -54,9 +54,9 @@ def upload_assignments(host, username, password, program_string, source_csv, for
     num_scheduled = 0
     for section_id, data in section_assignments.items():
         data.sort()
-        print  cookie_jar._cookies.values()[0]['/']['csrftoken'].value
+        print  cookie_jar._cookies.values()[0]['/']['esp_csrftoken'].value
         post_data = urllib.urlencode({
-                'csrfmiddlewaretoken': cookie_jar._cookies.values()[0]['/']['csrftoken'].value,
+                'csrfmiddlewaretoken': cookie_jar._cookies.values()[0]['/']['esp_csrftoken'].value,
                 'cls': section_id,
                 'action': 'assignreg',
                 'block_room_assignments': '\n'.join('%s,%s' % block_room

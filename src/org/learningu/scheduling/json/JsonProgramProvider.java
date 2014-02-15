@@ -283,7 +283,11 @@ public class JsonProgramProvider implements Provider<SerialProgram> {
       builder.addAllResource(parseResource(resource.getAsJsonObject()));
     }
     for (JsonElement section : sections) {
-      builder.addSection(parseSection(section.getAsJsonObject()));
+      JsonObject object = section.getAsJsonObject();
+      if (object.get("status").getAsInt() == 10) {
+        // the section must be approved
+        builder.addSection(parseSection(object));
+      }
     }
     ListMultimap<String, SerialRoom> buildings =
         Multimaps.newListMultimap(
