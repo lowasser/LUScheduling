@@ -22,6 +22,10 @@ def main():
 
     (options, args) = parser.parse_args()
 
+    if options.password is None:
+        import getpass
+        options.password = getpass.getpass('Password for %s@%s: ' % (options.username, options.host))
+
     if options.list_programs:
         list_programs(options.host, options.username, options.password, options.form_name)
     else:

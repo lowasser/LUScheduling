@@ -27,6 +27,10 @@ def main():
 
     (options, args) = parser.parse_args()
 
+    if options.password is None:
+        import getpass
+        options.password = getpass.getpass('Password for %s@%s: ' % (options.username, options.host))
+
     if options.list_programs:
         list_programs(options.host, options.username, options.password, options.form_name)
     else:
@@ -54,7 +58,7 @@ def list_programs(host, username, password, form_name):
     result = browser.open('https://%s/manage/programs/' % host)
     document = BeautifulSoup.BeautifulSoup(result.read())
     hrefs = ['/'.join(a['href'].split('/')[2:-1]) for a in document.findAll('a')
-             if a['href'].endswith('/main')]
+             if a.get('href', '').endswith('/main')]
     print "List of available programs to pick from:"
     print "=" * 40
     print os.linesep.join(' - ' + href for href in hrefs[::-1])
