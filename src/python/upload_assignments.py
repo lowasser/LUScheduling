@@ -68,6 +68,12 @@ def upload_assignments(host, username, password, program_string, source_csv, for
             })
 
         # TEST THIS!
+        # Set the referer to pass CSRF checks - <http://stackoverflow.com/a/13041112>
+        browser.set_handle_referer(False)
+        browser.set_handle_robots(False)
+        browser.set_handle_refresh(True)
+        browser.set_handle_redirect(True)
+        browser.addheaders = [('Referer', 'https://' + host),]
         response = browser.open(url, post_data)
         print ' -- Scheduled section %s.  Response: %s' % (section_id, response.read())
         num_scheduled += 1
