@@ -9,7 +9,9 @@ import com.google.gson.JsonSyntaxException;
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.google.inject.Provides;
 import com.google.inject.Scopes;
+import com.google.inject.name.Named;
 import com.google.inject.name.Names;
 import com.google.protobuf.TextFormat;
 
@@ -59,6 +61,12 @@ public final class ProtoFromJsonFile {
       protected void configure() {
         install(Flags.flagBindings(ProtoFromJsonFile.class));
       }
+
+      @Provides
+      @Named("main")
+      String mainClass() {
+        return "ProtoFromJson";
+      }       
     });
     ProtoFromJsonFile io = configuredInjector.getInstance(ProtoFromJsonFile.class);
     final JsonArray teachers = io.getTeachers();
