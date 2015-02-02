@@ -81,6 +81,12 @@
   	<developerConnection>Louis Wassermabn</developerConnection>
   </scm>
   <build>
+    <sourceDirectory>src/</sourceDirectory>
+	<resources>
+	  <resource>
+	    <directory>src/</directory>
+	  </resource>
+	</resources>
   	<plugins>
   		<plugin>
   			<groupId>org.apache.maven.plugins</groupId>
