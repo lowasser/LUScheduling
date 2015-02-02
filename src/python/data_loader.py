@@ -2,7 +2,7 @@
 import os
 import optparse
 import mechanize
-import BeautifulSoup
+from bs4 import BeautifulSoup
 
 DATA_URLS = (
     'ajax_sections',
