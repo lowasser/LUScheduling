@@ -5,7 +5,7 @@ import urllib
 import optparse
 import mechanize
 import collections
-import BeautifulSoup
+from bs4 import BeautifulSoup
 
 from data_loader import login, list_programs
 
